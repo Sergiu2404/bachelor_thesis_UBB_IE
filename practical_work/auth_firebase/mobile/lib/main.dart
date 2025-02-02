@@ -1,7 +1,7 @@
-import 'package:auth_firebase/pages/HomePage.dart';
-import 'package:auth_firebase/pages/WelcomePage.dart';
-import 'package:auth_firebase/pages/auth/LoginPage.dart';
-import 'package:auth_firebase/pages/auth/RegistrationPage.dart';
+import 'package:auth_firebase/presentation/auth/login_page.dart';
+import 'package:auth_firebase/presentation/auth/registration_page.dart';
+import 'package:auth_firebase/presentation/home_page.dart';
+import 'package:auth_firebase/presentation/welcome_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +21,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        '/': (context) => const WelcomePage(title: 'Welcome to the best financial app for any beginner',),
+        '/': (context) => const HomePage(),
+        //'/': (context) => const WelcomePage(title: 'Welcome to the best financial app for any beginner',),
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegistrationPage(),
         '/home': (context) => const HomePage()

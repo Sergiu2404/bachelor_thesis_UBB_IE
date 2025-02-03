@@ -1,0 +1,7 @@
+POST /api/auth/register
+POST /api/auth/login
+GET /api/user-portfolio/:userId
+POST /api/user-portfolio/:userId
+DELETE /api/user-portfolio/:portfolioCompanyId
+PUT /api/user-portfolio/:portfolioCompanyId
+

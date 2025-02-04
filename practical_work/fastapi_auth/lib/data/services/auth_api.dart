@@ -67,7 +67,7 @@ class AuthService {
     
     try{
       final response = await http.get(
-        Uri.parse('$baseUrl/auth/test-auth'),
+        Uri.parse('$baseUrl/auth/connected-user'),
         headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',

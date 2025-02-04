@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../auth_api.dart';
+import '../../../data/services/auth_api.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override

@@ -1,6 +1,6 @@
-import 'package:fastapi_auth/home_page.dart';
-import 'package:fastapi_auth/login_page.dart';
-import 'package:fastapi_auth/registration_page.dart';
+import 'package:fastapi_auth/presentation/home_page.dart';
+import 'package:fastapi_auth/presentation/pages/auth/login_page.dart';
+import 'package:fastapi_auth/presentation/pages/auth/registration_page.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/register',
+      initialRoute: '/home',
       routes: {
         '/register': (context) => RegisterScreen(),
         '/login': (context) => LoginScreen(),

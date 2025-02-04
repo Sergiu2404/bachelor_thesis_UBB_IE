@@ -1,6 +1,9 @@
 import 'package:fastapi_auth/presentation/home_page.dart';
 import 'package:fastapi_auth/presentation/pages/auth/login_page.dart';
 import 'package:fastapi_auth/presentation/pages/auth/registration_page.dart';
+import 'package:fastapi_auth/presentation/pages/demo_investing/demo_investing_main_page.dart';
+import 'package:fastapi_auth/presentation/pages/demo_investing/user_portfolio/user_portfolio_page.dart';
+import 'package:fastapi_auth/presentation/welcome_page.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -19,6 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/home',
       routes: {
+        '/': (context) => const WelcomePage(title: 'Welcome to the best financial app for any beginner',),
         '/register': (context) => RegisterScreen(),
         '/login': (context) => LoginScreen(),
         '/home': (context) => const HomePage(),

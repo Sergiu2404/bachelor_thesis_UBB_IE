@@ -9,6 +9,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+
 class HomeContent extends StatelessWidget {
   final Map<String, dynamic>? userData;
 
@@ -39,6 +40,8 @@ class HomeContent extends StatelessWidget {
     );
   }
 }
+
+
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
@@ -98,8 +101,8 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: _selectedIndex == 0
-          ? HomeContent(userData: userData) // Display User Info on Home Page
-          : _pages[_selectedIndex], // Switch pages using BottomNavigationBar
+          ? HomeContent(userData: userData)
+          : _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,

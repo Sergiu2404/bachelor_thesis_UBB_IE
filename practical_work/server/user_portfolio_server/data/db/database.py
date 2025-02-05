@@ -7,7 +7,9 @@ MONGO_URI = "mongodb+srv://sergiu_goian:SergiuMONGODB2404!@cluster0.vktc6.mongod
 # Initialize at module level
 client = AsyncIOMotorClient(MONGO_URI)
 db = client.user_portfolio_db
+
 users_collection = db.users_collection
+portfolio_company_collection = db.portfolio_company_collection
 
 
 async def init_db():

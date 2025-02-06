@@ -5,6 +5,7 @@ import yfinance as yahoo_finance_api
 
 from data.db.database import portfolio_company_collection
 from data.db.database import users_collection
+from data.models.portfolio_company import PortfolioCompany
 
 portfolio_router = APIRouter(prefix="/portfolio", tags=["portfolio"])
 
@@ -28,13 +29,13 @@ async def get_company_name_for_symbol(symbol: str) -> str:
 
 @portfolio_router.get("/{username}", response_model=List[dict])
 async def get_portfolio_for_user(username: str):
-    portfolio_companies = []
     portfolio_companies = await portfolio_company_collection.find({"username": username}).to_list(length=None)
 
     if not portfolio_companies:
         return []
 
-    return portfolio_companies
+    serialized_portfolio = [PortfolioCompany.serialize_portfolio_company(company) for company in portfolio_companies]
+    return serialized_portfolio
 
 @portfolio_router.post("/{username}/buy")
 async def buy_stock(username: str, symbol: str, quantity: int):

@@ -20,14 +20,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/home',
+      initialRoute: '/demo-investing',
       routes: {
         '/': (context) => const WelcomePage(title: 'Welcome to the best financial app for any beginner',),
         '/register': (context) => RegisterScreen(),
         '/login': (context) => LoginScreen(),
         '/home': (context) => const HomePage(),
-        // '/demo-investing': (context) => const DemoInvestingPage(),
-        // '/user-portfolio': (context) => const UserPortfolioPage(),
+        '/demo-investing': (context) => const DemoInvestingPage(),
+        //'/user-portfolio': (context) => const UserPortfolioPage(),
       },
     );
 

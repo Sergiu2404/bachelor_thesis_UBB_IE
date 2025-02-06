@@ -61,9 +61,14 @@ class AuthService {
     }
   }
   
-  Future<Map<String, dynamic>?> getCurrentUser() async {
+  Future<Map<String, dynamic>> getCurrentUser() async {
     final token = await getToken();
-    if(token == null) return null;
+    if(token == null)
+      return {
+        "username": "guest",
+        "email": "",
+        "virtual_money_balance": 0
+      };
     
     try{
       final response = await http.get(
@@ -77,10 +82,18 @@ class AuthService {
       if(response.statusCode == 200){
         return jsonDecode(response.body);
       } else {
-        return null;
+        return {
+          "username": "guest",
+          "email": "",
+          "virtual_money_balance": 0
+        };
       }
     } catch(error){
-      return null;
+      return {
+        "username": "guest",
+        "email": "",
+        "virtual_money_balance": 0
+      };
     }
   }
 

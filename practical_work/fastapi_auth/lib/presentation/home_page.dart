@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:fastapi_auth/presentation/pages/demo_investing/demo_investing_main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:fastapi_auth/data/services/auth_api.dart';
 
@@ -51,32 +52,34 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    fetchCurrentUser();
+    // TODO: uncomment this to work with login
+    //fetchCurrentUser();
   }
 
-  Future<void> fetchCurrentUser() async {
-    try {
-      final user = await authService.getCurrentUser();
-      setState(() {
-        userData = user;
-      });
-    } catch (error) {
-      setState(() {
-        userData = null;
-      });
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Error: ${error.toString()}")),
-      );
-    }
-  }
+  // TODO: uncomment this to work with login
+  // Future<void> fetchCurrentUser() async {
+  //   try {
+  //     final user = await authService.getCurrentUser();
+  //     setState(() {
+  //       userData = user;
+  //     });
+  //   } catch (error) {
+  //     setState(() {
+  //       userData = null;
+  //     });
+  //
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(content: Text("Error: ${error.toString()}")),
+  //     );
+  //   }
+  // }
 
   // ✅ Pages for Navigation
   final List<Widget> _pages = [
-    const HomeContent(),  // Home Page (Displays User Info)
-    const Center(child: Text("Learning Page")), // Replace with actual LearningPage()
-    const Center(child: Text("Demo Investing")), // Replace with actual DemoInvestingPage()
-    const Center(child: Text("Predictor")), // Replace with actual PredictorPage()
+    const HomeContent(),
+    const Center(child: Text("Learning Page")),
+    const DemoInvestingPage(),
+    const Center(child: Text("Predictor")),
   ];
 
   void _onItemTapped(int index) {

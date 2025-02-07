@@ -5,6 +5,7 @@ import yfinance as yahoo_finance_api
 
 from data.db.database import portfolio_company_collection
 from data.db.database import users_collection
+from data.models.buy_sell_requests import BuySellStockRequest
 from data.models.portfolio_company import PortfolioCompany
 
 portfolio_router = APIRouter(prefix="/portfolio", tags=["portfolio"])
@@ -38,7 +39,10 @@ async def get_portfolio_for_user(username: str):
     return serialized_portfolio
 
 @portfolio_router.post("/{username}/buy")
-async def buy_stock(username: str, symbol: str, quantity: int):
+async def buy_stock(username: str, request: BuySellStockRequest):
+    symbol = request.symbol
+    quantity = request.quantity
+
     if quantity <= 0:
         raise HTTPException(status_code=400, detail="Quantity must be an integer >= 0")
 
@@ -111,8 +115,11 @@ async def buy_stock(username: str, symbol: str, quantity: int):
 
 
 @portfolio_router.post("/{username}/sell")
-async def sell_stock(username: str, symbol: str, quantity: int):
+async def sell_stock(username: str, request: BuySellStockRequest):
     """Sell stocks and update virtual money balance accordingly."""
+    symbol = request.symbol
+    quantity = request.quantity
+
     if quantity <= 0:
         raise HTTPException(status_code=400, detail="Quantity to be sold must be > 0")
 

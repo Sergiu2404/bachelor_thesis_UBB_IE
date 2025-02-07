@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'BuySellPage.dart';
+import '../pages/demo_investing/user_portfolio/buy_sell_page.dart';
 
 class PortfolioCompanyCard extends StatelessWidget {
   final String symbol;

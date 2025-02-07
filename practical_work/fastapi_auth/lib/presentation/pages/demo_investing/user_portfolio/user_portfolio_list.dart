@@ -2,8 +2,9 @@ import 'package:fastapi_auth/data/models/portfolio_company.dart';
 import 'package:fastapi_auth/data/services/auth_api.dart';
 import 'package:fastapi_auth/data/services/portfolio_api.dart';
 import 'package:fastapi_auth/data/services/stock_data_api.dart';
+import 'package:fastapi_auth/presentation/pages/demo_investing/user_portfolio/portfolio_company_page.dart';
 import 'package:flutter/material.dart';
-import 'portfolio_company_card.dart'; // Import the card
+import '../../../custom_widgets/portfolio_company_card.dart'; // Import the card
 class UserPortfolioList extends StatefulWidget {
   const UserPortfolioList({super.key});
 
@@ -41,33 +42,55 @@ class _UserPortfolioListState extends State<UserPortfolioList> {
     }
   }
 
+  Future<void> _refreshPortfolio() async {
+    setState(() {
+      isLoading = true;
+    });
+    await _fetchPortfolioStocks();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text("Your Portfolio"),
-          backgroundColor: Colors.lightBlue,
+        title: const Text("Your Portfolio"),
+        backgroundColor: Colors.lightBlue,
       ),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : stocks.isEmpty
-          ? const Center(child: Text("Your portfolio is empty for now"))
-          : Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView.builder(
-          physics: AlwaysScrollableScrollPhysics(),
-          itemCount: stocks.length,
-          itemBuilder: (context, index) {
-            final stock = stocks[index];
-            return ListTile(
-              title: Text(stock.companyName),
-              subtitle: Text('Quantity: ${stock.quantity}'),
-              trailing: Text('\$${stock.totalCurrentValue}'),
-            );
-          },
+      body: RefreshIndicator(
+        onRefresh: _refreshPortfolio,
+        child: isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : stocks.isEmpty
+            ? const Center(child: Text("Your portfolio is empty for now"))
+            : Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: ListView.builder(
+            physics: const AlwaysScrollableScrollPhysics(),
+            itemCount: stocks.length,
+            itemBuilder: (context, index) {
+              final stock = stocks[index];
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PortfolioCompanyPage(stock: stock),
+                    ),
+                  ).then((_) => _refreshPortfolio());
+                },
+                child: PortfolioCompanyCard(
+                  symbol: stock.symbol,
+                  companyName: stock.companyName,
+                  currentPrice: stock.totalCurrentValue / stock.quantity,
+                  quantity: stock.quantity,
+                  averagePurchasePrice: stock.averageBuyPrice,
+                  currentEvaluation: stock.totalCurrentValue,
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
   }
-
 }

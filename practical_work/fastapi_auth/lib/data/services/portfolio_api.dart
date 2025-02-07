@@ -14,7 +14,7 @@ class PortfolioService{
 
     try {
       final response = await http.get(
-          Uri.parse("$baseUrl/portfolio/${currentUser?["username"]}"),
+          Uri.parse("$baseUrl/${currentUser?["username"]}"),
           headers: {
             'Content-Type': 'application/json'
           });

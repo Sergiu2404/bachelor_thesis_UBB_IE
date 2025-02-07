@@ -54,7 +54,7 @@ class StockDataService {
   }
 
 
-  Future<Map<String, Map<String, double>>> getMonthlyStockData(String provider, String symbol) async {
+  Future<Map<String, double>> getMonthlyStockData(String provider, String symbol) async {
     try {
       final response = await http.get(
         Uri.parse("$baseUrl/stocks/monthly/$provider/$symbol"),
@@ -68,7 +68,14 @@ class StockDataService {
 
         // Ensure we extract only the "monthly_prices" field
         if (data.containsKey("monthly_prices")) {
-          return Map<String, Map<String, double>>.from(data["monthly_prices"]);
+          final Map<String, dynamic> rawPrices = data["monthly_prices"];
+
+          // Convert to Map<String, double> by extracting "Close" values
+          final Map<String, double> formattedPrices = rawPrices.map(
+                (key, value) => MapEntry(key, value["Close"]?.toDouble() ?? 0.0),
+          );
+
+          return formattedPrices;
         } else {
           throw Exception("Invalid response format");
         }

@@ -1,9 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:fastapi_auth/data/models/stock_data.dart';
-import 'package:fastapi_auth/data/services/auth_api.dart';
-import 'package:fastapi_auth/data/services/portfolio_api.dart';
 import 'package:fastapi_auth/data/services/stock_data_api.dart';
+
+import '../user_portfolio/BuySellPage.dart';
 
 class StockDetailsPage extends StatefulWidget {
   final StockData stockData;
@@ -16,16 +18,9 @@ class StockDetailsPage extends StatefulWidget {
 
 class _StockDetailsPageState extends State<StockDetailsPage> {
   final StockDataService _stockService = StockDataService();
-  final AuthService _authService = AuthService();
-  final PortfolioService _portfolioService = PortfolioService();
-
-  Map<String, dynamic> currentConnectedUser = {};
-
-  String providerAPI = "yahoo";
-  final List<String> providerOptions = ["yahoo", "alpha"];
 
   StockData? stockDetails;
-  Map<String, Map<String, double>>? monthlyPrices;
+  late Map<String, double> monthlyPrices;
   bool isLoading = true;
 
   @override
@@ -36,8 +31,9 @@ class _StockDetailsPageState extends State<StockDetailsPage> {
 
   Future<void> _fetchStockDetails() async {
     try {
-      final stock = await _stockService.getStockForSymbol(providerAPI, widget.stockData.symbol);
-      final monthly = await _stockService.getMonthlyStockData(providerAPI, widget.stockData.symbol);
+      final stock = await _stockService.getStockForSymbol("yahoo", widget.stockData.symbol);
+      final monthly = await _stockService.getMonthlyStockData("yahoo", widget.stockData.symbol);
+      log("${stock.price} ${stock.symbol}");
 
       setState(() {
         stockDetails = stock;
@@ -57,7 +53,10 @@ class _StockDetailsPageState extends State<StockDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.stockData.symbol)),
+      appBar: AppBar(
+        title: Text(widget.stockData.symbol),
+        backgroundColor: Colors.blueAccent,
+      ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : Padding(
@@ -75,11 +74,60 @@ class _StockDetailsPageState extends State<StockDetailsPage> {
                 style: const TextStyle(fontSize: 16)),
             const SizedBox(height: 20),
 
-            if (monthlyPrices != null && monthlyPrices!.isNotEmpty)
+            // Chart Display
+            if (monthlyPrices != null && monthlyPrices.isNotEmpty)
               SizedBox(
                 height: 300,
                 child: _buildStockChart(),
               ),
+
+            // Add Buy and Sell buttons below the chart
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Buy Button
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BuySellPage(
+                          action: "Buy",
+                          symbol: widget.stockData.symbol,
+                          currentPrice: stockDetails?.price ?? 0.0,
+                        ),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green, // Buy button color
+                  ),
+                  child: const Text("Buy", style: TextStyle(fontSize: 18)),
+                ),
+                const SizedBox(width: 20), // Spacer between buttons
+
+                // Sell Button
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BuySellPage(
+                          action: "Sell",
+                          symbol: widget.stockData.symbol,
+                          currentPrice: stockDetails?.price ?? 0.0,
+                        ),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red, // Sell button color
+                  ),
+                  child: const Text("Sell", style: TextStyle(fontSize: 18)),
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -88,11 +136,11 @@ class _StockDetailsPageState extends State<StockDetailsPage> {
 
   Widget _buildStockChart() {
     final List<FlSpot> spots = [];
-    final sortedKeys = monthlyPrices!.keys.toList()..sort();
+    final sortedKeys = monthlyPrices.keys.toList()..sort();
 
     for (int i = 0; i < sortedKeys.length; i++) {
       final month = sortedKeys[i];
-      final closePrice = monthlyPrices![month]?["Close"] ?? 0;
+      final closePrice = monthlyPrices[month] ?? 0.0;
       spots.add(FlSpot(i.toDouble(), closePrice));
     }
 

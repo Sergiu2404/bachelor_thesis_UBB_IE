@@ -4,7 +4,6 @@ import 'package:fastapi_auth/data/services/portfolio_api.dart';
 import 'package:fastapi_auth/data/services/stock_data_api.dart';
 import 'package:flutter/material.dart';
 import 'portfolio_company_card.dart'; // Import the card
-
 class UserPortfolioList extends StatefulWidget {
   const UserPortfolioList({super.key});
 
@@ -21,21 +20,9 @@ class _UserPortfolioListState extends State<UserPortfolioList> {
   late List<PortfolioCompany> stocks = [];
   bool isLoading = true;
 
-
-  // List<Map<String, dynamic>> _generateHardcodedStocks() {
-  //   return List.generate(10, (i) => {
-  //     'name': 'Stock $i',
-  //     'currentPrice': (i + 1) * 10.0,
-  //     'quantity': (i + 1) * 2,
-  //     'purchasePrice': (i + 1) * 8.0,
-  //     'totalEvaluation': (i + 1) * 10.0 * (i + 1) * 2,
-  //   });
-  // }
-
   @override
   void initState() {
     super.initState();
-
     _fetchPortfolioStocks();
   }
 
@@ -43,8 +30,7 @@ class _UserPortfolioListState extends State<UserPortfolioList> {
     try {
       final fetchedPortfolioCompanies = await _portfolioService.getPortfolioForUser();
       setState(() {
-        if(fetchedPortfolioCompanies.isNotEmpty)
-          stocks = fetchedPortfolioCompanies;
+        if (fetchedPortfolioCompanies.isNotEmpty) stocks = fetchedPortfolioCompanies;
         isLoading = false;
       });
     } catch (error) {
@@ -58,8 +44,14 @@ class _UserPortfolioListState extends State<UserPortfolioList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+          title: const Text("Your Portfolio"),
+          backgroundColor: Colors.lightBlue,
+      ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
+          : stocks.isEmpty
+          ? const Center(child: Text("Your portfolio is empty for now"))
           : Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView.builder(
@@ -67,20 +59,15 @@ class _UserPortfolioListState extends State<UserPortfolioList> {
           itemCount: stocks.length,
           itemBuilder: (context, index) {
             final stock = stocks[index];
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 12.0),
-              child: PortfolioCompanyCard(
-                symbol: stock.symbol,
-                companyName: stock.username,
-                currentPrice: stock.totalCurrentValue / stock.quantity,
-                quantity: stock.quantity,
-                averagePurchasePrice: stock.averageBuyPrice,
-                currentEvaluation: stock.totalCurrentValue,
-              ),
+            return ListTile(
+              title: Text(stock.companyName),
+              subtitle: Text('Quantity: ${stock.quantity}'),
+              trailing: Text('\$${stock.totalCurrentValue}'),
             );
           },
         ),
       ),
     );
   }
+
 }

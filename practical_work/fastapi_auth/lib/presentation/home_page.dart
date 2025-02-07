@@ -10,7 +10,6 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-
 class HomeContent extends StatelessWidget {
   final Map<String, dynamic>? userData;
 
@@ -42,8 +41,6 @@ class HomeContent extends StatelessWidget {
   }
 }
 
-
-
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   AuthService authService = AuthService();
@@ -52,34 +49,32 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    // TODO: uncomment this to work with login
-    //fetchCurrentUser();
+    // Fetch user data for the home screen
+    _fetchCurrentUser();
   }
 
-  // TODO: uncomment this to work with login
-  // Future<void> fetchCurrentUser() async {
-  //   try {
-  //     final user = await authService.getCurrentUser();
-  //     setState(() {
-  //       userData = user;
-  //     });
-  //   } catch (error) {
-  //     setState(() {
-  //       userData = null;
-  //     });
-  //
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(content: Text("Error: ${error.toString()}")),
-  //     );
-  //   }
-  // }
+  Future<void> _fetchCurrentUser() async {
+    try {
+      final user = await authService.getCurrentUser();
+      setState(() {
+        userData = user;
+      });
+    } catch (error) {
+      setState(() {
+        userData = null;
+      });
 
-  // ✅ Pages for Navigation
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: ${error.toString()}")),
+      );
+    }
+  }
+
   final List<Widget> _pages = [
-    const HomeContent(),
+    const HomeContent(),  // Home content page
     const Center(child: Text("Learning Page")),
-    const DemoInvestingPage(),
-    const Center(child: Text("Predictor")),
+    const DemoInvestingPage(),  // Demo investing page
+    const Center(child: Text("Predictor")),  // Placeholder page
   ];
 
   void _onItemTapped(int index) {
@@ -91,7 +86,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      // HomePage's AppBar
+      appBar: _selectedIndex == 0
+          ? AppBar(
         title: const Text('Home Page'),
         actions: [
           IconButton(
@@ -102,10 +99,13 @@ class _HomePageState extends State<HomePage> {
             },
           ),
         ],
-      ),
+      )
+          : null,  // No AppBar for other pages
+
       body: _selectedIndex == 0
-          ? HomeContent(userData: userData)
-          : _pages[_selectedIndex],
+          ? HomeContent(userData: userData)  // Show HomeContent on HomePage
+          : _pages[_selectedIndex],  // Show other pages for different index
+
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,

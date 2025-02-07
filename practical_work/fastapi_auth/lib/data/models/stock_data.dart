@@ -9,7 +9,7 @@ class StockData{
     return StockData(
       symbol: json['symbol'] ?? '',
       companyName: json['company_name'] ?? '',
-      price: (json['price'] ?? 0.0).toDouble(),
+      price: (json['latest_price'] ?? 0.0).toDouble(),
     );
   }
 

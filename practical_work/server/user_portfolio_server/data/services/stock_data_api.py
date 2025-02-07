@@ -82,36 +82,49 @@ class YahooFinanceProvider(StockDataProvider):
         except Exception as e:
             return {"error": str(e)}
 
-    def get_monthly_open_close_prices(self, symbol: str) -> Dict[str, Dict[str, float]]:
+    import yfinance as yf
+    import pandas as pd
+    from datetime import datetime
+
+    def get_monthly_close_prices(self, symbol: str):
         """
-        Fetches the opening and closing stock prices for each month for the past 5 years.
+        Fetches the opening and closing stock prices for each month over the last 5 years.
 
         :param symbol: Stock ticker symbol
         :return: Dictionary with monthly open and close prices
         """
         try:
-            end_date = datetime.today().strftime('%Y-%m-%d')
-            start_date = (datetime.today() - timedelta(days=5 * 365)).strftime('%Y-%m-%d')
+            # Fetch stock data for the last 5 years
+            ticker = yahoo_finance_api.Ticker(symbol)
+            data = ticker.history(period="5y", interval="1mo")  # Monthly data
 
-            # Fetch prices for last 5 years
-            data = yahoo_finance_api.download(symbol, start=start_date, end=end_date, interval="1mo", progress=False)
-
+            # Check if DataFrame is empty
             if data.empty:
                 return {"error": "No historical data available"}
 
-            # Reset index to get the date column
+            # Reset index to get the Date column
             data.reset_index(inplace=True)
 
-            # Extract year and month
+            # Ensure required columns exist
+            required_columns = {"Close"}
+            missing_columns = required_columns - set(data.columns)
+            if missing_columns:
+                return {"error": f"Missing columns in data: {missing_columns}"}
+
+            # Extract Year-Month format
             data["Year-Month"] = data["Date"].dt.strftime("%Y-%m")
 
-            # Group by year-month and extract first (open) and last (close) price
-            monthly_data = data.groupby("Year-Month").agg({"Open": "first", "Close": "last"}).to_dict("index")
+            # Group by Year-Month: first (Open) and last (Close) price
+            monthly_data = (
+                data.groupby("Year-Month")
+                .agg({"Close": "last"})
+                .to_dict("index")
+            )
 
             return {
-                "provider": "Yahoo Finance",
+                "provider": "yahoo",
                 "symbol": symbol,
-                "monthly_prices": monthly_data
+                "monthly_prices": monthly_data,
             }
 
         except Exception as e:
@@ -196,6 +209,49 @@ class AlphaVantageProvider(StockDataProvider):
                 })
 
             return result
+
+        except Exception as e:
+            return {"error": str(e)}
+
+    def get_monthly_open_close_prices(self, symbol: str) -> Dict[str, Dict[str, float]]:
+        """
+        Fetches the opening and closing stock prices for each month for the past 5 years.
+
+        :param symbol: Stock ticker symbol
+        :return: Dictionary with monthly open and close prices or error message
+        """
+        try:
+            params = {
+                "function": "TIME_SERIES_MONTHLY_ADJUSTED",
+                "symbol": symbol,
+                "apikey": ALPHA_VANTAGE_KEY,
+                "datatype": "json"
+            }
+
+            response = requests.get(self.BASE_URL, params=params)
+            data = response.json()
+
+            # Validate response
+            if "Monthly Adjusted Time Series" not in data:
+                return {"error": "Invalid ticker or API limit reached"}
+
+            monthly_series = data["Monthly Adjusted Time Series"]
+            current_year = datetime.today().year
+
+            # Filter last 5 years of data
+            filtered_data = {
+                date: {
+                    "Close": float(values["4. close"])
+                }
+                for date, values in monthly_series.items()
+                if int(date[:4]) >= current_year - 5  # Filter for last 5 years
+            }
+
+            return {
+                "provider": "alpha",
+                "symbol": symbol,
+                "monthly_prices": filtered_data
+            }
 
         except Exception as e:
             return {"error": str(e)}

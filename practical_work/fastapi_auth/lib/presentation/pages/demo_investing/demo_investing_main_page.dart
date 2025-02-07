@@ -79,24 +79,14 @@ class _DemoInvestingPageState extends State<DemoInvestingPage> {
         title: const Text("Demo Investing Account"),
         backgroundColor: Colors.lightBlue,
         actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Center(
-              child: Text(
-                'Balance: \$${currentConnectedUser['virtual_money_balance']}',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
           IconButton(
             icon: const Icon(Icons.account_balance),
             onPressed: () {
+              print("Navigating to Portfolio...");
               Navigator.pushNamed(context, '/user-portfolio');
             },
             tooltip: 'View Portfolio',
-          ),
+          )
         ],
       ),
       body: Column(

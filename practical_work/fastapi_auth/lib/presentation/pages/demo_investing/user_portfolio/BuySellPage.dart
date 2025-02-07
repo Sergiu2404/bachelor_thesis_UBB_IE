@@ -1,8 +1,8 @@
+import 'package:fastapi_auth/data/services/portfolio_api.dart';
 import 'package:flutter/material.dart';
 
-
 class BuySellPage extends StatefulWidget {
-  final String action;
+  final String action;  // "Buy" or "Sell"
   final String symbol;
   final double currentPrice;
 
@@ -18,8 +18,56 @@ class BuySellPage extends StatefulWidget {
 }
 
 class _BuySellPageState extends State<BuySellPage> {
+  PortfolioService _portfolioService = PortfolioService();
+
   final _formKey = GlobalKey<FormState>();
   int _quantity = 1;
+  bool _isProcessing = false;
+  String _responseMessage = "";
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<void> _performAction() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      setState(() {
+        _isProcessing = true;
+        _responseMessage = "";
+      });
+
+      Map<String, dynamic> result;
+
+      if (widget.action.toLowerCase() == "buy") {
+        result = await _portfolioService.buyStockForUser(widget.symbol, _quantity);
+      } else if (widget.action.toLowerCase() == "sell") {
+        result = await _portfolioService.sellStockForUser(widget.symbol, _quantity);
+      } else {
+        setState(() {
+          _responseMessage = "Unknown action: ${widget.action}";
+          _isProcessing = false;
+        });
+        return;
+      }
+
+      setState(() {
+        if (result.containsKey("error")) {
+          _responseMessage = result["error"];
+        } else {
+          _responseMessage = "${widget.action} action successful!";
+        }
+        _isProcessing = false;
+      });
+
+      // Show snackbar with the result
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(_responseMessage)),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,16 +102,17 @@ class _BuySellPageState extends State<BuySellPage> {
               ),
               const SizedBox(height: 24),
               ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("${widget.action}ing $_quantity shares of ${widget.symbol}")),
-                    );
-                  }
-                },
-                child: Text(widget.action),
+                onPressed: _isProcessing ? null : _performAction,
+                child: _isProcessing
+                    ? CircularProgressIndicator(color: Colors.white)
+                    : Text(widget.action),
               ),
+              const SizedBox(height: 16),
+              if (_responseMessage.isNotEmpty)
+                Text(
+                  _responseMessage,
+                  style: TextStyle(color: _responseMessage.startsWith('Error') ? Colors.red : Colors.green),
+                ),
             ],
           ),
         ),

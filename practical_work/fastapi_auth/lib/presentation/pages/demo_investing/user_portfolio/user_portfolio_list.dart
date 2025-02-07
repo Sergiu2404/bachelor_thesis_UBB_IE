@@ -1,3 +1,4 @@
+import 'package:fastapi_auth/data/models/portfolio_company.dart';
 import 'package:fastapi_auth/data/services/auth_api.dart';
 import 'package:fastapi_auth/data/services/portfolio_api.dart';
 import 'package:fastapi_auth/data/services/stock_data_api.dart';
@@ -17,7 +18,7 @@ class _UserPortfolioListState extends State<UserPortfolioList> {
   final PortfolioService _portfolioService = PortfolioService();
   Map<String, dynamic> currentConnectedUser = {};
 
-  late List<Map<String, dynamic>> stocks = [];
+  late List<PortfolioCompany> stocks = [];
   bool isLoading = true;
 
 
@@ -69,11 +70,12 @@ class _UserPortfolioListState extends State<UserPortfolioList> {
             return Padding(
               padding: const EdgeInsets.only(bottom: 12.0),
               child: PortfolioCompanyCard(
-                companyName: stock['name'],
-                currentPrice: stock['total_current_price'] / stock['quantity'],
-                quantity: stock['quantity'],
-                averagePurchasePrice: stock['average_buy_price'],
-                currentEvaluation: stock['total_current_price'],
+                symbol: stock.symbol,
+                companyName: stock.username,
+                currentPrice: stock.totalCurrentValue / stock.quantity,
+                quantity: stock.quantity,
+                averagePurchasePrice: stock.averageBuyPrice,
+                currentEvaluation: stock.totalCurrentValue,
               ),
             );
           },

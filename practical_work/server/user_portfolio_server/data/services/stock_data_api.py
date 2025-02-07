@@ -93,7 +93,7 @@ class YahooFinanceProvider(StockDataProvider):
             end_date = datetime.today().strftime('%Y-%m-%d')
             start_date = (datetime.today() - timedelta(days=5 * 365)).strftime('%Y-%m-%d')
 
-            # Fetch historical data for last 5 years
+            # Fetch prices for last 5 years
             data = yahoo_finance_api.download(symbol, start=start_date, end=end_date, interval="1mo", progress=False)
 
             if data.empty:

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:fastapi_auth/data/models/portfolio_company.dart';
 import 'package:http/http.dart'as http;
 import 'package:fastapi_auth/data/services/auth_api.dart';
 
@@ -7,7 +8,7 @@ class PortfolioService{
   static const String baseUrl = 'http://10.0.2.2:8000/portfolio';
   final AuthService _authService = AuthService();
 
-  Future<List<Map<String, dynamic>>> getPortfolioForUser() async {
+  Future<List<PortfolioCompany>> getPortfolioForUser() async {
     Map<String, dynamic>? currentUser = await _authService.getCurrentUser();
     log("Fetching portfolio user: ${currentUser?["username"]}");
 
@@ -21,7 +22,14 @@ class PortfolioService{
       if(response.statusCode == 200){
         List<dynamic> jsonResponse = json.decode(response.body);
 
-        return jsonResponse.map((item) => item as Map<String, dynamic>).toList();
+        return jsonResponse.map((item) => PortfolioCompany(
+          username: item["username"],
+          symbol: item["symbol"],
+          companyName: item["company_name"],
+          quantity: (item["quantity"] ?? 0).toInt(),
+          averageBuyPrice: (item["average_buy_price"] ?? 0).toDouble(),
+          totalCurrentValue: (item["total_current_price"] ?? 0).toDouble()
+        )).toList();
       } else {
         log("Error: ${response.statusCode}, ${response.body}");
         return [];

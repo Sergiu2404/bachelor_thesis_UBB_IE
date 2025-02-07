@@ -54,8 +54,7 @@ class StockDataService {
   }
 
 
-
-  Future<Map<String, dynamic>> getMonthlyStockData(String provider, String symbol) async {
+  Future<Map<String, Map<String, double>>> getMonthlyStockData(String provider, String symbol) async {
     try {
       final response = await http.get(
         Uri.parse("$baseUrl/stocks/monthly/$provider/$symbol"),
@@ -66,7 +65,13 @@ class StockDataService {
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        return data;
+
+        // Ensure we extract only the "monthly_prices" field
+        if (data.containsKey("monthly_prices")) {
+          return Map<String, Map<String, double>>.from(data["monthly_prices"]);
+        } else {
+          throw Exception("Invalid response format");
+        }
       } else {
         log("Error fetching monthly stock data: ${response.body}");
         throw Exception("Failed to load monthly stock data");

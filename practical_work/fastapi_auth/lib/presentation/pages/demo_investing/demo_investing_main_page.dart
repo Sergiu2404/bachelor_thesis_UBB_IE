@@ -1,6 +1,7 @@
 import 'package:fastapi_auth/data/models/stock_data.dart';
 import 'package:fastapi_auth/data/services/auth_api.dart';
 import 'package:fastapi_auth/data/services/stock_data_api.dart';
+import 'package:fastapi_auth/presentation/pages/demo_investing/stocks/stock_details_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../custom_widgets/stock_card.dart';
@@ -193,10 +194,20 @@ class _DemoInvestingPageState extends State<DemoInvestingPage> {
               itemCount: stockResults.length,
               itemBuilder: (context, index) {
                 final stock = stockResults[index];
-                return StockCard(
-                  companyName: stock.companyName ?? "Company Name",
-                  symbol: stock.symbol,
-                  price: stock.price,
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => StockDetailsPage(stockData: stock),
+                      ),
+                    );
+                  },
+                  child: StockCard(
+                    companyName: stock.companyName ?? "Company Name",
+                    symbol: stock.symbol,
+                    price: stock.price,
+                  ),
                 );
               },
             ),

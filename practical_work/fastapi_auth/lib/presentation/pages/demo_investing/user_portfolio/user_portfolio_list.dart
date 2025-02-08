@@ -16,6 +16,7 @@ class _UserPortfolioListState extends State<UserPortfolioList> {
   final StockDataService _stockService = StockDataService();
   final AuthService _authService = AuthService();
   final PortfolioService _portfolioService = PortfolioService();
+  
   Map<String, dynamic> currentConnectedUser = {};
 
   late List<PortfolioCompany> stocks = [];
@@ -24,7 +25,14 @@ class _UserPortfolioListState extends State<UserPortfolioList> {
   @override
   void initState() {
     super.initState();
+    
+    _loadUserData();
     _fetchPortfolioStocks();
+  }
+
+  void _loadUserData() async {
+    currentConnectedUser = await _authService.getCurrentUser();
+    setState(() {});
   }
 
   Future<void> _fetchPortfolioStocks() async {
@@ -54,6 +62,12 @@ class _UserPortfolioListState extends State<UserPortfolioList> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Your Portfolio"),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 20),
+            child: Text(currentConnectedUser["virtual_money_balance"].toStringAsFixed(2), style: TextStyle(color: Colors.white),)
+          )
+        ],
         backgroundColor: Colors.lightBlue,
       ),
       body: RefreshIndicator(

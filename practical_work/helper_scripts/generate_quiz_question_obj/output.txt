@@ -1,0 +1,90 @@
+[
+  QuizQuestion(
+    id: 23,
+    question: "What is an 'exchange-traded fund' (ETF)?",
+    difficulty: "easy",
+    allAnswers: [
+      QuizAnswer.text(quizQuestionId: 23, text: "A fund traded on stock exchanges, much like stocks", isCorrect: true),
+      QuizAnswer.text(quizQuestionId: 23, text: "A government bond investment", isCorrect: false),
+      QuizAnswer.text(quizQuestionId: 23, text: "A type of savings account", isCorrect: false),
+      QuizAnswer.text(quizQuestionId: 23, text: "A type of currency exchange product", isCorrect: false),
+    ],
+  ),
+  QuizQuestion(
+    id: 24,
+    question: "Which company introduced the first initial public offering (IPO) in the U.S. stock market?",
+    difficulty: "medium",
+    allAnswers: [
+      QuizAnswer.text(quizQuestionId: 24, text: "Bank of New York", isCorrect: true),
+      QuizAnswer.text(quizQuestionId: 24, text: "Apple", isCorrect: false),
+      QuizAnswer.text(quizQuestionId: 24, text: "Microsoft", isCorrect: false),
+      QuizAnswer.text(quizQuestionId: 24, text: "Amazon", isCorrect: false),
+    ],
+  ),
+  QuizQuestion(
+    id: 25,
+    question: "What is a 'blue-chip stock'?",
+    difficulty: "easy",
+    allAnswers: [
+      QuizAnswer.text(quizQuestionId: 25, text: "A stock from a well-established and financially sound company", isCorrect: true),
+      QuizAnswer.text(quizQuestionId: 25, text: "A penny stock", isCorrect: false),
+      QuizAnswer.text(quizQuestionId: 25, text: "A government bond", isCorrect: false),
+      QuizAnswer.text(quizQuestionId: 25, text: "A cryptocurrency investment", isCorrect: false),
+    ],
+  ),
+  QuizQuestion(
+    id: 26,
+    question: "What is the 'Nikkei 225' index?",
+    difficulty: "medium",
+    allAnswers: [
+      QuizAnswer.text(quizQuestionId: 26, text: "A stock market index of Japan's 225 largest companies", isCorrect: true),
+      QuizAnswer.text(quizQuestionId: 26, text: "A bond market index", isCorrect: false),
+      QuizAnswer.text(quizQuestionId: 26, text: "A measure of Japan's inflation", isCorrect: false),
+      QuizAnswer.text(quizQuestionId: 26, text: "A commodity price index", isCorrect: false),
+    ],
+  ),
+  QuizQuestion(
+    id: 27,
+    question: "Which year did the United States officially abandon the gold standard?",
+    difficulty: "hard",
+    allAnswers: [
+      QuizAnswer.text(quizQuestionId: 27, text: "1971", isCorrect: true),
+      QuizAnswer.text(quizQuestionId: 27, text: "1929", isCorrect: false),
+      QuizAnswer.text(quizQuestionId: 27, text: "1965", isCorrect: false),
+      QuizAnswer.text(quizQuestionId: 27, text: "2000", isCorrect: false),
+    ],
+  ),
+  QuizQuestion(
+    id: 28,
+    question: "What is 'capital gains tax'?",
+    difficulty: "easy",
+    allAnswers: [
+      QuizAnswer.text(quizQuestionId: 28, text: "Tax on profits from the sale of assets or investments", isCorrect: true),
+      QuizAnswer.text(quizQuestionId: 28, text: "Tax on income earned through salary", isCorrect: false),
+      QuizAnswer.text(quizQuestionId: 28, text: "Tax on purchases of goods and services", isCorrect: false),
+      QuizAnswer.text(quizQuestionId: 28, text: "Tax on dividends from stocks", isCorrect: false),
+    ],
+  ),
+  QuizQuestion(
+    id: 29,
+    question: "What does the term 'bull market' refer to?",
+    difficulty: "medium",
+    allAnswers: [
+      QuizAnswer.text(quizQuestionId: 29, text: "A market in which prices are rising or are expected to rise", isCorrect: true),
+      QuizAnswer.text(quizQuestionId: 29, text: "A market with declining prices", isCorrect: false),
+      QuizAnswer.text(quizQuestionId: 29, text: "A stagnant market with no significant price movement", isCorrect: false),
+      QuizAnswer.text(quizQuestionId: 29, text: "A market characterized by high inflation", isCorrect: false),
+    ],
+  ),
+  QuizQuestion(
+    id: 30,
+    question: "What was the primary cause of the 2008 financial crisis?",
+    difficulty: "hard",
+    allAnswers: [
+      QuizAnswer.text(quizQuestionId: 30, text: "Subprime mortgage lending and financial derivatives", isCorrect: true),
+      QuizAnswer.text(quizQuestionId: 30, text: "The rise of cryptocurrency", isCorrect: false),
+      QuizAnswer.text(quizQuestionId: 30, text: "A collapse in global oil prices", isCorrect: false),
+      QuizAnswer.text(quizQuestionId: 30, text: "A government shutdown", isCorrect: false),
+    ],
+  )
+]

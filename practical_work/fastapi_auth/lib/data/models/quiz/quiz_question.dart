@@ -5,6 +5,7 @@ class QuizQuestion {
   String question;
   String? photoPath;
   List<QuizAnswer> allAnswers;
+  String category;
   String difficulty; // easy / medium / hard
 
   QuizQuestion({
@@ -12,6 +13,7 @@ class QuizQuestion {
     required this.question,
     this.photoPath,
     required this.allAnswers,
+    required this.category,
     required this.difficulty,
   });
 

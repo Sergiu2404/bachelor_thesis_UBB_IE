@@ -15,6 +15,8 @@ SECRET_KEY = "7317758526d8838bc182a5226a6172153146c2d2e4ddf7e9a4e71627783e48e3"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 180
 
+BLACKLIST = set()
+
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
@@ -75,6 +77,8 @@ async def get_current_user(token: str = Depends(oauth2_scheme)) -> User:
 
 
 
+
+
 # update the login endpoint to handle form data as well as JSON
 @router.post("/login", response_model=Token)
 async def login(user: UserLogin):
@@ -100,6 +104,45 @@ async def login(user: UserLogin):
         "username": user.username,
         "expires_in": ACCESS_TOKEN_EXPIRE_MINUTES * 60  # seconds
     }
+
+
+@router.post("/logout")
+async def logout(current_user: User = Depends(get_current_user), token: str = Depends(oauth2_scheme)):
+    """
+    Logout the current user and blacklist the token.
+    """
+    BLACKLIST.add(token)  # Add token to blacklist
+
+    return {"message": "Logged out successfully"}
+# TODO test if function below works with the BLACKLIST
+# async def get_current_user(token: str = Depends(oauth2_scheme)) -> User:
+#     if token in BLACKLIST:
+#         raise HTTPException(
+#             status_code=status.HTTP_401_UNAUTHORIZED,
+#             detail="Token has been blacklisted, please log in again",
+#             headers={"WWW-Authenticate": "Bearer"},
+#         )
+#     credentials_exception = HTTPException(
+#         status_code=status.HTTP_401_UNAUTHORIZED,
+#         detail="Could not validate credentials",
+#         headers={"WWW-Authenticate": "Bearer"},
+#     )
+#     try:
+#         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+#         username: str = payload.get("sub")
+#         if username is None:
+#             raise credentials_exception
+#     except JWTError:
+#         raise credentials_exception
+# 
+#     user = await get_user_by_username(username)
+#     if user is None:
+#         raise credentials_exception
+#     return user
+#
+
+
+
 
 
 # update register endpoint to return more information

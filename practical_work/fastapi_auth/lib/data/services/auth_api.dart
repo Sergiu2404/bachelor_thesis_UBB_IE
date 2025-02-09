@@ -120,10 +120,39 @@ class AuthService {
     }
   }
 
+  // Future<void> logout() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   await prefs.remove(tokenKey);
+  // }
+
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
+    final token = await getToken();
+
+    if (token != null) {
+      try {
+        final response = await http.post(
+          Uri.parse('$baseUrl/auth/logout'), // Make sure this endpoint exists in your FastAPI backend
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+        );
+
+        if (response.statusCode == 200) {
+          await prefs.remove(tokenKey);
+        } else {
+          throw Exception("Logout failed on server");
+        }
+      } catch (e) {
+        print("Error logging out: $e");
+      }
+    }
+
     await prefs.remove(tokenKey);
   }
+
+
 
   Future<void> _saveToken(String token) async {
     final prefs = await SharedPreferences.getInstance();

@@ -3,6 +3,7 @@ import 'package:fastapi_auth/presentation/pages/auth/login_page.dart';
 import 'package:fastapi_auth/presentation/pages/auth/registration_page.dart';
 import 'package:fastapi_auth/presentation/pages/demo_investing/demo_investing_main_page.dart';
 import 'package:fastapi_auth/presentation/pages/demo_investing/user_portfolio/user_portfolio_list.dart';
+import 'package:fastapi_auth/presentation/pages/learning_section/learning_main_page.dart';
 import 'package:fastapi_auth/presentation/pages/quiz/quiz_page.dart';
 import 'package:fastapi_auth/presentation/welcome_page.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomePage(),
         '/demo-investing': (context) => const DemoInvestingPage(),
         '/user-portfolio': (context) => const UserPortfolioList(),
-        '/quiz-page': (context) => const QuizPage()
+        '/quiz-page': (context) => const QuizPage(),
+        'learning-page': (context) => const LearningMainPage()
       },
     );
   }

@@ -4,6 +4,8 @@ from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from typing import Optional
 from jose import JWTError, jwt
+
+from data.models.balance_update_request import BalanceUpdateRequest
 from data.models.user import UserRegister, UserLogin, Token, User, UserInDB
 from data.db.database import users_collection
 from fastapi.security import OAuth2PasswordRequestForm
@@ -150,3 +152,24 @@ async def test_auth(current_user: User = Depends(get_current_user)):
         virtual_money_balance=current_user.virtual_money_balance,
         created_at=current_user.created_at
     )
+
+@router.post("/update-balance")
+async def update_balance(balance_update: BalanceUpdateRequest, current_user: User = Depends(get_current_user)):
+    if balance_update.new_balance < 0:
+        raise HTTPException(status_code=400, detail="Balance cannot be negative")
+
+    query_filter = {"username": current_user.username}
+    update_operation = {
+        "$set": {
+            "virtual_money_balance": balance_update.new_balance
+        }
+    }
+    result = await users_collection.update_one(
+        query_filter,
+        update_operation
+    )
+
+    if result.modified_count == 0:
+        raise HTTPException(status_code=400, detail="Failed to update balance of the user")
+
+    return {"message": "Balance updated succesfully", "new_balance": balance_update.new_balance}

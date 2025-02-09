@@ -1,3 +1,4 @@
+import 'package:fastapi_auth/presentation/pages/quiz/quiz_question_page.dart';
 import 'package:flutter/material.dart';
 import '../../../data/services/auth_api.dart';
 
@@ -27,7 +28,7 @@ class _QuizPageState extends State<QuizPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => QuizScreen(difficulty: difficulty, reward: reward),
+        builder: (context) => QuizQuestionPage(difficulty: difficulty, reward: reward),
       ),
     );
   }
@@ -37,13 +38,21 @@ class _QuizPageState extends State<QuizPage> {
     bool isAuthenticated = currentConnectedUser.isNotEmpty;
 
     return Scaffold(
-      appBar: AppBar(title: Text("Finance Quiz")),
+      appBar: AppBar(
+          title: Text("Finance Quiz"),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, '/home');
+            },
+    ),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              isAuthenticated ? "Welcome ${currentConnectedUser['name']}" : "Play for Free!",
+              isAuthenticated ? "Welcome ${currentConnectedUser['username']}" : "Play for Free!",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),

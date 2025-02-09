@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:fastapi_auth/presentation/pages/demo_investing/demo_investing_main_page.dart';
+import 'package:fastapi_auth/presentation/pages/quiz/quiz_page.dart';
 import 'package:flutter/material.dart';
 import 'package:fastapi_auth/data/services/auth_api.dart';
 
@@ -73,6 +74,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _pages = [
     const HomeContent(),  // Home content page
     const Center(child: Text("Learning Page")),
+    const QuizPage(),
     const DemoInvestingPage(),  // Demo investing page
     const Center(child: Text("Predictor")),  // Placeholder page
   ];
@@ -113,6 +115,7 @@ class _HomePageState extends State<HomePage> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.school), label: 'Learning'),
+          BottomNavigationBarItem(icon: Icon(Icons.quiz), label: 'Quiz'),
           BottomNavigationBarItem(icon: Icon(Icons.money), label: 'Demo Investing'),
           BottomNavigationBarItem(icon: Icon(Icons.analytics), label: 'Predictor'),
         ],

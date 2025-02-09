@@ -60,6 +60,29 @@ class AuthService {
       rethrow;
     }
   }
+
+  Future<void> updateUserBalance(double newBalance) async {
+    final token = await getToken();
+    if(token == null)
+      return;
+
+    try{
+      final response = await http.post(
+        Uri.parse("$baseUrl/auth/update-balance"),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token"
+        },
+        body: json.encode({"new_balance": newBalance})
+      );
+
+      if(response.statusCode != 200){
+        throw Exception("Failed to update balance");
+      }
+    } catch(exception) {
+      print("Error updating the balance: $exception");
+    }
+  }
   
   Future<Map<String, dynamic>> getCurrentUser() async {
     final token = await getToken();

@@ -65,7 +65,11 @@ class _UserPortfolioListState extends State<UserPortfolioList> {
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 20),
-            child: Text(currentConnectedUser["virtual_money_balance"].toStringAsFixed(2), style: TextStyle(color: Colors.white),)
+            child: Text(
+              (currentConnectedUser["virtual_money_balance"] as num?)?.toStringAsFixed(2) ?? "0.00",
+              style: TextStyle(color: Colors.white),
+            )
+
           )
         ],
         backgroundColor: Colors.lightBlue,

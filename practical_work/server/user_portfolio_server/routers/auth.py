@@ -56,24 +56,27 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
 #     if user is None:
 #         raise credentials_exception
 #     return UserInDB(**user)
-async def get_current_user(token: str = Depends(oauth2_scheme)) -> User:
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str = payload.get("sub")
-        if username is None:
-            raise credentials_exception
-    except JWTError:
-        raise credentials_exception
 
-    user = await get_user_by_username(username)
-    if user is None:
-        raise credentials_exception
-    return user
+
+
+# async def get_current_user(token: str = Depends(oauth2_scheme)) -> User:
+#     credentials_exception = HTTPException(
+#         status_code=status.HTTP_401_UNAUTHORIZED,
+#         detail="Could not validate credentials",
+#         headers={"WWW-Authenticate": "Bearer"},
+#     )
+#     try:
+#         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+#         username: str = payload.get("sub")
+#         if username is None:
+#             raise credentials_exception
+#     except JWTError:
+#         raise credentials_exception
+#
+#     user = await get_user_by_username(username)
+#     if user is None:
+#         raise credentials_exception
+#     return user
 
 
 
@@ -106,6 +109,32 @@ async def login(user: UserLogin):
     }
 
 
+# TODO test if function below works with the BLACKLIST
+async def get_current_user(token: str = Depends(oauth2_scheme)) -> User:
+    if token in BLACKLIST:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token has been blacklisted, please log in again",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: str = payload.get("sub")
+        if username is None:
+            raise credentials_exception
+    except JWTError:
+        raise credentials_exception
+
+    user = await get_user_by_username(username)
+    if user is None:
+        raise credentials_exception
+    return user
+
 @router.post("/logout")
 async def logout(current_user: User = Depends(get_current_user), token: str = Depends(oauth2_scheme)):
     """
@@ -114,32 +143,7 @@ async def logout(current_user: User = Depends(get_current_user), token: str = De
     BLACKLIST.add(token)  # Add token to blacklist
 
     return {"message": "Logged out successfully"}
-# TODO test if function below works with the BLACKLIST
-# async def get_current_user(token: str = Depends(oauth2_scheme)) -> User:
-#     if token in BLACKLIST:
-#         raise HTTPException(
-#             status_code=status.HTTP_401_UNAUTHORIZED,
-#             detail="Token has been blacklisted, please log in again",
-#             headers={"WWW-Authenticate": "Bearer"},
-#         )
-#     credentials_exception = HTTPException(
-#         status_code=status.HTTP_401_UNAUTHORIZED,
-#         detail="Could not validate credentials",
-#         headers={"WWW-Authenticate": "Bearer"},
-#     )
-#     try:
-#         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-#         username: str = payload.get("sub")
-#         if username is None:
-#             raise credentials_exception
-#     except JWTError:
-#         raise credentials_exception
-# 
-#     user = await get_user_by_username(username)
-#     if user is None:
-#         raise credentials_exception
-#     return user
-#
+
 
 
 

@@ -51,6 +51,18 @@ print(classification_report(y_test, (pred_lin_reg > 0.5).astype(int), zero_divis
 def output_credibility(pred_value):
     return 1 / (1 + np.exp(-pred_value))  # apply sigmoid function for probability scaling
 
+# def run_model(news):
+#     testing_news = {"text": [news]}
+#     new_def_test = pd.DataFrame(testing_news)
+#     new_def_test['text'] = new_def_test['text'].apply(preprocess_text)
+#
+#     new_x_test = new_def_test['text']
+#     new_xv_test = vectorization.transform(new_x_test)
+#
+#     pred_lin_reg = lin_reg.predict(new_xv_test)
+#     credibility_score = output_credibility(pred_lin_reg[0])
+#     return f"Linear Regression Credibility Prediction: {credibility_score:.2f}"
+
 def run_model(news):
     testing_news = {"text": [news]}
     new_def_test = pd.DataFrame(testing_news)
@@ -62,6 +74,17 @@ def run_model(news):
     pred_lin_reg = lin_reg.predict(new_xv_test)
     credibility_score = output_credibility(pred_lin_reg[0])
     return f"Linear Regression Credibility Prediction: {credibility_score:.2f}"
+
+    new_data = pd.DataFrame({"text": [news], "label": [1]})
+
+    # Preprocess the new data
+    new_data['text'] = new_data['text'].apply(preprocess_text)
+    new_x_new = new_data['text']
+    new_xv_new = vectorization.transform(new_x_new)
+
+    # Retrain the model incrementally (online learning)
+    lin_reg.fit(new_xv_new, new_data['label'])
+    print("Model updated with new data.")
 
 while True:
     news_input = input("Give some news as input: ")

@@ -59,3 +59,27 @@ print(df.tail())
 
 # df = pd.read_csv("/amazon-fine-reviews-dataset-splitted/Reviews1.csv")
 # df.head()
+
+example = df["Text"].iloc[50]
+print(example)
+
+# nltk.download('punkt_tab')
+tokens = nltk.word_tokenize(example)
+print(tokens[:10])
+
+#nltk.download('averaged_perceptron_tagger_eng')
+#
+# #get the tokens and their grammatical categories
+tagged = nltk.pos_tag(tokens)
+print(tagged[:10])
+
+#nltk.download('maxent_ne_chunker_tab')
+nltk.download('words')
+entities = nltk.chunk.ne_chunk(tagged)
+entities.pprint()
+
+from nltk.sentiment import SentimentIntensityAnalyzer
+nltk.download('vader_lexicon')
+
+sia = SentimentIntensityAnalyzer()
+print(sia.polarity_scores("I am very well"))

@@ -128,5 +128,5 @@ class StockPricePredictor:
 # Testing the model
 if __name__ == "__main__":
     predictor = StockPricePredictor()
-    predictions = predictor.run_model('AAPL', '2023-01-01', '2024-01-01', 10)
+    predictions = predictor.run_model('AAPL', '2024-01-01', '2024-05-05', 10)
     print("Test Predictions:", predictions)

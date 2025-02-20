@@ -1,3 +1,430 @@
+import os
+
+import pandas as pd
+import string
+import numpy as np
+import re
+
+import pickle
+import requests
+from bs4 import BeautifulSoup
+import warnings
+
+import nltk
+from nltk.corpus import stopwords, wordnet
+from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer
+from nltk import pos_tag
+
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report, accuracy_score
+
+warnings.filterwarnings('ignore')
+
+
+class FinancialNewsAnalyzer:
+    def __init__(self):
+        try:
+            nltk.data.find('tokenizers/punkt')
+            nltk.data.find('corpora/stopwords')
+            nltk.data.find('corpora/wordnet')
+        except LookupError:
+            print("download nltk resources...")
+            # nltk.download('punkt')
+            # nltk.download('stopwords')
+            # nltk.download('wordnet')
+
+        self.dataset_path = "fake_news_datasets/FinancialPhraseBank-v1.0/FinancialPhraseBank-v1.0"
+
+        self.stop_words = set(stopwords.words('english'))
+        self.negation_words = {"not", "never", "no", "without", "hardly", "barely"}
+
+        self.lemmatizer = WordNetLemmatizer()
+        self.vectorizer = None
+        self.model = None
+
+        self.financial_dictionary_classifier = self.load_financial_dictionary_classifier()
+
+    def get_wordnet_pos(self, word):
+        """Convert POS tag to format used by WordNetLemmatizer"""
+        tag = pos_tag([word])[0][1][0].upper()  # get first letter of POS tag
+        tag_dict = {"J": wordnet.ADJ, "N": wordnet.NOUN, "V": wordnet.VERB, "R": wordnet.ADV}
+        return tag_dict.get(tag, wordnet.NOUN)
+
+    def lexicon_score(self, text):
+        """Calculate sentiment score using financial lexicon, considering negations."""
+        tokens = word_tokenize(text.lower())
+        score = 0
+        negate = False
+
+        for token in tokens:
+            lemmatized_token = self.lemmatizer.lemmatize(token)
+
+            if lemmatized_token in self.negation_words:
+                negate = True  # Negation detected
+                continue
+
+            if lemmatized_token in self.financial_dictionary_classifier:
+                sentiment = self.financial_dictionary_classifier[lemmatized_token]
+                score += -sentiment if negate else sentiment  # Flip sentiment if negation applies
+                negate = False  # Reset negation after applying
+
+        return score / max(len(tokens), 1)
+
+    def load_financial_dictionary_classifier(self):
+        """Load or create a financial-specific sentiment lexicon"""
+        financial_positive = [
+            'beat', 'boost', 'exceed', 'surprisingly', 'grow', 'up', 'rise', 'gain', 'profitable', 'profit'
+            'earning', 'strong', 'strength', 'higher', 'high', 'rally', 'bullish', 'outperform',
+            'opportunity', 'success', 'improve', 'breakthrough', 'progress', 'upgrade', 'increase', 'win', 'reward'
+        ]
+
+        financial_negative = [
+            'miss', 'disappoint', 'decline', 'decrease', 'loss', 'negative',
+            'weak', 'drop', 'fall', 'bearish', 'underperform', 'risk',
+            'warning', 'fail', 'bankruptcy', 'investigation', 'lawsuit', 'litigation',
+            'concern', 'caution', 'fail', 'downgrade', 'decrease', 'lose', 'challenge', 'bearish'
+        ]
+
+        financial_neutral = [
+            'unchanged', 'neutral', 'maintain', 'expect',
+            'estimate', 'guidance', 'target', 'announce', 'report', 'quarter',
+            'fiscal', 'year', 'slightly', 'slight', 'pretty', 'slow', 'prudent', 'insignificant', 'unsignificant'
+        ]
+
+        lexicon = {}
+        for word in financial_positive:
+            lexicon[self.lemmatizer.lemmatize(word)] = 1
+        for word in financial_negative:
+            lexicon[self.lemmatizer.lemmatize(word)] = -2.5
+        for word in financial_neutral:
+            lexicon[self.lemmatizer.lemmatize(word)] = 0
+
+        return lexicon
+
+    def preprocess_text(self, text):
+        """Clean and preprocess text data"""
+        text = text.lower()
+        # remove URLs
+        text = re.sub(r'http\S+|www\S+', '', text)
+        # remove html
+        text = re.sub(r'<.*?>', '', text)
+        # remove punctuation
+        text = text.translate(str.maketrans('', '', string.punctuation))
+        # tokenize
+        tokens = word_tokenize(text)
+
+        # lemmatize tokens and remove stopwords
+        lemmatized_tokens = [self.lemmatizer.lemmatize(token, self.get_wordnet_pos(token)) for token in tokens if token not in self.stop_words and len(token) > 2]
+        return ' '.join(lemmatized_tokens)
+
+        # remove stopwords and lemmatize
+        # processed_tokens = [
+        #     self.lemmatizer.lemmatize(token) for token in tokens
+        #     if token not in self.stop_words and len(token) > 2
+        # ]
+        #
+        # return ' '.join(processed_tokens)
+
+    def load_financial_phrasebank(self):
+        """Load and preprocess the Financial PhraseBank dataset."""
+        data = []
+        files = [file for file in os.listdir(self.dataset_path) if file.startswith("Sentences")]
+
+        print("Loading Financial PhraseBank dataset...")
+
+        # for file_name in files:
+        #     file_path = os.path.join(self.dataset_path, file_name)
+        #     print(f"processing file {file_name}...")
+        #
+        #     with open(file_path, "r", encoding="ISO-8859-1") as file:
+        #         for line in file:
+        #             try:
+        #                 text, sentiment = line.rsplit("@", 1)
+        #                 sentiment = sentiment.strip()
+        #                 label = {"neutral": 0, "positive": 1, "negative": -1}.get(sentiment, 0)
+        #                 data.append({"text": text.strip(), "sentiment": label})
+        #             except ValueError:
+        #                 print(f"Skipping malformed line in {file_name}: {line}")
+        #
+        # dataset = pd.DataFrame(data)
+        # print(f"Total samples loaded: {len(dataset)}")
+        # return dataset
+
+
+        data = []
+        with open("fake_news_datasets/FinancialPhraseBank-v1.0/FinancialPhraseBank-v1.0/Sentences_50Agree.txt", "r", encoding="ISO-8859-1") as file:
+            for line in file:
+                text, sentiment = line.rsplit("@", 1)
+                sentiment = sentiment.strip()
+                label = {"neutral": 0, "positive": 1, "negative": -1}.get(sentiment, 0)
+                data.append({"text": text.strip(), "sentiment": label})
+
+        dataset = pd.DataFrame(data)
+        print(dataset['sentiment'].value_counts())
+        return dataset
+
+    # def get_financial_dataset(self):
+    #     """Download or create financial news sentiment dataset"""
+    #     # Check if we have a saved dataset
+    #     if os.path.exists('fake_news_datasets/financial_news_sentiment.csv'):
+    #         print("Loading existing dataset...")
+    #         return pd.read_csv('fake_news_datasets/financial_news_sentiment.csv')
+    #
+    #     print("Creating new financial news sentiment dataset...")
+    #
+    #     # Financial PhraseBank dataset
+    #     try:
+    #         url = "https://www.researchgate.net/profile/Pekka_Malo/publication/251231364_FinancialPhraseBank-v10/data/0c96051eee4fb1d56e000000/FinancialPhraseBank-v10.zip"
+    #         # For this example, we'll assume we have it downloaded
+    #         # In practice, you would download and extract the zip file
+    #
+    #         # Placeholder data similar to FinancialPhraseBank format
+    #         data = [
+    #             {'text': 'The company reported strong earnings this quarter, beating analyst expectations.',
+    #              'sentiment': 1},
+    #             {'text': 'The stock plummeted after the company missed revenue targets.', 'sentiment': -1},
+    #             {'text': 'The company maintained its previous guidance for the fiscal year.', 'sentiment': 0},
+    #             {'text': 'Profits soared by 25% year-over-year, driving the stock to new highs.', 'sentiment': 1},
+    #             {'text': 'The CEO announced layoffs affecting 15% of the workforce.', 'sentiment': -1}
+    #         ]
+    #         dataset1 = pd.DataFrame(data)
+    #     except:
+    #         # Fallback sample data
+    #         data = [
+    #             {'text': 'The company reported strong earnings this quarter, beating analyst expectations.',
+    #              'sentiment': 1},
+    #             {'text': 'The stock plummeted after the company missed revenue targets.', 'sentiment': -1},
+    #             {'text': 'The company maintained its previous guidance for the fiscal year.', 'sentiment': 0}
+    #         ]
+    #         dataset1 = pd.DataFrame(data)
+    #
+    #     # create synthetic data using our financial lexicon
+    #     synthetic_data = []
+    #     # Positive examples
+    #     for _ in range(300):
+    #         positive_words = np.random.choice(
+    #             [word for word, score in self.financial_dictionary_classifier.items() if score > 0],
+    #             size=np.random.randint(3, 8)
+    #         )
+    #         text = f"The company {np.random.choice(['reported', 'announced', 'showed'])} " + \
+    #                f"{' and '.join(positive_words)} " + \
+    #                f"for {np.random.choice(['Q1', 'Q2', 'Q3', 'Q4'])} {np.random.randint(2020, 2024)}."
+    #         synthetic_data.append({'text': text, 'sentiment': 1})
+    #
+    #     # negative examples
+    #     for _ in range(300):
+    #         negative_words = np.random.choice(
+    #             [word for word, score in self.financial_dictionary_classifier.items() if score < 0],
+    #             size=np.random.randint(3, 8)
+    #         )
+    #         text = f"The company {np.random.choice(['reported', 'announced', 'showed'])} " + \
+    #                f"{' and '.join(negative_words)} " + \
+    #                f"for {np.random.choice(['Q1', 'Q2', 'Q3', 'Q4'])} {np.random.randint(2020, 2024)}."
+    #         synthetic_data.append({'text': text, 'sentiment': -1})
+    #
+    #     # neutral examples
+    #     for _ in range(300):
+    #         neutral_words = np.random.choice(
+    #             [word for word, score in self.financial_dictionary_classifier.items() if score == 0],
+    #             size=np.random.randint(3, 8)
+    #         )
+    #         text = f"The company {np.random.choice(['reported', 'announced', 'showed'])} " + \
+    #                f"{' and '.join(neutral_words)} " + \
+    #                f"for {np.random.choice(['Q1', 'Q2', 'Q3', 'Q4'])} {np.random.randint(2020, 2024)}."
+    #         synthetic_data.append({'text': text, 'sentiment': 0})
+    #
+    #     dataset2 = pd.DataFrame(synthetic_data)
+    #
+    #     # combine datasets
+    #     combined_dataset = pd.concat([dataset1, dataset2], ignore_index=True)
+    #
+    #     # add ticker column (random for demonstration)
+    #     tickers = ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'META', 'TSLA', 'NVDA', 'JPM']
+    #     combined_dataset['ticker'] = np.random.choice(tickers, size=len(combined_dataset))
+    #
+    #     # preprocess texts
+    #     combined_dataset['processed_text'] = combined_dataset['text'].apply(self.preprocess_text)
+    #
+    #     # save dataset
+    #     combined_dataset.to_csv('financial_news_sentiment.csv', index=False)
+    #
+    #     return combined_dataset
+
+    def train_model(self):
+        """Train the sentiment analysis model."""
+        dataset = self.load_financial_phrasebank()
+        dataset["processed_text"] = dataset["text"].apply(self.preprocess_text)
+
+        # Split data
+        X_train, X_test, y_train, y_test = train_test_split(
+            dataset["processed_text"], dataset["sentiment"], test_size=0.2, random_state=42
+        )
+
+        # Vectorize text
+        self.vectorizer = TfidfVectorizer(max_features=5000)
+        X_train_vec = self.vectorizer.fit_transform(X_train)
+        X_test_vec = self.vectorizer.transform(X_test)
+
+        # train model
+        self.model = LogisticRegression(max_iter=1000, class_weight="balanced")
+        self.model.fit(X_train_vec, y_train)
+
+        # evaluate performance
+        y_pred = self.model.predict(X_test_vec)
+        accuracy = accuracy_score(y_test, y_pred)
+        print(f"Model accuracy: {accuracy:.4f}")
+        print(classification_report(y_test, y_pred))
+
+        # save model
+        with open("financial_sentiment_model.pkl", "wb") as f:
+            pickle.dump((self.vectorizer, self.model), f)
+
+        return accuracy
+
+    def load_model(self):
+        """Load a pre-trained model"""
+        try:
+            with open('financial_sentiment_model.pkl', 'rb') as f:
+                self.vectorizer, self.model = pickle.load(f)
+            return True
+        except FileNotFoundError:
+            print("No pre-trained model found. Training a new model...")
+            self.train_model()
+            return True
+        except Exception as e:
+            print(f"Error loading model: {e}")
+            return False
+
+    def fetch_news_for_ticker(self, ticker):
+        """Fetch recent news articles for a ticker symbol
+        This is a placeholder. In production, you'd use a proper API.
+        """
+        # Placeholder - in production use a real news API
+        print(f"Fetching news for {ticker}...")
+
+        # Sample news articles
+        sample_news = [
+            {
+                'title': f"{ticker} Reports Quarterly Earnings Above Expectations",
+                'content': f"{ticker} reported quarterly earnings that exceeded analyst expectations, with revenue growing 15% year-over-year. The company also raised its full-year guidance."
+            },
+            {
+                'title': f"Analyst Downgrades {ticker} Citing Competitive Pressures",
+                'content': f"An analyst at a major investment bank downgraded {ticker} from Buy to Hold, citing increasing competitive pressures and margin concerns in the coming quarters."
+            },
+            {
+                'title': f"{ticker} Announces New Product Launch",
+                'content': f"{ticker} unveiled its newest product line at an industry conference. Executives expect the new offerings to be revenue-neutral in the short term."
+            },
+            {
+                'title': f"{ticker} Announces New Record Sales",
+                'content': f"{ticker} announced yesterday high record sales for the last trimester. Investors expect new records to be hit by the company in the future."
+            },
+            {
+                'title': f"{ticker} Some Negative Records In Profit",
+                'content': f"{ticker} just announced that for the last semester they got the lowest profit in the last 10 years, which is a negative record for the company."
+            }
+        ]
+
+        return sample_news
+
+    def analyze_sentiment(self, text, ticker=None):
+        """Analyze sentiment of a financial news article"""
+        # Ensure model is loaded
+        if self.model is None or self.vectorizer is None:
+            self.load_model()
+
+        processed_text = self.preprocess_text(text)
+
+        # get prediction
+        X_vec = self.vectorizer.transform([processed_text])
+        model_score = self.model.predict_proba(X_vec)[0]
+
+        # Convert 3-class probabilities to a single score between -1 and 1
+        # Assuming classes are ordered as [-1, 0, 1] or [0, 1, 2]
+        if len(model_score) == 3:  # 3-class model
+            # Convert [neg_prob, neutral_prob, pos_prob] to a single score
+            score = model_score[2] - model_score[0]  # pos_prob - neg_prob
+        else:  # 2-class model
+            score = model_score[1] * 2 - 1  # Convert 0-1 to -1 to 1
+
+        lex_score = self.lexicon_score(processed_text)
+        combined_score = 0.7 * score + 0.3 * lex_score
+
+        if combined_score > 0.25:
+            sentiment = "Positive"
+        elif combined_score < -0.25:
+            sentiment = "Negative"
+        else:
+            sentiment = "Neutral"
+
+        result = {
+            'ticker': ticker,
+            'raw_text': text,
+            'processed_text': processed_text,
+            'sentiment_score': round(combined_score, 3),
+            'sentiment_class': sentiment,
+            'model_confidence': max(model_score) if len(model_score) == 3 else max(model_score[0], model_score[1])
+        }
+
+        return result
+
+def analyze_ticker_news(ticker, custom_article=None):
+    analyzer = FinancialNewsAnalyzer()
+
+    # check if model trained/loaded
+    if not os.path.exists('financial_sentiment_model.pkl'):
+        print("Training new sentiment model...")
+        analyzer.train_model()
+    else:
+        analyzer.load_model()
+
+    if custom_article:
+        result = analyzer.analyze_sentiment(custom_article, ticker)
+        print(f"\nAnalysis for custom article about {ticker}:")
+        print(f"Sentiment: {result['sentiment_class']} (Score: {result['sentiment_score']})")
+        print(f"Confidence: {result['model_confidence']:.2f}")
+        return result
+
+    articles = analyzer.fetch_news_for_ticker(ticker)
+    results = []
+
+    print(f"\nSentiment Analysis for {ticker} news:")
+    for i, article in enumerate(articles):
+        result = analyzer.analyze_sentiment(
+            f"{article['title']}. {article['content']}",
+            ticker
+        )
+        results.append(result)
+
+        print(f"\nArticle {i + 1}:")
+        print(f"Headline: {article['title']}")
+        print(f"Sentiment: {result['sentiment_class']} (Score: {result['sentiment_score']})")
+
+    # Calculate average sentiment
+    avg_score = sum(r['sentiment_score'] for r in results) / len(results)
+    print(f"\nOverall {ticker} sentiment: {avg_score:.3f}")
+
+    return results
+
+if __name__ == "__main__":
+    analyze_ticker_news("AAPL")
+
+    custom_news = """
+    NVDA shares jumped 8% after the company reported blockbuster earnings, 
+    beating Wall Street expectations by a wide margin. Revenue from AI chips 
+    tripled year-over-year, and the CEO announced plans to increase production 
+    capacity to meet surging demand.
+    """
+    analyze_ticker_news("NVDA", custom_news)
+
+
+
+
+
 # import feedparser
 # from transformers import pipeline
 #
@@ -75,7 +502,7 @@ class TextAnalysisPipeline:
                 nltk.data.find(f'tokenizers/{resource}')
             except LookupError:
                 print(f"Downloading required NLTK resource: {resource}")
-                nltk.download(resource)
+                #nltk.download(resource)
 
     def natural_sort(self, files):
         return sorted(files, key=lambda x: [int(text) if text.isdigit() else text.lower()
@@ -149,22 +576,22 @@ class TextAnalysisPipeline:
         return [self.predict(text) for text in texts]
 
 
-pipeline = TextAnalysisPipeline("./fake_news_datasets/amazon-fine-reviews-dataset-splitted/Reviews*")
-pipeline.train_model()
-
-# Example predictions
-example_texts = [
-    "This product is absolutely amazing! I love everything about it.",
-    "The quality was okay, but not worth the price.",
-    "Terrible product, complete waste of money."
-]
-
-print("\nAnalyzing example texts:")
-for text in example_texts:
-    result = pipeline.predict(text)
-    print(f"\nText: {text}")
-    print(f"Sentiment scores: {result['sentiment']}")
-    print(f"Comparison to average: {result['comparison_to_average']}")
+# pipeline = TextAnalysisPipeline("./fake_news_datasets/amazon-fine-reviews-dataset-splitted/Reviews*")
+# pipeline.train_model()
+#
+# # Example predictions
+# example_texts = [
+#     "This product is absolutely amazing! I love everything about it.",
+#     "The quality was okay, but not worth the price.",
+#     "Terrible product, complete waste of money."
+# ]
+#
+# print("\nAnalyzing example texts:")
+# for text in example_texts:
+#     result = pipeline.predict(text)
+#     print(f"\nText: {text}")
+#     print(f"Sentiment scores: {result['sentiment']}")
+#     print(f"Comparison to average: {result['comparison_to_average']}")
 
 
 

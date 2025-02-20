@@ -1,0 +1,906 @@
+text,sentiment,ticker,processed_text
+"The company reported strong earnings this quarter, beating analyst expectations.",1,TSLA,company reported strong earnings quarter beating analyst expectation
+The stock plummeted after the company missed revenue targets.,-1,NVDA,stock plummeted company missed revenue target
+The company maintained its previous guidance for the fiscal year.,0,AMZN,company maintained previous guidance fiscal year
+"Profits soared by 25% year-over-year, driving the stock to new highs.",1,GOOGL,profit soared yearoveryear driving stock new high
+The CEO announced layoffs affecting 15% of the workforce.,-1,META,ceo announced layoff affecting workforce
+The company announced boost and improvement and boost and up and rise and rally and earnings for Q3 2023.,1,JPM,company announced boost improvement boost rise rally earnings 2023
+The company showed profitable and improving and bullish for Q1 2021.,1,META,company showed profitable improving bullish 2021
+The company announced grew and breakthrough and boost and strength and beat for Q2 2020.,1,META,company announced grew breakthrough boost strength beat 2020
+The company announced beats and rally and boost for Q3 2022.,1,TSLA,company announced beat rally boost 2022
+The company reported opportunities and progress and opportunities and grew and breakthrough and risen for Q4 2021.,1,GOOGL,company reported opportunity progress opportunity grew breakthrough risen 2021
+The company showed strong and rally and opportunities and strong and improvement and strong for Q3 2023.,1,META,company showed strong rally opportunity strong improvement strong 2023
+The company reported positive and rising and up for Q2 2020.,1,GOOGL,company reported positive rising 2020
+The company reported exceeded and rally and profitable for Q4 2020.,1,NVDA,company reported exceeded rally profitable 2020
+The company showed opportunity and growth and grew for Q1 2020.,1,GOOGL,company showed opportunity growth grew 2020
+The company reported boost and raised and raised and strength and rally and boost for Q3 2023.,1,AAPL,company reported boost raised raised strength rally boost 2023
+The company announced risen and rise and improvement for Q2 2023.,1,JPM,company announced risen rise improvement 2023
+The company showed rally and rally and opportunity and profitable and boost and rally and beat for Q1 2022.,1,NVDA,company showed rally rally opportunity profitable boost rally beat 2022
+The company showed beats and outperform and gain and progress and rise for Q3 2020.,1,AAPL,company showed beat outperform gain progress rise 2020
+The company showed profitable and rising and rising and beat and rising and up and grew for Q1 2021.,1,MSFT,company showed profitable rising rising beat rising grew 2021
+The company announced improvement and improvement and boost for Q2 2021.,1,JPM,company announced improvement improvement boost 2021
+The company showed improve and progress and raised and positive and gains and opportunities for Q2 2022.,1,TSLA,company showed improve progress raised positive gain opportunity 2022
+The company showed profitable and beats and beats for Q2 2022.,1,TSLA,company showed profitable beat beat 2022
+The company reported profitable and up and raised for Q4 2020.,1,JPM,company reported profitable raised 2020
+The company showed earnings and outperform and progress and strength and bullish and breakthrough and opportunities for Q3 2023.,1,JPM,company showed earnings outperform progress strength bullish breakthrough opportunity 2023
+The company showed boost and breakthrough and improve for Q1 2021.,1,AMZN,company showed boost breakthrough improve 2021
+The company reported bullish and strong and up and outperform and rising for Q4 2022.,1,AAPL,company reported bullish strong outperform rising 2022
+The company reported improving and successful and strength and strength and exceeded for Q3 2021.,1,MSFT,company reported improving successful strength strength exceeded 2021
+The company showed gains and gains and successful and higher and gains for Q2 2022.,1,MSFT,company showed gain gain successful higher gain 2022
+The company reported success and outperform and earnings and growth for Q2 2022.,1,NVDA,company reported success outperform earnings growth 2022
+The company reported improvement and higher and outperform and bullish and rising and improvement for Q2 2021.,1,MSFT,company reported improvement higher outperform bullish rising improvement 2021
+The company reported opportunity and improving and growth and gains and up and improve for Q2 2023.,1,META,company reported opportunity improving growth gain improve 2023
+The company showed gain and improvement and breakthrough and gains and risen for Q1 2021.,1,JPM,company showed gain improvement breakthrough gain risen 2021
+The company announced boost and earnings and improving and successful for Q4 2021.,1,META,company announced boost earnings improving successful 2021
+The company reported breakthrough and improving and breakthrough for Q4 2020.,1,META,company reported breakthrough improving breakthrough 2020
+The company showed risen and exceeded and raised and growth and higher and positive and improve for Q2 2023.,1,JPM,company showed risen exceeded raised growth higher positive improve 2023
+The company announced earnings and higher and gains for Q1 2020.,1,MSFT,company announced earnings higher gain 2020
+The company reported risen and breakthrough and risen and growth for Q3 2023.,1,JPM,company reported risen breakthrough risen growth 2023
+The company reported risen and earnings and risen and opportunity and bullish for Q2 2023.,1,AAPL,company reported risen earnings risen opportunity bullish 2023
+The company showed higher and risen and higher for Q1 2023.,1,AAPL,company showed higher risen higher 2023
+The company announced successful and rising and opportunity for Q3 2020.,1,AAPL,company announced successful rising opportunity 2020
+The company announced exceeded and successful and rising and earnings and outperform and improvement for Q4 2022.,1,AMZN,company announced exceeded successful rising earnings outperform improvement 2022
+The company reported bullish and rising and boost for Q3 2022.,1,NVDA,company reported bullish rising boost 2022
+The company showed strength and strong and opportunities and earnings and gain and improve for Q4 2023.,1,MSFT,company showed strength strong opportunity earnings gain improve 2023
+The company announced successful and improve and success and exceeded and earnings for Q3 2023.,1,MSFT,company announced successful improve success exceeded earnings 2023
+The company showed bullish and earnings and exceeded for Q2 2020.,1,META,company showed bullish earnings exceeded 2020
+The company reported opportunities and improving and strong for Q3 2020.,1,JPM,company reported opportunity improving strong 2020
+The company showed gain and improving and up and up and profitable and strength for Q1 2020.,1,MSFT,company showed gain improving profitable strength 2020
+The company announced earnings and successful and improvement and progress and gain for Q2 2021.,1,JPM,company announced earnings successful improvement progress gain 2021
+The company showed rising and breakthrough and risen and higher and improve and beats for Q2 2020.,1,MSFT,company showed rising breakthrough risen higher improve beat 2020
+The company announced opportunity and improving and growth and improve and success and beat and strength for Q2 2020.,1,MSFT,company announced opportunity improving growth improve success beat strength 2020
+The company reported gains and bullish and boost for Q3 2022.,1,AMZN,company reported gain bullish boost 2022
+The company showed beats and outperform and beat and raised for Q1 2023.,1,NVDA,company showed beat outperform beat raised 2023
+The company announced successful and strength and raised and grew and opportunity and gain and higher for Q2 2022.,1,TSLA,company announced successful strength raised grew opportunity gain higher 2022
+The company showed rally and higher and rally for Q2 2023.,1,AAPL,company showed rally higher rally 2023
+The company reported gains and growth and rise and growth and opportunity for Q3 2022.,1,NVDA,company reported gain growth rise growth opportunity 2022
+The company reported raised and breakthrough and improve and exceeded for Q2 2022.,1,GOOGL,company reported raised breakthrough improve exceeded 2022
+The company announced improvement and exceeded and positive and raised and improving for Q3 2023.,1,MSFT,company announced improvement exceeded positive raised improving 2023
+The company showed profitable and up and positive and opportunities for Q2 2020.,1,AMZN,company showed profitable positive opportunity 2020
+The company reported risen and profitable and risen and risen for Q4 2022.,1,TSLA,company reported risen profitable risen risen 2022
+The company reported earnings and improve and rally for Q4 2022.,1,META,company reported earnings improve rally 2022
+The company announced success and up and breakthrough and opportunity and rising for Q3 2023.,1,TSLA,company announced success breakthrough opportunity rising 2023
+The company showed outperform and beat and positive for Q4 2020.,1,TSLA,company showed outperform beat positive 2020
+The company reported rise and opportunity and success for Q2 2022.,1,MSFT,company reported rise opportunity success 2022
+The company reported outperform and progress and improving and improve and higher and grew for Q1 2020.,1,AAPL,company reported outperform progress improving improve higher grew 2020
+The company reported growth and improvement and growth and gain and beat for Q2 2020.,1,NVDA,company reported growth improvement growth gain beat 2020
+The company announced strong and boost and higher and earnings and rally and raised and improvement for Q2 2020.,1,TSLA,company announced strong boost higher earnings rally raised improvement 2020
+The company showed improvement and beat and success and exceeded and rally for Q4 2021.,1,NVDA,company showed improvement beat success exceeded rally 2021
+The company announced opportunities and successful and improving and outperform and beats for Q3 2022.,1,AMZN,company announced opportunity successful improving outperform beat 2022
+The company announced growth and gain and exceeded and success for Q3 2020.,1,GOOGL,company announced growth gain exceeded success 2020
+The company announced strong and risen and progress and bullish and improvement and exceeded and up for Q1 2020.,1,META,company announced strong risen progress bullish improvement exceeded 2020
+The company reported profitable and rising and strength for Q1 2023.,1,AMZN,company reported profitable rising strength 2023
+The company reported success and beats and boost for Q1 2022.,1,GOOGL,company reported success beat boost 2022
+The company announced rise and opportunities and progress and successful for Q4 2023.,1,META,company announced rise opportunity progress successful 2023
+The company showed raised and risen and beat and opportunities for Q2 2020.,1,MSFT,company showed raised risen beat opportunity 2020
+The company announced successful and raised and improving and improve and gains and profitable and risen for Q3 2022.,1,GOOGL,company announced successful raised improving improve gain profitable risen 2022
+The company reported strength and bullish and grew for Q3 2020.,1,GOOGL,company reported strength bullish grew 2020
+The company announced rise and improving and improving and growth and gains and improve and boost for Q4 2023.,1,AMZN,company announced rise improving improving growth gain improve boost 2023
+The company announced rising and bullish and grew and breakthrough for Q1 2023.,1,AMZN,company announced rising bullish grew breakthrough 2023
+The company showed beat and grew and grew and gains and boost and growth for Q3 2023.,1,MSFT,company showed beat grew grew gain boost growth 2023
+The company showed positive and rally and up and profitable and rise for Q1 2020.,1,AAPL,company showed positive rally profitable rise 2020
+The company announced rally and raised and up for Q1 2023.,1,JPM,company announced rally raised 2023
+The company announced higher and earnings and boost for Q1 2021.,1,TSLA,company announced higher earnings boost 2021
+The company announced improvement and positive and risen and strong and breakthrough and gain and rising for Q4 2020.,1,JPM,company announced improvement positive risen strong breakthrough gain rising 2020
+The company showed grew and gain and improving and beats and strong and rally and rally for Q3 2022.,1,META,company showed grew gain improving beat strong rally rally 2022
+The company announced risen and higher and successful and opportunities and improving and earnings for Q3 2020.,1,NVDA,company announced risen higher successful opportunity improving earnings 2020
+The company reported grew and positive and profitable and gains and beat and growth for Q4 2023.,1,AMZN,company reported grew positive profitable gain beat growth 2023
+The company reported rally and positive and strong and strength and profitable and exceeded and grew for Q3 2022.,1,NVDA,company reported rally positive strong strength profitable exceeded grew 2022
+The company reported rise and up and boost and strength and improving and beat and rising for Q4 2020.,1,NVDA,company reported rise boost strength improving beat rising 2020
+The company showed gains and higher and positive and success and opportunities for Q1 2021.,1,JPM,company showed gain higher positive success opportunity 2021
+The company announced improvement and earnings and gain and improve for Q3 2021.,1,JPM,company announced improvement earnings gain improve 2021
+The company showed rising and positive and grew and outperform for Q1 2022.,1,GOOGL,company showed rising positive grew outperform 2022
+The company reported profitable and bullish and rally and opportunities and grew and earnings for Q2 2021.,1,AAPL,company reported profitable bullish rally opportunity grew earnings 2021
+The company reported rising and exceeded and improving and outperform and progress and opportunity for Q4 2022.,1,GOOGL,company reported rising exceeded improving outperform progress opportunity 2022
+The company announced successful and strength and positive for Q3 2020.,1,JPM,company announced successful strength positive 2020
+The company reported improvement and risen and improvement and strength for Q2 2020.,1,AAPL,company reported improvement risen improvement strength 2020
+The company announced exceeded and beats and strength and strong and boost and improvement and gain for Q1 2022.,1,AMZN,company announced exceeded beat strength strong boost improvement gain 2022
+The company announced grew and exceeded and improving and beat and rally for Q1 2021.,1,META,company announced grew exceeded improving beat rally 2021
+The company reported beat and exceeded and risen and beat and outperform and success for Q4 2023.,1,META,company reported beat exceeded risen beat outperform success 2023
+The company announced opportunities and profitable and opportunities and beats for Q2 2021.,1,AMZN,company announced opportunity profitable opportunity beat 2021
+The company showed raised and beats and beat and outperform and boost and breakthrough and beat for Q2 2022.,1,JPM,company showed raised beat beat outperform boost breakthrough beat 2022
+The company showed successful and beats and rising and opportunity and growth and success and beat for Q3 2021.,1,TSLA,company showed successful beat rising opportunity growth success beat 2021
+The company reported successful and breakthrough and rise and beat and success and improvement for Q2 2021.,1,MSFT,company reported successful breakthrough rise beat success improvement 2021
+The company reported improve and higher and improvement and strong and grew for Q1 2023.,1,AAPL,company reported improve higher improvement strong grew 2023
+The company showed risen and strong and success and successful and outperform for Q3 2021.,1,MSFT,company showed risen strong success successful outperform 2021
+The company showed rising and grew and higher and breakthrough and improvement and beats for Q2 2021.,1,AAPL,company showed rising grew higher breakthrough improvement beat 2021
+The company reported success and growth and improving for Q4 2023.,1,GOOGL,company reported success growth improving 2023
+The company reported improve and grew and opportunities and opportunity for Q3 2023.,1,AAPL,company reported improve grew opportunity opportunity 2023
+The company showed strength and beats and grew and exceeded and rising for Q1 2021.,1,AAPL,company showed strength beat grew exceeded rising 2021
+The company showed beat and rising and breakthrough for Q1 2022.,1,META,company showed beat rising breakthrough 2022
+The company showed positive and rise and improvement for Q4 2021.,1,AAPL,company showed positive rise improvement 2021
+The company showed opportunity and improvement and earnings for Q1 2021.,1,MSFT,company showed opportunity improvement earnings 2021
+The company announced exceeded and improvement and up and exceeded and strong for Q2 2023.,1,AMZN,company announced exceeded improvement exceeded strong 2023
+The company showed strong and earnings and opportunities and bullish and exceeded and opportunities and beat for Q3 2022.,1,MSFT,company showed strong earnings opportunity bullish exceeded opportunity beat 2022
+The company showed profitable and success and beat for Q3 2022.,1,GOOGL,company showed profitable success beat 2022
+The company announced beat and strength and growth and opportunities and rally and raised and higher for Q3 2021.,1,META,company announced beat strength growth opportunity rally raised higher 2021
+The company showed outperform and beat and strong and risen and improving and positive and bullish for Q4 2021.,1,GOOGL,company showed outperform beat strong risen improving positive bullish 2021
+The company announced boost and earnings and rise and gains and improve and successful for Q2 2021.,1,GOOGL,company announced boost earnings rise gain improve successful 2021
+The company reported earnings and progress and improvement and bullish and higher and positive and improvement for Q2 2021.,1,AAPL,company reported earnings progress improvement bullish higher positive improvement 2021
+The company announced success and boost and strength and profitable and beat and beats and rally for Q1 2022.,1,GOOGL,company announced success boost strength profitable beat beat rally 2022
+The company reported positive and beats and higher and gains and outperform for Q4 2022.,1,MSFT,company reported positive beat higher gain outperform 2022
+The company announced improve and positive and profitable and rally and gains and rising for Q1 2021.,1,GOOGL,company announced improve positive profitable rally gain rising 2021
+The company announced opportunities and rally and progress and outperform and rising and outperform and gain for Q3 2023.,1,JPM,company announced opportunity rally progress outperform rising outperform gain 2023
+The company reported growth and improvement and grew and opportunity and positive and profitable and breakthrough for Q4 2021.,1,META,company reported growth improvement grew opportunity positive profitable breakthrough 2021
+The company announced rise and strength and grew and boost and beats and earnings for Q3 2020.,1,TSLA,company announced rise strength grew boost beat earnings 2020
+The company announced bullish and rising and growth and risen and breakthrough for Q4 2022.,1,META,company announced bullish rising growth risen breakthrough 2022
+The company showed outperform and improvement and improvement and earnings and outperform and breakthrough and progress for Q3 2022.,1,TSLA,company showed outperform improvement improvement earnings outperform breakthrough progress 2022
+The company reported opportunities and rally and rally for Q1 2022.,1,META,company reported opportunity rally rally 2022
+The company reported rally and outperform and higher for Q3 2020.,1,MSFT,company reported rally outperform higher 2020
+The company announced breakthrough and progress and rising and success and positive and beats for Q3 2023.,1,AMZN,company announced breakthrough progress rising success positive beat 2023
+The company showed beat and opportunities and raised and profitable and opportunities and opportunity and boost for Q1 2021.,1,MSFT,company showed beat opportunity raised profitable opportunity opportunity boost 2021
+The company showed improving and risen and grew and outperform and beats for Q3 2022.,1,NVDA,company showed improving risen grew outperform beat 2022
+The company showed improve and rise and risen for Q4 2023.,1,JPM,company showed improve rise risen 2023
+The company announced opportunities and rising and success and bullish and opportunity and risen and gains for Q3 2021.,1,MSFT,company announced opportunity rising success bullish opportunity risen gain 2021
+The company reported strength and success and gains and risen and breakthrough and successful and improving for Q1 2023.,1,TSLA,company reported strength success gain risen breakthrough successful improving 2023
+The company reported outperform and exceeded and breakthrough and improving and exceeded and opportunity for Q4 2020.,1,MSFT,company reported outperform exceeded breakthrough improving exceeded opportunity 2020
+The company announced opportunity and improve and strong and opportunities and improving for Q3 2022.,1,MSFT,company announced opportunity improve strong opportunity improving 2022
+The company announced success and strong and exceeded and beat and strength for Q3 2023.,1,GOOGL,company announced success strong exceeded beat strength 2023
+The company announced outperform and growth and beat and improving and progress for Q2 2021.,1,NVDA,company announced outperform growth beat improving progress 2021
+The company announced beats and higher and growth and grew and growth for Q4 2021.,1,META,company announced beat higher growth grew growth 2021
+The company reported earnings and beats and rise for Q4 2023.,1,JPM,company reported earnings beat rise 2023
+The company showed progress and progress and earnings and successful and rising and breakthrough for Q4 2021.,1,AMZN,company showed progress progress earnings successful rising breakthrough 2021
+The company announced growth and outperform and opportunity for Q2 2021.,1,JPM,company announced growth outperform opportunity 2021
+The company showed bullish and exceeded and profitable and earnings and gain and progress and raised for Q2 2021.,1,GOOGL,company showed bullish exceeded profitable earnings gain progress raised 2021
+The company announced raised and raised and raised and opportunity for Q1 2022.,1,GOOGL,company announced raised raised raised opportunity 2022
+The company showed raised and rally and bullish and beat and opportunity for Q1 2021.,1,NVDA,company showed raised rally bullish beat opportunity 2021
+The company reported rally and growth and grew and bullish and beat and growth for Q4 2021.,1,NVDA,company reported rally growth grew bullish beat growth 2021
+The company announced profitable and improving and rally for Q2 2021.,1,GOOGL,company announced profitable improving rally 2021
+The company showed successful and strong and higher and strong for Q2 2023.,1,META,company showed successful strong higher strong 2023
+The company reported successful and raised and up and positive and raised for Q3 2022.,1,AAPL,company reported successful raised positive raised 2022
+The company reported higher and improve and raised and beats and success for Q2 2022.,1,MSFT,company reported higher improve raised beat success 2022
+The company reported opportunities and up and rising and improve and higher and rally and rise for Q2 2021.,1,TSLA,company reported opportunity rising improve higher rally rise 2021
+The company announced progress and rising and up and up and opportunities and strong and rising for Q3 2020.,1,AMZN,company announced progress rising opportunity strong rising 2020
+The company showed bullish and outperform and progress for Q4 2022.,1,JPM,company showed bullish outperform progress 2022
+The company reported gain and improve and gains and successful and raised for Q2 2022.,1,META,company reported gain improve gain successful raised 2022
+The company showed opportunity and grew and exceeded and grew and gain and opportunity and beat for Q3 2021.,1,AMZN,company showed opportunity grew exceeded grew gain opportunity beat 2021
+The company announced gains and rising and raised and success and successful for Q1 2023.,1,AMZN,company announced gain rising raised success successful 2023
+The company reported strong and up and opportunity and opportunity and improve and improving for Q2 2023.,1,AAPL,company reported strong opportunity opportunity improve improving 2023
+The company reported grew and profitable and gain for Q4 2023.,1,GOOGL,company reported grew profitable gain 2023
+The company showed opportunity and strength and exceeded for Q1 2020.,1,META,company showed opportunity strength exceeded 2020
+The company reported risen and up and strong for Q3 2020.,1,META,company reported risen strong 2020
+The company showed beats and improving and strength and risen and bullish and beats for Q4 2023.,1,JPM,company showed beat improving strength risen bullish beat 2023
+The company reported bullish and profitable and higher for Q4 2022.,1,MSFT,company reported bullish profitable higher 2022
+The company announced rise and improving and exceeded and beat and improve and opportunities for Q3 2021.,1,META,company announced rise improving exceeded beat improve opportunity 2021
+The company showed opportunities and raised and success and rally and opportunities for Q1 2022.,1,META,company showed opportunity raised success rally opportunity 2022
+The company showed raised and successful and outperform and risen and outperform and beats and rally for Q2 2020.,1,AAPL,company showed raised successful outperform risen outperform beat rally 2020
+The company announced breakthrough and strength and beats and improve and profitable for Q3 2023.,1,MSFT,company announced breakthrough strength beat improve profitable 2023
+The company announced risen and outperform and beats for Q2 2022.,1,JPM,company announced risen outperform beat 2022
+The company reported rising and up and opportunities and improvement for Q2 2021.,1,AMZN,company reported rising opportunity improvement 2021
+The company announced boost and strength and successful and rising for Q3 2021.,1,AAPL,company announced boost strength successful rising 2021
+The company reported success and positive and growth for Q1 2020.,1,AMZN,company reported success positive growth 2020
+The company showed outperform and bullish and exceeded and successful and boost and growth and opportunity for Q3 2020.,1,GOOGL,company showed outperform bullish exceeded successful boost growth opportunity 2020
+The company showed rising and opportunity and successful and profitable and boost for Q4 2021.,1,META,company showed rising opportunity successful profitable boost 2021
+The company reported earnings and beats and grew and improving and earnings for Q2 2020.,1,AAPL,company reported earnings beat grew improving earnings 2020
+The company announced strong and growth and grew and opportunities and grew for Q4 2023.,1,JPM,company announced strong growth grew opportunity grew 2023
+The company showed gain and breakthrough and up and rise and earnings and opportunities for Q1 2023.,1,NVDA,company showed gain breakthrough rise earnings opportunity 2023
+The company reported beat and up and progress and growth and opportunities and gain for Q1 2022.,1,MSFT,company reported beat progress growth opportunity gain 2022
+The company reported boost and opportunity and positive and positive and improve and earnings and strong for Q4 2023.,1,GOOGL,company reported boost opportunity positive positive improve earnings strong 2023
+The company announced profitable and success and opportunities and strength for Q1 2022.,1,GOOGL,company announced profitable success opportunity strength 2022
+The company showed strength and breakthrough and successful and gains and rally and improve and bullish for Q2 2022.,1,AMZN,company showed strength breakthrough successful gain rally improve bullish 2022
+The company showed improve and positive and rising and beat for Q2 2022.,1,TSLA,company showed improve positive rising beat 2022
+The company showed gains and earnings and rally and improving and boost for Q2 2022.,1,AAPL,company showed gain earnings rally improving boost 2022
+The company announced profitable and risen and gains and raised and successful and earnings and risen for Q4 2022.,1,AAPL,company announced profitable risen gain raised successful earnings risen 2022
+The company reported outperform and improvement and improvement for Q3 2020.,1,JPM,company reported outperform improvement improvement 2020
+The company showed opportunities and grew and rise and bullish and rising and growth and positive for Q1 2021.,1,META,company showed opportunity grew rise bullish rising growth positive 2021
+The company announced up and opportunities and gains and breakthrough for Q3 2020.,1,JPM,company announced opportunity gain breakthrough 2020
+The company announced rising and opportunity and strong and improve for Q1 2021.,1,AMZN,company announced rising opportunity strong improve 2021
+The company reported raised and breakthrough and gain and beat and earnings and strong and up for Q4 2022.,1,NVDA,company reported raised breakthrough gain beat earnings strong 2022
+The company reported improving and bullish and beat and gain and gain and profitable for Q3 2020.,1,GOOGL,company reported improving bullish beat gain gain profitable 2020
+The company showed raised and improve and improving for Q3 2021.,1,MSFT,company showed raised improve improving 2021
+The company showed opportunity and higher and higher and opportunities and raised and raised and rising for Q2 2021.,1,NVDA,company showed opportunity higher higher opportunity raised raised rising 2021
+The company showed rally and improve and boost and success and exceeded and success for Q4 2022.,1,GOOGL,company showed rally improve boost success exceeded success 2022
+The company announced improvement and bullish and strength for Q4 2020.,1,AAPL,company announced improvement bullish strength 2020
+The company announced gains and rally and beat and rise and grew and beat for Q4 2021.,1,MSFT,company announced gain rally beat rise grew beat 2021
+The company announced growth and growth and opportunities and raised and raised and boost and up for Q3 2020.,1,MSFT,company announced growth growth opportunity raised raised boost 2020
+The company showed improving and growth and strength and outperform and opportunity and higher for Q1 2020.,1,NVDA,company showed improving growth strength outperform opportunity higher 2020
+The company reported exceeded and success and exceeded for Q3 2022.,1,MSFT,company reported exceeded success exceeded 2022
+The company reported improve and gains and rise for Q2 2021.,1,MSFT,company reported improve gain rise 2021
+The company announced exceeded and rally and improving and higher for Q4 2021.,1,NVDA,company announced exceeded rally improving higher 2021
+The company announced gain and beat and higher and breakthrough for Q1 2022.,1,AAPL,company announced gain beat higher breakthrough 2022
+The company announced rise and opportunities and strong and rising for Q4 2020.,1,AAPL,company announced rise opportunity strong rising 2020
+The company reported gains and improving and risen and positive and rally and progress and successful for Q3 2020.,1,AMZN,company reported gain improving risen positive rally progress successful 2020
+The company showed higher and success and risen and progress and success and rising and improvement for Q4 2022.,1,AAPL,company showed higher success risen progress success rising improvement 2022
+The company reported earnings and success and earnings and rise and success and opportunity and strong for Q3 2023.,1,TSLA,company reported earnings success earnings rise success opportunity strong 2023
+The company announced growth and improve and improve for Q1 2021.,1,NVDA,company announced growth improve improve 2021
+The company reported higher and raised and breakthrough and improving and earnings and earnings and positive for Q4 2021.,1,MSFT,company reported higher raised breakthrough improving earnings earnings positive 2021
+The company announced rally and risen and up and beat for Q2 2022.,1,AMZN,company announced rally risen beat 2022
+The company reported risen and breakthrough and gains for Q1 2022.,1,JPM,company reported risen breakthrough gain 2022
+The company showed up and strength and higher and successful for Q2 2021.,1,TSLA,company showed strength higher successful 2021
+The company reported growth and bullish and gain for Q3 2021.,1,NVDA,company reported growth bullish gain 2021
+The company reported improve and opportunity and success and grew and outperform and breakthrough for Q1 2021.,1,AMZN,company reported improve opportunity success grew outperform breakthrough 2021
+The company showed beat and outperform and positive and success and positive and risen and opportunity for Q2 2022.,1,NVDA,company showed beat outperform positive success positive risen opportunity 2022
+The company announced risen and raised and risen and gains and gains and gains for Q1 2023.,1,MSFT,company announced risen raised risen gain gain gain 2023
+The company reported rising and risen and strong for Q3 2021.,1,AAPL,company reported rising risen strong 2021
+The company showed growth and raised and beat and outperform and rally and raised and gain for Q2 2022.,1,AMZN,company showed growth raised beat outperform rally raised gain 2022
+The company reported boost and opportunity and outperform and up and beats and successful and profitable for Q1 2022.,1,NVDA,company reported boost opportunity outperform beat successful profitable 2022
+The company showed gain and gain and gain for Q3 2020.,1,MSFT,company showed gain gain gain 2020
+The company reported rising and progress and raised and opportunity and risen and rise for Q2 2023.,1,META,company reported rising progress raised opportunity risen rise 2023
+The company reported higher and opportunities and beats for Q1 2022.,1,JPM,company reported higher opportunity beat 2022
+The company showed grew and strength and risen for Q4 2021.,1,TSLA,company showed grew strength risen 2021
+The company showed improvement and earnings and profitable and opportunity and beat and exceeded for Q2 2021.,1,AAPL,company showed improvement earnings profitable opportunity beat exceeded 2021
+The company reported raised and gains and beats and beat and breakthrough and earnings and higher for Q2 2023.,1,MSFT,company reported raised gain beat beat breakthrough earnings higher 2023
+The company reported beat and strength and gains and gain and progress and gain for Q4 2022.,1,JPM,company reported beat strength gain gain progress gain 2022
+The company announced up and up and beat and beats for Q1 2022.,1,META,company announced beat beat 2022
+The company announced earnings and boost and improving and bullish and boost and up and opportunity for Q2 2023.,1,AMZN,company announced earnings boost improving bullish boost opportunity 2023
+The company showed beats and profitable and beats and beat and opportunities and opportunities for Q2 2023.,1,MSFT,company showed beat profitable beat beat opportunity opportunity 2023
+The company announced gain and gains and gains and raised and gains and up and successful for Q3 2021.,1,JPM,company announced gain gain gain raised gain successful 2021
+The company showed improve and raised and improvement for Q2 2021.,1,AMZN,company showed improve raised improvement 2021
+The company showed strength and raised and outperform and up and rising and gains for Q2 2020.,1,META,company showed strength raised outperform rising gain 2020
+The company announced progress and improvement and improving and strong for Q4 2023.,1,META,company announced progress improvement improving strong 2023
+The company reported boost and exceeded and improving for Q2 2020.,1,AAPL,company reported boost exceeded improving 2020
+The company reported up and up and gain and strength and rising and rising for Q4 2022.,1,NVDA,company reported gain strength rising rising 2022
+The company showed gain and improving and boost and improvement and rising and improvement for Q1 2023.,1,AAPL,company showed gain improving boost improvement rising improvement 2023
+The company showed raised and rise and positive and grew and boost for Q3 2022.,1,JPM,company showed raised rise positive grew boost 2022
+The company showed bullish and improving and raised and improve and rally for Q2 2022.,1,NVDA,company showed bullish improving raised improve rally 2022
+The company reported strong and breakthrough and risen for Q4 2023.,1,MSFT,company reported strong breakthrough risen 2023
+The company showed rising and rise and higher and bullish and improvement and rising and rising for Q2 2023.,1,JPM,company showed rising rise higher bullish improvement rising rising 2023
+The company announced gain and earnings and rally and gain and strength and boost and higher for Q2 2022.,1,TSLA,company announced gain earnings rally gain strength boost higher 2022
+The company announced raised and improve and positive and profitable and improving and raised and success for Q2 2021.,1,MSFT,company announced raised improve positive profitable improving raised success 2021
+The company showed success and breakthrough and opportunities for Q2 2021.,1,GOOGL,company showed success breakthrough opportunity 2021
+The company reported improving and profitable and beat and improving and bullish and bullish and strong for Q3 2020.,1,MSFT,company reported improving profitable beat improving bullish bullish strong 2020
+The company showed outperform and beats and raised and positive and progress for Q2 2023.,1,META,company showed outperform beat raised positive progress 2023
+The company reported progress and rally and grew and improvement and positive and raised for Q1 2022.,1,NVDA,company reported progress rally grew improvement positive raised 2022
+The company showed gains and strength and grew and boost and strength for Q2 2023.,1,JPM,company showed gain strength grew boost strength 2023
+The company announced boost and risen and rise and raised for Q3 2023.,1,NVDA,company announced boost risen rise raised 2023
+The company reported rise and rising and opportunity for Q4 2022.,1,GOOGL,company reported rise rising opportunity 2022
+The company showed beat and gains and improve and outperform and opportunity for Q1 2023.,1,AMZN,company showed beat gain improve outperform opportunity 2023
+The company announced successful and strength and beat and growth and strong for Q2 2022.,1,GOOGL,company announced successful strength beat growth strong 2022
+The company showed gains and exceeded and strong and earnings and rally and gain and growth for Q3 2023.,1,TSLA,company showed gain exceeded strong earnings rally gain growth 2023
+The company showed bullish and gain and beat for Q2 2021.,1,META,company showed bullish gain beat 2021
+The company announced improvement and beat and success and progress and beats for Q1 2023.,1,GOOGL,company announced improvement beat success progress beat 2023
+The company showed rise and grew and earnings and beat and improvement for Q4 2023.,1,GOOGL,company showed rise grew earnings beat improvement 2023
+The company showed higher and rising and opportunities and boost and successful and opportunity for Q1 2022.,1,AAPL,company showed higher rising opportunity boost successful opportunity 2022
+The company reported positive and strength and grew and up and improve and successful and positive for Q3 2023.,1,MSFT,company reported positive strength grew improve successful positive 2023
+The company reported strength and breakthrough and raised for Q1 2021.,1,NVDA,company reported strength breakthrough raised 2021
+The company announced improvement and improvement and higher and improve and progress for Q4 2023.,1,META,company announced improvement improvement higher improve progress 2023
+The company announced raised and improving and breakthrough and bullish and raised and growth for Q1 2020.,1,GOOGL,company announced raised improving breakthrough bullish raised growth 2020
+The company announced grew and higher and rally and bullish and improve for Q3 2021.,1,JPM,company announced grew higher rally bullish improve 2021
+The company reported improvement and bullish and earnings and breakthrough and boost and success and profitable for Q4 2021.,1,GOOGL,company reported improvement bullish earnings breakthrough boost success profitable 2021
+The company showed improvement and boost and profitable and raised and growth and improve for Q4 2021.,1,MSFT,company showed improvement boost profitable raised growth improve 2021
+The company showed beat and raised and grew and gains and improvement for Q1 2020.,1,TSLA,company showed beat raised grew gain improvement 2020
+The company reported breakthrough and up and gains and improve for Q3 2020.,1,AMZN,company reported breakthrough gain improve 2020
+The company showed bullish and up and successful and improve for Q4 2023.,1,META,company showed bullish successful improve 2023
+The company showed opportunities and gain and success for Q2 2021.,1,MSFT,company showed opportunity gain success 2021
+The company reported success and raised and gains for Q4 2023.,1,AAPL,company reported success raised gain 2023
+The company reported beat and risen and grew and bullish and up and earnings for Q2 2021.,1,NVDA,company reported beat risen grew bullish earnings 2021
+The company announced rising and breakthrough and up and strength and risen and profitable for Q2 2020.,1,NVDA,company announced rising breakthrough strength risen profitable 2020
+The company announced gains and success and strong and rise for Q1 2022.,1,NVDA,company announced gain success strong rise 2022
+The company reported profitable and improving and rising and earnings and up and rally and boost for Q3 2020.,1,JPM,company reported profitable improving rising earnings rally boost 2020
+The company announced improve and growth and breakthrough and beat and breakthrough and improve and rally for Q4 2021.,1,AMZN,company announced improve growth breakthrough beat breakthrough improve rally 2021
+The company announced improve and boost and up and bullish and strength and rise and progress for Q4 2022.,1,AMZN,company announced improve boost bullish strength rise progress 2022
+The company reported beats and gain and success and beats for Q2 2022.,1,TSLA,company reported beat gain success beat 2022
+The company reported boost and strength and profitable and up for Q2 2021.,1,AMZN,company reported boost strength profitable 2021
+The company showed outperform and progress and up and beats for Q4 2020.,1,AAPL,company showed outperform progress beat 2020
+The company announced higher and gains and opportunity and breakthrough and strength and breakthrough for Q3 2023.,1,AAPL,company announced higher gain opportunity breakthrough strength breakthrough 2023
+The company reported strong and progress and opportunities for Q3 2023.,1,TSLA,company reported strong progress opportunity 2023
+The company reported gain and positive and higher and breakthrough and rising for Q2 2023.,1,AAPL,company reported gain positive higher breakthrough rising 2023
+The company showed success and opportunity and opportunities and positive for Q3 2023.,1,GOOGL,company showed success opportunity opportunity positive 2023
+The company reported up and successful and up for Q2 2022.,1,AMZN,company reported successful 2022
+The company reported strength and boost and strength and boost and improve and earnings for Q4 2021.,1,NVDA,company reported strength boost strength boost improve earnings 2021
+The company reported up and growth and breakthrough and strength for Q3 2021.,1,AAPL,company reported growth breakthrough strength 2021
+The company announced improve and outperform and beat for Q4 2022.,1,META,company announced improve outperform beat 2022
+The company announced gains and gains and improving and rally for Q1 2023.,1,AMZN,company announced gain gain improving rally 2023
+The company announced strong and positive and opportunities and up for Q4 2023.,1,NVDA,company announced strong positive opportunity 2023
+The company reported grew and earnings and earnings and opportunities for Q1 2020.,1,GOOGL,company reported grew earnings earnings opportunity 2020
+The company reported higher and profitable and beat and growth and strength and improving and outperform for Q1 2020.,1,GOOGL,company reported higher profitable beat growth strength improving outperform 2020
+The company showed strong and up and rally and improvement and gain for Q1 2023.,1,JPM,company showed strong rally improvement gain 2023
+The company announced strength and opportunities and opportunity for Q4 2020.,1,AMZN,company announced strength opportunity opportunity 2020
+The company announced rising and rally and up and improving and grew and raised and breakthrough for Q3 2021.,1,GOOGL,company announced rising rally improving grew raised breakthrough 2021
+The company announced progress and positive and opportunity and outperform and bullish for Q3 2020.,1,META,company announced progress positive opportunity outperform bullish 2020
+The company reported positive and higher and exceeded and raised and rally and up for Q1 2022.,1,TSLA,company reported positive higher exceeded raised rally 2022
+The company reported exceeded and strong and strength and beats and successful and profitable for Q4 2022.,1,AMZN,company reported exceeded strong strength beat successful profitable 2022
+The company showed strong and rising and gains for Q2 2021.,1,JPM,company showed strong rising gain 2021
+The company showed rally and successful and gains for Q1 2021.,1,GOOGL,company showed rally successful gain 2021
+The company announced improve and grew and breakthrough and rise and boost and boost and improving for Q3 2020.,1,META,company announced improve grew breakthrough rise boost boost improving 2020
+The company reported risen and growth and raised for Q1 2021.,1,AMZN,company reported risen growth raised 2021
+The company reported gains and successful and opportunities and progress and opportunity and beat for Q1 2021.,1,JPM,company reported gain successful opportunity progress opportunity beat 2021
+The company announced risen and rising and exceeded for Q1 2022.,1,TSLA,company announced risen rising exceeded 2022
+The company showed earnings and bullish and success and progress and opportunities and beat for Q2 2020.,1,AMZN,company showed earnings bullish success progress opportunity beat 2020
+The company reported success and boost and successful and progress and exceeded for Q2 2021.,1,AAPL,company reported success boost successful progress exceeded 2021
+The company reported opportunity and outperform and boost for Q2 2023.,1,MSFT,company reported opportunity outperform boost 2023
+The company showed rising and gains and opportunity and successful for Q2 2023.,1,GOOGL,company showed rising gain opportunity successful 2023
+The company announced successful and gain and positive and exceeded and up and successful for Q3 2023.,1,META,company announced successful gain positive exceeded successful 2023
+The company reported outperform and positive and opportunities and growth and bullish and successful for Q3 2022.,1,GOOGL,company reported outperform positive opportunity growth bullish successful 2022
+The company reported success and beats and outperform and gains and up and improvement and raised for Q1 2022.,1,TSLA,company reported success beat outperform gain improvement raised 2022
+The company reported opportunity and grew and beats and rising and outperform and improving for Q4 2020.,1,TSLA,company reported opportunity grew beat rising outperform improving 2020
+The company announced underperform and loss and decline and failed and decreased and risky for Q4 2021.,-1,AAPL,company announced underperform loss decline failed decreased risky 2021
+The company reported decreased and disappointed and weak for Q1 2022.,-1,MSFT,company reported decreased disappointed weak 2022
+The company announced concern and risks and miss and underperform for Q2 2023.,-1,META,company announced concern risk miss underperform 2023
+The company announced risky and down and missed and risk for Q1 2021.,-1,NVDA,company announced risky missed risk 2021
+The company announced risky and loss and slow and litigation for Q3 2020.,-1,MSFT,company announced risky loss slow litigation 2020
+The company announced weakness and concerns and lawsuit and weak for Q1 2023.,-1,AMZN,company announced weakness concern lawsuit weak 2023
+The company showed decreases and bearish and decline and failed for Q3 2022.,-1,MSFT,company showed decrease bearish decline failed 2022
+The company showed lower and decrease and weak and lawsuit and concern for Q2 2020.,-1,NVDA,company showed lower decrease weak lawsuit concern 2020
+The company showed risk and decreased and lawsuit and dropped and caution for Q1 2021.,-1,MSFT,company showed risk decreased lawsuit dropped caution 2021
+The company reported dropped and failed and down and warning for Q3 2022.,-1,AMZN,company reported dropped failed warning 2022
+The company announced investigation and missed and decline and miss and decreased and negative and misses for Q2 2022.,-1,GOOGL,company announced investigation missed decline miss decreased negative miss 2022
+The company announced underperform and cautious and dropped and drop and concerns and falling for Q3 2022.,-1,MSFT,company announced underperform cautious dropped drop concern falling 2022
+The company reported falling and failed and failed for Q1 2021.,-1,META,company reported falling failed failed 2021
+The company reported slow and risks and drops and concern and bankruptcy and failed for Q2 2023.,-1,AMZN,company reported slow risk drop concern bankruptcy failed 2023
+The company announced lower and risky and drop and concerns for Q4 2021.,-1,NVDA,company announced lower risky drop concern 2021
+The company reported decreased and weak and bankruptcy and bearish for Q1 2023.,-1,NVDA,company reported decreased weak bankruptcy bearish 2023
+The company showed decreases and lower and caution for Q3 2020.,-1,GOOGL,company showed decrease lower caution 2020
+The company announced risky and declined and drops and slow and down and falling for Q2 2022.,-1,TSLA,company announced risky declined drop slow falling 2022
+The company announced failure and weak and fail and warning and bankruptcy and missed for Q3 2021.,-1,AMZN,company announced failure weak fail warning bankruptcy missed 2021
+The company reported decreased and misses and fell and bankruptcy and disappointed and decline for Q2 2023.,-1,META,company reported decreased miss fell bankruptcy disappointed decline 2023
+The company reported declines and declined and drops and miss and bearish and losses and investigation for Q1 2020.,-1,AAPL,company reported decline declined drop miss bearish loss investigation 2020
+The company showed fell and weakness and declined and drops for Q1 2021.,-1,TSLA,company showed fell weakness declined drop 2021
+The company announced declines and slowing and loss and concerns for Q1 2023.,-1,MSFT,company announced decline slowing loss concern 2023
+The company showed bearish and losses and slowing and weakness and declines and declined for Q2 2022.,-1,JPM,company showed bearish loss slowing weakness decline declined 2022
+The company reported risks and loss and warning for Q2 2023.,-1,META,company reported risk loss warning 2023
+The company reported declines and disappointed and dropped for Q2 2020.,-1,MSFT,company reported decline disappointed dropped 2020
+The company showed dropped and weakness and decrease and failure for Q3 2022.,-1,MSFT,company showed dropped weakness decrease failure 2022
+The company showed miss and slow and slow for Q2 2021.,-1,GOOGL,company showed miss slow slow 2021
+The company announced underperform and loss and decreases and disappointed and decreased and missed and risky for Q2 2021.,-1,JPM,company announced underperform loss decrease disappointed decreased missed risky 2021
+The company reported decline and miss and risks and litigation for Q3 2022.,-1,META,company reported decline miss risk litigation 2022
+The company reported weak and misses and weakness and miss for Q3 2020.,-1,META,company reported weak miss weakness miss 2020
+The company showed fell and dropped and down and negative and dropped and disappoint and failed for Q3 2020.,-1,NVDA,company showed fell dropped negative dropped disappoint failed 2020
+The company showed decreased and concerns and miss and fail and loss for Q3 2022.,-1,JPM,company showed decreased concern miss fail loss 2022
+The company reported falling and litigation and underperform and slowing for Q4 2022.,-1,JPM,company reported falling litigation underperform slowing 2022
+The company announced cautious and disappointing and missed and bankrupt and bearish and bankruptcy and fell for Q3 2021.,-1,GOOGL,company announced cautious disappointing missed bankrupt bearish bankruptcy fell 2021
+The company showed falling and down and failure and declined and weakness and litigation for Q2 2020.,-1,AMZN,company showed falling failure declined weakness litigation 2020
+The company announced disappointed and investigation and drop and slow and declines and losses and litigation for Q2 2021.,-1,META,company announced disappointed investigation drop slow decline loss litigation 2021
+The company showed concern and misses and fell and bearish and drop for Q3 2021.,-1,MSFT,company showed concern miss fell bearish drop 2021
+The company showed risk and bankruptcy and missed for Q2 2022.,-1,AAPL,company showed risk bankruptcy missed 2022
+The company announced decrease and negative and loss for Q3 2023.,-1,MSFT,company announced decrease negative loss 2023
+The company reported failed and risks and missed and failure and risky and failure and failed for Q4 2021.,-1,META,company reported failed risk missed failure risky failure failed 2021
+The company reported concerns and decline and fail and down for Q1 2023.,-1,AMZN,company reported concern decline fail 2023
+The company announced drops and miss and dropped and cautious and investigation for Q3 2023.,-1,TSLA,company announced drop miss dropped cautious investigation 2023
+The company reported miss and losses and risk and down for Q1 2023.,-1,GOOGL,company reported miss loss risk 2023
+The company announced fail and drops and warning and missed for Q1 2023.,-1,AAPL,company announced fail drop warning missed 2023
+The company showed cautious and risks and underperform and caution and risky and losses and risks for Q2 2021.,-1,AAPL,company showed cautious risk underperform caution risky loss risk 2021
+The company reported negative and concerns and down and caution and failed and cautious and risks for Q4 2023.,-1,GOOGL,company reported negative concern caution failed cautious risk 2023
+The company reported bankruptcy and bearish and negative and concern and weakness for Q4 2020.,-1,TSLA,company reported bankruptcy bearish negative concern weakness 2020
+The company showed drops and losses and declines and failed and miss and disappointed for Q4 2023.,-1,AAPL,company showed drop loss decline failed miss disappointed 2023
+The company reported bankrupt and disappointing and misses and disappoint for Q2 2021.,-1,JPM,company reported bankrupt disappointing miss disappoint 2021
+The company reported declines and drops and failure and investigation and risky for Q1 2020.,-1,AAPL,company reported decline drop failure investigation risky 2020
+The company reported litigation and fell and negative and falling and risk for Q3 2023.,-1,JPM,company reported litigation fell negative falling risk 2023
+The company showed disappointed and cautious and risk and lawsuit for Q4 2021.,-1,AAPL,company showed disappointed cautious risk lawsuit 2021
+The company reported fail and slowing and decline for Q2 2020.,-1,AAPL,company reported fail slowing decline 2020
+The company showed miss and decreases and underperform and weakness and fell for Q3 2020.,-1,AMZN,company showed miss decrease underperform weakness fell 2020
+The company announced negative and warning and fail and decreases and disappoint for Q2 2021.,-1,MSFT,company announced negative warning fail decrease disappoint 2021
+The company announced concerns and failed and misses and misses and cautious for Q2 2021.,-1,JPM,company announced concern failed miss miss cautious 2021
+The company showed misses and slow and decline and falling and fell and miss for Q3 2021.,-1,JPM,company showed miss slow decline falling fell miss 2021
+The company reported bearish and bankrupt and cautious and lower for Q4 2022.,-1,NVDA,company reported bearish bankrupt cautious lower 2022
+The company showed falling and failure and falling and weakness and fail and litigation and decrease for Q2 2020.,-1,AMZN,company showed falling failure falling weakness fail litigation decrease 2020
+The company showed bankruptcy and falling and failure for Q2 2020.,-1,GOOGL,company showed bankruptcy falling failure 2020
+The company announced slow and fell and drop for Q3 2021.,-1,TSLA,company announced slow fell drop 2021
+The company showed loss and slow and slow and lower and risk for Q2 2021.,-1,TSLA,company showed loss slow slow lower risk 2021
+The company announced disappointing and drop and fail for Q4 2021.,-1,AAPL,company announced disappointing drop fail 2021
+The company announced declines and drop and disappointing for Q3 2020.,-1,META,company announced decline drop disappointing 2020
+The company announced dropped and cautious and declines and concerns and decrease and bearish for Q2 2023.,-1,GOOGL,company announced dropped cautious decline concern decrease bearish 2023
+The company reported declines and drops and decline for Q2 2023.,-1,AAPL,company reported decline drop decline 2023
+The company announced losses and concern and risks and risky and drops and lower for Q3 2023.,-1,TSLA,company announced loss concern risk risky drop lower 2023
+The company reported failure and drops and bankrupt for Q2 2023.,-1,NVDA,company reported failure drop bankrupt 2023
+The company announced drops and cautious and decline and drops and risk and failure for Q2 2023.,-1,GOOGL,company announced drop cautious decline drop risk failure 2023
+The company reported weak and weak and litigation and investigation and bankrupt for Q3 2023.,-1,JPM,company reported weak weak litigation investigation bankrupt 2023
+The company announced decline and concerns and failure and declined and bankruptcy and disappointing for Q3 2020.,-1,JPM,company announced decline concern failure declined bankruptcy disappointing 2020
+The company showed risky and bankruptcy and failed and litigation and underperform and weak for Q1 2023.,-1,GOOGL,company showed risky bankruptcy failed litigation underperform weak 2023
+The company showed disappointed and risk and decreased and lawsuit and decreased and litigation and cautious for Q3 2021.,-1,JPM,company showed disappointed risk decreased lawsuit decreased litigation cautious 2021
+The company reported decline and disappointing and weakness for Q2 2023.,-1,TSLA,company reported decline disappointing weakness 2023
+The company announced drops and warning and investigation and slow for Q4 2021.,-1,GOOGL,company announced drop warning investigation slow 2021
+The company announced decrease and drops and disappointing for Q4 2020.,-1,JPM,company announced decrease drop disappointing 2020
+The company reported down and miss and disappoint for Q4 2021.,-1,MSFT,company reported miss disappoint 2021
+The company announced miss and bankruptcy and falling and lawsuit and miss for Q2 2023.,-1,GOOGL,company announced miss bankruptcy falling lawsuit miss 2023
+The company reported decreased and negative and fell and decreased and declines for Q2 2020.,-1,GOOGL,company reported decreased negative fell decreased decline 2020
+The company announced loss and drops and decreases and drop and decreased and decreases for Q3 2021.,-1,AAPL,company announced loss drop decrease drop decreased decrease 2021
+The company announced miss and fail and drops for Q2 2020.,-1,MSFT,company announced miss fail drop 2020
+The company showed failed and disappointed and decreases and down and slow and decreased for Q1 2020.,-1,AAPL,company showed failed disappointed decrease slow decreased 2020
+The company reported declines and risky and cautious and bankrupt and declined and declines and concern for Q1 2022.,-1,NVDA,company reported decline risky cautious bankrupt declined decline concern 2022
+The company showed underperform and misses and risky for Q2 2023.,-1,AAPL,company showed underperform miss risky 2023
+The company reported failure and concern and misses and dropped and falling and declined and dropped for Q1 2021.,-1,META,company reported failure concern miss dropped falling declined dropped 2021
+The company reported declines and missed and decline for Q3 2021.,-1,AAPL,company reported decline missed decline 2021
+The company showed failed and drop and risks and litigation for Q1 2021.,-1,MSFT,company showed failed drop risk litigation 2021
+The company showed dropped and drops and falling and caution and decreased for Q4 2022.,-1,GOOGL,company showed dropped drop falling caution decreased 2022
+The company showed dropped and weak and declined and fail and drops for Q4 2022.,-1,AAPL,company showed dropped weak declined fail drop 2022
+The company announced bearish and decrease and fell and cautious and drop for Q3 2020.,-1,META,company announced bearish decrease fell cautious drop 2020
+The company showed drops and fell and warning and drop and drops and decline for Q3 2023.,-1,GOOGL,company showed drop fell warning drop drop decline 2023
+The company announced concern and loss and dropped and concern and disappoint and decreased for Q2 2023.,-1,AMZN,company announced concern loss dropped concern disappoint decreased 2023
+The company announced underperform and weak and miss for Q2 2021.,-1,GOOGL,company announced underperform weak miss 2021
+The company showed failure and negative and decreases for Q4 2021.,-1,AMZN,company showed failure negative decrease 2021
+The company showed fail and weak and falling and failed and lawsuit and risky and decreases for Q4 2023.,-1,META,company showed fail weak falling failed lawsuit risky decrease 2023
+The company reported weakness and missed and down and failure for Q1 2022.,-1,JPM,company reported weakness missed failure 2022
+The company announced disappointing and weakness and weak for Q4 2021.,-1,JPM,company announced disappointing weakness weak 2021
+The company announced down and failed and falling and dropped and dropped for Q1 2021.,-1,TSLA,company announced failed falling dropped dropped 2021
+The company showed miss and underperform and miss and bankrupt and declines and slow and weak for Q1 2020.,-1,NVDA,company showed miss underperform miss bankrupt decline slow weak 2020
+The company announced decreased and decreases and lower and risk and disappoint and fell and cautious for Q1 2021.,-1,AAPL,company announced decreased decrease lower risk disappoint fell cautious 2021
+The company announced decrease and declined and dropped and bankrupt and declined and disappoint and risk for Q1 2021.,-1,AMZN,company announced decrease declined dropped bankrupt declined disappoint risk 2021
+The company reported drops and cautious and failure and misses and risky and bearish and warning for Q2 2021.,-1,AMZN,company reported drop cautious failure miss risky bearish warning 2021
+The company showed losses and decreased and disappointed and decreased and drop and declines for Q1 2023.,-1,GOOGL,company showed loss decreased disappointed decreased drop decline 2023
+The company announced cautious and lower and cautious and missed for Q2 2023.,-1,GOOGL,company announced cautious lower cautious missed 2023
+The company reported concerns and losses and disappointed for Q2 2023.,-1,JPM,company reported concern loss disappointed 2023
+The company showed decrease and concern and failed for Q1 2021.,-1,GOOGL,company showed decrease concern failed 2021
+The company reported decreased and fail and concerns and slow and decline and fell for Q2 2021.,-1,NVDA,company reported decreased fail concern slow decline fell 2021
+The company announced fell and decreased and investigation for Q2 2022.,-1,META,company announced fell decreased investigation 2022
+The company reported drop and fail and failure and bankruptcy and decrease and missed for Q4 2020.,-1,TSLA,company reported drop fail failure bankruptcy decrease missed 2020
+The company announced losses and slow and risks and bankrupt and dropped and underperform and dropped for Q1 2023.,-1,GOOGL,company announced loss slow risk bankrupt dropped underperform dropped 2023
+The company reported slow and fail and bankruptcy and litigation and underperform and disappointing and weakness for Q2 2022.,-1,JPM,company reported slow fail bankruptcy litigation underperform disappointing weakness 2022
+The company showed disappointing and risk and caution and weak for Q4 2022.,-1,NVDA,company showed disappointing risk caution weak 2022
+The company reported decline and decreased and losses and decreases and falling for Q4 2020.,-1,NVDA,company reported decline decreased loss decrease falling 2020
+The company announced caution and concern and litigation and misses and slow for Q3 2022.,-1,AMZN,company announced caution concern litigation miss slow 2022
+The company reported disappointed and investigation and miss and slowing and lawsuit for Q3 2022.,-1,AAPL,company reported disappointed investigation miss slowing lawsuit 2022
+The company announced failure and underperform and weakness and declines and weak for Q4 2021.,-1,AAPL,company announced failure underperform weakness decline weak 2021
+The company showed losses and risk and negative for Q2 2021.,-1,GOOGL,company showed loss risk negative 2021
+The company announced down and drop and concern and negative and dropped and misses and weakness for Q4 2020.,-1,NVDA,company announced drop concern negative dropped miss weakness 2020
+The company showed decreased and underperform and failure and slowing and slow for Q3 2021.,-1,MSFT,company showed decreased underperform failure slowing slow 2021
+The company announced concern and negative and weakness and decreases for Q4 2022.,-1,MSFT,company announced concern negative weakness decrease 2022
+The company announced investigation and warning and litigation and caution and decrease for Q2 2020.,-1,GOOGL,company announced investigation warning litigation caution decrease 2020
+The company reported risk and caution and decline and bankruptcy and missed and decline and miss for Q2 2021.,-1,MSFT,company reported risk caution decline bankruptcy missed decline miss 2021
+The company showed risk and decreased and decrease and lawsuit for Q1 2023.,-1,GOOGL,company showed risk decreased decrease lawsuit 2023
+The company showed concern and risks and miss and decrease and caution and bankruptcy for Q1 2022.,-1,JPM,company showed concern risk miss decrease caution bankruptcy 2022
+The company showed falling and lower and fell and failure and decline and decreased and concerns for Q3 2022.,-1,MSFT,company showed falling lower fell failure decline decreased concern 2022
+The company showed lawsuit and bankrupt and miss and failure and slow for Q2 2023.,-1,NVDA,company showed lawsuit bankrupt miss failure slow 2023
+The company announced investigation and declined and weakness and negative and risks and investigation and losses for Q3 2021.,-1,TSLA,company announced investigation declined weakness negative risk investigation loss 2021
+The company announced caution and risks and bearish for Q4 2021.,-1,AAPL,company announced caution risk bearish 2021
+The company reported bankruptcy and negative and concerns and underperform and miss and bankruptcy and declines for Q2 2020.,-1,AMZN,company reported bankruptcy negative concern underperform miss bankruptcy decline 2020
+The company announced fell and drop and lawsuit and missed for Q2 2022.,-1,JPM,company announced fell drop lawsuit missed 2022
+The company announced negative and miss and loss and lower for Q2 2021.,-1,META,company announced negative miss loss lower 2021
+The company announced weak and weak and miss and disappointing and dropped for Q2 2020.,-1,AMZN,company announced weak weak miss disappointing dropped 2020
+The company showed concerns and underperform and concerns and bearish and concern for Q1 2021.,-1,AMZN,company showed concern underperform concern bearish concern 2021
+The company announced bearish and warning and slowing for Q3 2021.,-1,TSLA,company announced bearish warning slowing 2021
+The company reported cautious and disappoint and weak and fell and drop and misses and litigation for Q3 2022.,-1,GOOGL,company reported cautious disappoint weak fell drop miss litigation 2022
+The company showed bankruptcy and litigation and decline for Q3 2023.,-1,MSFT,company showed bankruptcy litigation decline 2023
+The company reported negative and slowing and slow and down for Q4 2023.,-1,GOOGL,company reported negative slowing slow 2023
+The company reported misses and risk and lawsuit for Q4 2022.,-1,GOOGL,company reported miss risk lawsuit 2022
+The company reported disappointed and weak and disappointed and risks for Q2 2020.,-1,JPM,company reported disappointed weak disappointed risk 2020
+The company showed litigation and weakness and risks and dropped and declines for Q2 2022.,-1,TSLA,company showed litigation weakness risk dropped decline 2022
+The company announced failure and declines and down and disappointing and risky and losses and missed for Q3 2020.,-1,NVDA,company announced failure decline disappointing risky loss missed 2020
+The company announced disappoint and risk and concern and drops for Q4 2023.,-1,MSFT,company announced disappoint risk concern drop 2023
+The company announced bearish and misses and drops and slowing and risk and failure and warning for Q3 2022.,-1,TSLA,company announced bearish miss drop slowing risk failure warning 2022
+The company showed dropped and disappointing and loss and drops and misses for Q1 2022.,-1,META,company showed dropped disappointing loss drop miss 2022
+The company showed dropped and negative and lower for Q2 2023.,-1,AAPL,company showed dropped negative lower 2023
+The company showed litigation and disappointed and declines and declined and concern for Q2 2022.,-1,AMZN,company showed litigation disappointed decline declined concern 2022
+The company announced losses and miss and decrease and declines and concern for Q4 2021.,-1,AMZN,company announced loss miss decrease decline concern 2021
+The company announced weak and miss and losses and disappointed and falling and bearish and cautious for Q4 2021.,-1,AMZN,company announced weak miss loss disappointed falling bearish cautious 2021
+The company reported miss and negative and slow for Q3 2021.,-1,AAPL,company reported miss negative slow 2021
+The company reported concern and investigation and disappoint and drops for Q4 2021.,-1,AAPL,company reported concern investigation disappoint drop 2021
+The company announced concern and down and bearish and risks for Q1 2023.,-1,AAPL,company announced concern bearish risk 2023
+The company reported miss and drops and litigation and weakness for Q2 2020.,-1,TSLA,company reported miss drop litigation weakness 2020
+The company showed declined and failed and failure for Q2 2023.,-1,NVDA,company showed declined failed failure 2023
+The company showed falling and bankrupt and failure and failed and misses and decline and cautious for Q4 2022.,-1,TSLA,company showed falling bankrupt failure failed miss decline cautious 2022
+The company showed declines and bankruptcy and disappointing and loss and weak and decline for Q2 2023.,-1,AAPL,company showed decline bankruptcy disappointing loss weak decline 2023
+The company reported failed and risk and drop for Q3 2023.,-1,TSLA,company reported failed risk drop 2023
+The company showed disappointed and risky and litigation and declined for Q1 2023.,-1,NVDA,company showed disappointed risky litigation declined 2023
+The company showed slow and underperform and warning for Q3 2022.,-1,GOOGL,company showed slow underperform warning 2022
+The company announced missed and misses and lower and disappoint and bankruptcy and disappointed for Q1 2021.,-1,META,company announced missed miss lower disappoint bankruptcy disappointed 2021
+The company showed disappointing and down and litigation and disappoint and concern for Q2 2020.,-1,MSFT,company showed disappointing litigation disappoint concern 2020
+The company showed warning and decline and cautious and bearish and declines and falling for Q4 2020.,-1,GOOGL,company showed warning decline cautious bearish decline falling 2020
+The company reported weakness and risky and miss for Q1 2023.,-1,GOOGL,company reported weakness risky miss 2023
+The company showed disappointing and dropped and weakness and risky and drops and bankrupt for Q4 2021.,-1,JPM,company showed disappointing dropped weakness risky drop bankrupt 2021
+The company showed declines and underperform and miss and bankruptcy for Q2 2021.,-1,TSLA,company showed decline underperform miss bankruptcy 2021
+The company reported missed and warning and bankruptcy and cautious and loss and disappointing for Q3 2023.,-1,MSFT,company reported missed warning bankruptcy cautious loss disappointing 2023
+The company announced slowing and litigation and concerns for Q1 2023.,-1,AMZN,company announced slowing litigation concern 2023
+The company reported bankruptcy and caution and concerns and drop and disappointed and weakness for Q1 2023.,-1,JPM,company reported bankruptcy caution concern drop disappointed weakness 2023
+The company announced weakness and disappointed and bearish and failed and fell and misses for Q2 2021.,-1,GOOGL,company announced weakness disappointed bearish failed fell miss 2021
+The company announced decreases and warning and decreases and litigation and disappointed and missed for Q2 2022.,-1,NVDA,company announced decrease warning decrease litigation disappointed missed 2022
+The company showed bankruptcy and weakness and missed and fail and bankrupt and investigation and losses for Q4 2020.,-1,AAPL,company showed bankruptcy weakness missed fail bankrupt investigation loss 2020
+The company announced weakness and falling and bankrupt and decline and fail and risks for Q1 2021.,-1,META,company announced weakness falling bankrupt decline fail risk 2021
+The company showed failure and drop and decreases and bearish and negative for Q4 2022.,-1,NVDA,company showed failure drop decrease bearish negative 2022
+The company showed risks and losses and concerns and bearish and warning and loss for Q3 2023.,-1,AMZN,company showed risk loss concern bearish warning loss 2023
+The company reported lower and failed and decreases and drops and disappoint and negative for Q4 2022.,-1,GOOGL,company reported lower failed decrease drop disappoint negative 2022
+The company showed underperform and drops and caution for Q2 2023.,-1,AMZN,company showed underperform drop caution 2023
+The company showed losses and misses and failed and fell and down and weakness for Q1 2023.,-1,JPM,company showed loss miss failed fell weakness 2023
+The company showed decreased and lawsuit and drop and loss and lower and drops and declines for Q3 2023.,-1,META,company showed decreased lawsuit drop loss lower drop decline 2023
+The company reported declines and negative and fail and negative and fell and disappoint for Q1 2021.,-1,TSLA,company reported decline negative fail negative fell disappoint 2021
+The company announced missed and slowing and caution and falling and disappointed and failed and underperform for Q4 2020.,-1,GOOGL,company announced missed slowing caution falling disappointed failed underperform 2020
+The company showed drops and disappointing and underperform for Q2 2020.,-1,NVDA,company showed drop disappointing underperform 2020
+The company announced slow and decline and disappoint and bankruptcy for Q1 2022.,-1,AMZN,company announced slow decline disappoint bankruptcy 2022
+The company announced concerns and concerns and fell and losses and declines and slowing and weak for Q4 2022.,-1,AAPL,company announced concern concern fell loss decline slowing weak 2022
+The company announced drop and disappoint and failure and failed and concerns and misses for Q2 2020.,-1,AAPL,company announced drop disappoint failure failed concern miss 2020
+The company showed slowing and litigation and bankrupt and missed and caution for Q4 2023.,-1,TSLA,company showed slowing litigation bankrupt missed caution 2023
+The company reported miss and decreased and investigation and decline and disappoint and concern and warning for Q4 2023.,-1,NVDA,company reported miss decreased investigation decline disappoint concern warning 2023
+The company showed loss and fail and miss and slowing for Q1 2021.,-1,TSLA,company showed loss fail miss slowing 2021
+The company showed bankruptcy and fail and slowing and concern and negative for Q4 2022.,-1,META,company showed bankruptcy fail slowing concern negative 2022
+The company reported slow and declines and decline and declined and decreases for Q4 2022.,-1,AMZN,company reported slow decline decline declined decrease 2022
+The company reported fell and weakness and disappointing and risks and concern and investigation for Q2 2021.,-1,META,company reported fell weakness disappointing risk concern investigation 2021
+The company announced lower and bankruptcy and bankrupt and litigation and weakness and missed and decrease for Q2 2021.,-1,AMZN,company announced lower bankruptcy bankrupt litigation weakness missed decrease 2021
+The company reported decreases and decline and declines and fell and lower and falling for Q1 2023.,-1,MSFT,company reported decrease decline decline fell lower falling 2023
+The company announced misses and declines and cautious for Q1 2022.,-1,JPM,company announced miss decline cautious 2022
+The company showed failed and failed and decreases and losses and failed and bankruptcy for Q1 2023.,-1,AAPL,company showed failed failed decrease loss failed bankruptcy 2023
+The company announced litigation and falling and bankruptcy and down and down for Q3 2020.,-1,NVDA,company announced litigation falling bankruptcy 2020
+The company showed fell and slow and litigation and down for Q1 2021.,-1,TSLA,company showed fell slow litigation 2021
+The company reported falling and dropped and decreased and missed for Q2 2021.,-1,AAPL,company reported falling dropped decreased missed 2021
+The company announced lawsuit and investigation and declined and concern and decreased and litigation for Q4 2020.,-1,META,company announced lawsuit investigation declined concern decreased litigation 2020
+The company reported misses and missed and dropped and drop and cautious and risk and slowing for Q2 2023.,-1,NVDA,company reported miss missed dropped drop cautious risk slowing 2023
+The company showed failure and weak and loss for Q3 2021.,-1,AAPL,company showed failure weak loss 2021
+The company showed misses and drop and decreased for Q4 2022.,-1,AMZN,company showed miss drop decreased 2022
+The company announced drop and risk and investigation and falling and disappointing for Q2 2022.,-1,AMZN,company announced drop risk investigation falling disappointing 2022
+The company announced risk and bankrupt and dropped for Q3 2023.,-1,GOOGL,company announced risk bankrupt dropped 2023
+The company announced investigation and failed and loss and weakness and lawsuit and risky for Q1 2022.,-1,AMZN,company announced investigation failed loss weakness lawsuit risky 2022
+The company reported weak and failed and litigation for Q3 2020.,-1,TSLA,company reported weak failed litigation 2020
+The company reported dropped and risks and risky and failure and bearish and losses for Q4 2023.,-1,GOOGL,company reported dropped risk risky failure bearish loss 2023
+The company announced decline and down and negative and cautious for Q1 2023.,-1,AAPL,company announced decline negative cautious 2023
+The company showed cautious and lawsuit and concern and slowing for Q1 2023.,-1,TSLA,company showed cautious lawsuit concern slowing 2023
+The company showed failure and risky and failure and caution and decreases and decrease and fail for Q1 2020.,-1,AAPL,company showed failure risky failure caution decrease decrease fail 2020
+The company showed risk and dropped and miss and negative for Q4 2023.,-1,NVDA,company showed risk dropped miss negative 2023
+The company announced caution and falling and cautious and losses for Q1 2020.,-1,AMZN,company announced caution falling cautious loss 2020
+The company reported concern and falling and fail and fail and warning and down for Q1 2022.,-1,AAPL,company reported concern falling fail fail warning 2022
+The company reported falling and decreases and disappointed for Q4 2022.,-1,META,company reported falling decrease disappointed 2022
+The company reported decline and risks and underperform and miss and falling and declines for Q4 2022.,-1,JPM,company reported decline risk underperform miss falling decline 2022
+The company reported slow and down and risks and cautious and loss and drops and underperform for Q2 2023.,-1,AAPL,company reported slow risk cautious loss drop underperform 2023
+The company announced disappoint and litigation and negative and litigation for Q1 2022.,-1,META,company announced disappoint litigation negative litigation 2022
+The company reported litigation and disappoint and slowing and disappointing and failed and negative and concerns for Q1 2022.,-1,MSFT,company reported litigation disappoint slowing disappointing failed negative concern 2022
+The company reported dropped and decrease and falling for Q4 2021.,-1,GOOGL,company reported dropped decrease falling 2021
+The company announced concerns and decreases and losses for Q1 2023.,-1,TSLA,company announced concern decrease loss 2023
+The company showed slow and drops and decline and dropped and declined for Q3 2021.,-1,JPM,company showed slow drop decline dropped declined 2021
+The company announced failed and disappointing and lawsuit and weakness for Q1 2020.,-1,MSFT,company announced failed disappointing lawsuit weakness 2020
+The company showed warning and declined and decline for Q2 2020.,-1,TSLA,company showed warning declined decline 2020
+The company reported caution and lower and drop and failure for Q3 2022.,-1,META,company reported caution lower drop failure 2022
+The company announced decreased and litigation and warning and warning and dropped for Q2 2021.,-1,MSFT,company announced decreased litigation warning warning dropped 2021
+The company announced decreases and drops and cautious and lawsuit and lower for Q1 2021.,-1,GOOGL,company announced decrease drop cautious lawsuit lower 2021
+The company showed negative and slowing and drop and falling and litigation for Q4 2023.,-1,GOOGL,company showed negative slowing drop falling litigation 2023
+The company announced loss and loss and concerns and underperform and risky for Q2 2022.,-1,TSLA,company announced loss loss concern underperform risky 2022
+The company reported decrease and dropped and loss and fail for Q4 2020.,-1,AMZN,company reported decrease dropped loss fail 2020
+The company announced lawsuit and decrease and decline and fell for Q1 2021.,-1,META,company announced lawsuit decrease decline fell 2021
+The company reported disappoint and disappointed and lower and drops for Q1 2021.,-1,NVDA,company reported disappoint disappointed lower drop 2021
+The company showed drops and down and bearish and falling and dropped for Q1 2021.,-1,JPM,company showed drop bearish falling dropped 2021
+The company announced slow and failed and caution and slow and falling and fail for Q3 2022.,-1,TSLA,company announced slow failed caution slow falling fail 2022
+The company reported disappoint and missed and fell and risk and slowing for Q4 2021.,-1,AAPL,company reported disappoint missed fell risk slowing 2021
+The company announced underperform and decline and falling and lower and concern for Q1 2020.,-1,META,company announced underperform decline falling lower concern 2020
+The company showed bankrupt and weak and miss and concern for Q1 2020.,-1,TSLA,company showed bankrupt weak miss concern 2020
+The company reported litigation and warning and decreased and decreased and losses for Q2 2020.,-1,META,company reported litigation warning decreased decreased loss 2020
+The company showed falling and misses and investigation and disappointed and dropped for Q2 2020.,-1,META,company showed falling miss investigation disappointed dropped 2020
+The company showed concerns and declines and loss and declines for Q4 2020.,-1,AAPL,company showed concern decline loss decline 2020
+The company showed disappointed and falling and drops for Q2 2020.,-1,META,company showed disappointed falling drop 2020
+The company reported cautious and litigation and disappointed and failed and litigation and lawsuit for Q1 2023.,-1,META,company reported cautious litigation disappointed failed litigation lawsuit 2023
+The company showed underperform and concern and weakness and missed and investigation for Q3 2020.,-1,META,company showed underperform concern weakness missed investigation 2020
+The company reported bearish and lower and risky and disappointed and decline and fell and litigation for Q4 2021.,-1,GOOGL,company reported bearish lower risky disappointed decline fell litigation 2021
+The company showed fell and slow and declined and warning and declines and weak and risky for Q2 2020.,-1,TSLA,company showed fell slow declined warning decline weak risky 2020
+The company showed risky and drop and decrease and decline and litigation and concerns and fail for Q2 2020.,-1,MSFT,company showed risky drop decrease decline litigation concern fail 2020
+The company reported weakness and dropped and concern and bankrupt and warning for Q2 2022.,-1,MSFT,company reported weakness dropped concern bankrupt warning 2022
+The company showed losses and slowing and miss and negative and negative and weakness for Q3 2020.,-1,MSFT,company showed loss slowing miss negative negative weakness 2020
+The company announced risk and missed and failure for Q3 2021.,-1,GOOGL,company announced risk missed failure 2021
+The company reported disappointed and risk and caution and decline and slowing and bankruptcy for Q4 2021.,-1,NVDA,company reported disappointed risk caution decline slowing bankruptcy 2021
+The company reported warning and declined and fell and negative and declined for Q3 2022.,-1,TSLA,company reported warning declined fell negative declined 2022
+The company reported warning and drop and risks for Q2 2022.,-1,AAPL,company reported warning drop risk 2022
+The company reported decline and failure and bearish and investigation and risks for Q4 2022.,-1,AAPL,company reported decline failure bearish investigation risk 2022
+The company announced caution and warning and caution and slowing and concern and decreased and decline for Q4 2020.,-1,NVDA,company announced caution warning caution slowing concern decreased decline 2020
+The company announced losses and litigation and fell and caution and disappoint for Q4 2021.,-1,AAPL,company announced loss litigation fell caution disappoint 2021
+The company announced missed and decreased and weak and concern for Q4 2023.,-1,AAPL,company announced missed decreased weak concern 2023
+The company reported slow and missed and risky and bankruptcy and decreased and underperform for Q1 2023.,-1,MSFT,company reported slow missed risky bankruptcy decreased underperform 2023
+The company reported miss and underperform and down and negative and fell and warning for Q1 2021.,-1,JPM,company reported miss underperform negative fell warning 2021
+The company showed failure and loss and bearish for Q3 2023.,-1,META,company showed failure loss bearish 2023
+The company announced failed and concerns and slow and slow for Q2 2022.,-1,AMZN,company announced failed concern slow slow 2022
+The company reported concern and slowing and losses and losses for Q3 2023.,-1,MSFT,company reported concern slowing loss loss 2023
+The company announced bankruptcy and lawsuit and down and warning for Q3 2023.,-1,NVDA,company announced bankruptcy lawsuit warning 2023
+The company showed misses and falling and loss and cautious for Q1 2020.,-1,GOOGL,company showed miss falling loss cautious 2020
+The company showed risks and investigation and cautious and bankruptcy and risky for Q3 2020.,-1,MSFT,company showed risk investigation cautious bankruptcy risky 2020
+The company reported negative and losses and missed and caution and failed for Q4 2021.,-1,META,company reported negative loss missed caution failed 2021
+The company showed risks and failure and decline for Q2 2021.,-1,AAPL,company showed risk failure decline 2021
+The company showed falling and investigation and slow for Q3 2021.,-1,NVDA,company showed falling investigation slow 2021
+The company announced decrease and cautious and concerns and bankruptcy and declines and decrease for Q2 2021.,-1,AMZN,company announced decrease cautious concern bankruptcy decline decrease 2021
+The company reported bankrupt and weak and down for Q4 2022.,-1,JPM,company reported bankrupt weak 2022
+The company reported failed and missed and misses and declined and bankrupt for Q3 2020.,-1,NVDA,company reported failed missed miss declined bankrupt 2020
+The company showed weak and underperform and miss and missed and declines and caution for Q2 2020.,-1,TSLA,company showed weak underperform miss missed decline caution 2020
+The company announced decrease and concerns and disappointed and bearish and failure and underperform for Q1 2022.,-1,TSLA,company announced decrease concern disappointed bearish failure underperform 2022
+The company showed lower and underperform and decreases and declined and failed and decline and failure for Q4 2020.,-1,JPM,company showed lower underperform decrease declined failed decline failure 2020
+The company reported weak and failed and loss and failed and drops for Q2 2023.,-1,AAPL,company reported weak failed loss failed drop 2023
+The company reported misses and bankrupt and declined and slowing and weak for Q2 2021.,-1,GOOGL,company reported miss bankrupt declined slowing weak 2021
+The company reported disappoint and losses and bankrupt and down and falling for Q4 2020.,-1,AMZN,company reported disappoint loss bankrupt falling 2020
+The company showed cautious and risk and bankruptcy and weak and risk for Q1 2023.,-1,MSFT,company showed cautious risk bankruptcy weak risk 2023
+The company showed slowing and warning and miss for Q4 2021.,-1,NVDA,company showed slowing warning miss 2021
+The company reported negative and negative and missed and litigation for Q1 2021.,-1,NVDA,company reported negative negative missed litigation 2021
+The company reported lawsuit and misses and risks for Q2 2021.,-1,AAPL,company reported lawsuit miss risk 2021
+The company showed litigation and underperform and risks and concerns and underperform and falling for Q3 2021.,-1,JPM,company showed litigation underperform risk concern underperform falling 2021
+The company reported declined and lower and slowing for Q2 2023.,-1,GOOGL,company reported declined lower slowing 2023
+The company announced missed and weakness and down and miss for Q3 2023.,-1,AMZN,company announced missed weakness miss 2023
+The company showed cautious and declined and bankruptcy and falling and fail and drops and weakness for Q1 2021.,-1,META,company showed cautious declined bankruptcy falling fail drop weakness 2021
+The company announced bearish and misses and misses and failed and missed for Q3 2023.,-1,NVDA,company announced bearish miss miss failed missed 2023
+The company showed concern and declines and missed and bearish and losses and slow and miss for Q3 2023.,-1,GOOGL,company showed concern decline missed bearish loss slow miss 2023
+The company showed declined and loss and missed and concern and misses and falling and declines for Q4 2022.,-1,GOOGL,company showed declined loss missed concern miss falling decline 2022
+The company showed negative and misses and failure for Q1 2023.,-1,META,company showed negative miss failure 2023
+The company reported failed and failed and caution and losses for Q4 2020.,-1,AMZN,company reported failed failed caution loss 2020
+The company announced cautious and disappointing and bankruptcy for Q3 2022.,-1,AAPL,company announced cautious disappointing bankruptcy 2022
+The company reported dropped and lawsuit and loss for Q1 2020.,-1,NVDA,company reported dropped lawsuit loss 2020
+The company showed underperform and risk and investigation for Q3 2020.,-1,MSFT,company showed underperform risk investigation 2020
+The company showed caution and decline and litigation and declined and cautious and negative and weakness for Q2 2022.,-1,MSFT,company showed caution decline litigation declined cautious negative weakness 2022
+The company reported fail and misses and bankrupt and dropped and fell and weak and underperform for Q1 2022.,-1,AAPL,company reported fail miss bankrupt dropped fell weak underperform 2022
+The company announced bankruptcy and miss and disappointing for Q3 2023.,-1,GOOGL,company announced bankruptcy miss disappointing 2023
+The company reported fail and negative and investigation for Q1 2021.,-1,MSFT,company reported fail negative investigation 2021
+The company showed risky and decreased and dropped and cautious for Q2 2020.,-1,NVDA,company showed risky decreased dropped cautious 2020
+The company showed bearish and negative and loss for Q2 2020.,-1,MSFT,company showed bearish negative loss 2020
+The company reported down and declines and litigation and drop and falling for Q4 2023.,-1,META,company reported decline litigation drop falling 2023
+The company showed failure and dropped and slow for Q1 2020.,-1,JPM,company showed failure dropped slow 2020
+The company showed lower and disappoint and missed and failed and misses and disappointing and negative for Q1 2020.,-1,GOOGL,company showed lower disappoint missed failed miss disappointing negative 2020
+The company reported bearish and decreased and investigation and misses for Q3 2020.,-1,AAPL,company reported bearish decreased investigation miss 2020
+The company reported target and target and estimated and unchanged and estimated and quarterly and scheduled for Q1 2022.,0,GOOGL,company reported target target estimated unchanged estimated quarterly scheduled 2022
+The company reported reports and year and quarterly and reports and reported and guidance for Q2 2020.,0,AAPL,company reported report year quarterly report reported guidance 2020
+The company announced quarter and scheduled and projected for Q2 2023.,0,MSFT,company announced quarter scheduled projected 2023
+The company announced announces and year and maintains and estimated for Q3 2020.,0,JPM,company announced announces year maintains estimated 2020
+The company announced announced and expected and quarterly and maintain and neutral for Q2 2023.,0,AAPL,company announced announced expected quarterly maintain neutral 2023
+The company reported announces and maintained and fiscal and reported and reported and scheduled for Q2 2021.,0,META,company reported announces maintained fiscal reported reported scheduled 2021
+The company showed reported and report and guidance and maintains for Q4 2020.,0,TSLA,company showed reported report guidance maintains 2020
+The company showed maintain and maintains and maintained and scheduled and year for Q4 2022.,0,NVDA,company showed maintain maintains maintained scheduled year 2022
+The company announced forecasted and reported and quarter for Q3 2021.,0,MSFT,company announced forecasted reported quarter 2021
+The company announced target and target and maintained and quarterly and reported and scheduled for Q4 2021.,0,AMZN,company announced target target maintained quarterly reported scheduled 2021
+The company reported year and target and unchanged for Q3 2020.,0,MSFT,company reported year target unchanged 2020
+The company announced reports and year and maintained and maintain and neutral and reports for Q1 2022.,0,NVDA,company announced report year maintained maintain neutral report 2022
+The company announced announced and reports and estimated and year and reported and report and target for Q4 2021.,0,AMZN,company announced announced report estimated year reported report target 2021
+The company reported report and report and year and quarter and announced and estimated for Q4 2023.,0,JPM,company reported report report year quarter announced estimated 2023
+The company reported forecasted and maintains and fiscal and reported and maintain and maintain for Q3 2023.,0,TSLA,company reported forecasted maintains fiscal reported maintain maintain 2023
+The company showed projected and fiscal and quarterly and maintain for Q1 2021.,0,GOOGL,company showed projected fiscal quarterly maintain 2021
+The company announced forecasted and guidance and maintain and target for Q4 2021.,0,NVDA,company announced forecasted guidance maintain target 2021
+The company announced report and quarter and target for Q2 2020.,0,TSLA,company announced report quarter target 2020
+The company reported forecasted and report and expected and reported for Q4 2023.,0,GOOGL,company reported forecasted report expected reported 2023
+The company showed reports and estimated and expected and unchanged for Q2 2023.,0,AAPL,company showed report estimated expected unchanged 2023
+The company reported announces and forecasted and announced for Q3 2022.,0,GOOGL,company reported announces forecasted announced 2022
+The company announced expected and estimated and announces and reported and report and guidance and quarterly for Q3 2023.,0,NVDA,company announced expected estimated announces reported report guidance quarterly 2023
+The company announced quarter and maintained and maintain and target for Q4 2023.,0,AAPL,company announced quarter maintained maintain target 2023
+The company reported quarter and guidance and neutral and report and year for Q1 2021.,0,AMZN,company reported quarter guidance neutral report year 2021
+The company reported maintains and projected and year for Q2 2022.,0,TSLA,company reported maintains projected year 2022
+The company showed announces and reports and announces and quarterly for Q2 2021.,0,MSFT,company showed announces report announces quarterly 2021
+The company reported estimated and quarter and year and unchanged and announces for Q3 2022.,0,MSFT,company reported estimated quarter year unchanged announces 2022
+The company announced announced and fiscal and reported and scheduled and quarterly and target and announced for Q4 2022.,0,JPM,company announced announced fiscal reported scheduled quarterly target announced 2022
+The company showed neutral and announced and fiscal and neutral and reports and quarterly for Q1 2022.,0,JPM,company showed neutral announced fiscal neutral report quarterly 2022
+The company announced quarterly and reports and estimated and estimated and neutral and scheduled for Q2 2022.,0,AAPL,company announced quarterly report estimated estimated neutral scheduled 2022
+The company announced target and scheduled and announced and quarter and guidance and maintained for Q4 2022.,0,NVDA,company announced target scheduled announced quarter guidance maintained 2022
+The company reported year and target and reported and expected and scheduled for Q3 2021.,0,NVDA,company reported year target reported expected scheduled 2021
+The company reported reported and guidance and maintains and report for Q1 2021.,0,TSLA,company reported reported guidance maintains report 2021
+The company showed forecasted and estimated and reported and report and quarter and announces and projected for Q2 2022.,0,AMZN,company showed forecasted estimated reported report quarter announces projected 2022
+The company reported forecasted and maintained and maintain and maintain and quarter and estimated and scheduled for Q3 2023.,0,TSLA,company reported forecasted maintained maintain maintain quarter estimated scheduled 2023
+The company announced reports and maintained and announced for Q4 2023.,0,AMZN,company announced report maintained announced 2023
+The company reported expected and report and reports and announces for Q2 2023.,0,META,company reported expected report report announces 2023
+The company showed quarter and reports and announces and report for Q3 2023.,0,TSLA,company showed quarter report announces report 2023
+The company reported expected and fiscal and expected and quarterly and neutral and quarterly for Q3 2020.,0,GOOGL,company reported expected fiscal expected quarterly neutral quarterly 2020
+The company reported reported and projected and unchanged and fiscal and neutral for Q2 2021.,0,AAPL,company reported reported projected unchanged fiscal neutral 2021
+The company reported maintain and quarterly and maintained and announced and guidance for Q2 2021.,0,AMZN,company reported maintain quarterly maintained announced guidance 2021
+The company reported neutral and guidance and maintains for Q3 2021.,0,TSLA,company reported neutral guidance maintains 2021
+The company announced estimated and guidance and reports and announced for Q4 2021.,0,TSLA,company announced estimated guidance report announced 2021
+The company showed scheduled and forecasted and announced and estimated and report and announced and quarterly for Q4 2020.,0,GOOGL,company showed scheduled forecasted announced estimated report announced quarterly 2020
+The company showed quarterly and quarter and announced and estimated and announced and maintains and quarterly for Q3 2022.,0,MSFT,company showed quarterly quarter announced estimated announced maintains quarterly 2022
+The company reported target and announced and fiscal and maintains and target and fiscal and estimated for Q2 2021.,0,MSFT,company reported target announced fiscal maintains target fiscal estimated 2021
+The company announced announced and reports and forecasted and estimated and quarter and quarter for Q2 2023.,0,AAPL,company announced announced report forecasted estimated quarter quarter 2023
+The company announced announces and unchanged and announced and maintained and quarterly and estimated and scheduled for Q1 2023.,0,GOOGL,company announced announces unchanged announced maintained quarterly estimated scheduled 2023
+The company announced guidance and scheduled and reports and reports for Q1 2023.,0,GOOGL,company announced guidance scheduled report report 2023
+The company showed report and maintains and estimated and maintains and scheduled and quarter for Q1 2021.,0,META,company showed report maintains estimated maintains scheduled quarter 2021
+The company reported projected and fiscal and quarter and quarter for Q1 2023.,0,AAPL,company reported projected fiscal quarter quarter 2023
+The company showed maintained and reports and target and scheduled and maintains for Q2 2023.,0,TSLA,company showed maintained report target scheduled maintains 2023
+The company reported year and maintains and forecasted and expected and quarter and neutral and forecasted for Q4 2020.,0,AAPL,company reported year maintains forecasted expected quarter neutral forecasted 2020
+The company reported unchanged and quarter and quarter and unchanged and fiscal and announced and projected for Q1 2023.,0,NVDA,company reported unchanged quarter quarter unchanged fiscal announced projected 2023
+The company reported reports and maintains and maintains and report and maintains and announced for Q4 2020.,0,JPM,company reported report maintains maintains report maintains announced 2020
+The company reported reported and estimated and year and expected for Q1 2022.,0,AAPL,company reported reported estimated year expected 2022
+The company announced projected and reported and maintained and unchanged and fiscal for Q1 2023.,0,NVDA,company announced projected reported maintained unchanged fiscal 2023
+The company announced reported and expected and fiscal and guidance and maintained and neutral and announces for Q2 2022.,0,AMZN,company announced reported expected fiscal guidance maintained neutral announces 2022
+The company showed guidance and guidance and scheduled and guidance and announces for Q4 2021.,0,AAPL,company showed guidance guidance scheduled guidance announces 2021
+The company reported maintained and maintains and neutral and year for Q4 2023.,0,META,company reported maintained maintains neutral year 2023
+The company showed forecasted and reported and maintained for Q2 2020.,0,NVDA,company showed forecasted reported maintained 2020
+The company showed year and forecasted and announces and reported for Q3 2021.,0,TSLA,company showed year forecasted announces reported 2021
+The company showed estimated and announced and maintain and year for Q2 2020.,0,AMZN,company showed estimated announced maintain year 2020
+The company announced maintained and projected and neutral for Q2 2020.,0,META,company announced maintained projected neutral 2020
+The company showed target and quarter and quarter for Q1 2020.,0,TSLA,company showed target quarter quarter 2020
+The company reported target and projected and scheduled and projected for Q1 2022.,0,JPM,company reported target projected scheduled projected 2022
+The company showed maintains and projected and announced and scheduled and unchanged and forecasted and maintained for Q3 2021.,0,GOOGL,company showed maintains projected announced scheduled unchanged forecasted maintained 2021
+The company announced year and announces and year for Q4 2020.,0,TSLA,company announced year announces year 2020
+The company showed projected and year and forecasted and target and announced and forecasted and maintain for Q2 2023.,0,AAPL,company showed projected year forecasted target announced forecasted maintain 2023
+The company announced estimated and guidance and report and unchanged for Q2 2021.,0,AMZN,company announced estimated guidance report unchanged 2021
+The company reported reported and maintained and reported and maintained and guidance for Q3 2023.,0,TSLA,company reported reported maintained reported maintained guidance 2023
+The company reported quarterly and projected and neutral and reported and maintained and announces and forecasted for Q2 2023.,0,GOOGL,company reported quarterly projected neutral reported maintained announces forecasted 2023
+The company showed maintained and announces and maintains and fiscal and forecasted and reported and quarterly for Q3 2020.,0,GOOGL,company showed maintained announces maintains fiscal forecasted reported quarterly 2020
+The company announced unchanged and forecasted and forecasted for Q4 2020.,0,GOOGL,company announced unchanged forecasted forecasted 2020
+The company showed quarterly and guidance and announced and estimated for Q3 2022.,0,NVDA,company showed quarterly guidance announced estimated 2022
+The company showed expected and forecasted and target and fiscal and fiscal for Q3 2020.,0,AAPL,company showed expected forecasted target fiscal fiscal 2020
+The company announced forecasted and maintains and quarter and reported and scheduled and projected and fiscal for Q4 2021.,0,GOOGL,company announced forecasted maintains quarter reported scheduled projected fiscal 2021
+The company showed neutral and guidance and neutral and year and scheduled for Q3 2021.,0,JPM,company showed neutral guidance neutral year scheduled 2021
+The company announced unchanged and report and announces and unchanged for Q1 2023.,0,GOOGL,company announced unchanged report announces unchanged 2023
+The company announced announced and announces and target for Q4 2022.,0,AAPL,company announced announced announces target 2022
+The company announced fiscal and reported and estimated and forecasted and unchanged and reports and quarterly for Q2 2023.,0,META,company announced fiscal reported estimated forecasted unchanged report quarterly 2023
+The company reported forecasted and expected and estimated for Q4 2021.,0,NVDA,company reported forecasted expected estimated 2021
+The company showed quarter and reports and maintained and fiscal and year for Q3 2022.,0,GOOGL,company showed quarter report maintained fiscal year 2022
+The company reported reported and maintain and guidance and reported and scheduled and scheduled for Q1 2022.,0,AMZN,company reported reported maintain guidance reported scheduled scheduled 2022
+The company reported reported and expected and target and guidance and maintain and year for Q1 2023.,0,NVDA,company reported reported expected target guidance maintain year 2023
+The company reported maintains and reports and maintains for Q1 2021.,0,TSLA,company reported maintains report maintains 2021
+The company reported unchanged and estimated and guidance and forecasted and maintained and maintains and reports for Q4 2022.,0,META,company reported unchanged estimated guidance forecasted maintained maintains report 2022
+The company announced announces and scheduled and reported and quarterly and maintains and announced and reports for Q3 2022.,0,TSLA,company announced announces scheduled reported quarterly maintains announced report 2022
+The company announced unchanged and maintains and unchanged and report for Q4 2021.,0,TSLA,company announced unchanged maintains unchanged report 2021
+The company showed forecasted and quarter and quarter and expected for Q1 2020.,0,TSLA,company showed forecasted quarter quarter expected 2020
+The company showed projected and expected and announced and guidance and projected and guidance for Q2 2021.,0,GOOGL,company showed projected expected announced guidance projected guidance 2021
+The company announced quarterly and expected and quarterly and reports and maintains and expected and quarter for Q4 2021.,0,TSLA,company announced quarterly expected quarterly report maintains expected quarter 2021
+The company reported quarter and maintain and forecasted for Q3 2022.,0,TSLA,company reported quarter maintain forecasted 2022
+The company reported unchanged and quarterly and quarter for Q1 2023.,0,AMZN,company reported unchanged quarterly quarter 2023
+The company reported maintained and scheduled and scheduled and scheduled and fiscal and maintained and expected for Q1 2020.,0,MSFT,company reported maintained scheduled scheduled scheduled fiscal maintained expected 2020
+The company showed maintained and expected and forecasted and projected and maintains and scheduled and quarterly for Q3 2022.,0,META,company showed maintained expected forecasted projected maintains scheduled quarterly 2022
+The company reported target and quarterly and guidance and unchanged and announces and quarter for Q1 2021.,0,AAPL,company reported target quarterly guidance unchanged announces quarter 2021
+The company reported quarter and announces and maintains and maintains and report for Q4 2021.,0,AAPL,company reported quarter announces maintains maintains report 2021
+The company showed reports and announced and maintain and estimated for Q2 2022.,0,JPM,company showed report announced maintain estimated 2022
+The company announced target and announced and guidance and announced and quarterly for Q3 2022.,0,GOOGL,company announced target announced guidance announced quarterly 2022
+The company showed forecasted and neutral and year and maintain for Q1 2023.,0,JPM,company showed forecasted neutral year maintain 2023
+The company showed announces and target and reported and forecasted and reports and neutral and announced for Q4 2023.,0,AAPL,company showed announces target reported forecasted report neutral announced 2023
+The company announced maintain and expected and quarter and maintains and estimated for Q2 2023.,0,META,company announced maintain expected quarter maintains estimated 2023
+The company showed expected and unchanged and announced and projected and quarterly for Q4 2021.,0,TSLA,company showed expected unchanged announced projected quarterly 2021
+The company announced maintains and guidance and maintained and maintains and estimated and guidance for Q1 2021.,0,TSLA,company announced maintains guidance maintained maintains estimated guidance 2021
+The company showed reports and maintained and report and scheduled and maintain for Q2 2020.,0,META,company showed report maintained report scheduled maintain 2020
+The company reported maintains and neutral and expected and maintains for Q4 2020.,0,AAPL,company reported maintains neutral expected maintains 2020
+The company showed year and maintain and estimated and expected for Q2 2021.,0,GOOGL,company showed year maintain estimated expected 2021
+The company showed estimated and maintain and forecasted for Q1 2021.,0,AAPL,company showed estimated maintain forecasted 2021
+The company announced announced and year and projected and year and neutral and reported for Q1 2022.,0,NVDA,company announced announced year projected year neutral reported 2022
+The company showed estimated and forecasted and report for Q1 2023.,0,AMZN,company showed estimated forecasted report 2023
+The company reported quarter and maintains and forecasted and estimated and announced and report and reported for Q3 2020.,0,TSLA,company reported quarter maintains forecasted estimated announced report reported 2020
+The company showed announced and fiscal and announces and report and maintains and guidance and maintains for Q4 2022.,0,TSLA,company showed announced fiscal announces report maintains guidance maintains 2022
+The company announced announces and reported and fiscal for Q3 2022.,0,JPM,company announced announces reported fiscal 2022
+The company reported reports and year and expected and projected and unchanged for Q1 2021.,0,TSLA,company reported report year expected projected unchanged 2021
+The company showed maintained and quarterly and expected for Q4 2022.,0,META,company showed maintained quarterly expected 2022
+The company reported estimated and year and unchanged and target and quarter and reported and maintain for Q4 2023.,0,MSFT,company reported estimated year unchanged target quarter reported maintain 2023
+The company reported report and neutral and estimated for Q4 2020.,0,GOOGL,company reported report neutral estimated 2020
+The company reported announces and quarter and maintains and target and announced and expected and neutral for Q2 2020.,0,TSLA,company reported announces quarter maintains target announced expected neutral 2020
+The company reported projected and expected and projected and year and quarter for Q1 2022.,0,META,company reported projected expected projected year quarter 2022
+The company reported guidance and quarter and announced and quarter and quarterly and projected for Q3 2020.,0,AMZN,company reported guidance quarter announced quarter quarterly projected 2020
+The company reported maintained and report and forecasted and projected and reported and report and estimated for Q4 2020.,0,TSLA,company reported maintained report forecasted projected reported report estimated 2020
+The company showed guidance and guidance and reports and projected and announces for Q2 2020.,0,MSFT,company showed guidance guidance report projected announces 2020
+The company announced reports and projected and quarter and unchanged and maintained and projected for Q2 2021.,0,JPM,company announced report projected quarter unchanged maintained projected 2021
+The company announced target and estimated and maintained and scheduled and quarter for Q2 2021.,0,GOOGL,company announced target estimated maintained scheduled quarter 2021
+The company showed announced and fiscal and estimated for Q2 2023.,0,MSFT,company showed announced fiscal estimated 2023
+The company announced maintains and maintained and maintain and year and unchanged for Q2 2020.,0,TSLA,company announced maintains maintained maintain year unchanged 2020
+The company announced expected and reports and report and announces and quarterly and year for Q1 2020.,0,JPM,company announced expected report report announces quarterly year 2020
+The company showed announces and quarter and announces and forecasted for Q1 2022.,0,AAPL,company showed announces quarter announces forecasted 2022
+The company reported report and expected and announced and maintain for Q4 2021.,0,AMZN,company reported report expected announced maintain 2021
+The company reported maintain and guidance and maintained and estimated and reported for Q3 2022.,0,NVDA,company reported maintain guidance maintained estimated reported 2022
+The company reported forecasted and target and maintained and reported and year and target for Q3 2022.,0,AAPL,company reported forecasted target maintained reported year target 2022
+The company showed maintain and reports and neutral and projected and quarterly for Q2 2020.,0,TSLA,company showed maintain report neutral projected quarterly 2020
+The company announced reported and scheduled and quarter and neutral and unchanged and announces for Q1 2021.,0,AMZN,company announced reported scheduled quarter neutral unchanged announces 2021
+The company showed neutral and quarterly and projected and announces and announced and guidance for Q1 2023.,0,META,company showed neutral quarterly projected announces announced guidance 2023
+The company showed projected and quarterly and reported for Q2 2022.,0,AAPL,company showed projected quarterly reported 2022
+The company showed target and quarterly and maintain and forecasted and unchanged and maintain for Q3 2022.,0,AMZN,company showed target quarterly maintain forecasted unchanged maintain 2022
+The company reported scheduled and year and maintained and fiscal and forecasted for Q1 2022.,0,META,company reported scheduled year maintained fiscal forecasted 2022
+The company reported neutral and expected and year and reports and maintains for Q1 2023.,0,TSLA,company reported neutral expected year report maintains 2023
+The company reported maintains and reported and quarterly and maintained and forecasted and projected and quarter for Q1 2021.,0,TSLA,company reported maintains reported quarterly maintained forecasted projected quarter 2021
+The company reported maintained and projected and forecasted and neutral for Q2 2021.,0,AMZN,company reported maintained projected forecasted neutral 2021
+The company announced announced and fiscal and guidance for Q4 2022.,0,AAPL,company announced announced fiscal guidance 2022
+The company announced estimated and announces and quarter and maintained and target and quarter and maintain for Q4 2020.,0,TSLA,company announced estimated announces quarter maintained target quarter maintain 2020
+The company reported maintained and projected and maintains and forecasted and maintained and target and maintained for Q3 2020.,0,TSLA,company reported maintained projected maintains forecasted maintained target maintained 2020
+The company reported quarterly and maintained and fiscal and maintained and quarter for Q2 2021.,0,AAPL,company reported quarterly maintained fiscal maintained quarter 2021
+The company reported quarter and report and report and reports and quarterly for Q4 2023.,0,META,company reported quarter report report report quarterly 2023
+The company announced fiscal and neutral and announced and forecasted and quarter and maintained and unchanged for Q1 2020.,0,GOOGL,company announced fiscal neutral announced forecasted quarter maintained unchanged 2020
+The company reported announces and maintained and scheduled and year and neutral and scheduled and expected for Q1 2023.,0,META,company reported announces maintained scheduled year neutral scheduled expected 2023
+The company announced projected and maintains and quarterly and reports and report and reported for Q3 2022.,0,AMZN,company announced projected maintains quarterly report report reported 2022
+The company announced announced and maintain and guidance and maintains and unchanged and announces for Q4 2021.,0,JPM,company announced announced maintain guidance maintains unchanged announces 2021
+The company showed fiscal and announces and fiscal and fiscal and announces for Q3 2021.,0,META,company showed fiscal announces fiscal fiscal announces 2021
+The company announced guidance and announces and unchanged and announced for Q2 2023.,0,TSLA,company announced guidance announces unchanged announced 2023
+The company showed announced and neutral and maintains and target and expected and expected for Q3 2021.,0,MSFT,company showed announced neutral maintains target expected expected 2021
+The company announced reported and scheduled and quarterly and forecasted for Q2 2020.,0,AMZN,company announced reported scheduled quarterly forecasted 2020
+The company announced scheduled and forecasted and neutral for Q1 2023.,0,GOOGL,company announced scheduled forecasted neutral 2023
+The company announced quarter and maintain and quarterly for Q1 2023.,0,JPM,company announced quarter maintain quarterly 2023
+The company reported unchanged and unchanged and guidance and announces for Q1 2022.,0,AAPL,company reported unchanged unchanged guidance announces 2022
+The company showed maintain and report and projected and guidance and guidance and fiscal and estimated for Q1 2020.,0,TSLA,company showed maintain report projected guidance guidance fiscal estimated 2020
+The company announced target and fiscal and projected and maintained for Q4 2023.,0,JPM,company announced target fiscal projected maintained 2023
+The company showed maintained and forecasted and announces and forecasted and announces and unchanged and target for Q3 2020.,0,AAPL,company showed maintained forecasted announces forecasted announces unchanged target 2020
+The company reported unchanged and quarter and year and scheduled and fiscal for Q2 2021.,0,TSLA,company reported unchanged quarter year scheduled fiscal 2021
+The company reported projected and guidance and target for Q1 2021.,0,JPM,company reported projected guidance target 2021
+The company reported reported and target and fiscal for Q1 2020.,0,META,company reported reported target fiscal 2020
+The company announced quarter and target and quarterly and fiscal for Q3 2020.,0,NVDA,company announced quarter target quarterly fiscal 2020
+The company reported target and announces and report and projected and estimated and quarter and projected for Q4 2023.,0,TSLA,company reported target announces report projected estimated quarter projected 2023
+The company showed maintains and projected and scheduled and quarterly and expected for Q2 2023.,0,AAPL,company showed maintains projected scheduled quarterly expected 2023
+The company announced maintains and neutral and neutral for Q2 2023.,0,GOOGL,company announced maintains neutral neutral 2023
+The company showed quarterly and report and quarter for Q4 2023.,0,META,company showed quarterly report quarter 2023
+The company showed reported and reported and announces and reported and target and maintains for Q1 2020.,0,JPM,company showed reported reported announces reported target maintains 2020
+The company showed maintained and maintain and fiscal and maintained and quarterly and year for Q2 2023.,0,AMZN,company showed maintained maintain fiscal maintained quarterly year 2023
+The company showed neutral and expected and announced and unchanged and quarter for Q2 2022.,0,AMZN,company showed neutral expected announced unchanged quarter 2022
+The company announced neutral and quarterly and estimated and quarter and reports and announces and expected for Q4 2020.,0,MSFT,company announced neutral quarterly estimated quarter report announces expected 2020
+The company announced target and announces and maintained and quarter for Q2 2023.,0,JPM,company announced target announces maintained quarter 2023
+The company reported quarter and announced and target and reported and neutral for Q1 2022.,0,AAPL,company reported quarter announced target reported neutral 2022
+The company reported maintains and maintains and scheduled and announces and maintained for Q2 2021.,0,AMZN,company reported maintains maintains scheduled announces maintained 2021
+The company reported announces and projected and reports for Q4 2021.,0,TSLA,company reported announces projected report 2021
+The company reported quarterly and guidance and scheduled and maintain and estimated and guidance and year for Q1 2021.,0,GOOGL,company reported quarterly guidance scheduled maintain estimated guidance year 2021
+The company reported estimated and guidance and reports and scheduled and announced and maintained for Q4 2023.,0,NVDA,company reported estimated guidance report scheduled announced maintained 2023
+The company showed target and quarterly and projected and forecasted and projected and expected and scheduled for Q3 2020.,0,MSFT,company showed target quarterly projected forecasted projected expected scheduled 2020
+The company showed estimated and report and expected and maintained and fiscal for Q3 2021.,0,AMZN,company showed estimated report expected maintained fiscal 2021
+The company showed quarterly and forecasted and estimated and maintains and forecasted and projected and unchanged for Q4 2021.,0,JPM,company showed quarterly forecasted estimated maintains forecasted projected unchanged 2021
+The company showed projected and projected and maintained and target and maintain and scheduled and reported for Q3 2021.,0,META,company showed projected projected maintained target maintain scheduled reported 2021
+The company showed announced and maintain and guidance and year and forecasted for Q3 2020.,0,META,company showed announced maintain guidance year forecasted 2020
+The company announced reported and announced and unchanged and year and maintains and scheduled for Q4 2023.,0,AMZN,company announced reported announced unchanged year maintains scheduled 2023
+The company reported guidance and unchanged and unchanged and announces for Q2 2021.,0,TSLA,company reported guidance unchanged unchanged announces 2021
+The company showed guidance and expected and report and estimated and maintained and report and unchanged for Q2 2021.,0,TSLA,company showed guidance expected report estimated maintained report unchanged 2021
+The company reported reports and quarter and unchanged for Q3 2021.,0,META,company reported report quarter unchanged 2021
+The company showed maintain and reports and maintain and projected for Q1 2023.,0,MSFT,company showed maintain report maintain projected 2023
+The company reported expected and estimated and reported and maintain and guidance and maintains and quarter for Q3 2023.,0,TSLA,company reported expected estimated reported maintain guidance maintains quarter 2023
+The company reported reported and maintained and estimated and target and unchanged and maintains and reported for Q1 2020.,0,AMZN,company reported reported maintained estimated target unchanged maintains reported 2020
+The company announced fiscal and report and quarter and reported and quarterly and guidance and scheduled for Q3 2023.,0,AAPL,company announced fiscal report quarter reported quarterly guidance scheduled 2023
+The company showed reported and unchanged and report and unchanged and neutral and maintains for Q1 2022.,0,MSFT,company showed reported unchanged report unchanged neutral maintains 2022
+The company reported unchanged and forecasted and reports and expected and maintains and guidance and announces for Q3 2023.,0,TSLA,company reported unchanged forecasted report expected maintains guidance announces 2023
+The company reported quarter and quarter and fiscal and forecasted and maintains for Q3 2022.,0,TSLA,company reported quarter quarter fiscal forecasted maintains 2022
+The company showed estimated and quarter and announced and reports and expected and announces for Q1 2023.,0,MSFT,company showed estimated quarter announced report expected announces 2023
+The company reported fiscal and maintained and announces and reported and neutral and year and target for Q4 2023.,0,MSFT,company reported fiscal maintained announces reported neutral year target 2023
+The company announced maintained and scheduled and scheduled and projected and neutral and quarterly and projected for Q1 2021.,0,AMZN,company announced maintained scheduled scheduled projected neutral quarterly projected 2021
+The company reported neutral and expected and maintains and scheduled and year and fiscal and quarter for Q2 2021.,0,AAPL,company reported neutral expected maintains scheduled year fiscal quarter 2021
+The company announced reports and reported and reported for Q4 2022.,0,MSFT,company announced report reported reported 2022
+The company announced unchanged and neutral and reported and target and expected and quarterly and report for Q4 2021.,0,AAPL,company announced unchanged neutral reported target expected quarterly report 2021
+The company showed projected and expected and quarterly and maintained and maintained and expected for Q1 2022.,0,META,company showed projected expected quarterly maintained maintained expected 2022
+The company reported scheduled and scheduled and projected and announced and quarterly for Q1 2022.,0,TSLA,company reported scheduled scheduled projected announced quarterly 2022
+The company reported maintained and maintain and announces for Q1 2021.,0,JPM,company reported maintained maintain announces 2021
+The company showed quarterly and forecasted and announces and fiscal and quarter and year and fiscal for Q2 2023.,0,NVDA,company showed quarterly forecasted announces fiscal quarter year fiscal 2023
+The company announced scheduled and reports and neutral and fiscal for Q4 2022.,0,GOOGL,company announced scheduled report neutral fiscal 2022
+The company showed announced and projected and report and unchanged and fiscal and quarterly for Q3 2020.,0,GOOGL,company showed announced projected report unchanged fiscal quarterly 2020
+The company reported expected and forecasted and year and announced and unchanged for Q3 2020.,0,NVDA,company reported expected forecasted year announced unchanged 2020
+The company showed unchanged and projected and expected and maintain and scheduled and announces for Q2 2023.,0,AMZN,company showed unchanged projected expected maintain scheduled announces 2023
+The company announced quarterly and scheduled and quarter and report for Q1 2021.,0,NVDA,company announced quarterly scheduled quarter report 2021
+The company showed maintains and estimated and scheduled and estimated for Q1 2023.,0,TSLA,company showed maintains estimated scheduled estimated 2023
+The company announced maintain and scheduled and reported and year and fiscal for Q3 2020.,0,AAPL,company announced maintain scheduled reported year fiscal 2020
+The company showed estimated and quarterly and maintained and maintains and reported and maintain and scheduled for Q2 2022.,0,NVDA,company showed estimated quarterly maintained maintains reported maintain scheduled 2022
+The company reported year and estimated and reported and neutral and maintain and announces for Q3 2020.,0,TSLA,company reported year estimated reported neutral maintain announces 2020
+The company reported quarterly and report and announced and estimated and estimated and announced for Q1 2023.,0,GOOGL,company reported quarterly report announced estimated estimated announced 2023
+The company showed projected and announced and quarterly and announces for Q4 2022.,0,META,company showed projected announced quarterly announces 2022
+The company reported projected and expected and reports and expected and maintained for Q3 2023.,0,NVDA,company reported projected expected report expected maintained 2023
+The company showed expected and forecasted and maintains and reports and scheduled and estimated and estimated for Q3 2023.,0,TSLA,company showed expected forecasted maintains report scheduled estimated estimated 2023
+The company announced neutral and forecasted and reported for Q2 2022.,0,AMZN,company announced neutral forecasted reported 2022
+The company announced target and neutral and guidance and announced and announced for Q2 2020.,0,GOOGL,company announced target neutral guidance announced announced 2020
+The company reported maintain and announces and year and reports for Q3 2022.,0,AMZN,company reported maintain announces year report 2022
+The company showed announces and neutral and projected and quarter and projected for Q1 2023.,0,GOOGL,company showed announces neutral projected quarter projected 2023
+The company announced maintains and expected and maintains and reports for Q2 2023.,0,JPM,company announced maintains expected maintains report 2023
+The company showed announced and target and target for Q1 2022.,0,TSLA,company showed announced target target 2022
+The company showed scheduled and target and guidance and expected and target and forecasted and quarterly for Q1 2023.,0,GOOGL,company showed scheduled target guidance expected target forecasted quarterly 2023
+The company announced unchanged and quarter and guidance and estimated and maintain and scheduled for Q4 2021.,0,GOOGL,company announced unchanged quarter guidance estimated maintain scheduled 2021
+The company reported announces and fiscal and maintained and fiscal for Q4 2020.,0,JPM,company reported announces fiscal maintained fiscal 2020
+The company reported guidance and maintained and estimated for Q3 2023.,0,GOOGL,company reported guidance maintained estimated 2023
+The company reported announces and unchanged and reports for Q1 2023.,0,META,company reported announces unchanged report 2023
+The company showed target and scheduled and projected and unchanged and maintains and target and maintained for Q3 2021.,0,TSLA,company showed target scheduled projected unchanged maintains target maintained 2021
+The company showed maintains and maintains and report and guidance and expected for Q3 2020.,0,AMZN,company showed maintains maintains report guidance expected 2020
+The company showed report and guidance and year and expected and forecasted for Q3 2022.,0,TSLA,company showed report guidance year expected forecasted 2022
+The company announced quarterly and reported and report and quarterly and year and fiscal and maintained for Q2 2023.,0,AAPL,company announced quarterly reported report quarterly year fiscal maintained 2023
+The company reported report and scheduled and announces and target and maintain and quarter for Q2 2022.,0,META,company reported report scheduled announces target maintain quarter 2022
+The company showed reported and announces and year and quarter and quarterly and maintains for Q3 2021.,0,META,company showed reported announces year quarter quarterly maintains 2021
+The company showed fiscal and announced and reported and report and announced and quarter for Q2 2023.,0,JPM,company showed fiscal announced reported report announced quarter 2023
+The company showed maintains and announced and reported and year and target and projected and maintains for Q1 2023.,0,AMZN,company showed maintains announced reported year target projected maintains 2023
+The company showed quarterly and unchanged and reported and reported and estimated for Q3 2023.,0,NVDA,company showed quarterly unchanged reported reported estimated 2023
+The company reported announced and reports and announces and quarter and target for Q3 2021.,0,AAPL,company reported announced report announces quarter target 2021
+The company showed neutral and maintain and unchanged and report and scheduled and announces and announced for Q3 2020.,0,JPM,company showed neutral maintain unchanged report scheduled announces announced 2020
+The company showed reported and year and quarter and target and announced and estimated and reported for Q3 2023.,0,META,company showed reported year quarter target announced estimated reported 2023
+The company announced guidance and quarter and year for Q3 2020.,0,META,company announced guidance quarter year 2020
+The company showed forecasted and expected and reports and estimated and estimated and fiscal for Q3 2020.,0,GOOGL,company showed forecasted expected report estimated estimated fiscal 2020
+The company announced fiscal and expected and report and neutral and announces and reported and maintain for Q4 2022.,0,NVDA,company announced fiscal expected report neutral announces reported maintain 2022
+The company announced guidance and quarterly and maintained and unchanged and estimated for Q2 2021.,0,GOOGL,company announced guidance quarterly maintained unchanged estimated 2021
+The company reported neutral and year and maintains and projected and neutral for Q2 2021.,0,GOOGL,company reported neutral year maintains projected neutral 2021
+The company reported maintained and reported and announced and projected and neutral for Q3 2020.,0,NVDA,company reported maintained reported announced projected neutral 2020
+The company showed neutral and neutral and fiscal and maintained and guidance for Q3 2022.,0,GOOGL,company showed neutral neutral fiscal maintained guidance 2022
+The company reported neutral and reported and neutral and projected for Q4 2022.,0,NVDA,company reported neutral reported neutral projected 2022
+The company showed scheduled and guidance and announced and estimated and announces for Q3 2023.,0,JPM,company showed scheduled guidance announced estimated announces 2023
+The company showed quarter and announces and reports and forecasted and maintains and announces for Q2 2020.,0,JPM,company showed quarter announces report forecasted maintains announces 2020
+The company announced maintain and scheduled and report and projected and year and fiscal for Q4 2022.,0,TSLA,company announced maintain scheduled report projected year fiscal 2022
+The company showed year and maintains and expected and forecasted and unchanged for Q3 2022.,0,GOOGL,company showed year maintains expected forecasted unchanged 2022
+The company announced fiscal and reported and announces for Q4 2021.,0,NVDA,company announced fiscal reported announces 2021
+The company showed maintained and year and quarterly for Q2 2021.,0,META,company showed maintained year quarterly 2021
+The company reported maintain and maintained and reported and guidance and expected for Q3 2021.,0,META,company reported maintain maintained reported guidance expected 2021
+The company showed maintained and report and scheduled and announces for Q2 2021.,0,MSFT,company showed maintained report scheduled announces 2021
+The company reported expected and neutral and unchanged and maintains and reported and report and fiscal for Q1 2022.,0,TSLA,company reported expected neutral unchanged maintains reported report fiscal 2022
+The company showed announces and forecasted and announced and announced for Q2 2020.,0,NVDA,company showed announces forecasted announced announced 2020
+The company announced expected and quarterly and unchanged and quarterly and estimated for Q4 2020.,0,GOOGL,company announced expected quarterly unchanged quarterly estimated 2020
+The company showed target and announced and reports and estimated and target and fiscal for Q3 2023.,0,GOOGL,company showed target announced report estimated target fiscal 2023
+The company announced target and announced and reports and announces and expected and forecasted and reported for Q1 2022.,0,AMZN,company announced target announced report announces expected forecasted reported 2022
+The company announced year and reported and neutral for Q2 2022.,0,AAPL,company announced year reported neutral 2022
+The company reported fiscal and quarter and expected for Q4 2021.,0,NVDA,company reported fiscal quarter expected 2021
+The company announced projected and forecasted and year and target and reported and fiscal for Q4 2021.,0,AMZN,company announced projected forecasted year target reported fiscal 2021
+The company showed announces and unchanged and unchanged and projected and maintained and unchanged and fiscal for Q4 2020.,0,TSLA,company showed announces unchanged unchanged projected maintained unchanged fiscal 2020
+The company showed reported and unchanged and unchanged and forecasted for Q4 2022.,0,AMZN,company showed reported unchanged unchanged forecasted 2022
+The company reported quarter and quarterly and maintained and projected for Q3 2023.,0,META,company reported quarter quarterly maintained projected 2023
+The company announced maintains and quarter and quarterly and quarter and maintain and maintained and reported for Q1 2020.,0,AMZN,company announced maintains quarter quarterly quarter maintain maintained reported 2020
+The company announced quarterly and fiscal and year for Q1 2020.,0,NVDA,company announced quarterly fiscal year 2020
+The company announced unchanged and forecasted and guidance and announces and reported and reported for Q1 2021.,0,JPM,company announced unchanged forecasted guidance announces reported reported 2021
+The company announced estimated and expected and reports and year and forecasted and forecasted for Q4 2021.,0,AAPL,company announced estimated expected report year forecasted forecasted 2021
+The company showed year and reports and forecasted and neutral and reports and reports for Q2 2023.,0,META,company showed year report forecasted neutral report report 2023
+The company reported neutral and maintains and forecasted and quarterly for Q4 2021.,0,AMZN,company reported neutral maintains forecasted quarterly 2021
+The company announced guidance and announces and reports for Q2 2023.,0,NVDA,company announced guidance announces report 2023
+The company showed report and announces and fiscal and reports for Q3 2020.,0,NVDA,company showed report announces fiscal report 2020
+The company showed reported and quarter and target and guidance and target and scheduled for Q1 2020.,0,JPM,company showed reported quarter target guidance target scheduled 2020
+The company announced guidance and reports and announces and fiscal for Q2 2022.,0,JPM,company announced guidance report announces fiscal 2022
+The company reported maintains and maintains and expected and unchanged for Q4 2023.,0,NVDA,company reported maintains maintains expected unchanged 2023
+The company reported year and expected and maintain and quarter and forecasted for Q4 2021.,0,AMZN,company reported year expected maintain quarter forecasted 2021
+The company reported guidance and guidance and year and quarter and report for Q4 2020.,0,TSLA,company reported guidance guidance year quarter report 2020
+The company reported scheduled and quarter and quarter and reported and unchanged and reports and expected for Q4 2020.,0,META,company reported scheduled quarter quarter reported unchanged report expected 2020
+The company announced maintained and scheduled and quarterly for Q2 2021.,0,AMZN,company announced maintained scheduled quarterly 2021
+The company reported neutral and quarter and report and guidance and guidance and announces for Q4 2021.,0,TSLA,company reported neutral quarter report guidance guidance announces 2021
+The company showed estimated and maintained and announced and scheduled for Q1 2021.,0,MSFT,company showed estimated maintained announced scheduled 2021
+The company showed announced and maintained and scheduled and quarter and expected and report for Q2 2021.,0,META,company showed announced maintained scheduled quarter expected report 2021
+The company showed reported and scheduled and quarterly and year and fiscal and reported for Q2 2023.,0,TSLA,company showed reported scheduled quarterly year fiscal reported 2023
+The company showed neutral and maintained and quarterly and neutral and guidance and year and forecasted for Q2 2023.,0,META,company showed neutral maintained quarterly neutral guidance year forecasted 2023
+The company announced reports and unchanged and maintains for Q1 2020.,0,MSFT,company announced report unchanged maintains 2020
+The company showed year and neutral and target for Q4 2022.,0,AAPL,company showed year neutral target 2022
+The company announced quarterly and projected and year and fiscal and estimated and forecasted for Q2 2022.,0,MSFT,company announced quarterly projected year fiscal estimated forecasted 2022
+The company announced reports and neutral and announced and guidance for Q3 2021.,0,GOOGL,company announced report neutral announced guidance 2021
+The company reported unchanged and neutral and maintained and guidance for Q4 2020.,0,META,company reported unchanged neutral maintained guidance 2020
+The company showed target and quarter and maintained and target and quarterly and maintains for Q3 2022.,0,GOOGL,company showed target quarter maintained target quarterly maintains 2022
+The company reported expected and projected and quarter and forecasted and maintained and fiscal for Q3 2022.,0,GOOGL,company reported expected projected quarter forecasted maintained fiscal 2022
+The company reported estimated and quarterly and guidance and guidance for Q3 2020.,0,META,company reported estimated quarterly guidance guidance 2020
+The company announced fiscal and scheduled and guidance and maintained for Q4 2020.,0,MSFT,company announced fiscal scheduled guidance maintained 2020
+The company announced estimated and expected and maintains and announces and scheduled for Q4 2023.,0,META,company announced estimated expected maintains announces scheduled 2023
+The company announced year and estimated and announces and expected for Q2 2022.,0,NVDA,company announced year estimated announces expected 2022
+The company showed announces and scheduled and maintained and reports for Q2 2021.,0,AAPL,company showed announces scheduled maintained report 2021
+The company reported quarter and announces and scheduled for Q3 2023.,0,NVDA,company reported quarter announces scheduled 2023

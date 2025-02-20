@@ -1,4 +1,5 @@
 import os
+import random
 
 import pandas as pd
 import string
@@ -53,52 +54,123 @@ class FinancialNewsAnalyzer:
         tag_dict = {"J": wordnet.ADJ, "N": wordnet.NOUN, "V": wordnet.VERB, "R": wordnet.ADV}
         return tag_dict.get(tag, wordnet.NOUN)
 
+    # def lexicon_score(self, text):
+    #     """Calculate sentiment score using financial lexicon, considering negations and analyst rating changes."""
+    #     text = text.lower()
+    #     tokens = word_tokenize(text)
+    #     score = 0
+    #     negate = False
+    #
+    #     # define phrase based sentiment adjustments
+    #     phrase_sentiments = {
+    #         "from buy to hold": -2.0, "from hold to sell": -2.5, "from buy to sell": -3.0,
+    #         "downgraded to hold": -2.0, "downgraded to sell": -3.0, "cut to hold": -2.0, "cut to sell": -3.0,
+    #
+    #         "from sell to hold": 2.0, "from hold to buy": 2.5, "from sell to buy": 3.0,
+    #         "upgraded to buy": 3.0, "upgraded to hold": 2.0, "raised to buy": 3.0
+    #     }
+    #
+    #     # check for phrases
+    #     for phrase, sentiment in phrase_sentiments.items():
+    #         if phrase in text:
+    #             score += sentiment
+    #
+    #     for token in tokens:
+    #         lemmatized_token = self.lemmatizer.lemmatize(token)
+    #
+    #         if lemmatized_token in self.negation_words:
+    #             negate = True  # found negation
+    #             continue
+    #
+    #         if lemmatized_token in self.financial_dictionary_classifier:
+    #             sentiment = self.financial_dictionary_classifier[lemmatized_token]
+    #             score += -sentiment if negate else sentiment  # flip the sentiment if negation applies
+    #             negate = False  # reset negation after applying
+    #
+    #     return score / max(len(tokens), 1)
+
     def lexicon_score(self, text):
-        """Calculate sentiment score using financial lexicon, considering negations."""
-        tokens = word_tokenize(text.lower())
+        """Calculate sentiment score using financial lexicon, considering negations and analyst rating changes."""
+        text = text.lower()
+        tokens = word_tokenize(text)
         score = 0
         negate = False
+        negation_scope = []
+        stop_words = {".", ",", ";", ":", "!", "?"}  # they end negation
+
+        # Define phrase-based sentiment adjustments
+        phrase_sentiments = {
+            "from buy to hold": -3.0, "from hold to sell": -3.5, "from buy to sell": -3.5,
+            "downgraded to hold": -3.0, "downgraded to sell": -3.5, "cut to hold": -3.5, "cut to sell": -3.5,
+            "from sell to hold": 2.0, "from hold to buy": 2.2, "from sell to buy": 2.4,
+            "upgraded to buy": 2.0, "upgraded to hold": 2.2, "raised to buy": 2.4
+        }
+
+        # Check for phrases first
+        for phrase, sentiment in phrase_sentiments.items():
+            if phrase in text:
+                score += sentiment
 
         for token in tokens:
-            lemmatized_token = self.lemmatizer.lemmatize(token)
+            lemmatized_token = self.lemmatizer.lemmatize(token, self.get_wordnet_pos(token))
 
             if lemmatized_token in self.negation_words:
-                negate = True  # Negation detected
+                negate = True  # Activate negation
+                negation_scope = []  # Reset scope
                 continue
+
+            if negate:
+                negation_scope.append(lemmatized_token)
 
             if lemmatized_token in self.financial_dictionary_classifier:
                 sentiment = self.financial_dictionary_classifier[lemmatized_token]
-                score += -sentiment if negate else sentiment  # Flip sentiment if negation applies
-                negate = False  # Reset negation after applying
+
+                if negate:
+                    # Flip the entire negation scope
+                    for neg_word in negation_scope:
+                        if neg_word in self.financial_dictionary_classifier:
+                            sentiment = -self.financial_dictionary_classifier[neg_word]
+                            score += sentiment
+                    negation_scope = []  # Clear scope after applying negation
+                    negate = False  # Reset negation
+
+                else:
+                    score += sentiment
+
+            # Reset negation at punctuation
+            if token in stop_words:
+                negate = False
+                negation_scope = []
 
         return score / max(len(tokens), 1)
 
     def load_financial_dictionary_classifier(self):
         """Load or create a financial-specific sentiment lexicon"""
         financial_positive = [
-            'beat', 'boost', 'exceed', 'surprisingly', 'grow', 'up', 'rise', 'gain', 'profitable', 'profit'
-            'earning', 'strong', 'strength', 'higher', 'high', 'rally', 'bullish', 'outperform',
-            'opportunity', 'success', 'improve', 'breakthrough', 'progress', 'upgrade', 'increase', 'win', 'reward'
+            'beat', 'boost', 'exceed', 'surprisingly', 'grow', 'up', 'rise', 'gain', 'profitable',
+            'earn', 'strong', 'strength', 'higher', 'high', 'rally', 'bullish', 'outperform',
+            'opportunity', 'success', 'improve', 'breakthrough', 'progress', 'upgrade', 'increase', 'win', 'reward',
+            'advance', 'progress', 'soar', 'climb', 'ascent', 'great', 'amazing'
         ]
 
         financial_negative = [
-            'miss', 'disappoint', 'decline', 'decrease', 'loss', 'negative',
-            'weak', 'drop', 'fall', 'bearish', 'underperform', 'risk',
-            'warning', 'fail', 'bankruptcy', 'investigation', 'lawsuit', 'litigation',
-            'concern', 'caution', 'fail', 'downgrade', 'decrease', 'lose', 'challenge', 'bearish'
+            'miss', 'disappoint', 'decline', 'decrease', 'loss', 'negative', 'descent', 'low',
+            'weak', 'drop', 'fall', 'bearish', 'underperform', 'risk', 'dive', 'problem'
+            'warning', 'fail', 'bankruptcy', 'investigation', 'lawsuit', 'litigation', 'pressure'
+            'concern', 'caution', 'downgrade', 'decrease', 'lose', 'challenge', 'bearish', 'degeneration'
         ]
 
         financial_neutral = [
-            'unchanged', 'neutral', 'maintain', 'expect',
+            'unchanged', 'neutral', 'maintain', 'expect', 'keep'
             'estimate', 'guidance', 'target', 'announce', 'report', 'quarter',
             'fiscal', 'year', 'slightly', 'slight', 'pretty', 'slow', 'prudent', 'insignificant', 'unsignificant'
         ]
 
         lexicon = {}
         for word in financial_positive:
-            lexicon[self.lemmatizer.lemmatize(word)] = 1
+            lexicon[self.lemmatizer.lemmatize(word)] = random.uniform(1, 1.5)
         for word in financial_negative:
-            lexicon[self.lemmatizer.lemmatize(word)] = -2.5
+            lexicon[self.lemmatizer.lemmatize(word)] = random.uniform(-3, -3.5)
         for word in financial_neutral:
             lexicon[self.lemmatizer.lemmatize(word)] = 0
 
@@ -326,6 +398,10 @@ class FinancialNewsAnalyzer:
             {
                 'title': f"{ticker} Some Negative Records In Profit",
                 'content': f"{ticker} just announced that for the last semester they got the lowest profit in the last 10 years, which is a negative record for the company."
+            },
+            {
+                'title': f"{ticker} Gives New Declarations",
+                'content': f"{ticker} just announced they do not think they got the lowest profit in the last 10 years, which is a negative record for the company."
             }
         ]
 

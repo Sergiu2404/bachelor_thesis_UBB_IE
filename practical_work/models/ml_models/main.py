@@ -28,6 +28,6 @@ class FinancialNewsAnalyzer:
 
 # Example usage
 analyzer = FinancialNewsAnalyzer()
-sample_text = "The company bullish"
+sample_text = "The company profitable"
 processed_text = analyzer.preprocess_text(sample_text)
 print(processed_text)  # Expected output: "the company grow rapidly and be now grow with strong grow."

@@ -23,11 +23,12 @@ class FinancialNewsAnalyzer:
         """Tokenize, lemmatize, and return preprocessed text"""
         text = text.lower()
         tokens = word_tokenize(text)
+        print(tokens)
         lemmatized_tokens = [self.lemmatizer.lemmatize(token, self.get_wordnet_pos(token)) for token in tokens]
         return ' '.join(lemmatized_tokens)
 
 # Example usage
 analyzer = FinancialNewsAnalyzer()
-sample_text = "The company profitable"
+sample_text = "strength don't meet expectations"
 processed_text = analyzer.preprocess_text(sample_text)
 print(processed_text)  # Expected output: "the company grow rapidly and be now grow with strong grow."

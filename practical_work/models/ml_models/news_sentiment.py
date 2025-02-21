@@ -40,7 +40,11 @@ class FinancialNewsAnalyzer:
         self.dataset_path = "fake_news_datasets/FinancialPhraseBank-v1.0/FinancialPhraseBank-v1.0"
 
         self.stop_words = set(stopwords.words('english'))
-        self.negation_words = {"not", "never", "no", "without", "hardly", "barely"}
+        self.negation_words = {
+            "n't", "not", "never", "no", "without", "hardly", "barely",
+            "fail", "unable", "unlikely", "absence", "prevent", "lack",
+            "deny", "dismiss", "reject", "cannot"
+        }
 
         self.lemmatizer = WordNetLemmatizer()
         self.vectorizer = None
@@ -54,110 +58,21 @@ class FinancialNewsAnalyzer:
         tag_dict = {"J": wordnet.ADJ, "N": wordnet.NOUN, "V": wordnet.VERB, "R": wordnet.ADV}
         return tag_dict.get(tag, wordnet.NOUN)
 
-    # def lexicon_score(self, text):
-    #     """Calculate sentiment score using financial lexicon, considering negations and analyst rating changes."""
-    #     text = text.lower()
-    #     tokens = word_tokenize(text)
-    #     score = 0
-    #     negate = False
-    #
-    #     # define phrase based sentiment adjustments
-    #     phrase_sentiments = {
-    #         "from buy to hold": -2.0, "from hold to sell": -2.5, "from buy to sell": -3.0,
-    #         "downgraded to hold": -2.0, "downgraded to sell": -3.0, "cut to hold": -2.0, "cut to sell": -3.0,
-    #
-    #         "from sell to hold": 2.0, "from hold to buy": 2.5, "from sell to buy": 3.0,
-    #         "upgraded to buy": 3.0, "upgraded to hold": 2.0, "raised to buy": 3.0
-    #     }
-    #
-    #     # check for phrases
-    #     for phrase, sentiment in phrase_sentiments.items():
-    #         if phrase in text:
-    #             score += sentiment
-    #
-    #     for token in tokens:
-    #         lemmatized_token = self.lemmatizer.lemmatize(token)
-    #
-    #         if lemmatized_token in self.negation_words:
-    #             negate = True  # found negation
-    #             continue
-    #
-    #         if lemmatized_token in self.financial_dictionary_classifier:
-    #             sentiment = self.financial_dictionary_classifier[lemmatized_token]
-    #             score += -sentiment if negate else sentiment  # flip the sentiment if negation applies
-    #             negate = False  # reset negation after applying
-    #
-    #     return score / max(len(tokens), 1)
-
-    def lexicon_score(self, text):
-        """Calculate sentiment score using financial lexicon, considering negations and analyst rating changes."""
-        text = text.lower()
-        tokens = word_tokenize(text)
-        score = 0
-        negate = False
-        negation_scope = []
-        stop_words = {".", ",", ";", ":", "!", "?"}  # they end negation
-
-        # Define phrase-based sentiment adjustments
-        phrase_sentiments = {
-            "from buy to hold": -3.0, "from hold to sell": -3.5, "from buy to sell": -3.5,
-            "downgraded to hold": -3.0, "downgraded to sell": -3.5, "cut to hold": -3.5, "cut to sell": -3.5,
-            "from sell to hold": 2.0, "from hold to buy": 2.2, "from sell to buy": 2.4,
-            "upgraded to buy": 2.0, "upgraded to hold": 2.2, "raised to buy": 2.4
-        }
-
-        # Check for phrases first
-        for phrase, sentiment in phrase_sentiments.items():
-            if phrase in text:
-                score += sentiment
-
-        for token in tokens:
-            lemmatized_token = self.lemmatizer.lemmatize(token, self.get_wordnet_pos(token))
-
-            if lemmatized_token in self.negation_words:
-                negate = True  # Activate negation
-                negation_scope = []  # Reset scope
-                continue
-
-            if negate:
-                negation_scope.append(lemmatized_token)
-
-            if lemmatized_token in self.financial_dictionary_classifier:
-                sentiment = self.financial_dictionary_classifier[lemmatized_token]
-
-                if negate:
-                    # Flip the entire negation scope
-                    for neg_word in negation_scope:
-                        if neg_word in self.financial_dictionary_classifier:
-                            sentiment = -self.financial_dictionary_classifier[neg_word]
-                            score += sentiment
-                    negation_scope = []  # Clear scope after applying negation
-                    negate = False  # Reset negation
-
-                else:
-                    score += sentiment
-
-            # Reset negation at punctuation
-            if token in stop_words:
-                negate = False
-                negation_scope = []
-
-        return score / max(len(tokens), 1)
-
     def load_financial_dictionary_classifier(self):
         """Load or create a financial-specific sentiment lexicon"""
         financial_positive = [
-            'beat', 'boost', 'exceed', 'surprisingly', 'grow', 'up', 'rise', 'gain', 'profitable',
-            'earn', 'strong', 'strength', 'higher', 'high', 'rally', 'bullish', 'outperform',
+            'beat', 'boost', 'exceed', 'surprisingly', 'grow', 'up', 'rise', 'gain', 'profitable', 'hike', 'well',
+            'earn', 'strong', 'strength', 'higher', 'high', 'rally', 'bullish', 'outperform', 'surpass', 'good',
             'opportunity', 'success', 'improve', 'breakthrough', 'progress', 'upgrade', 'increase', 'win', 'reward',
-            'advance', 'progress', 'soar', 'climb', 'ascent', 'great', 'amazing'
+            'advance', 'progress', 'soar', 'climb', 'ascent', 'great', 'amazing', 'above', 'expansion', 'expand',
+            'optimistic', 'wide', 'jump', 'double', 'triple', 'twice', 'upside'
         ]
 
         financial_negative = [
-            'miss', 'disappoint', 'decline', 'decrease', 'loss', 'negative', 'descent', 'low',
-            'weak', 'drop', 'fall', 'bearish', 'underperform', 'risk', 'dive', 'problem'
-            'warning', 'fail', 'bankruptcy', 'investigation', 'lawsuit', 'litigation', 'pressure'
-            'concern', 'caution', 'downgrade', 'decrease', 'lose', 'challenge', 'bearish', 'degeneration'
+            'miss', 'disappoint', 'decline', 'decrease', 'loss', 'negative', 'descent', 'low', 'slow', 'down', 'slowdown',
+            'weak', 'drop', 'fall', 'bearish', 'underperform', 'risk', 'dive', 'problem', 'below', 'downside', 'headwind',
+            'warning', 'fail', 'bankruptcy', 'investigation', 'lawsuit', 'litigation', 'pressure', 'fear', 'recession',
+            'concern', 'caution', 'downgrade', 'decrease', 'lose', 'challenge', 'bearish', 'degeneration', 'half', 'downside'
         ]
 
         financial_neutral = [
@@ -184,21 +99,13 @@ class FinancialNewsAnalyzer:
         # remove html
         text = re.sub(r'<.*?>', '', text)
         # remove punctuation
-        text = text.translate(str.maketrans('', '', string.punctuation))
+        #text = text.translate(str.maketrans('', '', string.punctuation))
         # tokenize
         tokens = word_tokenize(text)
 
         # lemmatize tokens and remove stopwords
-        lemmatized_tokens = [self.lemmatizer.lemmatize(token, self.get_wordnet_pos(token)) for token in tokens if token not in self.stop_words and len(token) > 2]
+        lemmatized_tokens = [self.lemmatizer.lemmatize(token, self.get_wordnet_pos(token)) for token in tokens if len(token) > 1]
         return ' '.join(lemmatized_tokens)
-
-        # remove stopwords and lemmatize
-        # processed_tokens = [
-        #     self.lemmatizer.lemmatize(token) for token in tokens
-        #     if token not in self.stop_words and len(token) > 2
-        # ]
-        #
-        # return ' '.join(processed_tokens)
 
     def load_financial_phrasebank(self):
         """Load and preprocess the Financial PhraseBank dataset."""
@@ -237,6 +144,243 @@ class FinancialNewsAnalyzer:
         dataset = pd.DataFrame(data)
         print(dataset['sentiment'].value_counts())
         return dataset
+
+    def train_model(self):
+        """Train the sentiment analysis model."""
+        dataset = self.load_financial_phrasebank()
+        dataset["processed_text"] = dataset["text"].apply(self.preprocess_text)
+
+        X_train, X_test, y_train, y_test = train_test_split(
+            dataset["processed_text"], dataset["sentiment"], test_size=0.2, random_state=42
+        )
+
+        self.vectorizer = TfidfVectorizer(max_features=5000)
+        X_train_vec = self.vectorizer.fit_transform(X_train)
+        X_test_vec = self.vectorizer.transform(X_test)
+
+        self.model = LogisticRegression(max_iter=1000, class_weight="balanced")
+        self.model.fit(X_train_vec, y_train)
+
+        # evaluate performance
+        y_pred = self.model.predict(X_test_vec)
+        accuracy = accuracy_score(y_test, y_pred)
+        print(f"Model accuracy: {accuracy:.4f}")
+        print(classification_report(y_test, y_pred))
+
+        # save model
+        with open("financial_sentiment_model.pkl", "wb") as f:
+            pickle.dump((self.vectorizer, self.model), f)
+
+        return accuracy
+
+    def load_model(self):
+        """Load a pre-trained model"""
+        try:
+            with open('financial_sentiment_model.pkl', 'rb') as f:
+                self.vectorizer, self.model = pickle.load(f)
+            return True
+        except FileNotFoundError:
+            print("No pre-trained model found. Training a new model...")
+            self.train_model()
+            return True
+        except Exception as e:
+            print(f"Error loading model: {e}")
+            return False
+
+    def fetch_news_for_ticker(self, ticker):
+        """Fetch recent news articles for a ticker symbol
+        This is a placeholder. In production, you'd use a proper API.
+        """
+        print(f"Fetching news for {ticker}...")
+
+        sample_news = [
+            {
+                'title': f"{ticker} Reports Quarterly Earnings Above Expectations",
+                'content': f"{ticker} reported quarterly earnings that exceeded analyst expectations, with revenue growing 15% year-over-year. The company also raised its full-year guidance."
+            },
+            {
+                'title': f"Analyst Downgrades {ticker} Citing Competitive Pressures",
+                'content': f"An analyst at a major investment bank downgraded {ticker} from Buy to Hold, citing increasing competitive pressures and margin concerns in the coming quarters."
+            },
+            {
+                'title': f"{ticker} Announces New Product Launch",
+                'content': f"{ticker} unveiled its newest product line at an industry conference. Executives expect the new offerings to be revenue-neutral in the short term."
+            },
+            {
+                'title': f"{ticker} Announces New Record Sales",
+                'content': f"{ticker} announced yesterday high record sales for the last trimester. Investors expect new records to be hit by the company in the future."
+            },
+            {
+                'title': f"{ticker} Some Negative Records In Profit",
+                'content': f"{ticker} just announced that for the last semester they got the lowest profit in the last 10 years, which is a negative record for the company."
+            },
+            {
+                'title': f"{ticker} Gives New Declarations",
+                'content': f"{ticker} just announced they don't think they got the lowest profit in the last 10 years."
+            }
+        ]
+
+        return sample_news
+
+    def detect_negation_scope(self, text):
+        """
+        Identifies words affected by negation in financial text.
+        Returns a set of words that should have their sentiment flipped.
+        """
+        tokens = word_tokenize(text.lower())
+        negated_words = set()
+
+        # typical negation scope terminators
+        scope_terminators = {"but", "however", "nevertheless", "yet", "although", "though",
+                             ".", ",", ";", ":", "!", "?"}
+
+        negation_active = False
+        negation_distance = 0
+        max_negation_distance = 10  # max range of words affected by negation
+
+        for i, token in enumerate(tokens):
+            # check if token is negation word
+            if token in self.negation_words:
+                negation_active = True
+                negation_distance = 0
+                continue
+
+            # if negation active, mark words for sentiment flipping
+            if negation_active:
+                negation_distance += 1
+
+                # check if it should end the negation scope
+                if token in scope_terminators or negation_distance > max_negation_distance:
+                    negation_active = False
+                else:
+                    #add meaningful words to negated set (not stopwords)
+                    if token not in self.stop_words:
+                        #negated_words.add(token)
+                        negated_words.add(self.lemmatizer.lemmatize(token))
+
+        return negated_words
+
+    def lexicon_score(self, text):
+        """
+        Calculate sentiment score with improved downgrade/upgrade detection and negation handling.
+        """
+        text = text.lower()
+        tokens = word_tokenize(text)
+        score = 0
+
+        phrase_sentiments = {
+            "from buy to hold": -2.0, "from hold to sell": -2.5, "from buy to sell": -3.0,
+            "downgrade to hold": -2.0, "downgrade to sell": -3.0, "cut to hold": -2.0, "cut to sell": -3.0,
+            "downgrade": -1.8,
+            "from sell to hold": 2.0, "from hold to buy": 2.5, "from sell to buy": 3.0, "reinstates dividend": 1.6, "profit boost": 1.7,
+            "market leader": 1.8, "top performer": 1.8,
+            "upgrade to buy": 3.0, "upgrade to hold": 2.0, "raise to buy": 3.0, "acquisition deal": 2.0, "strategic partnership": 2.0,
+            "upgrade": 1.8, "new product": 1.5, "new offer": 1.5, "new offering": 1.5, "expansion plan": 1.5, "new contract": 1.5,
+            "n't meet expectation": -2.5, "not profitable": -2.0, "no growth": -1.5,
+            "n't achieve target": -2.0, "never recover": -1.5,
+            "competitive pressure": -1.5, "margin concern": -1.7
+        }
+
+        # financial_sentiment_words = {
+        #     "downside": -1.5, "headwind": -1.3, "pressure": -1.2, "concern": -1.3,
+        #     "challenge": -1.2, "risk": -1.3, "weak": -1.4, "decline": -1.5,
+        #     "upside": 1.5, "tailwind": 1.3, "opportunity": 1.3, "strong": 1.4, "strength": 1.4,
+        #     "growth": 1.3, "beat": 1.5, "exceed": 1.4, "outperform": 1.5
+        # }
+
+        # check for phrases for custom sentiment
+        for phrase, sentiment in phrase_sentiments.items():
+            if phrase in text:
+                score += sentiment
+
+        # for word, sentiment in financial_sentiment_words.items():
+        #     if word in text:
+        #         score += sentiment
+
+        # get words after negation
+        negated_words = self.detect_negation_scope(text)
+
+
+        for token in tokens:
+            lemmatized_token = self.lemmatizer.lemmatize(token)
+
+            if lemmatized_token in self.financial_dictionary_classifier:
+                sentiment = self.financial_dictionary_classifier[lemmatized_token]
+
+                # flip sentiment if word is in negation scope
+                if token in negated_words or lemmatized_token in negated_words:
+                    sentiment = -sentiment
+
+                score += sentiment
+
+        # Apply higher weights for titles containing downgrades/upgrades
+        if any(term in text[:50].lower() for term in ["downgrade", "upgrade", "cut", "raise", "record"]):
+            score *= 1.5  # Amplify sentiment for headlines with rating changes
+
+        # Normalize score by text length with a minimum divisor
+        return score / max(len(tokens), 1)
+
+    def analyze_sentiment(self, text, ticker=None):
+        """Analyze sentiment with improved handling of downgrades and analyst ratings"""
+        # Ensure model is loaded
+        if self.model is None or self.vectorizer is None:
+            self.load_model()
+
+        # Split title and content if they're combined
+        title_content = text.split('. ', 1)
+        title = title_content[0] if len(title_content) > 1 else ""
+
+        # Get processed text but preserve original for negation detection
+        processed_text = self.preprocess_text(text)
+
+        # Get model prediction
+        X_vec = self.vectorizer.transform([processed_text])
+        model_score = self.model.predict_proba(X_vec)[0]
+
+        # Convert model probabilities to score
+        if len(model_score) == 3:  # 3-class model
+            ml_score = model_score[2] - model_score[0]  # pos_prob - neg_prob
+        else:  # 2-class model
+            ml_score = model_score[1] * 2 - 1  # Convert 0-1 to -1 to 1
+
+        negation_present = any(term in word_tokenize(processed_text) for term in self.negation_words)
+        for term in processed_text:
+            if term in self.negation_words:
+                print(term)
+        if negation_present:
+            ml_score *= 0.75
+
+        # Get lexicon score with enhanced negation handling on the original text
+        lex_score = self.lexicon_score(processed_text)
+
+        # For downgrade/upgrade news, increase lexicon weight
+        if negation_present:
+            combined_score = 0.3 * ml_score + 0.7 * lex_score  # Trust lexicon more in negation cases
+        elif any(term in text.lower() for term in ["downgrade", "upgrade", "cut", "raise", "record"]):
+            combined_score = 0.5 * ml_score + 0.5 * lex_score  # Balanced for analyst ratings
+        else:
+            combined_score = 0.45 * ml_score + 0.55 * lex_score
+
+        # Classify sentiment with adjusted thresholds for analyst ratings
+        if combined_score > 0.25:
+            sentiment = "Positive"
+        elif combined_score < -0.25:  # Slightly more sensitive to negative sentiment
+            sentiment = "Negative"
+        else:
+            sentiment = "Neutral"
+
+        result = {
+            'ticker': ticker,
+            'raw_text': text,
+            'processed_text': processed_text,
+            'ml_score': round(ml_score, 3),
+            'lexicon_score': round(lex_score, 3),
+            'sentiment_score': round(combined_score, 3),
+            'sentiment_class': sentiment,
+            'model_confidence': max(model_score) if len(model_score) == 3 else max(model_score[0], model_score[1])
+        }
+
+        return result
 
     # def get_financial_dataset(self):
     #     """Download or create financial news sentiment dataset"""
@@ -325,129 +469,6 @@ class FinancialNewsAnalyzer:
     #
     #     return combined_dataset
 
-    def train_model(self):
-        """Train the sentiment analysis model."""
-        dataset = self.load_financial_phrasebank()
-        dataset["processed_text"] = dataset["text"].apply(self.preprocess_text)
-
-        # Split data
-        X_train, X_test, y_train, y_test = train_test_split(
-            dataset["processed_text"], dataset["sentiment"], test_size=0.2, random_state=42
-        )
-
-        # Vectorize text
-        self.vectorizer = TfidfVectorizer(max_features=5000)
-        X_train_vec = self.vectorizer.fit_transform(X_train)
-        X_test_vec = self.vectorizer.transform(X_test)
-
-        # train model
-        self.model = LogisticRegression(max_iter=1000, class_weight="balanced")
-        self.model.fit(X_train_vec, y_train)
-
-        # evaluate performance
-        y_pred = self.model.predict(X_test_vec)
-        accuracy = accuracy_score(y_test, y_pred)
-        print(f"Model accuracy: {accuracy:.4f}")
-        print(classification_report(y_test, y_pred))
-
-        # save model
-        with open("financial_sentiment_model.pkl", "wb") as f:
-            pickle.dump((self.vectorizer, self.model), f)
-
-        return accuracy
-
-    def load_model(self):
-        """Load a pre-trained model"""
-        try:
-            with open('financial_sentiment_model.pkl', 'rb') as f:
-                self.vectorizer, self.model = pickle.load(f)
-            return True
-        except FileNotFoundError:
-            print("No pre-trained model found. Training a new model...")
-            self.train_model()
-            return True
-        except Exception as e:
-            print(f"Error loading model: {e}")
-            return False
-
-    def fetch_news_for_ticker(self, ticker):
-        """Fetch recent news articles for a ticker symbol
-        This is a placeholder. In production, you'd use a proper API.
-        """
-        # Placeholder - in production use a real news API
-        print(f"Fetching news for {ticker}...")
-
-        # Sample news articles
-        sample_news = [
-            {
-                'title': f"{ticker} Reports Quarterly Earnings Above Expectations",
-                'content': f"{ticker} reported quarterly earnings that exceeded analyst expectations, with revenue growing 15% year-over-year. The company also raised its full-year guidance."
-            },
-            {
-                'title': f"Analyst Downgrades {ticker} Citing Competitive Pressures",
-                'content': f"An analyst at a major investment bank downgraded {ticker} from Buy to Hold, citing increasing competitive pressures and margin concerns in the coming quarters."
-            },
-            {
-                'title': f"{ticker} Announces New Product Launch",
-                'content': f"{ticker} unveiled its newest product line at an industry conference. Executives expect the new offerings to be revenue-neutral in the short term."
-            },
-            {
-                'title': f"{ticker} Announces New Record Sales",
-                'content': f"{ticker} announced yesterday high record sales for the last trimester. Investors expect new records to be hit by the company in the future."
-            },
-            {
-                'title': f"{ticker} Some Negative Records In Profit",
-                'content': f"{ticker} just announced that for the last semester they got the lowest profit in the last 10 years, which is a negative record for the company."
-            },
-            {
-                'title': f"{ticker} Gives New Declarations",
-                'content': f"{ticker} just announced they do not think they got the lowest profit in the last 10 years, which is a negative record for the company."
-            }
-        ]
-
-        return sample_news
-
-    def analyze_sentiment(self, text, ticker=None):
-        """Analyze sentiment of a financial news article"""
-        # Ensure model is loaded
-        if self.model is None or self.vectorizer is None:
-            self.load_model()
-
-        processed_text = self.preprocess_text(text)
-
-        # get prediction
-        X_vec = self.vectorizer.transform([processed_text])
-        model_score = self.model.predict_proba(X_vec)[0]
-
-        # Convert 3-class probabilities to a single score between -1 and 1
-        # Assuming classes are ordered as [-1, 0, 1] or [0, 1, 2]
-        if len(model_score) == 3:  # 3-class model
-            # Convert [neg_prob, neutral_prob, pos_prob] to a single score
-            score = model_score[2] - model_score[0]  # pos_prob - neg_prob
-        else:  # 2-class model
-            score = model_score[1] * 2 - 1  # Convert 0-1 to -1 to 1
-
-        lex_score = self.lexicon_score(processed_text)
-        combined_score = 0.7 * score + 0.3 * lex_score
-
-        if combined_score > 0.25:
-            sentiment = "Positive"
-        elif combined_score < -0.25:
-            sentiment = "Negative"
-        else:
-            sentiment = "Neutral"
-
-        result = {
-            'ticker': ticker,
-            'raw_text': text,
-            'processed_text': processed_text,
-            'sentiment_score': round(combined_score, 3),
-            'sentiment_class': sentiment,
-            'model_confidence': max(model_score) if len(model_score) == 3 else max(model_score[0], model_score[1])
-        }
-
-        return result
-
 def analyze_ticker_news(ticker, custom_article=None):
     analyzer = FinancialNewsAnalyzer()
 
@@ -500,54 +521,6 @@ if __name__ == "__main__":
 
 
 
-
-# import feedparser
-# from transformers import pipeline
-#
-# class FinBertNewsSentiment:
-#     def __init__(self, symbol, keyword):
-#         self.symbol = symbol
-#         self.keyword = keyword.lower()
-#         self.pipe = pipeline("text-classification", model="ProsusAI/finbert")
-#         self.rss_url = f'https://finance.yahoo.com/rss/headline?s={self.symbol}'
-#         self.total_score = 0
-#         self.num_articles = 0
-#
-#     def analyze_news(self):
-#         feed = feedparser.parse(self.rss_url)
-#
-#         for entry in feed.entries:
-#             if self.keyword not in entry.summary.lower():
-#                 continue
-#
-#             print(f"title: {entry.title}")
-#             print(f"link: {entry.link}")
-#             print(f"published: {entry.published}")
-#             print(f"summary: {entry.summary}")
-#
-#             sentiment = self.pipe(entry.summary)[0]
-#             print(f"Sentiment: {sentiment['label']}, score: {sentiment['score']}")
-#             print("-" * 20)
-#
-#             if sentiment['label'] == 'positive':
-#                 self.total_score += sentiment['score']
-#                 self.num_articles += 1
-#             elif sentiment['label'] == 'negative':
-#                 self.total_score -= sentiment['score']
-#                 self.num_articles += 1
-#
-#     def get_final_sentiment(self):
-#         if self.num_articles == 0:
-#             return "No relevant articles found."
-#
-#         final_score = self.total_score / self.num_articles
-#         sentiment_label = 'positive' if final_score >= 0.15 else 'negative' if final_score <= -0.15 else 'neutral'
-#         return f"Overall sentiment for news regarding {self.symbol} is {final_score}, so news is mostly {sentiment_label}"
-
-
-# news_sentiment = FinBertNewsSentiment("META", "meta")
-# news_sentiment.analyze_news()
-# print(news_sentiment.get_final_sentiment())
 
 
 import re

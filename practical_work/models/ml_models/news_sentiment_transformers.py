@@ -1,3 +1,5 @@
+import re
+
 import torch
 import io
 import pandas as pd
@@ -15,12 +17,20 @@ def load_financial_phrasebank():
     print("Loading Financial PhraseBank df...")
     data = []
     with open("fake_news_datasets/FinancialPhraseBank-v1.0/FinancialPhraseBank-v1.0/Sentences_50Agree.txt", "r",
-              encoding="ISO-8859-1") as file:
+              encoding="ISO-8859-1") as file: # support western european languages encoding
         for line in file:
-            text, sentiment = line.rsplit("@", 1)
-            sentiment = sentiment.strip()
-            label = {"neutral": 0, "positive": 1, "negative": 2}.get(sentiment, 0)
-            data.append({"text": text.strip(), "sentiment": label})
+            match = re.search(r"@(neutral|positive|negative)\s*$", line.strip())
+            if match:
+                sentiment = match.group(1)
+                text = line[:match.start()].strip()
+                label = {"neutral": 0, "positive": 1, "negative": 2}[sentiment]
+                data.append({"text": text, "sentiment": label})
+            else:
+                print(f"Skipping malformed line: {line.strip()}")
+            # text, sentiment = line.rsplit("@", 1)
+            # sentiment = sentiment.strip()
+            # label = {"neutral": 0, "positive": 1, "negative": 2}.get(sentiment, 0)
+            # data.append({"text": text.strip(), "sentiment": label})
 
     df = pd.DataFrame(data)
     return df
@@ -43,10 +53,13 @@ tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 max_len = 0
 
 for sentence in contents:
+    # encode each sentence and transform to tensor for padding later regarding longest sentence
     input_ids = torch.tensor(tokenizer.encode(sentence, add_special_tokens=True))
     max_len = max(max_len, len(input_ids))
 
 print(max_len)
+
+
 
 input_ids = []
 attention_masks = []
@@ -55,18 +68,18 @@ for sent in contents:
     encoded_dict = tokenizer.encode_plus(
                         sent,
                         add_special_tokens = True, # add [CLS] and [SEP]
-                        truncation=True,
-                        max_length = 64,           # Pad & truncate all sentences.
+                        truncation=True,           # cut longer sent to max_length
+                        max_length = 64,
                         padding='max_length',
-                        pad_to_max_length = True,
-                        return_attention_mask = True,   # Construct attn masks.
-                        return_tensors = 'pt',     # return pytorch tensors.
+                        pad_to_max_length = True,  # to ensure all input has same length
+                        return_attention_mask = True,   # construct attn masks for excluding padding tokens
+                        return_tensors = 'pt',     # return as pytorch tensors for using gpu power
                    )
 
-    input_ids.append(encoded_dict['input_ids'])
-    attention_masks.append(encoded_dict['attention_mask'])
+    input_ids.append(encoded_dict['input_ids']) # tokenized sentence stacked together
+    attention_masks.append(encoded_dict['attention_mask']) # arr of 1 for sentence token or 0 for padding token
 
-input_ids = torch.cat(input_ids, dim=0)
+input_ids = torch.cat(input_ids, dim=0) # concats all sentences together
 attention_masks = torch.cat(attention_masks, dim=0)
 labels = torch.tensor(labels)
 
@@ -75,300 +88,275 @@ print('Original: ', contents[0])
 print('Token IDs:', input_ids[0])
 
 
+
 from torch.utils.data import TensorDataset, random_split
 
+# for using all these in a dataloader
 dataset = TensorDataset(input_ids, attention_masks, labels)
 
-train_size = int(0.85 * len(dataset))
-val_size = len(dataset) - train_size
+# train, validation (for fine-tuning), test
+train_ratio = 0.7
+val_ratio = 0.15
+test_ratio = 0.15
 
-# divide dataset by randomly selecting samples.
-train_dataset, val_dataset = random_split(dataset, [train_size, val_size])
+# dataset sizes
+train_size = int(train_ratio * len(dataset))
+val_size = int(val_ratio * len(dataset))
+test_size = len(dataset) - train_size - val_size
 
-print('{:>5,} training samples'.format(train_size))
-print('{:>5,} validation samples'.format(val_size))
+# split dataset randomly according to sizes
+train_dataset, val_dataset, test_dataset = random_split(dataset, [train_size, val_size, test_size])
 
-# Add these after creating your dataset
-print("Unique labels in dataset:", torch.unique(labels))
-print("Label distribution:", torch.bincount(labels))
+# Print dataset sizes
+print(f"Train samples: {train_size}")
+print(f"Validation samples: {val_size}")
+print(f"Test samples: {test_size}")
+
+
+
 
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
 
-# The DataLoader needs to know our batch size for training, so we specify it
-# here. For fine-tuning BERT on a specific task, the authors recommend a batch
-# size of 16 or 32.
+# for fine-tuning bert on a specific task, the authors recommend a batch size of 16 or 32.
 batch_size = 32
 
-# Create the DataLoaders for our training and validation sets.
-# We'll take training samples in random order.
+# create DataLoaders for training, validation and testing sets.
 train_dataloader = DataLoader(
-            train_dataset,  # training samples.
-            sampler = RandomSampler(train_dataset), # get batches randomly
-            batch_size = batch_size # trains with this batch size.
-        )
+    train_dataset,  # training samples
+    sampler = RandomSampler(train_dataset),  # get batches randomly
+    batch_size = batch_size  # trains with this batch size.
+)
 
 # For validation the order doesn't matter, so we'll just read them sequentially.
 validation_dataloader = DataLoader(
-            val_dataset, # validation samples.
-            sampler = SequentialSampler(val_dataset), # Pull out batches sequentially.
-            batch_size = batch_size # Evaluate with this batch size.
-        )
+    val_dataset,
+    sampler = SequentialSampler(val_dataset), # get batches sequentially.
+    batch_size = batch_size
+)
+
+test_dataloader = DataLoader(
+    test_dataset,
+    sampler=SequentialSampler(test_dataset),
+    batch_size=batch_size
+)
+
 
 
 from transformers import BertForSequenceClassification, AdamW, BertConfig
 
-# Load BertForSequenceClassification, the pretrained BERT model with a single
-# linear classification layer on top.
+# load BertForSequenceClassification pretrained BERT model with a linear classification layer on top.
 model = BertForSequenceClassification.from_pretrained(
-    "bert-base-uncased", # Use the 12-layer BERT model, with an uncased vocab.
-    num_labels = 3, # The number of output labels--2 for binary classification.
-    output_attentions = False, # Whether the model returns attentions weights.
-    output_hidden_states = False, # Whether the model returns all hidden-states.
+    "bert-base-uncased",  # use BERT model with uncased vocab.
+    num_labels = 3,  # 3 output labels for classification
+    output_attentions = False,  # dont need attentions weights.
+    output_hidden_states = False,  # dont need hidden-states.
     return_dict = False
 )
+
 model.train()
-# Tell pytorch to run this model on the GPU.
+# run on GPU
 model.cuda()
 
 
 params = list(model.named_parameters())
+# print('The BERT model has {:} different named parameters.\n'.format(len(params)))
 
-print('The BERT model has {:} different named parameters.\n'.format(len(params)))
-
-print('==== Embedding Layer ====\n')
-
+print('\nEmbedding Layer\n')
 for p in params[0:5]:
     print("{:<55} {:>12}".format(p[0], str(tuple(p[1].size()))))
 
-print('\n==== First Transformer ====\n')
-
+print('\nFirst Transformer\n')
 for p in params[5:21]:
     print("{:<55} {:>12}".format(p[0], str(tuple(p[1].size()))))
 
-print('\n==== Output Layer ====\n')
-
+print('\nOutput Layer\n')
 for p in params[-4:]:
     print("{:<55} {:>12}".format(p[0], str(tuple(p[1].size()))))
 
 
+# AdamW optimizer for reducing overfitting (compromising accuracy)
+optimizer = AdamW(
+    model.parameters(),
+    lr = 2e-5, # args.learning_rate - default is 5e-5
+    eps = 1e-8
+)
 
-optimizer = AdamW(model.parameters(),
-                  lr = 2e-5, # args.learning_rate - default is 5e-5, our notebook had 2e-5
-                  eps = 1e-8 # args.adam_epsilon  - default is 1e-8.
-                )
+
+
 
 
 from transformers import get_linear_schedule_with_warmup
 
+
+# recommended 2 - 4 passes through entire dataset
 epochs = 4
 
-# Total number of training steps is [number of batches] x [number of epochs].
+# training steps: [nr batches] x [nr epochs]
 total_steps = len(train_dataloader) * epochs
 
-# Create the learning rate scheduler.
-scheduler = get_linear_schedule_with_warmup(optimizer,
-                                            num_warmup_steps = 0, # Default value in run_glue.py
-                                            num_training_steps = total_steps)
+# scheduler modifies learning rate during training
+scheduler = get_linear_schedule_with_warmup(
+    optimizer,
+    num_warmup_steps = 0,
+    # no warmup => starts from high learning rate for exploring faster at beginning and gradually decreases it
+    num_training_steps = total_steps
+)
 
 
 
 # training loop
+import time
+import datetime
+import random
 import numpy as np
 
-# Function to calculate the accuracy of our predictions vs labels
-def flat_accuracy(preds, labels):
-    pred_flat = np.argmax(preds, axis=1).flatten()
+
+# calculate accuracy of predictions for given labels
+def flat_accuracy(predictions, labels):
+    pred_flat = np.argmax(predictions, axis=1).flatten()
     labels_flat = labels.flatten()
     return np.sum(pred_flat == labels_flat) / len(labels_flat)
 
 
-import time
-import datetime
-
-
 def format_time(elapsed):
     '''
-    Takes a time in seconds and returns a string hh:mm:ss
+    Take time in seconds and return string hh:mm:ss
     '''
-    # Round to the nearest second.
+    # round to seconds
     elapsed_rounded = int(round((elapsed)))
-
-    # Format as hh:mm:ss
+    # format -> hh:mm:ss
     return str(datetime.timedelta(seconds=elapsed_rounded))
 
-
-import random
-import numpy as np
-
-seed_val = 42
-
-random.seed(seed_val)
-np.random.seed(seed_val)
-torch.manual_seed(seed_val)
-torch.cuda.manual_seed_all(seed_val)
+# set fixed seed to ensure random operations in libraries generate same results
+seed = 42
+random.seed(seed)
+np.random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed_all(seed)
 
 training_stats = []
-
-# Measure the total training time for the whole run.
+# measure training time for the whole run
 total_t0 = time.time()
 
-# For each epoch...
+
+# iterate over entire dataset epochs times
 for epoch_i in range(0, epochs):
 
     print("")
     print('======== Epoch {:} / {:} ========'.format(epoch_i + 1, epochs))
     print('Training...')
 
-    # Measure how long the training epoch takes.
+    # measure training time
     t0 = time.time()
-
-    # Reset the total loss for this epoch.
+    # calculate loss for each epoch
     total_train_loss = 0
-
-    # Put the model into training mode
+    # run training
     model.train()
 
-    # For each batch of training data...
+    # iterate over training batches
     for step, batch in enumerate(train_dataloader):
-
-        # Progress update every 40 batches.
+        # progress every 40 batches
         if step % 40 == 0 and not step == 0:
-            # Calculate elapsed time in minutes.
+            # elapsed time in minutes
             elapsed = format_time(time.time() - t0)
+            # print('  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.'.format(step, len(train_dataloader), elapsed))
 
-            # Report progress.
-            print('  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.'.format(step, len(train_dataloader), elapsed))
-
-        # Unpack this training batch from our dataloader.
+        # unpack training batch from dataloader
         b_input_ids = batch[0].to(device)
         b_input_mask = batch[1].to(device)
         b_labels = batch[2].to(device)
 
-        # Always clear any previously calculated gradients before performing a
-        # backward pass.
+        # clear gradients accumulates in prev steps before performing backward pass
         model.zero_grad()
 
-        # Perform a forward pass (evaluate the model on this training batch).
-        outputs = model(b_input_ids,
-                             token_type_ids=None,
-                             attention_mask=b_input_mask,
-                             labels=b_labels)
-
+        # forward pass (evaluate the model on this training batch), get output from bert classification model
+        outputs = model(
+            b_input_ids,
+            token_type_ids=None,
+            attention_mask=b_input_mask,
+            labels=b_labels
+        )
         loss = outputs[0]
-        logits = outputs[1]
+        logits = outputs[1]  # raw output predictions before applying activation fn
 
-        print("\/\/\/\/\/\/\/")
-        print("Loss:", loss)
-        print("Logits shape:", logits.shape)
-        print("Labels shape:", b_labels.shape)
-        print("Unique labels:", torch.unique(b_labels))
+        # print("\/\/\/\/\/\/\/")
+        # print("Loss:", loss)
+        # print("Logits shape:", logits.shape)
+        # print("Labels shape:", b_labels.shape)
+        # print("Unique labels:", torch.unique(b_labels))
 
-        # Accumulate the training loss over all of the batches so that we can
-        # calculate the average loss at the end. `loss` is a Tensor containing a
-        # single value; the `.item()` function just returns the Python value
-        # from the tensor.
+        # sum up training loss over all batches for getting average loss, loss is a Tensor containing the actual loss
         total_train_loss += loss.item()
-
-        # Perform a backward pass to calculate the gradients.
+        # calc gradient and backpropagate to update weights
         loss.backward()
-
-        # Clip the norm of the gradients to 1.0.
-        # This is to help prevent the "exploding gradients" problem.
+        # hold norm of gradient under 1 for preventing exploding gradient
         torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
-
-        # Update parameters and take a step using the computed gradient.
-        # The optimizer dictates the "update rule"--how the parameters are
-        # modified based on their gradients, the learning rate, etc.
+        # update parameters based on calculated gradients, adjust weights to minimize loss
         optimizer.step()
-
-        # Update the learning rate.
+        # update learning rate
         scheduler.step()
 
-    # Calculate the average loss over all of the batches.
+    # calc average loss of all batches
     avg_train_loss = total_train_loss / len(train_dataloader)
-
-    # Measure how long this epoch took.
+    # measure time for current epoch
     training_time = format_time(time.time() - t0)
 
     print("")
     print("  Average training loss: {0:.2f}".format(avg_train_loss))
     print("  Training epcoh took: {:}".format(training_time))
 
-    # ========================================
-    #               Validation
-    # ========================================
-    # After the completion of each training epoch, measure our performance on
-    # our validation set.
-
     print("")
     print("Running Validation...")
 
     t0 = time.time()
 
-    # Put the model in evaluation mode--the dropout layers behave differently
-    # during evaluation.
+    # start evaluation
     model.eval()
-
-    # Tracking variables
     total_eval_accuracy = 0
     total_eval_loss = 0
     nb_eval_steps = 0
 
-    # Evaluate data for one epoch
+    # eval data for one epoch
     for batch in validation_dataloader:
-        # Unpack this training batch from our dataloader.
-        #
-        # As we unpack the batch, we'll also copy each tensor to the GPU using
-        # the `to` method.
-        #
-        # `batch` contains three pytorch tensors:
-        #   [0]: input ids
-        #   [1]: attention masks
-        #   [2]: labels
+        # unpack validation batches
         b_input_ids = batch[0].to(device)
         b_input_mask = batch[1].to(device)
         b_labels = batch[2].to(device)
 
-        # Tell pytorch not to bother with constructing the compute graph during
-        # the forward pass, since this is only needed for backprop (training).
+        # no need for gradient computation in validation / testing phase, only in training
         with torch.no_grad():
-            # Forward pass, calculate logit predictions.
-            # token_type_ids is the same as the "segment ids", which
-            # differentiates sentence 1 and 2 in 2-sentence tasks.
-            # The documentation for this `model` function is here:
-            # https://huggingface.co/transformers/v2.2.0/model_doc/bert.html#transformers.BertForSequenceClassification
-            # Get the "logits" output by the model. The "logits" are the output
-            # values prior to applying an activation function like the softmax.
-            (loss, logits) = model(b_input_ids,
-                                   token_type_ids=None,
-                                   attention_mask=b_input_mask,
-                                   labels=b_labels)
+            # forward pass, calculate logit predictions
+            # calculate logit predictions
+            (loss, logits) = model(
+                b_input_ids,
+                token_type_ids=None,
+                attention_mask=b_input_mask,
+                labels=b_labels
+            )
 
-        # Accumulate the validation loss.
+        # accumulate validation loss
         total_eval_loss += loss.item()
 
-        # Move logits and labels to CPU
+        # move logits and labels to CPU
         logits = logits.detach().cpu().numpy()
         label_ids = b_labels.to('cpu').numpy()
 
-        # Calculate the accuracy for this batch of test sentences, and
-        # accumulate it over all batches.
+        # calculate accuracy for current batch and accumulate it over all batches.
         total_eval_accuracy += flat_accuracy(logits, label_ids)
 
-    # Report the final accuracy for this validation run.
     avg_val_accuracy = total_eval_accuracy / len(validation_dataloader)
     print("  Accuracy: {0:.2f}".format(avg_val_accuracy))
 
-    # Calculate the average loss over all of the batches.
+    # average loss over all batches.
     avg_val_loss = total_eval_loss / len(validation_dataloader)
 
-    # Measure how long the validation run took.
+    # measure validation time
     validation_time = format_time(time.time() - t0)
 
     print("  Validation Loss: {0:.2f}".format(avg_val_loss))
     print("  Validation took: {:}".format(validation_time))
 
-    # Record all statistics from this epoch.
+    # record all stats for current epoch.
     training_stats.append(
         {
             'epoch': epoch_i + 1,
@@ -384,3 +372,171 @@ print("")
 print("Training complete!")
 
 print("Total training took {:} (h:mm:ss)".format(format_time(time.time() - total_t0)))
+
+
+
+
+print("\nRun Test Evaluation...")
+
+t0 = time.time()
+model.eval()
+
+total_test_accuracy = 0
+total_test_loss = 0
+
+for batch in test_dataloader:
+    b_input_ids = batch[0].to(device)
+    b_input_mask = batch[1].to(device)
+    b_labels = batch[2].to(device)
+
+    # no gradient computation needed since testing phase
+    with torch.no_grad():
+        (loss, logits) = model(
+            b_input_ids,
+            token_type_ids=None,
+            attention_mask=b_input_mask,
+            labels=b_labels
+        )
+
+    total_test_loss += loss.item()
+    logits = logits.detach().cpu().numpy()
+    label_ids = b_labels.to('cpu').numpy()
+    total_test_accuracy += flat_accuracy(logits, label_ids)
+
+avg_test_accuracy = total_test_accuracy / len(test_dataloader)
+avg_test_loss = total_test_loss / len(test_dataloader)
+
+print("  Test Accuracy: {0:.2f}".format(avg_test_accuracy))
+print("  Test Loss: {0:.2f}".format(avg_test_loss))
+print("  Test Evaluation took: {:}".format(format_time(time.time() - t0)))
+
+
+from transformers import BertForSequenceClassification, BertTokenizer
+import torch
+
+# Skip saving and just use the already trained model
+# Assuming the model object and tokenizer are already defined from your training process
+
+# Make sure model is in evaluation mode
+model.eval()
+
+# Define preprocessing function for new inputs
+def preprocess_text(text, tokenizer, max_length=512):
+    # Tokenize the input text
+    encoding = tokenizer.encode_plus(
+        text,
+        add_special_tokens=True,    # add special tokens like [CLS] and [SEP]
+        max_length=max_length,      # max len of tokenized sequence
+        padding='max_length',       # Pad to max_length
+        truncation=True,            # truncate if longer than max_length
+        return_tensors='pt',        # return as PyTorch tensor
+    )
+    return encoding
+
+# Example text for sentiment analysis
+text = "Tesla has success after making announcements about their new electric vehicle"
+inputs = preprocess_text(text, tokenizer)
+
+# Ensure the input is on the correct device
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+inputs = {k: v.to(device) for k, v in inputs.items()}
+
+# Get predictions
+with torch.no_grad():  # no gradient computation needed
+    outputs = model(**inputs)
+
+# Get the logits (raw prediction scores)
+logits = outputs[0]
+# Convert logits to probabilities using softmax
+probabilities = torch.nn.functional.softmax(logits, dim=-1)
+# Get predicted sentiment class
+predicted_class = torch.argmax(probabilities, dim=-1).item()
+
+# Print results
+print(f"Predicted class: {predicted_class}")
+print(f"Probabilities: {probabilities}")
+sentiment_classes = ["neutral", "positive", "negative"]  # Make sure this matches your training labels
+print(f"Predicted sentiment: {sentiment_classes[predicted_class]}")
+
+
+
+import os
+
+# output_dir = './model_save/'
+# if not os.path.exists(output_dir):
+#     os.makedirs(output_dir)
+#
+# print("Saving model to %s" % output_dir)
+
+# save trained model, configuration and tokenizer
+# reload them using from_pretrained()
+# model_to_save = model.module if hasattr(model, 'module') else model
+# model_to_save.save_pretrained(output_dir)
+# tokenizer.save_pretrained(output_dir)
+
+# good practice to save training arguments together with the trained model
+# torch.save(args, os.path.join(output_dir, 'training_args.bin'))
+
+# print(os.path.exists("./model_save/"))
+# print(os.listdir("./"))
+
+# from google.colab import drive
+# drive.mount('/content/drive')
+
+
+# Copy the model files to a directory in your Google Drive.
+#!cp -r ./model_save/ "./drive/Shared drives/ChrisMcCormick.AI/Blog Posts/BERT Fine-Tuning/"
+
+
+# save_path = "/content/drive/MyDrive/models_saved/"
+# os.makedirs(save_path, exist_ok=True)
+# model.save_pretrained(save_path)
+
+
+
+#
+# from transformers import BertForSequenceClassification, BertTokenizer
+# import torch
+#
+# # path to saved model
+# model_path = "/content/drive/MyDrive/models_saved"
+#
+# tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+# model = BertForSequenceClassification.from_pretrained(model_path)
+#
+# # set model to eval mode for using it
+# model.eval()
+#
+# # preprocess input
+# def preprocess_text(text, tokenizer, max_length=512):
+#     # Tokenize the input text
+#     encoding = tokenizer.encode_plus(
+#         text,
+#         add_special_tokens=True,    # add special tokens like [CLS] and [SEP]
+#         max_length=max_length,      # max len of tokenized sequence
+#         padding='max_length',       # Pad to max_length
+#         truncation=True,            # truncate (divide in equal size packages of text) if it's longer than max_length
+#         return_tensors='pt',        # return as PyTorch tensor
+#     )
+#
+#     return encoding
+#
+# # text = "The stock market saw a significant drop today after disappointing earnings reports from major tech companies."
+# # text = "The stock market saw a significant rise today after announced new product launch"
+# text = "Tesla has succes after makes announcements about their new electric vehicle"
+# inputs = preprocess_text(text, tokenizer)
+#
+# with torch.no_grad():  # no gradient computation needed
+#     outputs = model(**inputs)
+#
+# # Get the logits (raw prediction scores)
+# logits = outputs[0]
+# # convert logits to probabilities using softmax activation function
+# probabilities = torch.nn.functional.softmax(logits, dim=-1)
+# # get predicted sentiment
+# predicted_class = torch.argmax(probabilities, dim=-1).item()
+#
+# print(f"Predicted class: {predicted_class}")
+# print(f"Probabilities: {probabilities}")
+# sentiment_classes = ["negative", "neutral", "positive"]
+# print(f"Predicted sentiment: {sentiment_classes[predicted_class]}")

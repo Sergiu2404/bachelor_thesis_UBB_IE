@@ -33,9 +33,40 @@ def load_financial_phrasebank():
             # data.append({"text": text.strip(), "sentiment": label})
 
     df = pd.DataFrame(data)
+    print(df.head())
     return df
 
 df = load_financial_phrasebank()
+
+splits = {
+    'train': 'data/train-00000-of-00001-aeefa1eadf5be10b.parquet',
+    'test': 'data/test-00000-of-00001-0fb9f3a47c7d0fce.parquet',
+    'valid': 'data/valid-00000-of-00001-51867fe1ac59af78.parquet'
+}
+
+df_fiqa = pd.read_parquet("hf://datasets/TheFinAI/fiqa-sentiment-classification/" + splits["train"])
+
+# Select relevant columns
+df_fiqa = df_fiqa[['sentence', 'score']].rename(columns={'sentence': 'text', 'score': 'sentiment'})
+
+def convert_score_to_label(score):
+    if score < -0.05:  # Negative sentiment
+        return 0
+    elif score > 0.05:  # Positive sentiment
+        return 2
+    else:  # Neutral sentiment
+        return 1
+
+df_fiqa['sentiment'] = df_fiqa['sentiment'].apply(convert_score_to_label)
+
+# Concatenate both datasets
+df_combined = pd.concat([df, df_fiqa], ignore_index=True)
+
+# Print value counts to verify balance
+print(df_combined['sentiment'].value_counts())
+
+# Check first few rows
+df_combined.tail(20)
 # print(df['sentiment'].value_counts())
 # print(df.head())
 #
@@ -414,13 +445,7 @@ print("  Test Evaluation took: {:}".format(format_time(time.time() - t0)))
 from transformers import BertForSequenceClassification, BertTokenizer
 import torch
 
-# Skip saving and just use the already trained model
-# Assuming the model object and tokenizer are already defined from your training process
-
-# Make sure model is in evaluation mode
 model.eval()
-
-# Define preprocessing function for new inputs
 def preprocess_text(text, tokenizer, max_length=512):
     # Tokenize the input text
     encoding = tokenizer.encode_plus(
@@ -433,110 +458,27 @@ def preprocess_text(text, tokenizer, max_length=512):
     )
     return encoding
 
-# Example text for sentiment analysis
-text = "Tesla has success after making announcements about their new electric vehicle"
+
+#text = "The stock market saw a significant drop today after disappointing earnings reports from major tech companies." negative
+text = "The stock market kept the same track for last 3 months."
+#text = "Tesla has success after making announcements about their new electric vehicle" positive
 inputs = preprocess_text(text, tokenizer)
 
 # Ensure the input is on the correct device
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 inputs = {k: v.to(device) for k, v in inputs.items()}
 
-# Get predictions
 with torch.no_grad():  # no gradient computation needed
     outputs = model(**inputs)
 
-# Get the logits (raw prediction scores)
+# raw prediction scores
 logits = outputs[0]
 # Convert logits to probabilities using softmax
 probabilities = torch.nn.functional.softmax(logits, dim=-1)
 # Get predicted sentiment class
 predicted_class = torch.argmax(probabilities, dim=-1).item()
 
-# Print results
 print(f"Predicted class: {predicted_class}")
 print(f"Probabilities: {probabilities}")
-sentiment_classes = ["neutral", "positive", "negative"]  # Make sure this matches your training labels
+sentiment_classes = ["neutral", "positive", "negative"]
 print(f"Predicted sentiment: {sentiment_classes[predicted_class]}")
-
-
-
-import os
-
-# output_dir = './model_save/'
-# if not os.path.exists(output_dir):
-#     os.makedirs(output_dir)
-#
-# print("Saving model to %s" % output_dir)
-
-# save trained model, configuration and tokenizer
-# reload them using from_pretrained()
-# model_to_save = model.module if hasattr(model, 'module') else model
-# model_to_save.save_pretrained(output_dir)
-# tokenizer.save_pretrained(output_dir)
-
-# good practice to save training arguments together with the trained model
-# torch.save(args, os.path.join(output_dir, 'training_args.bin'))
-
-# print(os.path.exists("./model_save/"))
-# print(os.listdir("./"))
-
-# from google.colab import drive
-# drive.mount('/content/drive')
-
-
-# Copy the model files to a directory in your Google Drive.
-#!cp -r ./model_save/ "./drive/Shared drives/ChrisMcCormick.AI/Blog Posts/BERT Fine-Tuning/"
-
-
-# save_path = "/content/drive/MyDrive/models_saved/"
-# os.makedirs(save_path, exist_ok=True)
-# model.save_pretrained(save_path)
-
-
-
-#
-# from transformers import BertForSequenceClassification, BertTokenizer
-# import torch
-#
-# # path to saved model
-# model_path = "/content/drive/MyDrive/models_saved"
-#
-# tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
-# model = BertForSequenceClassification.from_pretrained(model_path)
-#
-# # set model to eval mode for using it
-# model.eval()
-#
-# # preprocess input
-# def preprocess_text(text, tokenizer, max_length=512):
-#     # Tokenize the input text
-#     encoding = tokenizer.encode_plus(
-#         text,
-#         add_special_tokens=True,    # add special tokens like [CLS] and [SEP]
-#         max_length=max_length,      # max len of tokenized sequence
-#         padding='max_length',       # Pad to max_length
-#         truncation=True,            # truncate (divide in equal size packages of text) if it's longer than max_length
-#         return_tensors='pt',        # return as PyTorch tensor
-#     )
-#
-#     return encoding
-#
-# # text = "The stock market saw a significant drop today after disappointing earnings reports from major tech companies."
-# # text = "The stock market saw a significant rise today after announced new product launch"
-# text = "Tesla has succes after makes announcements about their new electric vehicle"
-# inputs = preprocess_text(text, tokenizer)
-#
-# with torch.no_grad():  # no gradient computation needed
-#     outputs = model(**inputs)
-#
-# # Get the logits (raw prediction scores)
-# logits = outputs[0]
-# # convert logits to probabilities using softmax activation function
-# probabilities = torch.nn.functional.softmax(logits, dim=-1)
-# # get predicted sentiment
-# predicted_class = torch.argmax(probabilities, dim=-1).item()
-#
-# print(f"Predicted class: {predicted_class}")
-# print(f"Probabilities: {probabilities}")
-# sentiment_classes = ["negative", "neutral", "positive"]
-# print(f"Predicted sentiment: {sentiment_classes[predicted_class]}")

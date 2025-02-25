@@ -1,17 +1,7 @@
 import os
 import random
-
-import pandas as pd
-import string
-import numpy as np
-import re
-
-import pickle
-import requests
-from bs4 import BeautifulSoup
 import warnings
 
-import nltk
 from nltk.corpus import stopwords, wordnet
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer

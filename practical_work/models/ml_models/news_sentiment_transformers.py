@@ -11,13 +11,17 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 print("Using device:", device)
 
+import pandas as pd
+import re
+import kagglehub
 
+# Load Financial PhraseBank dataset
 def load_financial_phrasebank():
-    """Load and preprocess the Financial PhraseBank df."""
-    print("Loading Financial PhraseBank df...")
+    """Load and preprocess the Financial PhraseBank dataset."""
+    print("Loading Financial PhraseBank dataset...")
     data = []
     with open("fake_news_datasets/FinancialPhraseBank-v1.0/FinancialPhraseBank-v1.0/Sentences_50Agree.txt", "r",
-              encoding="ISO-8859-1") as file: # support western european languages encoding
+              encoding="ISO-8859-1") as file:
         for line in file:
             match = re.search(r"@(neutral|positive|negative)\s*$", line.strip())
             if match:
@@ -27,17 +31,14 @@ def load_financial_phrasebank():
                 data.append({"text": text, "sentiment": label})
             else:
                 print(f"Skipping malformed line: {line.strip()}")
-            # text, sentiment = line.rsplit("@", 1)
-            # sentiment = sentiment.strip()
-            # label = {"neutral": 0, "positive": 1, "negative": 2}.get(sentiment, 0)
-            # data.append({"text": text.strip(), "sentiment": label})
 
     df = pd.DataFrame(data)
-    print(df.head())
+    print("Financial PhraseBank Loaded:", df.shape)
     return df
 
 df = load_financial_phrasebank()
 
+# Load FiQA dataset
 splits = {
     'train': 'data/train-00000-of-00001-aeefa1eadf5be10b.parquet',
     'test': 'data/test-00000-of-00001-0fb9f3a47c7d0fce.parquet',
@@ -49,24 +50,98 @@ df_fiqa = pd.read_parquet("hf://datasets/TheFinAI/fiqa-sentiment-classification/
 # Select relevant columns
 df_fiqa = df_fiqa[['sentence', 'score']].rename(columns={'sentence': 'text', 'score': 'sentiment'})
 
+# Convert sentiment score to labels
 def convert_score_to_label(score):
-    if score < -0.05:  # Negative sentiment
-        return 0
-    elif score > 0.05:  # Positive sentiment
-        return 2
-    else:  # Neutral sentiment
-        return 1
+    if score < -0.05:
+        return 0  # Neutral
+    elif score > 0.05:
+        return 2  # Positive
+    else:
+        return 1  # Negative
 
 df_fiqa['sentiment'] = df_fiqa['sentiment'].apply(convert_score_to_label)
 
-# Concatenate both datasets
+# Concatenate PhraseBank and FiQA datasets
 df_combined = pd.concat([df, df_fiqa], ignore_index=True)
 
-# Print value counts to verify balance
+print("After merging PhraseBank and FiQA:", df_combined.shape)
+
+# **Load Kaggle dataset (Sentiment Analysis for Financial News)**
+path = kagglehub.dataset_download("ankurzing/sentiment-analysis-for-financial-news")
+kaggle_df = pd.read_csv(f"{path}/all-data.csv", encoding="ISO-8859-1", header=None)
+
+# Rename columns to match existing datasets
+kaggle_df.columns = ["sentiment", "text"]
+
+# Map sentiment labels (negative -> 2, neutral -> 0, positive -> 1)
+sentiment_mapping = {"negative": 2, "neutral": 0, "positive": 1}
+kaggle_df["sentiment"] = kaggle_df["sentiment"].map(sentiment_mapping)
+
+# Concatenate Kaggle dataset with df_combined
+df_combined = pd.concat([df_combined, kaggle_df], ignore_index=True)
+
+print("Final dataset shape:", df_combined.shape)
+
+# Display value counts of sentiments
 print(df_combined['sentiment'].value_counts())
 
-# Check first few rows
+# Preview last rows
 df_combined.tail(20)
+
+
+# def load_financial_phrasebank():
+#     """Load and preprocess the Financial PhraseBank df."""
+#     print("Loading Financial PhraseBank df...")
+#     data = []
+#     with open("fake_news_datasets/FinancialPhraseBank-v1.0/FinancialPhraseBank-v1.0/Sentences_50Agree.txt", "r",
+#               encoding="ISO-8859-1") as file: # support western european languages encoding
+#         for line in file:
+#             match = re.search(r"@(neutral|positive|negative)\s*$", line.strip())
+#             if match:
+#                 sentiment = match.group(1)
+#                 text = line[:match.start()].strip()
+#                 label = {"neutral": 0, "positive": 1, "negative": 2}[sentiment]
+#                 data.append({"text": text, "sentiment": label})
+#             else:
+#                 print(f"Skipping malformed line: {line.strip()}")
+#
+#     df = pd.DataFrame(data)
+#     print(df.head())
+#     return df
+#
+# df = load_financial_phrasebank()
+#
+# splits = {
+#     'train': 'data/train-00000-of-00001-aeefa1eadf5be10b.parquet',
+#     'test': 'data/test-00000-of-00001-0fb9f3a47c7d0fce.parquet',
+#     'valid': 'data/valid-00000-of-00001-51867fe1ac59af78.parquet'
+# }
+#
+# df_fiqa = pd.read_parquet("hf://datasets/TheFinAI/fiqa-sentiment-classification/" + splits["train"])
+#
+# df_fiqa = df_fiqa[['sentence', 'score']].rename(columns={'sentence': 'text', 'score': 'sentiment'})
+#
+# def convert_score_to_label(score):
+#     if score < -0.05:  # Negative
+#         return 0
+#     elif score > 0.05:  # Positive
+#         return 2
+#     else:
+#         return 1
+#
+# df_fiqa['sentiment'] = df_fiqa['sentiment'].apply(convert_score_to_label)
+#
+# # Concatenate both datasets
+# df_combined = pd.concat([df, df_fiqa], ignore_index=True)
+#
+# # Print value counts to verify balance
+# print(df_combined['sentiment'].value_counts())
+#
+# # Check first few rows
+# df_combined.tail(20)
+
+
+
 # print(df['sentiment'].value_counts())
 # print(df.head())
 #

@@ -32,9 +32,15 @@
 # sample_text = "strength don't meet expectations"
 # processed_text = analyzer.preprocess_text(sample_text)
 # print(processed_text)  # Expected output: "the company grow rapidly and be now grow with strong grow."
+from urllib.parse import urlparse
 
-import pandas as pd
+# import pandas as pd
+#
+# splits = {'train': 'data/train-00000-of-00001-aeefa1eadf5be10b.parquet', 'test': 'data/test-00000-of-00001-0fb9f3a47c7d0fce.parquet', 'valid': 'data/valid-00000-of-00001-51867fe1ac59af78.parquet'}
+# df = pd.read_parquet("hf://datasets/TheFinAI/fiqa-sentiment-classification/" + splits["train"])
+# print(df.head())
 
-splits = {'train': 'data/train-00000-of-00001-aeefa1eadf5be10b.parquet', 'test': 'data/test-00000-of-00001-0fb9f3a47c7d0fce.parquet', 'valid': 'data/valid-00000-of-00001-51867fe1ac59af78.parquet'}
-df = pd.read_parquet("hf://datasets/TheFinAI/fiqa-sentiment-classification/" + splits["train"])
-print(df.head())
+url = 'www.reuters.com'
+
+domain = urlparse(url).netloc.replace('www.', '')
+print(domain)

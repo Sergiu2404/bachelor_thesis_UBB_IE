@@ -88,73 +88,12 @@ print(df_combined['sentiment'].value_counts())
 # Preview last rows
 df_combined.tail(20)
 
-
-# def load_financial_phrasebank():
-#     """Load and preprocess the Financial PhraseBank df."""
-#     print("Loading Financial PhraseBank df...")
-#     data = []
-#     with open("fake_news_datasets/FinancialPhraseBank-v1.0/FinancialPhraseBank-v1.0/Sentences_50Agree.txt", "r",
-#               encoding="ISO-8859-1") as file: # support western european languages encoding
-#         for line in file:
-#             match = re.search(r"@(neutral|positive|negative)\s*$", line.strip())
-#             if match:
-#                 sentiment = match.group(1)
-#                 text = line[:match.start()].strip()
-#                 label = {"neutral": 0, "positive": 1, "negative": 2}[sentiment]
-#                 data.append({"text": text, "sentiment": label})
-#             else:
-#                 print(f"Skipping malformed line: {line.strip()}")
-#
-#     df = pd.DataFrame(data)
-#     print(df.head())
-#     return df
-#
-# df = load_financial_phrasebank()
-#
-# splits = {
-#     'train': 'data/train-00000-of-00001-aeefa1eadf5be10b.parquet',
-#     'test': 'data/test-00000-of-00001-0fb9f3a47c7d0fce.parquet',
-#     'valid': 'data/valid-00000-of-00001-51867fe1ac59af78.parquet'
-# }
-#
-# df_fiqa = pd.read_parquet("hf://datasets/TheFinAI/fiqa-sentiment-classification/" + splits["train"])
-#
-# df_fiqa = df_fiqa[['sentence', 'score']].rename(columns={'sentence': 'text', 'score': 'sentiment'})
-#
-# def convert_score_to_label(score):
-#     if score < -0.05:  # Negative
-#         return 0
-#     elif score > 0.05:  # Positive
-#         return 2
-#     else:
-#         return 1
-#
-# df_fiqa['sentiment'] = df_fiqa['sentiment'].apply(convert_score_to_label)
-#
-# # Concatenate both datasets
-# df_combined = pd.concat([df, df_fiqa], ignore_index=True)
-#
-# # Print value counts to verify balance
-# print(df_combined['sentiment'].value_counts())
-#
-# # Check first few rows
-# df_combined.tail(20)
-
-
-
-# print(df['sentiment'].value_counts())
-# print(df.head())
-#
-# print(df.loc[df.sentiment == 0].sample(5)[['text', 'sentiment']])
 contents = df.text.values
 labels = df.sentiment.values
 
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 
-# print(tokenizer.tokenize(contents[0]))
-# print('Token IDs: ', tokenizer.convert_tokens_to_ids(tokenizer.tokenize(contents[0])))
-# input_ids = torch.tensor(tokenizer.encode('this is a cat', add_special_tokens=True, truncation=True, max_length = 10, padding = True)).unsqueeze(0)
-# print(input_ids)
+
 
 max_len = 0
 

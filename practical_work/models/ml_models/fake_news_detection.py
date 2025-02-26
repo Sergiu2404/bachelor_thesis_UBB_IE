@@ -14,7 +14,7 @@ from sklearn.metrics import classification_report
 
 
 class FinancialNewsCredibilityAnalyzer:
-    def __init__(self, model_path="E:\\saved_models\\credibility_model.zip"):
+    def __init__(self, model_path="E:\\saved_models\\fake_news_detection_model\\credibility_model.zip"):
         self.model_path = model_path
         self.language_tool = language_tool_python.LanguageTool('en-US')
         self.vectorization = TfidfVectorizer()
@@ -25,7 +25,7 @@ class FinancialNewsCredibilityAnalyzer:
             'marketwatch.com': 0.85, 'barrons.com': 0.85, 'forbes.com': 0.75,
             'morningstar.com': 0.75, 'investors.com': 0.75, 'businessinsider.com': 0.7,
             'fool.com': 0.7, 'seekingalpha.com': 0.65, 'yahoo.com/finance': 0.7,
-            'cnn.com/business': 0.75, 'nytimes.com/business': 0.8
+            'cnn.com': 0.75, 'nytimes.com': 0.8
         }
         self.SUSPICIOUS_DOMAINS = ['.com.co', '.co.com', '.lo', 'finance-news24',
                                    'breaking-finance', 'stockalert', 'investing-secrets',
@@ -37,8 +37,8 @@ class FinancialNewsCredibilityAnalyzer:
             with zipfile.ZipFile(self.model_path, 'r') as zip_ref:
                 zip_ref.extractall("E:\\saved_models")
 
-            self.model = joblib.load("E:\\saved_models\\credibility_model.pkl")
-            self.vectorization = joblib.load("E:\\saved_models\\vectorizer.pkl")
+            self.model = joblib.load("E:\\saved_models\\fake_news_detection_model\\credibility_model.pkl")
+            self.vectorization = joblib.load("E:\\saved_models\\fake_news_detection_model\\vectorizer.pkl")
             # self.feature_scaler = joblib.load("E:\\saved_models\\feature_scaler.pkl")
         else:
             self._train_model()
@@ -75,13 +75,13 @@ class FinancialNewsCredibilityAnalyzer:
     def _save_model(self):
         os.makedirs("E:\\saved_models", exist_ok=True)
 
-        joblib.dump(self.model, "E:\\saved_models\\credibility_model.pkl")
-        joblib.dump(self.vectorization, "E:\\saved_models\\vectorizer.pkl")
+        joblib.dump(self.model, "E:\\saved_models\\fake_news_detection_model\\credibility_model.pkl")
+        joblib.dump(self.vectorization, "E:\\saved_models\\fake_news_detection_model\\vectorizer.pkl")
         # joblib.dump(self.feature_scaler, "E:\\saved_models\\feature_scaler.pkl")
 
         with zipfile.ZipFile(self.model_path, 'w') as zip_ref:
-            zip_ref.write("E:\\saved_models\\credibility_model.pkl", "credibility_model.pkl")
-            zip_ref.write("E:\\saved_models\\vectorizer.pkl", "vectorizer.pkl")
+            zip_ref.write("E:\\saved_models\\fake_news_detection_model\\credibility_model.pkl", "credibility_model.pkl")
+            zip_ref.write("E:\\saved_models\\fake_news_detection_model\\vectorizer.pkl", "vectorizer.pkl")
             # zip_ref.write("E:\\saved_models\\feature_scaler.pkl", "feature_scaler.pkl")
 
     def _preprocess_text(self, text):
@@ -95,11 +95,12 @@ class FinancialNewsCredibilityAnalyzer:
 
     def _check_source_credibility(self, url):
         if not url:
-            return 0.5
+            return 0.8
         domain = urlparse(url).netloc.replace('www.', '')
+
         if domain in self.CREDIBLE_FINANCIAL_SOURCES:
             return self.CREDIBLE_FINANCIAL_SOURCES[domain]
-        if any(susp in domain for susp in self.SUSPICIOUS_DOMAINS):
+        if any(suspicious_domain in domain for suspicious_domain in self.SUSPICIOUS_DOMAINS):
             return 0.2
         return 0.5
 
@@ -114,19 +115,50 @@ class FinancialNewsCredibilityAnalyzer:
         return round(len(self.language_tool.check(text)) / max(len(word_tokenize(text)), 1), 3)
 
     def _text_quality_score(self, text):
-        all_caps_ratio = len(re.findall(r'\b[A-Z]{3,}\b', text)) / max(1, len(text.split()))
-        excessive_punct_ratio = (text.count('!') + text.count('?')) / max(1, len(text))
+        score = 1
+        all_caps_patterns = re.findall(r'\b[A-Z]{3,}\b', text)
+
+        all_caps_ratio = len(all_caps_patterns) / max(1, len(text.split()))
+        excessive_punctuation_ratio = (text.count('!') + text.count('?') + text.count("  ")) / max(1, len(text))
         grammar_errors_ratio = self._grammatical_score(text)
-        quality_score = 1 - sum([all_caps_ratio >= 0.2, excessive_punct_ratio >= 0.02, grammar_errors_ratio > 0.09]) * 0.1
-        return max(0.1, quality_score)
+
+        print(all_caps_ratio, excessive_punctuation_ratio, grammar_errors_ratio)
+        if all_caps_ratio >= 0.2:
+            score *= 0.5
+        elif all_caps_ratio >= 0.1:
+            score *= 0.7
+
+        if excessive_punctuation_ratio >= 0.03:
+            score *= 0.7
+        elif excessive_punctuation_ratio >= 0.01:
+            score *= 0.9
+
+        if grammar_errors_ratio > 0.12:
+            score *= 0.5
+        elif grammar_errors_ratio > 0.07:
+            score *= 0.7
+
+        # quality_score = 1 - sum([all_caps_ratio >= 0.2, excessive_punctuation_ratio >= 0.02, grammar_errors_ratio > 0.09]) * 0.1
+        print(score)
+        return max(0.1, score)
 
     def _domain_legitimacy(self, url):
+        score = 1
         if not url or not validators.url(url):
-            return 0.4
-        domain = urlparse(url).netloc
-        if any(susp in domain for susp in self.SUSPICIOUS_DOMAINS) or len(domain) < 5:
-            return 0.3
-        return 0.8
+            score *= 0.4
+
+        parsed_url = urlparse(url)
+        protocol = parsed_url.scheme
+        domain = parsed_url.netloc
+
+        if protocol == "http":
+            score *= 0.7  # reduce the score in case secure http is not used
+        # urlparse(url).netloc
+        for suspicious_domain in self.SUSPICIOUS_DOMAINS:
+            if suspicious_domain in domain or domain in self.SUSPICIOUS_DOMAINS or len(domain) < 5:
+                score *= 0.3  # reduce if domain is suspicious
+
+        return score
 
 
     def analyze(self, news):

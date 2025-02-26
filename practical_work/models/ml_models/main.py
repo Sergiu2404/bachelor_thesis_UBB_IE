@@ -27,20 +27,8 @@
 #         lemmatized_tokens = [self.lemmatizer.lemmatize(token, self.get_wordnet_pos(token)) for token in tokens]
 #         return ' '.join(lemmatized_tokens)
 #
-# # Example usage
-# analyzer = FinancialNewsAnalyzer()
-# sample_text = "strength don't meet expectations"
-# processed_text = analyzer.preprocess_text(sample_text)
-# print(processed_text)  # Expected output: "the company grow rapidly and be now grow with strong grow."
 from urllib.parse import urlparse
 
-# import pandas as pd
-#
-# splits = {'train': 'data/train-00000-of-00001-aeefa1eadf5be10b.parquet', 'test': 'data/test-00000-of-00001-0fb9f3a47c7d0fce.parquet', 'valid': 'data/valid-00000-of-00001-51867fe1ac59af78.parquet'}
-# df = pd.read_parquet("hf://datasets/TheFinAI/fiqa-sentiment-classification/" + splits["train"])
-# print(df.head())
-
-url = 'www.reuters.com'
-
-domain = urlparse(url).netloc.replace('www.', '')
-print(domain)
+domain = urlparse("https://www.cnn.com").netloc
+print("https://www.cnn.com".split("://"))
+print(urlparse("https://www.cnn.com").netloc)

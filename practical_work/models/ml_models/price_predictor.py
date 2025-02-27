@@ -143,6 +143,7 @@ from sklearn.model_selection import train_test_split
 from fredapi import Fred
 
 
+
 class EnhancedStockPricePredictor:
     def __init__(self, look_back_months=36, fred_api_key="15a4d2e1121e1a09cc3021690a867b13"):
         self.look_back_months = look_back_months
@@ -158,10 +159,10 @@ class EnhancedStockPricePredictor:
         stock = yf.Ticker(ticker)
         # Get daily data then resample to monthly
         df = stock.history(start=start_date, end=end_date, interval="1d")
-        # Calculate monthly metrics
-        monthly_df = df['Close'].resample('M').agg(['first', 'max', 'min', 'last'])
+        # Calculate monthly metrics - using 'ME' instead of 'M'
+        monthly_df = df['Close'].resample('ME').agg(['first', 'max', 'min', 'last'])
         monthly_df.columns = ['Open', 'High', 'Low', 'Close']
-        monthly_df['Volume'] = df['Volume'].resample('M').sum()
+        monthly_df['Volume'] = df['Volume'].resample('ME').sum()
 
         # Add technical indicators
         monthly_df['MA_3'] = monthly_df['Close'].rolling(window=3).mean()
@@ -176,46 +177,76 @@ class EnhancedStockPricePredictor:
 
     def fetch_macroeconomic_data(self, start_date, end_date):
         """Fetch monthly macroeconomic indicators from FRED"""
-        # Convert dates to datetime for comparison
         start_dt = pd.to_datetime(start_date)
         end_dt = pd.to_datetime(end_date)
 
         # Fetch data
         gdp = self.fred_api.get_series("GDP", start_date, end_date)
-        gdp = gdp.reindex(pd.date_range(start=gdp.index[0], end=gdp.index[-1], freq='M'))
-        gdp = gdp.ffill()  # Forward fill to get monthly data
+        gdp = gdp.reindex(pd.date_range(start=gdp.index[0], end=gdp.index[-1], freq='ME'))
+        gdp = gdp.ffill()
 
         cpi = self.fred_api.get_series("CPIAUCSL", start_date, end_date)
         unemployment = self.fred_api.get_series("UNRATE", start_date, end_date)
         interest_rate = self.fred_api.get_series("DGS10", start_date, end_date)
         inflation_expectations = self.fred_api.get_series("T10YIE", start_date, end_date)
 
-        # S&P 500 as a market benchmark
-        sp500 = yf.download("^GSPC", start=start_date, end=end_date, interval="1mo")['Close']
+        # S&P 500 as a market benchmark - extract just the Close column values
+        sp500_data = yf.download("^GSPC", start=start_date, end=end_date, interval="1mo")
+        sp500 = sp500_data['Close']
 
-        # Ensure all data is 1D
+        # Create a properly sized date range for the data frame
+        date_range = pd.date_range(start=start_dt, periods=len(sp500), freq='ME')
+
+        #bound them to 60 (expected length for each)
+        gdp = gdp.reindex(date_range, method='ffill')
+        interest_rate = interest_rate.resample('ME').last()  # Keep last value of each month
+        interest_rate = interest_rate.reindex(date_range, method='ffill')  # Ensure 60 values
+
+        inflation_expectations = inflation_expectations.resample('ME').last()
+        inflation_expectations = inflation_expectations.reindex(date_range, method='ffill')
+
+        print(len(gdp), len(cpi), len(unemployment), len(interest_rate), len(inflation_expectations), len(sp500),
+              len(date_range))
+
+        # macro_data = pd.DataFrame({
+        #     'GDP': gdp.values if isinstance(gdp, pd.Series) else gdp,
+        #     'CPI': cpi.values if isinstance(cpi, pd.Series) else cpi,
+        #     'Unemployment': unemployment.values if isinstance(unemployment, pd.Series) else unemployment,
+        #     'Interest_Rate': interest_rate.values if isinstance(interest_rate, pd.Series) else interest_rate,
+        #     'Inflation_Expectations': inflation_expectations.values if isinstance(inflation_expectations,
+        #                                                                           pd.Series) else inflation_expectations,
+        #     'SP500': sp500.values  # Series values are already 1D
+        # }, index=date_range)
         macro_data = pd.DataFrame({
-            'GDP': gdp.values.flatten() if isinstance(gdp, np.ndarray) else gdp,
-            'CPI': cpi.values.flatten() if isinstance(cpi, np.ndarray) else cpi,
-            'Unemployment': unemployment.values.flatten() if isinstance(unemployment, np.ndarray) else unemployment,
-            'Interest_Rate': interest_rate.values.flatten() if isinstance(interest_rate, np.ndarray) else interest_rate,
-            'Inflation_Expectations': inflation_expectations.values.flatten() if isinstance(inflation_expectations,
-                                                                                            np.ndarray) else inflation_expectations,
-            'SP500': sp500.values.flatten() if isinstance(sp500, np.ndarray) else sp500
-        })
+            'GDP': gdp.values.squeeze(),  # Ensure 1D
+            'CPI': cpi.values.squeeze(),
+            'Unemployment': unemployment.values.squeeze(),
+            'Interest_Rate': interest_rate.values.squeeze(),
+            'Inflation_Expectations': inflation_expectations.values.squeeze(),
+            'SP500': sp500.values.squeeze()
+        }, index=date_range)
 
-        # Calculate percentage changes for trend analysis
         for col in macro_data.columns:
+            # macro_data[f'{col}_Change'] = macro_data[col].pct_change(fill_method=None)
+            # macro_data[f'{col}_Change'].fillna(inplace=True)  # Fill forward
+            # macro_data[f'{col}_Change'].fillna(inplace=True)  # Fill backward
+
             macro_data[f'{col}_Change'] = macro_data[col].pct_change()
 
-        # Handle NaN values
-        macro_data = macro_data.fillna(method='ffill').fillna(method='bfill')
+        macro_data = macro_data.ffill().bfill()
+        #macro_data = macro_data.fillna(method='ffill').fillna(method='bfill')
+
+        if macro_data.isna().sum().sum() > 0:
+            print("Warning: NaN values detected in macro_data, filling with forward/backward fill.")
+            macro_data = macro_data.ffill().bfill()
 
         return macro_data
 
     def prepare_lstm_data(self, stock_data, macro_data):
         """Prepare data for LSTM model with merged stock and macro data"""
-        # Merge stock and macro data on dates
+        stock_data.index = stock_data.index.tz_localize(None)
+        macro_data.index = macro_data.index.tz_localize(None)
+
         merged_data = pd.merge(
             stock_data,
             macro_data,
@@ -224,11 +255,10 @@ class EnhancedStockPricePredictor:
             how='inner'
         )
 
-        # Feature columns (exclude Close price which is the target)
         feature_cols = [col for col in merged_data.columns if col != 'Close']
-        self.feature_count = len(feature_cols)  # Set feature count for model creation
+        self.feature_count = len(feature_cols)
 
-        # Now create the model with the known feature count
+        # create model with the known feature count
         self.monthly_model = self.create_lstm_model()
 
         # Scale all features
@@ -262,7 +292,7 @@ class EnhancedStockPricePredictor:
         model.compile(optimizer='adam', loss='mse')
         return model
 
-    def train_macro_adjustment_model(self, stock_data, macro_data, prediction_window=24):
+    def train_macro_adjustment_model(self, stock_data, macro_data, prediction_window=12):
         """Train a secondary model to adjust predictions based on macroeconomic trends"""
         # Prepare data for the adjustment model
         merged_data = pd.merge(
@@ -299,7 +329,7 @@ class EnhancedStockPricePredictor:
 
         return self.macro_model
 
-    def predict_future_monthly(self, stock_data, macro_data, num_months=24):
+    def predict_future_monthly(self, stock_data, macro_data, num_months=12):
         """Predict stock prices for the next num_months"""
         # Get the latest data for prediction
         merged_data = pd.merge(
@@ -347,14 +377,8 @@ class EnhancedStockPricePredictor:
 
     def apply_macro_adjustments(self, base_predictions, historical_data, future_dates):
         """Apply adjustments to predictions based on macroeconomic forecasts"""
-        # This is a simplified version - in a real implementation, you would:
-        # 1. Forecast macroeconomic indicators for future dates
-        # 2. Use the trained macro_model to adjust predictions
-
-        # For now, we'll use a simple adjustment based on recent macro trends
         recent_macro = historical_data.iloc[-6:].drop('Close', axis=1)  # Last 6 months
 
-        # Calculate average trends
         avg_trends = {}
         for col in recent_macro.columns:
             if col.endswith('_Change'):
@@ -363,6 +387,7 @@ class EnhancedStockPricePredictor:
         # Apply adjustments
         adjusted_predictions = []
         base_price = historical_data['Close'].iloc[-1]
+        epsilon = 1e-6  # Small constant to prevent division by zero
 
         for i, base_pred in enumerate(base_predictions):
             month = i + 1
@@ -371,29 +396,27 @@ class EnhancedStockPricePredictor:
             if i == 0:
                 pred_pct_change = (base_pred - base_price) / base_price
             else:
-                pred_pct_change = (base_pred - adjusted_predictions[-1]) / adjusted_predictions[-1]
+                safe_last_value = adjusted_predictions[-1] if adjusted_predictions[-1] != 0 else epsilon
+                pred_pct_change = (base_pred - safe_last_value) / safe_last_value
 
-            # Adjustment factors (simplified)
             # Stronger adjustments for longer-term predictions
             inflation_factor = 1 + (avg_trends.get('Inflation_Expectations_Change', 0) * month * 0.1)
             interest_factor = 1 - (avg_trends.get('Interest_Rate_Change', 0) * month * 0.15)
             gdp_factor = 1 + (avg_trends.get('GDP_Change', 0) * month * 0.2)
 
-            # Combined adjustment
             adjustment = (inflation_factor * interest_factor * gdp_factor - 1)
             adjusted_pct_change = pred_pct_change + adjustment
 
-            # Calculate adjusted price
             if i == 0:
                 adjusted_price = base_price * (1 + adjusted_pct_change)
             else:
                 adjusted_price = adjusted_predictions[-1] * (1 + adjusted_pct_change)
 
-            adjusted_predictions.append(max(0, adjusted_price))  # Ensure no negative prices
+            adjusted_predictions.append(max(0, adjusted_price))  # Prevent negative prices
 
         return adjusted_predictions
 
-    def run_model(self, ticker, training_years=5, num_months_to_predict=24, epochs=100, batch_size=32):
+    def run_model(self, ticker, training_years=5, num_months_to_predict=12, epochs=50, batch_size=32):
         """Run the complete model pipeline"""
         end_date = datetime.now().strftime('%Y-%m-%d')
         start_date = (datetime.now() - relativedelta(years=training_years)).strftime('%Y-%m-%d')
@@ -402,10 +425,8 @@ class EnhancedStockPricePredictor:
         stock_data = self.fetch_stock_data(ticker, start_date, end_date)
         macro_data = self.fetch_macroeconomic_data(start_date, end_date)
 
-        # Prepare data for LSTM
         X, y, merged_data = self.prepare_lstm_data(stock_data, macro_data)
 
-        # Split data
         train_size = int(len(X) * 0.8)
         X_train, X_test = X[:train_size], X[train_size:]
         y_train, y_test = y[:train_size], y[train_size:]
@@ -429,7 +450,9 @@ class EnhancedStockPricePredictor:
         for date, price in predictions:
             print(f"{date.strftime('%Y-%m')}: ${price:.2f}")
 
-        return predictions
+        # Return simplified monthly prediction values only
+        monthly_predictions = [price for _, price in predictions]
+        return monthly_predictions
 
 
 # Example usage
@@ -438,6 +461,11 @@ if __name__ == "__main__":
     predictions = predictor.run_model(
         ticker="AAPL",
         training_years=5,
-        num_months_to_predict=24,
-        epochs=100
+        num_months_to_predict=12,
+        epochs=50
     )
+
+    # Print simplified monthly prediction values
+    print("\nSimplified Monthly Predictions for next 12 months:")
+    for i, price in enumerate(predictions):
+        print(f"Month {i + 1}: ${price:.2f}")

@@ -134,3 +134,98 @@ class StockPricePredictor:
 # import numpy as np
 # import pandas as pd
 # import yfinance as yf
+
+# import matplotlib.pyplot as plt
+# import matplotlib.dates as mdates
+from datetime import datetime, timedelta
+from statsmodels.tsa.arima.model import ARIMA
+from sklearn.metrics import mean_squared_error
+
+
+def prepare_stock_data(ticker, train_start='2010-01-01', train_end='2020-12-31',
+                       val_start='2021-01-01', val_end='2023-01-01'):
+    data = yf.download(ticker, start=train_start, end=val_end)
+
+    training_data = data['Close'][train_start:train_end]
+    validation_data = data['Close'][val_start:val_end]
+
+    return training_data, validation_data, data
+
+
+def build_and_train_model(training_data, validation_data):
+    print("Finding best ARIMA parameters...")
+
+    # TODO: use auto_arima from pmdarima
+    order = (5, 1, 0)  # p, d, q parameters for ARIMA
+
+    print(f"Fitting ARIMA{order} model...")
+    model = ARIMA(training_data, order=order)
+    model_fit = model.fit()
+
+    print("Making predictions on validation set...")
+    predictions = model_fit.forecast(steps=len(validation_data))
+
+    mse = mean_squared_error(validation_data, predictions)
+    rmse = np.sqrt(mse)
+    print(f"Validation RMSE: {rmse:.2f}")
+
+    return model_fit, predictions
+
+
+def print_monthly_predictions(predictions, future_dates, ticker):
+    print(f"\n{ticker} Monthly Price Predictions:")
+    print("-" * 40)
+    print(f"{'Month':<15} {'Predicted Price':<15}")
+    print("-" * 40)
+
+    # convert predictions to a list if it's a Series or other iterable
+    if hasattr(predictions, 'tolist'):
+        pred_list = predictions.tolist()
+    else:
+        pred_list = list(predictions)
+
+    for i in range(len(future_dates)):
+        month_str = future_dates[i].strftime('%b %Y')
+        if i < len(pred_list):
+            price_str = f"${pred_list[i]:.2f}"
+            print(f"{month_str:<15} {price_str:<15}")
+        else:
+            print(f"{month_str:<15} No prediction available")
+
+def predict_next_12_months(model, historical_data):
+    current_date = datetime.now()
+    future_dates = []
+
+    predictions = model.forecast(steps=12)
+
+    for i in range(12):
+        future_date = (current_date + timedelta(days=30 * (i + 1)))
+        future_dates.append(future_date)
+
+    return predictions, future_dates
+
+
+def run_stock_prediction(ticker='AAPL'):
+    print(f"Loading and preparing {ticker} data...")
+    training_data, validation_data, historical_data = prepare_stock_data(ticker)
+
+    print("Building and training ARIMA model...")
+    model, val_predictions = build_and_train_model(training_data, validation_data)
+
+    print("Refitting model on all available data for future predictions...")
+    all_data = historical_data['Close']
+    final_model = ARIMA(all_data, order=(5, 1, 0))
+    final_model_fit = final_model.fit()
+
+    print("Predicting prices for the next 12 months...")
+    predictions, future_dates = predict_next_12_months(final_model_fit, historical_data)
+    print_monthly_predictions(predictions, future_dates, ticker)
+
+    return predictions, future_dates
+
+
+print("Running prediction for SPY...")
+spy_predictions, spy_dates = run_stock_prediction('SPY')
+
+print("\nRunning prediction for AAPL...")
+aapl_predictions, aapl_dates = run_stock_prediction('AAPL')

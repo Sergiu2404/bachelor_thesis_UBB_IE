@@ -47,10 +47,9 @@ splits = {
 
 df_fiqa = pd.read_parquet("hf://datasets/TheFinAI/fiqa-sentiment-classification/" + splits["train"])
 
-# Select relevant columns
+# relevant columns
 df_fiqa = df_fiqa[['sentence', 'score']].rename(columns={'sentence': 'text', 'score': 'sentiment'})
 
-# Convert sentiment score to labels
 def convert_score_to_label(score):
     if score < -0.05:
         return 0  # Neutral

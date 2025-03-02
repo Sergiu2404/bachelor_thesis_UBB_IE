@@ -1,7 +1,9 @@
 import os
 import random
 import warnings
+import re
 
+import nltk
 from nltk.corpus import stopwords, wordnet
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
@@ -15,12 +17,28 @@ from sklearn.metrics import classification_report, accuracy_score
 warnings.filterwarnings('ignore')
 
 
+
+import re
+import glob
+from tqdm import tqdm
+import pickle
+from pathlib import Path
+
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+import nltk
+import pandas as pd
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+
+
+
 class FinancialNewsAnalyzer:
     def __init__(self):
         try:
-            nltk.data.find('tokenizers/punkt')
-            nltk.data.find('corpora/stopwords')
-            nltk.data.find('corpora/wordnet')
+            print()
+            # nltk.data.find('tokenizers/punkt')
+            # nltk.data.find('corpora/stopwords')
+            # nltk.data.find('corpora/wordnet')
         except LookupError:
             print("download nltk resources...")
             # nltk.download('punkt')
@@ -73,9 +91,9 @@ class FinancialNewsAnalyzer:
 
         lexicon = {}
         for word in financial_positive:
-            lexicon[self.lemmatizer.lemmatize(word)] = random.uniform(1, 1.5)
+            lexicon[self.lemmatizer.lemmatize(word)] = random.uniform(1.5, 2)
         for word in financial_negative:
-            lexicon[self.lemmatizer.lemmatize(word)] = random.uniform(-3, -3.5)
+            lexicon[self.lemmatizer.lemmatize(word)] = random.uniform(-2, -1.5)
         for word in financial_neutral:
             lexicon[self.lemmatizer.lemmatize(word)] = 0
 
@@ -250,35 +268,82 @@ class FinancialNewsAnalyzer:
 
         return negated_words
 
+    # def lexicon_score(self, text):
+    #     """
+    #     Calculate sentiment score with improved downgrade/upgrade detection and negation handling.
+    #     """
+    #     text = text.lower()
+    #     tokens = word_tokenize(text)
+    #     score = 0
+    #
+    #     phrase_sentiments = {
+    #         "from buy to hold": -2.0, "from hold to sell": -2.5, "from buy to sell": -3.0,
+    #         "downgrade to hold": -2.0, "downgrade to sell": -3.0, "cut to hold": -2.0, "cut to sell": -3.0,
+    #         "downgrade": -1.8,
+    #         "from sell to hold": 2.0, "from hold to buy": 2.5, "from sell to buy": 3.0, "reinstates dividend": 1.6, "profit boost": 1.7,
+    #         "market leader": 1.8, "top performer": 1.8,
+    #         "upgrade to buy": 3.0, "upgrade to hold": 2.0, "raise to buy": 3.0, "acquisition deal": 2.0, "strategic partnership": 2.0,
+    #         "upgrade": 1.8, "new product": 1.5, "new offer": 1.5, "new offering": 1.5, "expansion plan": 1.5, "new contract": 1.5,
+    #         "n't meet expectation": -2.5, "not profitable": -2.0, "no growth": -1.5,
+    #         "n't achieve target": -2.0, "never recover": -1.5,
+    #         "competitive pressure": -1.5, "margin concern": -1.7
+    #     }
+    #
+    #     # check for phrases for custom sentiment
+    #     for phrase, sentiment in phrase_sentiments.items():
+    #         if phrase in text:
+    #             score += sentiment
+    #
+    #     # get words after negation
+    #     negated_words = self.detect_negation_scope(text)
+    #
+    #
+    #     for token in tokens:
+    #         lemmatized_token = self.lemmatizer.lemmatize(token)
+    #
+    #         if lemmatized_token in self.financial_dictionary_classifier:
+    #             sentiment = self.financial_dictionary_classifier[lemmatized_token]
+    #
+    #             # flip sentiment if word is in negation scope
+    #             if token in negated_words or lemmatized_token in negated_words:
+    #                 sentiment = -sentiment
+    #
+    #             score += sentiment
+    #
+    #     # higher weights for titles containing downgrades/upgrades
+    #     if any(term in text[:50].lower() for term in ["downgrade", "upgrade", "cut", "raise", "record"]):
+    #         score *= 1.5  # Amplify sentiment for headlines with rating changes
+    #
+    #     # normalize score by text length
+    #     return score / max(len(tokens), 1)
     def lexicon_score(self, text):
         """
-        Calculate sentiment score with improved downgrade/upgrade detection and negation handling.
+        Calculate sentiment score without normalization but with capping.
         """
         text = text.lower()
         tokens = word_tokenize(text)
         score = 0
 
         phrase_sentiments = {
-            "from buy to hold": -2.0, "from hold to sell": -2.5, "from buy to sell": -3.0,
-            "downgrade to hold": -2.0, "downgrade to sell": -3.0, "cut to hold": -2.0, "cut to sell": -3.0,
-            "downgrade": -1.8,
-            "from sell to hold": 2.0, "from hold to buy": 2.5, "from sell to buy": 3.0, "reinstates dividend": 1.6, "profit boost": 1.7,
-            "market leader": 1.8, "top performer": 1.8,
-            "upgrade to buy": 3.0, "upgrade to hold": 2.0, "raise to buy": 3.0, "acquisition deal": 2.0, "strategic partnership": 2.0,
-            "upgrade": 1.8, "new product": 1.5, "new offer": 1.5, "new offering": 1.5, "expansion plan": 1.5, "new contract": 1.5,
-            "n't meet expectation": -2.5, "not profitable": -2.0, "no growth": -1.5,
-            "n't achieve target": -2.0, "never recover": -1.5,
-            "competitive pressure": -1.5, "margin concern": -1.7
+                "from buy to hold": -2, "from hold to sell": -2, "from buy to sell": -2,
+                "downgrade to hold": -2, "downgrade to sell": -2, "cut to hold": -2, "cut to sell": -2,
+                "downgrade": -2,
+                "from sell to hold": 2, "from hold to buy": 2, "from sell to buy": 2, "reinstates dividend": 1.5, "profit boost": 1.5,
+                "market leader": 2, "top performer": 2,
+                "upgrade to buy": 2, "upgrade to hold": 2, "raise to buy": 2, "acquisition deal": 2, "strategic partnership": 2,
+                "upgrade": 2, "new product": 1.5, "new offer": 1.5, "new offering": 1.5, "expansion plan": 1.5, "new contract": 1.5,
+                "n't meet expectation": -2, "not profitable": -2, "no growth": -1.5,
+                "n't achieve target": -2, "never recover": -1.5,
+                "competitive pressure": -1.5, "margin concern": -1.5
         }
 
-        # check for phrases for custom sentiment
+        # Check for phrases with custom sentiment
         for phrase, sentiment in phrase_sentiments.items():
             if phrase in text:
                 score += sentiment
 
-        # get words after negation
+        # Get words after negation
         negated_words = self.detect_negation_scope(text)
-
 
         for token in tokens:
             lemmatized_token = self.lemmatizer.lemmatize(token)
@@ -286,20 +351,22 @@ class FinancialNewsAnalyzer:
             if lemmatized_token in self.financial_dictionary_classifier:
                 sentiment = self.financial_dictionary_classifier[lemmatized_token]
 
-                # flip sentiment if word is in negation scope
+                # Flip sentiment if word is in negation scope
                 if token in negated_words or lemmatized_token in negated_words:
-                    sentiment = -sentiment
+                    sentiment = -sentiment * 0.3
+                    # since these words are negated, it doesn't mean we have to completely flip the sentiment, but also to give a neutrality impact
 
                 score += sentiment
 
-        # higher weights for titles containing downgrades/upgrades
+        # Higher weights for titles containing downgrades/upgrades
         if any(term in text[:50].lower() for term in ["downgrade", "upgrade", "cut", "raise", "record"]):
             score *= 1.5  # Amplify sentiment for headlines with rating changes
 
-        # normalize score by text length
-        return score / max(len(tokens), 1)
+        # cap the score to prevent extremely high values in long texts
+        return max(min(score, 1), -1)
 
-    def analyze_sentiment(self, text, ticker=None):
+
+    def analyze_sentiment(self, text):
         """Analyze sentiment with improved handling of downgrades and analyst ratings"""
         if self.model is None or self.vectorizer is None:
             self.load_model()
@@ -321,9 +388,9 @@ class FinancialNewsAnalyzer:
             ml_score = model_score[1] * 2 - 1  # Convert 0-1 to -1 to 1
 
         negation_present = any(term in word_tokenize(processed_text) for term in self.negation_words)
-        for term in processed_text:
-            if term in self.negation_words:
-                print(term)
+        # for term in processed_text:
+        #     if term in self.negation_words:
+        #         print(term)
         if negation_present:
             ml_score *= 0.75
 
@@ -345,7 +412,6 @@ class FinancialNewsAnalyzer:
             sentiment = "Neutral"
 
         result = {
-            'ticker': ticker,
             'raw_text': text,
             'processed_text': processed_text,
             'ml_score': round(ml_score, 3),
@@ -356,6 +422,7 @@ class FinancialNewsAnalyzer:
         }
 
         return result
+
 
 
 def analyze_ticker_news(ticker, custom_article=None):
@@ -397,32 +464,23 @@ def analyze_ticker_news(ticker, custom_article=None):
     return results
 
 if __name__ == "__main__":
-    analyze_ticker_news("AAPL")
+    #analyze_ticker_news("AAPL")
 
-    custom_news = """
-    NVDA shares jumped 8% after the company reported blockbuster earnings, 
-    beating Wall Street expectations by a wide margin. Revenue from AI chips 
-    tripled year-over-year, and the CEO announced plans to increase production 
-    capacity to meet surging demand.
-    """
-    analyze_ticker_news("NVDA", custom_news)
-
-
-
+    # custom_news = """
+    # NVDA shares jumped 8% after the company reported blockbuster earnings,
+    # beating Wall Street expectations by a wide margin. Revenue from AI chips
+    # tripled year-over-year, and the CEO announced plans to increase production
+    # capacity to meet surging demand.
+    # """
+    # analyze_ticker_news("NVDA", custom_news)
+    print(analyze_ticker_news("AAPL", "Apple has announced they will increase the production of smartphones by 2025. https://www.reuters.com"))
 
 
 
-import re
-import glob
-from tqdm import tqdm
-import pickle
-from pathlib import Path
 
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
-import nltk
-import pandas as pd
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
+
+
+
 
 
 class TextAnalysisPipeline:

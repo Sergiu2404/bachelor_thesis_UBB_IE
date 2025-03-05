@@ -53,14 +53,16 @@ class FinancialNewsCredibilityAnalyzer:
 
         true['label'], fake['label'] = 1, 0
         news = pd.concat([true, fake], axis=0).drop(['title', 'subject', 'date'], axis=1, errors='ignore')
-        news = news.sample(frac=1).reset_index(drop=True)
+        news = news.sample(frac=1).reset_index(drop=True)  # shuffle entire dataset, 100% of the dataset
         news['text'] = news['text'].apply(self._preprocess_text)
 
         x_train, x_test, y_train, y_test = train_test_split(news['text'], news['label'], test_size=0.2, random_state=42)
-        self.vectorization.fit(x_train)
-        xv_train, xv_test = self.vectorization.transform(x_train), self.vectorization.transform(x_test)
+        self.vectorization.fit(x_train)  # convert to numerical vals
+        xv_train, xv_test = self.vectorization.transform(x_train), self.vectorization.transform(x_test)  # convert to a sparse matrix using vocab
+
         self.model.fit(xv_train, y_train)
-        pred = self.model.predict_proba(xv_test)[:, 1]
+        pred = self.model.predict_proba(xv_test)[:, 1]  # output prob for each class
+
         print(classification_report(y_test, (pred > 0.5).astype(int), zero_division=0))
 
 

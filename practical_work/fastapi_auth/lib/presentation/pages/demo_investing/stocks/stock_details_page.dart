@@ -20,12 +20,13 @@ class _StockDetailsPageState extends State<StockDetailsPage> {
   final StockDataService _stockService = StockDataService();
 
   StockData? stockDetails;
-  late Map<String, double> monthlyPrices;
+  Map<String, double> monthlyPrices = {};
   bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
+    monthlyPrices = {};
     _fetchStockDetails();
   }
 

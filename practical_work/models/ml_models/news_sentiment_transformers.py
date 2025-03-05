@@ -59,41 +59,30 @@ def convert_score_to_label(score):
         return 1  # Negative
 
 df_fiqa['sentiment'] = df_fiqa['sentiment'].apply(convert_score_to_label)
-
-# Concatenate PhraseBank and FiQA datasets
 df_combined = pd.concat([df, df_fiqa], ignore_index=True)
-
 print("After merging PhraseBank and FiQA:", df_combined.shape)
 
-# **Load Kaggle dataset (Sentiment Analysis for Financial News)**
+#  Kaggle dataset Sentiment Analysis for Financial News
 path = kagglehub.dataset_download("ankurzing/sentiment-analysis-for-financial-news")
 kaggle_df = pd.read_csv(f"{path}/all-data.csv", encoding="ISO-8859-1", header=None)
 
 # Rename columns to match existing datasets
 kaggle_df.columns = ["sentiment", "text"]
-
-# Map sentiment labels (negative -> 2, neutral -> 0, positive -> 1)
 sentiment_mapping = {"negative": 2, "neutral": 0, "positive": 1}
 kaggle_df["sentiment"] = kaggle_df["sentiment"].map(sentiment_mapping)
 
-# Concatenate Kaggle dataset with df_combined
 df_combined = pd.concat([df_combined, kaggle_df], ignore_index=True)
-
 print("Final dataset shape:", df_combined.shape)
-
-# Display value counts of sentiments
 print(df_combined['sentiment'].value_counts())
-
-# Preview last rows
 df_combined.tail(20)
 
 contents = df.text.values
 labels = df.sentiment.values
 
+
+
+
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-
-
-
 max_len = 0
 
 for sentence in contents:
@@ -205,15 +194,15 @@ model.cuda()
 params = list(model.named_parameters())
 # print('The BERT model has {:} different named parameters.\n'.format(len(params)))
 
-print('\nEmbedding Layer\n')
+print('\nemb Layer\n')
 for p in params[0:5]:
     print("{:<55} {:>12}".format(p[0], str(tuple(p[1].size()))))
 
-print('\nFirst Transformer\n')
+print('\n1st Transformer\n')
 for p in params[5:21]:
     print("{:<55} {:>12}".format(p[0], str(tuple(p[1].size()))))
 
-print('\nOutput Layer\n')
+print('\noutput\n')
 for p in params[-4:]:
     print("{:<55} {:>12}".format(p[0], str(tuple(p[1].size()))))
 
@@ -329,9 +318,8 @@ for epoch_i in range(0, epochs):
         # print("Labels shape:", b_labels.shape)
         # print("Unique labels:", torch.unique(b_labels))
 
-        # sum up training loss over all batches for getting average loss, loss is a Tensor containing the actual loss
+        # sum up training loss over all batches for getting average loss, loss is a Tensor containing the actual loss, backpropagate to adjust weights
         total_train_loss += loss.item()
-        # calc gradient and backpropagate to update weights
         loss.backward()
         # hold norm of gradient under 1 for preventing exploding gradient
         torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
@@ -354,7 +342,6 @@ for epoch_i in range(0, epochs):
 
     t0 = time.time()
 
-    # start evaluation
     model.eval()
     total_eval_accuracy = 0
     total_eval_loss = 0
@@ -455,12 +442,11 @@ print("  Test Loss: {0:.2f}".format(avg_test_loss))
 print("  Test Evaluation took: {:}".format(format_time(time.time() - t0)))
 
 
-from transformers import BertForSequenceClassification, BertTokenizer
+
 import torch
 
 model.eval()
 def preprocess_text(text, tokenizer, max_length=512):
-    # Tokenize the input text
     encoding = tokenizer.encode_plus(
         text,
         add_special_tokens=True,    # add special tokens like [CLS] and [SEP]
@@ -477,11 +463,10 @@ text = "The stock market kept the same track for last 3 months."
 #text = "Tesla has success after making announcements about their new electric vehicle" positive
 inputs = preprocess_text(text, tokenizer)
 
-# Ensure the input is on the correct device
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 inputs = {k: v.to(device) for k, v in inputs.items()}
 
-with torch.no_grad():  # no gradient computation needed
+with torch.no_grad():  # no gradient computation needed since using the model only
     outputs = model(**inputs)
 
 # raw prediction scores

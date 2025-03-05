@@ -68,19 +68,16 @@ def predict_next_crash(model_filename='crash_model.pkl', scaler_filename='scaler
 
 
 if __name__ == "__main__":
-    # Fetch and save data if not available
     try:
         data = load_data()
     except FileNotFoundError:
         data = fetch_and_save_data()
 
-    # Create features and train model
     print("Training model...")
     data = create_features(data)
     X = data.drop(['crash_label', 'Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume'], axis=1)
     y = data['crash_label']
     train_and_save_model(X, y)
 
-    # Predict crash probability
     print("Predicting next crash...")
     predict_next_crash()

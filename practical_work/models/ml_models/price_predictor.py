@@ -179,19 +179,19 @@ class ARIMAStockPredictionModel:
         self.ticker = ticker
         return self
 
-    def prepare_stock_data(self, train_start='2010-01-01', train_end='2020-12-31',
-                           val_start='2021-01-01', val_end='2023-01-01'):
-        if self.ticker is None:
-            raise ValueError("Ticker symbol not set. Use set_ticker() method first.")
-
-        data = yf.download(self.ticker, start=train_start, end=val_end)
-        data = data.asfreq('B')
-        # data = data.fillna(method='ffill').fillna(method='bfill')
-        data = data.ffill().bfill()
-        training_data = data['Close'][train_start:train_end]
-        validation_data = data['Close'][val_start:val_end]
-        self.data = data
-        return training_data, validation_data
+    # def prepare_stock_data(self, train_start='2010-01-01', train_end='2020-12-31',
+    #                        val_start='2021-01-01', val_end='2023-01-01'):
+    #     if self.ticker is None:
+    #         raise ValueError("Ticker symbol not set. Use set_ticker() method first.")
+    #
+    #     data = yf.download(self.ticker, start=train_start, end=val_end)
+    #     data = data.asfreq('B')
+    #     # data = data.fillna(method='ffill').fillna(method='bfill')
+    #     data = data.ffill().bfill()
+    #     training_data = data['Close'][train_start:train_end]
+    #     validation_data = data['Close'][val_start:val_end]
+    #     self.data = data
+    #     return training_data, validation_data
 
     def build_and_train_model(self, training_data, validation_data):
         print("Finding best ARIMA parameters with auto_arima")
@@ -259,8 +259,11 @@ class ARIMAStockPredictionModel:
             print(f"No existing model found at {self.model_file}")
             return False
 
-    def run_stock_prediction(self, ticker=None):
+    def run_stock_prediction(self, data):
         # Allow setting ticker here or use previously set ticker
+        ticker = data[0]
+        self.data = data[1]
+
         if ticker is not None:
             self.set_ticker(ticker)
 
@@ -271,7 +274,9 @@ class ARIMAStockPredictionModel:
 
         # Always load fresh data for the current ticker
         print(f"Loading {self.ticker} data")
-        training_data, validation_data = self.prepare_stock_data()
+        training_data = data[2]
+        validation_data = data[3]
+        #training_data, validation_data = self.prepare_stock_data()
 
         # Try to load existing model first
         # if self.load_model():

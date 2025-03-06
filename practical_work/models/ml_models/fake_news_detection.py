@@ -1,5 +1,7 @@
 import os
 import re
+import time
+
 import joblib
 import zipfile
 import validators
@@ -206,4 +208,6 @@ if __name__ == "__main__":
     analyzer = FinancialNewsCredibilityAnalyzer()
     while True:
         news_article = input("Enter financial news text: ")
+        start = time.time()
         print(analyzer.analyze(news_article)['credibility_score'], analyzer.analyze(news_article)['credibility'])
+        print(f"time took: {time.time() - start}")

@@ -81,3 +81,15 @@ if __name__ == "__main__":
 
     print("Predicting next crash...")
     predict_next_crash()
+
+
+
+
+# import yfinance as yf
+# from datetime import datetime
+# import time
+#
+# start = time.time()
+# current_date = datetime.now().strftime("%Y-%m-%d")
+# data = yf.download("MSFT", start="2010-01-01", end=current_date)
+# print(f"time elapsed: {time.time() - start}")

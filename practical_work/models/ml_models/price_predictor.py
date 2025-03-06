@@ -229,6 +229,36 @@ class ARIMAStockPredictionModel:
 
         return monthly_predictions, monthly_indices
 
+    def predict_next_5_years(self):
+        if self.ticker is None:
+            raise ValueError("Ticker symbol not set. Use set_ticker() method first.")
+        if self.model is None or self.data is None:
+            raise ValueError("Model has not been trained or data is not loaded")
+
+        last_date = self.data.index[-1]
+        # 252 business days / year
+        future_periods = 252 * 5
+        future_dates = pd.date_range(start=last_date + pd.Timedelta(days=1),
+                                     periods=future_periods, freq='B')
+        predictions = self.model.predict(n_periods=future_periods)
+
+        # introduce a small bias to integrate volatility
+        for i in range(1, len(predictions)):
+            if predictions[i] > predictions[i - 1]:
+                predictions[i] *= 1.001
+            else:
+                predictions[i] *= 0.999
+
+
+        future_predictions = pd.Series(predictions, index=future_dates)
+
+        # Generate monthly indices over the 5-year period
+        monthly_indices = pd.date_range(start=future_dates.min(), end=future_dates.max(), freq='M')
+        monthly_predictions = [future_predictions.loc[future_predictions.index[
+            future_predictions.index.get_indexer([date], method='nearest')[0]]] for date in monthly_indices]
+
+        return monthly_predictions, monthly_indices
+
     def print_monthly_predictions(self, predictions, future_dates):
         if self.ticker is None:
             raise ValueError("Ticker symbol not set. Use set_ticker() method first.")
@@ -260,7 +290,6 @@ class ARIMAStockPredictionModel:
             return False
 
     def run_stock_prediction(self, data):
-        # Allow setting ticker here or use previously set ticker
         ticker = data[0]
         self.data = data[1]
 
@@ -274,8 +303,6 @@ class ARIMAStockPredictionModel:
 
         # Always load fresh data for the current ticker
         print(f"Loading {self.ticker} data")
-        training_data = data[2]
-        validation_data = data[3]
         #training_data, validation_data = self.prepare_stock_data()
 
         # Try to load existing model first
@@ -300,6 +327,9 @@ class ARIMAStockPredictionModel:
             self.model.update(all_data)
         else:
             # Need to train new model
+            training_data = data[2]
+            validation_data = data[3]
+
             print("Training ARIMA model")
             val_predictions = self.build_and_train_model(training_data, validation_data)
 
@@ -312,11 +342,12 @@ class ARIMAStockPredictionModel:
 
         print("Predicting prices for the next 12 months...")
         predictions, future_dates = self.predict_next_12_months()
+        #predictions, future_dates = self.predict_next_5_years()
         #self.print_monthly_predictions(predictions, future_dates)
 
         return predictions, future_dates
 
-    def run_stock_prediction_overall_sentiment(self, weighted_sentiment_score, ticker=None):
+    def run_stock_prediction_overall_sentiment(self, weighted_sentiment_score, ticker):
         if ticker is not None:
             self.set_ticker(ticker)
 
@@ -390,16 +421,33 @@ class ARIMAStockPredictionModel:
 
         return adjusted_predictions
 
-# def main():
-#     # Example usage
-#     model = ARIMAStockPredictionModel()
-#
-#     print("\nPrediction for AAPL")
-#     aapl_predictions, aapl_dates = model.run_stock_prediction('AAPL')
-#
-#
-# if __name__ == "__main__":
-#     main()
+def fetch_stock_data(ticker, train_start='2010-01-01', train_end='2020-12-31',
+                       val_start='2021-01-01', val_end='2023-01-01'):
+    if ticker is None:
+        raise ValueError("Ticker symbol not set. Use set_ticker() method first.")
+
+    data = yf.download(ticker, start=train_start, end=val_end)
+    data = data.asfreq('B')
+    # data = data.fillna(method='ffill').fillna(method='bfill')
+    data = data.ffill().bfill()
+    training_data = data['Close'][train_start:train_end]
+    validation_data = data['Close'][val_start:val_end]
+
+    return (ticker, data, training_data, validation_data)
+
+def main():
+    # Example usage
+    model = ARIMAStockPredictionModel()
+
+    data = fetch_stock_data('AAPL')
+    print("\nPrediction")
+    predictions, dates = model.run_stock_prediction(data)
+    for i in range(len(predictions)):
+        print(f"price {predictions[i]} at date {dates[i]}")
+
+
+if __name__ == "__main__":
+    main()
 
 
 

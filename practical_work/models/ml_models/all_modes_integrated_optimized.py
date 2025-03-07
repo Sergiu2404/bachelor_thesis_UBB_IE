@@ -3,6 +3,7 @@ import random
 import re
 import warnings
 import zipfile
+from datetime import timedelta
 from urllib.parse import urlparse
 import time
 import threading
@@ -475,7 +476,7 @@ def lexicon_score(text):
     return max(min(score, 1), -1)
 
 
-def analyze_sentiment(text, ticker=None):
+def analyze_sentiment(text):
     global sentiment_vectorizer, sentiment_model
     if sentiment_model is None or sentiment_vectorizer is None:
         load_sentiment_model()
@@ -743,23 +744,29 @@ def analyze_ticker_news(ticker, custom_article=None):
 
 
 from concurrent.futures import ThreadPoolExecutor, as_completed
-def load_all_models_in_parallel():
+def load_all_models_in_parallel(ticker, train_start, train_end, val_start, val_end):
     load_functions = [
         load_credibility_model,
         load_sentiment_model,
-        load_arima_model
+        load_arima_model,
     ]
 
     with ThreadPoolExecutor(max_workers=3) as executor:
         futures = {executor.submit(func): func.__name__ for func in load_functions}
+        fetch_future = executor.submit(fetch_stock_data_parallel, ticker, train_start, train_end, val_start, val_end)
+        futures[fetch_future] = "stock_data"
 
         for future in as_completed(futures):
             func_name = futures[future]
             try:
                 result = future.result()
                 thread_safe_print(f"{func_name} completed successfully.")
+                if func_name == "stock_data":
+                    stock_data = result
             except Exception as e:
                 thread_safe_print(f"{func_name} generated an exception: {e}")
+
+    return stock_data
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import re
 
@@ -775,7 +782,7 @@ def calculate_text_quality_score(clean_news):
 def calculate_domain_legitimacy_score(url):
     return domain_legitimacy(url)
 
-def run_credibility(news, ticker):
+def run_credibility(news):
     url = re.search(r'(https?://[^\s]+)$', news) or re.search(r'([a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)$', news)
     url = url.group(1) if url else ''
     clean_news = news.replace(url, '') if url else news
@@ -807,15 +814,88 @@ def run_credibility(news, ticker):
         scores.get("domain_legitimacy_score", 0) * 0.1
     )
 
-    credibility_score = get_credibility(credibility_score)
-    print(f"cred: {credibility_score}")
+    # credibility_score = get_credibility(credibility_score)
+    # print(f"cred: {credibility_score}")
+    return credibility_score
 
+def run_sentiment(news):
+    return analyze_sentiment(news)
+
+def run_arima(stock_data):
+    all_data = stock_data['Close'].asfreq('B').ffill().bfill()
+    arima_model.update(all_data)
+
+    predictions, future_dates = predict_next_12_months()
+    return (predictions, future_dates)
+
+import yfinance as yf
+def split_date_range(start_date, end_date, chunk_days=730):
+    date_ranges = []
+    current_start = start_date
+    while current_start < end_date:
+        current_end = min(current_start + timedelta(days=chunk_days), end_date)
+        date_ranges.append((current_start, current_end))
+        current_start = current_end + timedelta(days=1)
+    return date_ranges
+
+def fetch_stock_data_for_range(ticker, start_date, end_date):
+    data = yf.download(ticker, start=start_date, end=end_date)
+    data = data.asfreq('B').ffill().bfill()
+    return data
+
+def fetch_stock_data_parallel(ticker, train_start, train_end, val_start, val_end):
+    if ticker is None:
+        raise ValueError("Ticker symbol not set.")
+
+    start_time = time.time()
+    date_ranges = split_date_range(pd.to_datetime(train_start), pd.to_datetime(val_end))
+
+    with ThreadPoolExecutor() as executor:
+        futures = [executor.submit(fetch_stock_data_for_range, ticker, start, end) for start, end in date_ranges]
+        all_data = [future.result() for future in futures]
+
+    data = pd.concat(all_data).drop_duplicates()
+    data = data.asfreq('B').ffill().bfill()
+    training_data = data['Close'][train_start:train_end]
+    validation_data = data['Close'][val_start:val_end]
+
+    print(f"Stock data fetched in {time.time() - start_time} seconds")
+    return (ticker, data, training_data, validation_data)
 
 
 if __name__ == "__main__":
-    load_all_models_in_parallel()
     news = "Apple has announced they will increase the production of smartphones by 2025. https://www.reuters.com"
     ticker = "MSFT"
+    train_start, train_end = "2010-01-01", "2018-01-01"
+    val_start, val_end = "2019-01-02", "2022-01-01"
+    stock_data = load_all_models_in_parallel(ticker, train_start, train_end, val_start, val_end)[2]
+    print(stock_data.tail())
 
-    run_credibility(news, ticker)
+    with ThreadPoolExecutor(max_workers=3) as executor:
+        futures = {
+            executor.submit(run_credibility, news): "credibility_score",
+            executor.submit(run_sentiment, news): "sentiment_score",
+            executor.submit(run_arima, stock_data): "arima_prediction"
+        }
+        results = {}
+        for future in as_completed(futures):
+            key = futures[future]
+            try:
+                results[key] = future.result()
+            except Exception as exception:
+                print(f"Error calculating {key}: {exception}")
+                results[key] = None
+    credibility_score = results.get("credibility_score", 0)
+    sentiment_score = results.get("sentiment_score", 0)["sentiment_score"]
+
+    arima_results = results.get("arima_prediction", ([], []))
+    print(arima_results)
+    #predictions, future_dates = arima_results
+
+    # print("ARIMA predicted prices for 12 months")
+    # for i in range(len(predictions)):
+    #     print(predictions[i])
+
+    # credibility_score = run_credibility(news)
+    # sentiment_score = run_sentiment(news)["sentiment_score"]
     # TODO: run sentiment model, then fetch data concurrently form yf, then run arima model, then try to run all of them together after loading all of them

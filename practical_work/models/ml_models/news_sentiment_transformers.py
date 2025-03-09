@@ -543,12 +543,12 @@ def load_fiqa_dataset():
     df_fiqa = df_fiqa[['sentence', 'score']].rename(columns={'sentence': 'text', 'score': 'sentiment'})
 
     def convert_score_to_label(score):
-        if score < -0.05:
-            return 0  # Neutral
-        elif score > 0.05:
-            return 2  # Pos
+        if score < -0.15:
+            return 2
+        elif score > 0.15:
+            return 1
         else:
-            return 1  # Neg
+            return 0
 
     df_fiqa['sentiment'] = df_fiqa['sentiment'].apply(convert_score_to_label)
     print("FiQA dataset loaded:", df_fiqa.shape)
@@ -679,11 +679,8 @@ def initialize_model(num_labels=3):
 
 def initialize_optimizer(model, train_dataloader, epochs=4):
     """Initialize optimizer and learning rate scheduler."""
-    optimizer = AdamW(
-        model.parameters(),
-        lr=2e-5,
-        eps=1e-8
-    )
+    optimizer = AdamW(model.parameters(), lr=1e-5, eps=1e-8)
+
 
     # total number of training steps
     total_steps = len(train_dataloader) * epochs
@@ -944,7 +941,8 @@ def main():
 
         save_model(model, tokenizer, model_path)
 
-    # sample_text1 = "The stock market kept the same track for last 3 months."
+    sample_text1 = "The stock market kept the same track for last 3 months."
+    predict_sentiment(sample_text1, model, tokenizer)
     sample_text2 = "The stock market kept its descendant trend for last 3 months."
     predict_sentiment(sample_text2, model, tokenizer)
 

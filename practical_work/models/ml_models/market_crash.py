@@ -84,7 +84,6 @@ if __name__ == "__main__":
 
 
 
-
 # import yfinance as yf
 # from datetime import datetime
 # import time

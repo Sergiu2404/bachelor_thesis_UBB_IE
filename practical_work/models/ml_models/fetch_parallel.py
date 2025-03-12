@@ -1,3 +1,6 @@
+import os
+import re
+
 import kagglehub
 import yfinance as yf
 import concurrent.futures
@@ -58,39 +61,59 @@ def fetch_stock_data_parallel(ticker, start_date, end_date):
 
 
 
-# import pandas as pd
-#
-# def load_fiqa_dataset():
-#     """Load and preprocess the FiQA dataset."""
-#     print("Loading FiQA dataset...")
-#     splits = {
-#         'train': 'data/train-00000-of-00001-aeefa1eadf5be10b.parquet',
-#         'test': 'data/test-00000-of-00001-0fb9f3a47c7d0fce.parquet',
-#         'valid': 'data/valid-00000-of-00001-51867fe1ac59af78.parquet'
-#     }
-#
-#     df_fiqa = pd.read_parquet("hf://datasets/TheFinAI/fiqa-sentiment-classification/" + splits["train"])
-#
-#     # Select relevant columns and rename
-#     df_fiqa = df_fiqa[['sentence', 'score']].rename(columns={'sentence': 'text', 'score': 'sentiment'})
-#
-#     # Filter rows where sentiment score is between -0.1 and 0.1
-#     neutral = df_fiqa[(df_fiqa['sentiment'] > -0.15) & (df_fiqa['sentiment'] < 0.15)]
-#     positive = df_fiqa[(df_fiqa['sentiment'] > 0.15)]
-#     negative = df_fiqa[(df_fiqa['sentiment'] < -0.15)]
-#
-#     print("FiQA dataset loaded:", df_fiqa.shape)
-#     return (neutral, positive, negative)
-#
-# print(f"neutral: {load_fiqa_dataset()[0].shape[0]}")
-# print(load_fiqa_dataset()[0])
-# print(f"positive: {load_fiqa_dataset()[1].shape[0]}")
-# print(load_fiqa_dataset()[1])
-# print(f"negative: {load_fiqa_dataset()[2].shape[0]}")
-# print(load_fiqa_dataset()[2])
-
-
 import pandas as pd
+
+
+def load_fiqa_dataset():
+    """Load and preprocess the FiQA dataset."""
+    print("Loading FiQA dataset...")
+    splits = {
+        'train': 'data/train-00000-of-00001-aeefa1eadf5be10b.parquet',
+        'test': 'data/test-00000-of-00001-0fb9f3a47c7d0fce.parquet',
+        'valid': 'data/valid-00000-of-00001-51867fe1ac59af78.parquet'
+    }
+
+    df_fiqa = pd.read_parquet("hf://datasets/TheFinAI/fiqa-sentiment-classification/" + splits["train"])
+
+    # Select relevant columns and rename
+    df_fiqa = df_fiqa[['sentence', 'score']].rename(columns={'sentence': 'text', 'score': 'sentiment'})
+
+    slightly_negative = df_fiqa[(df_fiqa['sentiment'] == 0)]
+    neutral = df_fiqa[(df_fiqa['sentiment'] > -0.03) & (df_fiqa['sentiment'] < 0.1)]
+    positive = df_fiqa[(df_fiqa['sentiment'] > 0.1)]
+    negative = df_fiqa[(df_fiqa['sentiment'] < -0.03)]
+
+    print("FiQA dataset loaded:", df_fiqa.shape)
+    return (neutral, positive, negative, slightly_negative)
+
+print(load_fiqa_dataset()[3])
+
+
+def load_fiqa_dataset():
+    """Load and preprocess the FiQA dataset."""
+    print("Loading FiQA dataset...")
+    splits = {
+        'train': 'data/train-00000-of-00001-aeefa1eadf5be10b.parquet',
+        'test': 'data/test-00000-of-00001-0fb9f3a47c7d0fce.parquet',
+        'valid': 'data/valid-00000-of-00001-51867fe1ac59af78.parquet'
+    }
+
+    df_fiqa = pd.read_parquet("hf://datasets/TheFinAI/fiqa-sentiment-classification/" + splits["train"])
+
+    df_fiqa = df_fiqa[['sentence', 'score']].rename(columns={'sentence': 'text', 'score': 'sentiment'})
+
+    def convert_score_to_label(score):
+        if score < 0:
+            return 2
+        elif score > 0.05:
+            return 1
+        else:
+            return 0
+
+    df_fiqa['sentiment'] = df_fiqa['sentiment'].apply(convert_score_to_label)
+    print("FiQA dataset loaded:", df_fiqa.shape)
+    return df_fiqa
+
 
 def load_kaggle_dataset():
     """Load and preprocess the Kaggle Sentiment Analysis for Financial News dataset."""
@@ -103,14 +126,19 @@ def load_kaggle_dataset():
     kaggle_df["sentiment"] = kaggle_df["sentiment"].map(sentiment_mapping)
 
     print("Kaggle dataset loaded:", kaggle_df.shape)
-
-    # Display only the text and its sentiment for the first 2 rows of each sentiment category (0, 1, 2)
-    for sentiment in [0, 1, 2]:
-        print(f"\nSentiment {sentiment}:")
-        rows = kaggle_df[kaggle_df['sentiment'] == sentiment].head(2)
-        for _, row in rows.iterrows():
-            print(f"Sentiment {row['sentiment']}: {row['text']}")
-
     return kaggle_df
 
-print(load_kaggle_dataset())
+
+def load_all_datasets():
+    """Load and combine all datasets."""
+    #df_phrasebank = load_financial_phrasebank()
+    df_fiqa = load_fiqa_dataset()
+    df_kaggle = load_kaggle_dataset()
+
+    # merge datasets
+    df_combined = pd.concat([df_fiqa, df_kaggle], ignore_index=True)
+    # print("Final combined dataset shape:", df_combined.shape)
+    print("Sentiment class distribution:", df_combined['sentiment'].value_counts())
+    return df_combined
+
+df = load_all_datasets()

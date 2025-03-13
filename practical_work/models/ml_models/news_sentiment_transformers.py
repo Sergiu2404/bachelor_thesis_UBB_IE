@@ -25,28 +25,6 @@ def set_seed(seed_value=42):
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(seed_value)
 
-
-def load_financial_phrasebank():
-    """Load and preprocess the Financial PhraseBank dataset."""
-    print("Loading Financial PhraseBank dataset...")
-    data = []
-    with open("fake_news_datasets/FinancialPhraseBank-v1.0/FinancialPhraseBank-v1.0/Sentences_50Agree.txt", "r",
-              encoding="ISO-8859-1") as file:
-        for line in file:
-            match = re.search(r"@(neutral|positive|negative)\s*$", line.strip())
-            if match:
-                sentiment = match.group(1)
-                text = line[:match.start()].strip()
-                label = {"neutral": 0, "positive": 1, "negative": 2}[sentiment]
-                data.append({"text": text, "sentiment": label})
-            else:
-                print(f"Skipping malformed line: {line.strip()}")
-
-    df = pd.DataFrame(data)
-    print("Financial PhraseBank Loaded:", df.shape)
-    return df
-
-
 def load_fiqa_dataset():
     """Load and preprocess the FiQA dataset."""
     print("Loading FiQA dataset...")
@@ -89,7 +67,6 @@ def load_kaggle_dataset():
 
 def load_all_datasets():
     """Load and combine all datasets."""
-    #df_phrasebank = load_financial_phrasebank()
     df_fiqa = load_fiqa_dataset()
     df_kaggle = load_kaggle_dataset()
 
@@ -467,7 +444,6 @@ def main():
 
 
 
-# Modified main function to incorporate negation handling
 def main_with_negation_handling():
     """Modified main function with negation handling."""
     set_seed()

@@ -173,10 +173,9 @@ class NegationHandlingTransformer:
         adjusted_probs = original_probs.copy()
 
         if original_pred_class == 2:  # Negative
-            # Transfer probability from negative to positive
             transfer_amount = adjusted_probs[2] * 0.7
             adjusted_probs[2] -= transfer_amount
-            adjusted_probs[1] += transfer_amount  # Add to positive
+            adjusted_probs[1] += transfer_amount
 
             adjustment_reason = f"Double negation detected: {pattern}"
 

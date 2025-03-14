@@ -436,7 +436,6 @@ def fetch_stock_data(ticker, train_start='2010-01-01', train_end='2020-12-31',
     return (ticker, data, training_data, validation_data)
 
 def main():
-    # Example usage
     model = ARIMAStockPredictionModel()
 
     data = fetch_stock_data('AAPL')

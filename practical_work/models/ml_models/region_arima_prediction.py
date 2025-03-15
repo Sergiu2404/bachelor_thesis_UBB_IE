@@ -106,7 +106,6 @@ class RegionalARIMAStockPredictionModel:
         print(f"Validation RMSE: {rmse:.2f}")
         return predictions
 
-    # TODO: ADJUST THIS FUNCTION TO NOT PREDICT LESS THAN 0
     def predict_next_12_months(self):
         if self.ticker is None:
             raise ValueError("Ticker symbol not set. Use set_ticker() method first.")
@@ -118,11 +117,27 @@ class RegionalARIMAStockPredictionModel:
                                      periods=252, freq='B')
         predictions = self.model.predict(n_periods=252)
 
+        if isinstance(self.data.iloc[-1], pd.Series):
+            last_known_price = float(self.data.iloc[-1].iloc[0])
+        else:
+            last_known_price = float(self.data.iloc[-1])
+
+        threshold = last_known_price * 0.1
+
         for i in range(1, len(predictions)):
-            if predictions[i] > predictions[i - 1]:
+            current_value = predictions[i - 1]
+
+            if predictions[i] > current_value:
                 predictions[i] *= 1.01
             else:
-                predictions[i] *= 0.99
+                if current_value < threshold:
+                    decrease_factor = 0.99 + 0.01 * (1 - current_value / threshold)
+                    decrease_factor = min(decrease_factor, 0.999)
+                    predictions[i] = current_value * decrease_factor
+                else:
+                    predictions[i] *= 0.99
+
+        predictions = np.maximum(predictions, 0)
 
         future_predictions = pd.Series(predictions, index=future_dates)
 
@@ -224,12 +239,12 @@ def main():
     predictions_us, dates_us, region_us = model.run_stock_prediction(data_us)
     model.print_monthly_predictions(predictions_us, dates_us)
 
-    print("\nGerman Stock")
+    print("\nGerman")
     data_german = model.fetch_stock_data(german_ticker)
     predictions_german, dates_german, region_german = model.run_stock_prediction(data_german)
     model.print_monthly_predictions(predictions_german, dates_german)
 
-    print("\nJapan Stock")
+    print("\nJapan")
     data_japanese = model.fetch_stock_data(japanese_ticker)
     predictions_japanese, dates_japanese, region_japanese = model.run_stock_prediction(data_japanese)
     model.print_monthly_predictions(predictions_japanese, dates_japanese)

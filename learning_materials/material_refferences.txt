@@ -1,3 +1,26 @@
 https://www.matec-conferences.org/articles/matecconf/pdf/2024/04/matecconf_icmed2024_01163.pdf
 fake news romanian: https://www.mdpi.com/2076-3417/13/24/13207
 stock price prediciton methods paper: https://arxiv.org/pdf/2111.01137
+
+
+get news input
+news sentiment analysis: use finbert / transformers
+predict longevity of news: short or long  term, if short term affect price for next month, if long affect on more months
+fake news detection: use some model and decrease the score at grammar errors, if source inst reliable etc
+
+combine sentiment and fake news scores
+
+
+get ticker input
+get ticker domain: sector = stock.info.get('sector'), industry = stock.info.get('industry')
+get news domain: if some news are about the same domain of the ticker domain, apply more impact on the price, if not apply less
+  (if about the specific company, increase some impact factor)
+  use models like latent dirichlet / berttopic / gpt or use named entity recognition
+get technical indicators for ticker (try to predict the technical indicators for future using some model for time series forecasting)
+get macroeconomic indicators (try to predict indicators using for future using time series forecasting)
+
+
+predict price using arima / lstm: if news not in domain of ticker, decrease most of the impact on the predicted price, if news about ticker domain adjust it with combined sentiment-credibility score, if longevity is short term, adjust only for short term 
+  (1 month or few weeks) using some factor to be decreased and give less impact for the next months, if extracted longevity is long term
+  the impact factor should decrease mildly for the next months
+adjust prices predicted regarding the current technical indicators and macroeconomic indicators or predictions of theser

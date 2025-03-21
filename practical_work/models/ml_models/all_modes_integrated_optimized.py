@@ -754,14 +754,14 @@ def load_all_models_in_parallel(ticker, train_start, train_end, val_start, val_e
     with ThreadPoolExecutor(max_workers=3) as executor:
         futures = {executor.submit(func): func.__name__ for func in load_functions}
         fetch_future = executor.submit(fetch_stock_data_parallel, ticker, train_start, train_end, val_start, val_end)
-        futures[fetch_future] = "stock_data"
+        futures[fetch_future] = "stocks"
 
         for future in as_completed(futures):
             func_name = futures[future]
             try:
                 result = future.result()
                 thread_safe_print(f"{func_name} completed successfully.")
-                if func_name == "stock_data":
+                if func_name == "stocks":
                     stock_data = result
             except Exception as e:
                 thread_safe_print(f"{func_name} generated an exception: {e}")

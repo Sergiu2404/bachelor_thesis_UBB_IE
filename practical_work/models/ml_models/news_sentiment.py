@@ -436,7 +436,7 @@ def analyze_ticker_news(ticker, custom_article=None):
         analyzer.load_model()
 
     if custom_article:
-        result = analyzer.analyze_sentiment(custom_article, ticker)
+        result = analyzer.analyze_sentiment(custom_article)
         print(f"\nAnalysis for custom article about {ticker}:")
         print(f"Sentiment: {result['sentiment_class']} (Score: {result['sentiment_score']})")
         print(f"Confidence: {result['model_confidence']:.2f}")

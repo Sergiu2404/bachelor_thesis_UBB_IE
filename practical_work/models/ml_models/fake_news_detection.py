@@ -241,11 +241,10 @@ class FinancialNewsCredibilityAnalyzer:
         self.model_path = model_path
         self.language_tool = language_tool_python.LanguageTool('en-US')
 
-        # Create a pipeline with feature selection and LinearSVC
         self.model = Pipeline([
             ('tfidf', TfidfVectorizer(
-                max_features=5000,  # Reduced features
-                stop_words='english',  # Remove common stop words
+                max_features=5000,
+                stop_words='english',
                 ngram_range=(1, 2),  # Use unigrams and bigrams
                 max_df=0.7,  # Ignore terms that appear in more than 70% of documents
                 min_df=3  # Ignore terms that appear in less than 3 documents
@@ -411,8 +410,7 @@ class FinancialNewsCredibilityAnalyzer:
 
         preprocessed_text = self._preprocess_text(clean_news)
 
-        # Use decision function and convert to probability-like score
-        pred_value_score = (self.model.decision_function([preprocessed_text])[0] + 1) / 2
+        pred_value_score = max(0.02, min(1, (self.model.decision_function([preprocessed_text])[0] + 1) / 2))
 
         source_credibility_score = self._check_source_credibility(url)
         text_quality_score = self._text_quality_score(clean_news)

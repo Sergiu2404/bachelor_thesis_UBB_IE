@@ -1,0 +1,31 @@
+ Option 1: Downsample your data (e.g., monthly prices)
+Yes — this is a smart move for long-term prediction:
+
+Create a resampled version of your dataset — instead of daily prices, use monthly or weekly closing prices.
+
+Then, feed that into the LSTM with an appropriate sequence length — for example:
+
+12 months of past data (sequence length = 12) to predict the price 3 months into the future.
+
+Advantages:
+
+Less noise.
+
+More focused on long-term trends (e.g., macroeconomic cycles, investor sentiment shifts).
+
+Simpler model due to reduced sequence length.
+
+✅ Option 2: Use features engineered for long-term signals
+Instead of just price, include:
+
+Moving averages (e.g., 50-day, 200-day).
+
+RSI, MACD.
+
+Volume trends.
+
+Sector indexes.
+
+Economic indicators (GDP, interest rate forecasts).
+
+These help the model grasp long-term behavior better than raw prices alone.

@@ -408,201 +408,255 @@ def create_financial_sentiment_dataset(target_size=10000):
 # print(f"✅ Merged dataset saved to {final_path}")
 
 
-import os
+
+
+
+#
+# import os
+# import pandas as pd
+# import numpy as np
+# import torch
+# from transformers import AutoTokenizer, AutoModelForSequenceClassification
+# from datasets import load_dataset
+# import logging
+#
+# logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+# logger = logging.getLogger(__name__)
+#
+# os.makedirs('sentiment_datasets', exist_ok=True)
+#
+#
+# def score_text_with_finbert(texts, model, tokenizer):
+#     logger.info(f"Scoring {len(texts)} texts with FinBERT")
+#     results = []
+#
+#     batch_size = 32
+#     for i in range(0, len(texts), batch_size):
+#         batch_texts = texts[i:i + batch_size]
+#         batch_texts = [str(text) for text in batch_texts]
+#
+#         encoded_input = tokenizer(batch_texts, padding=True, truncation=True, return_tensors='pt', max_length=512)
+#
+#         if torch.cuda.is_available():
+#             encoded_input = {k: v.cuda() for k, v in encoded_input.items()}
+#             model = model.cuda()
+#
+#         with torch.no_grad():
+#             outputs = model(**encoded_input)
+#
+#         probs = torch.nn.functional.softmax(outputs.logits, dim=1).cpu().numpy()
+#
+#         for prob in probs:
+#             score = -1 * prob[0] + 0 * prob[1] + 1 * prob[2]
+#             results.append(float(score))
+#
+#         if (i // batch_size) % 5 == 0:
+#             logger.info(f"Processed batch {i // batch_size + 1}/{(len(texts) + batch_size - 1) // batch_size}")
+#
+#     return results
+#
+#
+# try:
+#     logger.info("Loading existing financial news sentiment data")
+#     existing_df = pd.read_csv('sentiment_datasets/financial_news_sentiment.csv', names=['text', 'score'])
+#     logger.info(f"Loaded {len(existing_df)} existing entries")
+# except FileNotFoundError:
+#     logger.warning("Existing sentiment file not found. Creating a new one.")
+#     existing_df = pd.DataFrame(columns=['text', 'score'])
+#
+#     sample_data = [
+#         ["AMD reduces debt significantly, improves balance sheet", 0.93],
+#         ["Economic indicators point to contraction in telecom sector", -0.96],
+#         ["telecom sector rallies as Tesla leads gains", 0.86],
+#         ["Investors maintain hold rating on Google stock", 0.01],
+#         ["Meta restructuring fails to address fundamental issues", -0.3],
+#         ["CVS Health introduces revolutionary new product to market acclaim", 0.58],
+#         ["Target beats quarterly revenue estimates by $92 million", 0.55],
+#         ["real estate sector rallies as Honda leads gains", 0.5],
+#         ["Wells Fargo introduces revolutionary new product to market acclaim", 0.62],
+#         ["Investors bearish on Google as competition intensifies", -0.92],
+#         ["Cisco quarterly results mixed with some positives and negatives", -0.94]
+#     ]
+#     existing_df = pd.DataFrame(sample_data, columns=['text', 'score'])
+#     existing_df.to_csv('sentiment_datasets/financial_news_sentiment.csv', index=False, header=False)
+#     logger.info(f"Created sample file with {len(existing_df)} entries")
+#
+# logger.info("Loading FinBERT model")
+# finbert_model_name = "ProsusAI/finbert"
+# tokenizer = AutoTokenizer.from_pretrained(finbert_model_name)
+# model = AutoModelForSequenceClassification.from_pretrained(finbert_model_name)
+#
+# dfs_to_merge = [existing_df]
+#
+# financial_datasets = [
+#     "financial_phrasebank",
+#     "zeroshot/twitter-financial-news-sentiment"
+# ]
+#
+# for dataset_name in financial_datasets:
+#     logger.info(f"Attempting to load {dataset_name} dataset")
+#     try:
+#         if dataset_name == "financial_phrasebank":
+#             dataset = load_dataset(dataset_name, name="sentences_allagree")
+#             if 'train' in dataset:
+#                 df = pd.DataFrame({
+#                     'text': dataset['train']['sentence'],
+#                     'original_label': dataset['train']['label']
+#                 })
+#                 logger.info(f"Loaded Financial PhraseBank with {len(df)} entries")
+#             else:
+#                 logger.warning(f"No 'train' split found in {dataset_name}")
+#                 continue
+#
+#         elif "twitter-financial-news-sentiment" in dataset_name:
+#             dataset = load_dataset(dataset_name)
+#             if 'train' in dataset:
+#                 df = pd.DataFrame({
+#                     'text': dataset['train']['text'],
+#                     'original_label': dataset['train']['label'] if 'label' in dataset['train'].features else
+#                     dataset['train']['sentiment'] if 'sentiment' in dataset['train'].features else [0] * len(
+#                         dataset['train'])
+#                 })
+#                 logger.info(f"Loaded Twitter Financial News with {len(df)} entries")
+#             else:
+#                 logger.warning(f"No 'train' split found in {dataset_name}")
+#                 continue
+#
+#         df['score'] = score_text_with_finbert(df['text'].tolist(), model, tokenizer)
+#
+#         df = df[['text', 'score']]
+#
+#         logger.info(f"Processed {len(df)} entries from {dataset_name}")
+#         dfs_to_merge.append(df)
+#     except Exception as e:
+#         logger.error(f"Error loading {dataset_name} dataset: {str(e)}")
+#
+# logger.info("Loading FiQA sentiment classification dataset")
+# try:
+#     fiqa_dataset = load_dataset("TheFinAI/fiqa-sentiment-classification")
+#
+#     fiqa_dfs = []
+#     for split in ['train', 'test', 'validation']:
+#         if split in fiqa_dataset:
+#             columns = fiqa_dataset[split].column_names
+#             logger.info(f"Available columns in FiQA {split} split: {columns}")
+#
+#             if 'sentence' in columns and 'score' in columns:
+#                 split_df = pd.DataFrame({
+#                     'text': fiqa_dataset[split]['sentence'],
+#                     'original_score': fiqa_dataset[split]['score']
+#                 })
+#                 min_score = split_df['original_score'].min()
+#                 max_score = split_df['original_score'].max()
+#
+#                 if min_score < -1 or max_score > 1:
+#                     logger.info(f"Normalizing FiQA scores from range [{min_score}, {max_score}] to [-1, 1]")
+#                     split_df['score'] = split_df['original_score'].apply(
+#                         lambda x: 2 * (x - min_score) / (max_score - min_score) - 1 if max_score != min_score else 0
+#                     )
+#                 else:
+#                     split_df['score'] = split_df['original_score']
+#             else:
+#                 split_df = pd.DataFrame({
+#                     'text': fiqa_dataset[split]['sentence']
+#                 })
+#                 split_df['score'] = score_text_with_finbert(split_df['text'].tolist(), model, tokenizer)
+#
+#             split_df = split_df[['text', 'score']]
+#             fiqa_dfs.append(split_df)
+#
+#     if fiqa_dfs:
+#         fiqa_df = pd.concat(fiqa_dfs, ignore_index=True)
+#         logger.info(f"Processed {len(fiqa_df)} entries from FiQA dataset")
+#         dfs_to_merge.append(fiqa_df)
+#     else:
+#         logger.warning("No usable data found in FiQA dataset")
+#
+# except Exception as e:
+#     logger.error(f"Error loading FiQA dataset: {str(e)}")
+#
+# logger.info("Merging all datasets")
+# if dfs_to_merge:
+#     for i, df in enumerate(dfs_to_merge):
+#         if 'text' not in df.columns or 'score' not in df.columns:
+#             logger.warning(f"Skipping dataframe at index {i} due to missing required columns. Columns: {df.columns}")
+#             dfs_to_merge[i] = None
+#
+#     dfs_to_merge = [df for df in dfs_to_merge if df is not None]
+#
+#     if dfs_to_merge:
+#         final_df = pd.concat(dfs_to_merge, ignore_index=True)
+#
+#         before_dedup = len(final_df)
+#         final_df.drop_duplicates(subset=['text'], keep='first', inplace=True)
+#         after_dedup = len(final_df)
+#         logger.info(f"Removed {before_dedup - after_dedup} duplicate entries")
+#
+#         final_df['score'] = pd.to_numeric(final_df['score'], errors='coerce')
+#         final_df = final_df.dropna(subset=['score'])  # Drop rows with non-numeric scores
+#
+#         final_df['score'] = final_df['score'].apply(lambda x: max(min(float(x), 1.0), -1.0))
+#
+#         final_df['score'] = final_df['score'].round(2)
+#
+#         output_path = 'sentiment_datasets/all_financial_news_sentiment_datasets.csv'
+#         final_df.to_csv(output_path, index=False, header=False)
+#
+#         logger.info(f"Successfully created merged dataset with {len(final_df)} entries at {output_path}")
+#
+#         print("\nSample of final dataset:")
+#         print(final_df.sample(min(10, len(final_df))).to_string())
+#     else:
+#         logger.error("No valid dataframes to merge")
+# else:
+#     logger.error("No dataframes to merge")
+
+
+
+
+
 import pandas as pd
-import numpy as np
-import torch
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
-from datasets import load_dataset
-import logging
+import random
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+input_path = "./sentiment_datasets/all_financial_sentiment_datasets_negation_handling.csv"
+output_path = "./sentiment_datasets/all_financial_sentiment_datasets_major_handling.csv"
 
-os.makedirs('sentiment_datasets', exist_ok=True)
+df_original = pd.read_csv(input_path, header=None, names=["text", "sentiment"])
 
-
-def score_text_with_finbert(texts, model, tokenizer):
-    logger.info(f"Scoring {len(texts)} texts with FinBERT")
-    results = []
-
-    batch_size = 32
-    for i in range(0, len(texts), batch_size):
-        batch_texts = texts[i:i + batch_size]
-        batch_texts = [str(text) for text in batch_texts]
-
-        encoded_input = tokenizer(batch_texts, padding=True, truncation=True, return_tensors='pt', max_length=512)
-
-        if torch.cuda.is_available():
-            encoded_input = {k: v.cuda() for k, v in encoded_input.items()}
-            model = model.cuda()
-
-        with torch.no_grad():
-            outputs = model(**encoded_input)
-
-        probs = torch.nn.functional.softmax(outputs.logits, dim=1).cpu().numpy()
-
-        for prob in probs:
-            score = -1 * prob[0] + 0 * prob[1] + 1 * prob[2]
-            results.append(float(score))
-
-        if (i // batch_size) % 5 == 0:
-            logger.info(f"Processed batch {i // batch_size + 1}/{(len(texts) + batch_size - 1) // batch_size}")
-
-    return results
-
-
-try:
-    logger.info("Loading existing financial news sentiment data")
-    existing_df = pd.read_csv('sentiment_datasets/financial_news_sentiment.csv', names=['text', 'score'])
-    logger.info(f"Loaded {len(existing_df)} existing entries")
-except FileNotFoundError:
-    logger.warning("Existing sentiment file not found. Creating a new one.")
-    existing_df = pd.DataFrame(columns=['text', 'score'])
-
-    sample_data = [
-        ["AMD reduces debt significantly, improves balance sheet", 0.93],
-        ["Economic indicators point to contraction in telecom sector", -0.96],
-        ["telecom sector rallies as Tesla leads gains", 0.86],
-        ["Investors maintain hold rating on Google stock", 0.01],
-        ["Meta restructuring fails to address fundamental issues", -0.3],
-        ["CVS Health introduces revolutionary new product to market acclaim", 0.58],
-        ["Target beats quarterly revenue estimates by $92 million", 0.55],
-        ["real estate sector rallies as Honda leads gains", 0.5],
-        ["Wells Fargo introduces revolutionary new product to market acclaim", 0.62],
-        ["Investors bearish on Google as competition intensifies", -0.92],
-        ["Cisco quarterly results mixed with some positives and negatives", -0.94]
-    ]
-    existing_df = pd.DataFrame(sample_data, columns=['text', 'score'])
-    existing_df.to_csv('sentiment_datasets/financial_news_sentiment.csv', index=False, header=False)
-    logger.info(f"Created sample file with {len(existing_df)} entries")
-
-logger.info("Loading FinBERT model")
-finbert_model_name = "ProsusAI/finbert"
-tokenizer = AutoTokenizer.from_pretrained(finbert_model_name)
-model = AutoModelForSequenceClassification.from_pretrained(finbert_model_name)
-
-dfs_to_merge = [existing_df]
-
-financial_datasets = [
-    "financial_phrasebank",
-    "zeroshot/twitter-financial-news-sentiment"
+augmented_data = [
+    ("TTrump administration will cause a major stock market crash due to their tariffs for all the other countries.", -0.7),
+    ("The current US republican administration could cause a major stock market crash due to their tariffs imposed for all the other countries.", -0.7),
+    ("Germany will spend more money on defend industry, weapons and army", -0.2),
+    ("The European Union member countries will spend more money on defend industry, weapons and army", 0.2),
+    ("US stock market could crash anytime soon", -0.8),
+    ("Chinese stock market could crash anytime soon", -0.8),
+    ("The global economy shows real signs of recovery", 0.7),
+    ("Investors see great chances of a steep fall in stock prices", -0.9),
+    ("The possibility of a significant downturn is growing", -0.8),
+    ("Dividends are expected to decrease", -0.8),
+    ("Dividends are not expected to increase", -0.2),
+    ("There is no clear sign of misinformation spreading", 0.3),
+    ("Misinformation about market trends is concerning investors", -0.4),
+    ("Efforts to fight misinformation are making a difference", 0.4),
+    ("It's unlikely that investors won't gain this quarter", 0.9),
+    ("Analysts believe the market won't recover", -0.8),
+    ("Investors don't think dividends will not be decreased this year", -0.5),
+    ("Investors want to minimize their losses and will quit the market", -0.9),
+    ("Investors want to mark their profits and will quit the market until the situation recovers", -0.8),
 ]
 
-for dataset_name in financial_datasets:
-    logger.info(f"Attempting to load {dataset_name} dataset")
-    try:
-        if dataset_name == "financial_phrasebank":
-            dataset = load_dataset(dataset_name, name="sentences_allagree")
-            if 'train' in dataset:
-                df = pd.DataFrame({
-                    'text': dataset['train']['sentence'],
-                    'original_label': dataset['train']['label']
-                })
-                logger.info(f"Loaded Financial PhraseBank with {len(df)} entries")
-            else:
-                logger.warning(f"No 'train' split found in {dataset_name}")
-                continue
+expanded_data = []
+for _ in range(10):
+    for text, score in augmented_data:
+        variation = text.replace("stock market", random.choice(["financial markets", "global markets", "investment sector"]))
+        variation = variation.replace("dividends", random.choice(["returns", "dividends", "yields"]))
+        variation = variation.replace("investors", random.choice(["investors", "analysts", "traders", "economists"]))
+        variation = variation.replace("could", random.choice(["might", "could", "may"]))
+        noise = random.uniform(-0.05, 0.05)
+        new_score = min(max(score + noise, -1), 1)
+        expanded_data.append((variation, round(new_score, 3)))
 
-        elif "twitter-financial-news-sentiment" in dataset_name:
-            dataset = load_dataset(dataset_name)
-            if 'train' in dataset:
-                df = pd.DataFrame({
-                    'text': dataset['train']['text'],
-                    'original_label': dataset['train']['label'] if 'label' in dataset['train'].features else
-                    dataset['train']['sentiment'] if 'sentiment' in dataset['train'].features else [0] * len(
-                        dataset['train'])
-                })
-                logger.info(f"Loaded Twitter Financial News with {len(df)} entries")
-            else:
-                logger.warning(f"No 'train' split found in {dataset_name}")
-                continue
+df_augmented = pd.DataFrame(expanded_data, columns=["text", "sentiment"])
 
-        df['score'] = score_text_with_finbert(df['text'].tolist(), model, tokenizer)
-
-        df = df[['text', 'score']]
-
-        logger.info(f"Processed {len(df)} entries from {dataset_name}")
-        dfs_to_merge.append(df)
-    except Exception as e:
-        logger.error(f"Error loading {dataset_name} dataset: {str(e)}")
-
-logger.info("Loading FiQA sentiment classification dataset")
-try:
-    fiqa_dataset = load_dataset("TheFinAI/fiqa-sentiment-classification")
-
-    fiqa_dfs = []
-    for split in ['train', 'test', 'validation']:
-        if split in fiqa_dataset:
-            columns = fiqa_dataset[split].column_names
-            logger.info(f"Available columns in FiQA {split} split: {columns}")
-
-            if 'sentence' in columns and 'score' in columns:
-                split_df = pd.DataFrame({
-                    'text': fiqa_dataset[split]['sentence'],
-                    'original_score': fiqa_dataset[split]['score']
-                })
-                min_score = split_df['original_score'].min()
-                max_score = split_df['original_score'].max()
-
-                if min_score < -1 or max_score > 1:
-                    logger.info(f"Normalizing FiQA scores from range [{min_score}, {max_score}] to [-1, 1]")
-                    split_df['score'] = split_df['original_score'].apply(
-                        lambda x: 2 * (x - min_score) / (max_score - min_score) - 1 if max_score != min_score else 0
-                    )
-                else:
-                    split_df['score'] = split_df['original_score']
-            else:
-                split_df = pd.DataFrame({
-                    'text': fiqa_dataset[split]['sentence']
-                })
-                split_df['score'] = score_text_with_finbert(split_df['text'].tolist(), model, tokenizer)
-
-            split_df = split_df[['text', 'score']]
-            fiqa_dfs.append(split_df)
-
-    if fiqa_dfs:
-        fiqa_df = pd.concat(fiqa_dfs, ignore_index=True)
-        logger.info(f"Processed {len(fiqa_df)} entries from FiQA dataset")
-        dfs_to_merge.append(fiqa_df)
-    else:
-        logger.warning("No usable data found in FiQA dataset")
-
-except Exception as e:
-    logger.error(f"Error loading FiQA dataset: {str(e)}")
-
-logger.info("Merging all datasets")
-if dfs_to_merge:
-    for i, df in enumerate(dfs_to_merge):
-        if 'text' not in df.columns or 'score' not in df.columns:
-            logger.warning(f"Skipping dataframe at index {i} due to missing required columns. Columns: {df.columns}")
-            dfs_to_merge[i] = None
-
-    dfs_to_merge = [df for df in dfs_to_merge if df is not None]
-
-    if dfs_to_merge:
-        final_df = pd.concat(dfs_to_merge, ignore_index=True)
-
-        before_dedup = len(final_df)
-        final_df.drop_duplicates(subset=['text'], keep='first', inplace=True)
-        after_dedup = len(final_df)
-        logger.info(f"Removed {before_dedup - after_dedup} duplicate entries")
-
-        final_df['score'] = pd.to_numeric(final_df['score'], errors='coerce')
-        final_df = final_df.dropna(subset=['score'])  # Drop rows with non-numeric scores
-
-        final_df['score'] = final_df['score'].apply(lambda x: max(min(float(x), 1.0), -1.0))
-
-        final_df['score'] = final_df['score'].round(2)
-
-        output_path = 'sentiment_datasets/all_financial_news_sentiment_datasets.csv'
-        final_df.to_csv(output_path, index=False, header=False)
-
-        logger.info(f"Successfully created merged dataset with {len(final_df)} entries at {output_path}")
-
-        print("\nSample of final dataset:")
-        print(final_df.sample(min(10, len(final_df))).to_string())
-    else:
-        logger.error("No valid dataframes to merge")
-else:
-    logger.error("No dataframes to merge")
+df_combined = pd.concat([df_original, df_augmented], ignore_index=True)
+df_combined.to_csv(output_path, index=False, header=False)

@@ -223,25 +223,25 @@ for phrase in tricky_positives + tricky_negatives:
 
 # for entry in dataset:
 #     print(entry)
-
-all_items = dataset.copy()
-for text, score in all_items:
-    if any(neg in text.lower() for neg in negations):
-        continue
-
-    if score > 0.1:
-        for i, neg1 in enumerate(negations):
-            for neg2 in negations[i + 1:]:
-                double_negated = f"{neg1} {neg2} {text}"
-                new_score = score
-                dataset.append((double_negated, round(new_score, 2)))
-
-    elif score < -0.1:
-        for i, neg1 in enumerate(negations):
-            for neg2 in negations[i + 1:]:
-                double_negated = f"{neg1} {neg2} {text}"
-                new_score = score
-                dataset.append((double_negated, round(new_score, 2)))
+#
+# all_items = dataset.copy()
+# for text, score in all_items:
+#     if any(neg in text.lower() for neg in negations):
+#         continue
+#
+#     if score > 0.1:
+#         for i, neg1 in enumerate(negations):
+#             for neg2 in negations[i + 1:]:
+#                 double_negated = f"{neg1} {neg2} {text}"
+#                 new_score = score
+#                 dataset.append((double_negated, round(new_score, 2)))
+#
+#     elif score < -0.1:
+#         for i, neg1 in enumerate(negations):
+#             for neg2 in negations[i + 1:]:
+#                 double_negated = f"{neg1} {neg2} {text}"
+#                 new_score = score
+#                 dataset.append((double_negated, round(new_score, 2)))
 
 
 print(dataset)

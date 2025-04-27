@@ -1,19 +1,21 @@
-from transformers import AutoModelForSequenceClassification, AutoTokenizer
+from transformers import BertTokenizer, BertForSequenceClassification
 import torch
 import torch.nn.functional as F
 
-model_name = "yiyanghkust/finbert-tone"
-model = AutoModelForSequenceClassification.from_pretrained(model_name)
-tokenizer = AutoTokenizer.from_pretrained(model_name)
+tokenizer = BertTokenizer.from_pretrained('ProsusAI/finbert')
+model = BertForSequenceClassification.from_pretrained('ProsusAI/finbert')
 
-def get_sentiment_score(text):
-    inputs = tokenizer(text, return_tensors="pt", truncation=True)
+text_pos = "The company's quarterly earnings exceeded expectations, leading to a surge in stock prices." # 0.9
+text_neg = "The company just reported great losses and this may lead to a steep fall in stock prices." # -0.9
+text_neu = "The company's stock prices kept the same trend for the last months." # 0.2
+
+inputs = tokenizer(text_neu, return_tensors="pt", truncation=True, max_length=512)
+
+with torch.no_grad():
     outputs = model(**inputs)
-    probs = F.softmax(outputs.logits, dim=1).detach().cpu().numpy()[0]
-    # [negative, neutral, positive]
-    # score = probs[2] - probs[0]
-    return (probs[0], probs[1], probs[2])
+    logits = outputs.logits
+    probabilities = F.softmax(logits, dim=1)
 
-text = "The company's profits exceeded expectations, leading to a surge in stock prices."
-score = get_sentiment_score(text)
-print(f"Scores: {score[0]:.6f}, {score[1]:.6f}, {score[2]:.6f}")
+sentiment_scores = torch.tensor([1, -1, 0])
+weighted_score = torch.sum(probabilities * sentiment_scores)
+print(f"Sentiment score: {weighted_score.item():.3f}")

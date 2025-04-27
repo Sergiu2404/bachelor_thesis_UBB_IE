@@ -25,7 +25,7 @@ negative_words = [
     'concern', 'caution', 'downgrade', 'decrease', 'lose', 'challenge', 'bearish', 'degeneration', 'half', 'downside',
     'collapse', 'crash', 'debt', 'deficit', 'default', 'layoff', 'liquidation', 'obsolete', 'penalty',
     'poor', 'shortage', 'shrink', 'strain', 'struggle', 'suspend', 'taper', 'tension', 'terminate',
-    'threat', 'uncertain', 'underperform', 'unstable', 'vulnerability', 'volatile', 'writedown'
+    'threat', 'uncertain', 'underperform', 'unstable', 'vulnerability', 'volatile', 'writedown', 'unpredictable', 'crash'
 ]
 
 neutral_words = [
@@ -48,16 +48,16 @@ positive_phrases = [
     "boost in profits", "strong economic indicators", "company performance exceeds",
     "successful market strategies", "fiscal strength", "substantial growth",
     "strong future outlook", "strong bullish sentiment", "market rally", "upward trend",
-    "optimistic market forecast", "profit margins rise", "revenue increases",
+    "optimistic market forecast", "profit margins rise", "revenue increase",
     "business revenue grows", "investor optimism increases", "positive economic outlook",
     "decrease losses", "reduce risk", "cut expenses", "lower costs", "diminish debt",
     "shrink deficit", "minimize exposure", "decline in expenses", "falling costs",
     "efficient cost structure", "strategic restructuring", "favorable refinancing",
-    "streamlined operations", "cost optimization", "enhanced productivity"
+    "streamlined operations", "cost optimization", "enhanced productivity", "decrease loss"
 ]
 
 negative_phrases = [
-    "market crash", "earnings decline", "economic slowdown", "investment drop",
+    "market crash", "earnings decline", "economic slowdown", "investment drop", "increase loss"
     "stock plunge", "revenue loss", "financial deterioration", "credit risk",
     "company's profits fall", "earnings dip", "poor financial performance",
     "economic downturn", "stock price drops", "business decline", "rising risks",
@@ -156,7 +156,7 @@ def intensify_score(score):
 
 def pos_score(): return round(random.uniform(0.6, 0.8), 2)
 def neg_score(): return round(random.uniform(-0.8, -0.6), 2)
-def neu_score(): return round(random.uniform(-0.1, 0.1), 2)
+def neu_score(): return round(random.uniform(-0.2, 0.2), 2)
 def flip_score(score): return round(-score + random.uniform(-0.1, 0.1), 2)
 
 negations = ["not", "no", "never", "neither", "n't", "hardly", "scarcely", "barely"]
@@ -183,7 +183,7 @@ negative_set = set(negative_words + negative_phrases)
 intensified_dataset = []
 
 for text, score in dataset:
-    if text in positive_set or text in negative_set:
+    if text in positive_words or text in negative_words:
         for word in intensifiers:
             intensified_text = f"{word} {text}"
             intensified_score = intensify_score(score)
@@ -193,18 +193,19 @@ dataset.extend(intensified_dataset)
 
 all_items = dataset.copy()
 for text, score in all_items:
-    for neg in negations:
-        if "n't" in neg:
-            words = text.split()
-            if len(words) > 1:
-                negated = f"{words[0]}{neg} {' '.join(words[1:])}"
+    if text in positive_words or text in negative_words:
+        for neg in negations:
+            if "n't" in neg:
+                words = text.split()
+                if len(words) > 1:
+                    negated = f"{words[0]}{neg} {' '.join(words[1:])}"
+                else:
+                    negated = f"{text}{neg}"
+            elif neg in ["neither", "nor"]:
+                negated = f"{neg} {text} nor {text}"
             else:
-                negated = f"{text}{neg}"
-        elif neg in ["neither", "nor"]:
-            negated = f"{neg} {text} nor {text}"
-        else:
-            negated = f"{neg} {text}"
-        dataset.append((negated, flip_score(score)))
+                negated = f"{neg} {text}"
+            dataset.append((negated, flip_score(score)))
 
 
 def score_tricky_phrase(phrase):
@@ -245,13 +246,13 @@ for phrase in tricky_positives + tricky_negatives:
 
 
 print(dataset)
-# random.shuffle(dataset)
-#
-# output_dir = "./sentiment_datasets"
-# os.makedirs(output_dir, exist_ok=True)
-# output_file = os.path.join(output_dir, "financial_sentiment_words_phrases_negations.csv")
-#
-# with open(output_file, mode='w', newline='', encoding='utf-8') as f:
-#     writer = csv.writer(f)
-#     writer.writerow(["text", "score"])
-#     writer.writerows(dataset)
+random.shuffle(dataset)
+
+output_dir = "./sentiment_datasets"
+os.makedirs(output_dir, exist_ok=True)
+output_file = os.path.join(output_dir, "financial_sentiment_words_phrases_negations.csv")
+
+with open(output_file, mode='w', newline='', encoding='utf-8') as f:
+    writer = csv.writer(f)
+    #writer.writerow(["text", "score"])
+    writer.writerows(dataset)

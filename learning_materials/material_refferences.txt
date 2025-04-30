@@ -1,3 +1,5 @@
+start fastapi server: uvicorn main:app --host=0.0.0.0 --port=8000
+
 https://www.matec-conferences.org/articles/matecconf/pdf/2024/04/matecconf_icmed2024_01163.pdf
 fake news romanian: https://www.mdpi.com/2076-3417/13/24/13207
 stock price prediciton methods paper: https://arxiv.org/pdf/2111.01137
@@ -24,6 +26,9 @@ fake news detection: use some model and decrease the score at grammar errors, if
 
 combine sentiment and fake news scores
 
+
+!!! Use Tickerizer python package to see if the news are related to that company: Tickerizer uses the OpenCalais API to extract company names and their stock symbols from text. 
+It returns a list of companies mentioned, along with their relevance scores and ticker symbols. Instead of this use nasdaq csv to map the tickers to eventual company data.
 
 get ticker input
 get ticker domain: sector = stock.info.get('sector'), industry = stock.info.get('industry')

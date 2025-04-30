@@ -198,9 +198,9 @@ for text, score in all_items:
             if "n't" in neg:
                 words = text.split()
                 if len(words) > 1:
-                    negated = f"{words[0]}{neg} {' '.join(words[1:])}"
+                    negated = f"{words[0]} {neg} {' '.join(words[1:])}"
                 else:
-                    negated = f"{text}{neg}"
+                    negated = f"{text} {neg}"
             elif neg in ["neither", "nor"]:
                 negated = f"{neg} {text} nor {text}"
             else:

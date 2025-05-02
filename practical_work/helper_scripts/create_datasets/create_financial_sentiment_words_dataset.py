@@ -6,6 +6,10 @@ import random
 import pandas as pd
 import numpy as np
 
+import spacy
+nlp = spacy.load("en_core_web_sm", disable=["parser", "ner"])
+
+
 positive_words = [
     "increase", "grow", "progress", "improve", "boost", "advance", "expand", "rise", "gain", "surge", 'beat', 'boost', 'exceed', 'surprisingly', 'grow', 'up', 'rise', 'gain', 'profitable', 'hike', 'well',
     'earn', 'strong', 'strength', 'higher', 'high', 'rally', 'bullish', 'outperform', 'surpass', 'good',
@@ -25,7 +29,7 @@ negative_words = [
     'concern', 'caution', 'downgrade', 'decrease', 'lose', 'challenge', 'bearish', 'degeneration', 'half', 'downside',
     'collapse', 'crash', 'debt', 'deficit', 'default', 'layoff', 'liquidation', 'obsolete', 'penalty',
     'poor', 'shortage', 'shrink', 'strain', 'struggle', 'suspend', 'taper', 'tension', 'terminate',
-    'threat', 'uncertain', 'underperform', 'unstable', 'vulnerability', 'volatile', 'writedown', 'unpredictable', 'crash'
+    'threat', 'uncertain', 'underperform', 'unstable', 'vulnerability', 'volatile', 'writedown', 'unpredictable', 'crash', 'contraction'
 ]
 
 neutral_words = [
@@ -146,6 +150,15 @@ intensifiers = [
     "marked", "pronounced", "immense", "meaningful", "huge", "hefty"
 ]
 
+
+def lemmatize_phrase(text):
+    doc = nlp(text.lower())
+    return ' '.join([
+        token.text if token.text in negations else token.lemma_
+        for token in doc
+        if token.lemma_.strip()
+    ])
+
 def intensify_score(score):
     if score > 0:
         return round(random.uniform(0.8, 0.97), 2)
@@ -153,39 +166,44 @@ def intensify_score(score):
         return round(random.uniform(-0.97, -0.8), 2)
     return score
 
-
 def pos_score(): return round(random.uniform(0.6, 0.8), 2)
 def neg_score(): return round(random.uniform(-0.8, -0.6), 2)
 def neu_score(): return round(random.uniform(-0.2, 0.2), 2)
 def flip_score(score): return round(-score + random.uniform(-0.1, 0.1), 2)
 
-negations = ["not", "no", "never", "neither", "n't", "hardly", "scarcely", "barely"]
+negations = ["not", "no", "never", "neither", "n't"]
 
 dataset = []
 
 for word in positive_words:
+    word = lemmatize_phrase(word)
     dataset.append((word, pos_score()))
 for word in negative_words:
+    word = lemmatize_phrase(word)
     dataset.append((word, neg_score()))
 for word in neutral_words:
+    word = lemmatize_phrase(word)
     dataset.append((word, neu_score()))
 
 for phrase in positive_phrases:
+    phrase = lemmatize_phrase(phrase)
     dataset.append((phrase, pos_score()))
 for phrase in negative_phrases:
+    phrase = lemmatize_phrase(phrase)
     dataset.append((phrase, neg_score()))
 for phrase in neutral_phrases:
+    phrase = lemmatize_phrase(phrase)
     dataset.append((phrase, neu_score()))
 
-positive_set = set(positive_words + positive_phrases)
-negative_set = set(negative_words + negative_phrases)
+positive_set = set([lemmatize_phrase(w) for w in positive_words + positive_phrases])
+negative_set = set([lemmatize_phrase(w) for w in negative_words + negative_phrases])
 
 intensified_dataset = []
 
 for text, score in dataset:
-    if text in positive_words or text in negative_words:
+    if text in positive_set or text in negative_set:
         for word in intensifiers:
-            intensified_text = f"{word} {text}"
+            intensified_text = lemmatize_phrase(f"{word} {text}")
             intensified_score = intensify_score(score)
             intensified_dataset.append((intensified_text, intensified_score))
 
@@ -193,33 +211,25 @@ dataset.extend(intensified_dataset)
 
 all_items = dataset.copy()
 for text, score in all_items:
-    if text in positive_words or text in negative_words:
+    if text in positive_set or text in negative_set:
         for neg in negations:
-            if "n't" in neg:
-                words = text.split()
-                if len(words) > 1:
-                    negated = f"{words[0]} {neg} {' '.join(words[1:])}"
-                else:
-                    negated = f"{text} {neg}"
-            elif neg in ["neither", "nor"]:
+            if neg in ["neither", "nor"]:
                 negated = f"{neg} {text} nor {text}"
             else:
                 negated = f"{neg} {text}"
+            negated = lemmatize_phrase(negated)
             dataset.append((negated, flip_score(score)))
-
 
 def score_tricky_phrase(phrase):
     if phrase in tricky_positives:
         return pos_score()
-
     elif phrase in tricky_negatives:
         return neg_score()
-
     return neu_score()
-
 
 for phrase in tricky_positives + tricky_negatives:
     score = score_tricky_phrase(phrase)
+    phrase = lemmatize_phrase(phrase)
     dataset.append((phrase, score))
 
 # for entry in dataset:

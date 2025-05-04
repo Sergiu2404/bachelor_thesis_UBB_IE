@@ -5,7 +5,6 @@ import pandas as pd
 import torch.nn as nn
 import torch.nn.functional as F
 from transformers import AutoModel, AutoConfig, AutoTokenizer, Trainer, TrainingArguments
-from sklearn.metrics import mean_squared_error, r2_score
 from nltk.corpus import stopwords
 from datasets import Dataset
 from sklearn.model_selection import train_test_split

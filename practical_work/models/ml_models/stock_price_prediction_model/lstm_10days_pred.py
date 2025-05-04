@@ -177,6 +177,133 @@
 
 
 
+# import numpy as np
+# import pandas as pd
+# import yfinance as yf
+# import torch
+# import torch.nn as nn
+# import torch.optim as optim
+# from sklearn.preprocessing import StandardScaler
+# from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+# import time
+# import os
+#
+# DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+#
+# model_path_file = "E:\saved_models\LSTM_price_prediction_model\LSTM_price_prediction_model.pt"
+#
+# ticker = yf.Ticker("^GSPC")
+# data = ticker.history(start="2021-07-01", end="2024-02-01").reset_index()
+#
+# data['Date'] = pd.to_datetime(data['Date'])
+# dataset = data[['Close']].values
+#
+# scaler = StandardScaler()
+# scaled_data = scaler.fit_transform(dataset)
+#
+# sequence_length = 60
+# train_size = int(len(scaled_data) * 0.85)
+#
+# train_data = scaled_data[:train_size]
+# test_data = scaled_data[train_size - sequence_length:]
+#
+# def create_sequences(data, seq_len):
+#     X, y = [], []
+#     for i in range(seq_len, len(data)):
+#         X.append(data[i - seq_len:i, 0])
+#         y.append(data[i, 0])
+#     return torch.tensor(X, dtype=torch.float32).unsqueeze(-1), torch.tensor(y, dtype=torch.float32)
+#
+#
+# X_train, y_train = create_sequences(train_data, sequence_length)
+# X_test, y_test = create_sequences(test_data, sequence_length)
+#
+# X_train, y_train = X_train.to(DEVICE), y_train.to(DEVICE)
+# X_test = X_test.to(DEVICE)
+#
+# class SimpleLSTM(nn.Module):
+#     def __init__(self):
+#         super().__init__()
+#         self.lstm1 = nn.LSTM(input_size=1, hidden_size=64, batch_first=True)
+#         self.lstm2 = nn.LSTM(input_size=64, hidden_size=64, batch_first=True)
+#         self.fc1 = nn.Linear(64, 128)
+#         self.dropout = nn.Dropout(0.2)
+#         self.fc2 = nn.Linear(128, 1)
+#
+#     def forward(self, x):
+#         x, _ = self.lstm1(x)
+#         x, _ = self.lstm2(x)
+#         x = x[:, -1, :]
+#         x = self.fc1(x)
+#         x = torch.nn.functional.leaky_relu(x, negative_slope=0.01)
+#         x = self.dropout(x)
+#         x = self.fc2(x)
+#         return x.squeeze()
+#
+# model = SimpleLSTM().to(DEVICE)
+#
+# if os.path.exists(model_path_file):
+#     model.load_state_dict(torch.load(model_path_file))
+# else:
+#     optimizer = optim.Adam(model.parameters(), lr=0.001)
+#     loss_fn = nn.MSELoss()
+#     best_loss = float('inf')
+#     patience = 10
+#     wait = 0
+#     for epoch in range(50):
+#         model.train()
+#         optimizer.zero_grad()
+#         output = model(X_train)
+#         loss = loss_fn(output, y_train)
+#         loss.backward()
+#         optimizer.step()
+#         if loss.item() < best_loss:
+#             best_loss = loss.item()
+#             wait = 0
+#             #torch.save(model.state_dict(), model_path_file)
+#         else:
+#             wait += 1
+#             if wait >= patience:
+#                 break
+#
+# model.eval()
+# with torch.no_grad():
+#     predictions = model(X_test).cpu().numpy()
+#
+# predictions = scaler.inverse_transform(predictions.reshape(-1, 1))
+# true = dataset[train_size:]
+# rmse = np.sqrt(np.mean((predictions - true[:len(predictions)]) ** 2))
+# print(f"RMSE: {rmse:.2f}")
+#
+# last_sequence = torch.tensor(scaled_data[-sequence_length:], dtype=torch.float32).unsqueeze(0).to(DEVICE)
+# future_predictions = []
+#
+# model.eval()
+# for _ in range(10):
+#     with torch.no_grad():
+#         pred = model(last_sequence).item()
+#     future_predictions.append(pred)
+#     next_input = torch.tensor([[pred]], dtype=torch.float32).to(DEVICE)
+#     last_sequence = torch.cat((last_sequence[:, 1:, :], next_input.unsqueeze(0)), dim=1)
+#
+# future_prices = scaler.inverse_transform(np.array(future_predictions).reshape(-1, 1))
+# last_date = data['Date'].iloc[-1]
+# future_dates = pd.date_range(start=last_date + pd.Timedelta(days=1), periods=10, freq='B')
+#
+# print("\nNext 10 business days predictions:")
+# for date, price in zip(future_dates, future_prices.flatten()):
+#     print(f"{date.strftime('%Y-%m-%d')}: ${price:.2f}")
+
+
+
+
+
+
+
+
+
+
+
 import numpy as np
 import pandas as pd
 import yfinance as yf
@@ -185,6 +312,7 @@ import torch.nn as nn
 import torch.optim as optim
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+import time
 import os
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -192,7 +320,7 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model_path_file = "E:\saved_models\LSTM_price_prediction_model\LSTM_price_prediction_model.pt"
 
 ticker = yf.Ticker("^GSPC")
-data = ticker.history(period="5y").reset_index()
+data = ticker.history(start="2025-01-01", end="2025-05-01").reset_index()
 
 data['Date'] = pd.to_datetime(data['Date'])
 dataset = data[['Close']].values
@@ -200,7 +328,7 @@ dataset = data[['Close']].values
 scaler = StandardScaler()
 scaled_data = scaler.fit_transform(dataset)
 
-sequence_length = 60
+sequence_length = 30
 train_size = int(len(scaled_data) * 0.85)
 
 train_data = scaled_data[:train_size]
@@ -213,32 +341,45 @@ def create_sequences(data, seq_len):
         y.append(data[i, 0])
     return torch.tensor(X, dtype=torch.float32).unsqueeze(-1), torch.tensor(y, dtype=torch.float32)
 
+
 X_train, y_train = create_sequences(train_data, sequence_length)
 X_test, y_test = create_sequences(test_data, sequence_length)
 
 X_train, y_train = X_train.to(DEVICE), y_train.to(DEVICE)
 X_test = X_test.to(DEVICE)
 
-class SimpleLSTM(nn.Module):
+class ImprovedLSTM(nn.Module):
     def __init__(self):
         super().__init__()
-        self.lstm1 = nn.LSTM(input_size=1, hidden_size=64, batch_first=True)
-        self.lstm2 = nn.LSTM(input_size=64, hidden_size=64, batch_first=True)
-        self.fc1 = nn.Linear(64, 128)
-        self.dropout = nn.Dropout(0.5)
-        self.fc2 = nn.Linear(128, 1)
+        self.lstm1 = nn.LSTM(input_size=1, hidden_size=128, batch_first=True, bidirectional=True)
+        self.lstm2 = nn.LSTM(input_size=256, hidden_size=128, batch_first=True, bidirectional=True)
+
+        self.norm = nn.LayerNorm(256)
+
+        self.fc1 = nn.Linear(256, 128)
+        self.dropout1 = nn.Dropout(0.3)
+        self.fc2 = nn.Linear(128, 64)
+        self.dropout2 = nn.Dropout(0.3)
+        self.out = nn.Linear(64, 1)
 
     def forward(self, x):
         x, _ = self.lstm1(x)
         x, _ = self.lstm2(x)
         x = x[:, -1, :]
-        x = self.fc1(x)
-        x = torch.relu(x)
-        x = self.dropout(x)
-        x = self.fc2(x)
+        x = self.norm(x)
+        x = torch.nn.functional.leaky_relu(self.fc1(x), negative_slope=0.01)
+        x = self.dropout1(x)
+        x = torch.nn.functional.relu(self.fc2(x))
+        x = self.dropout2(x)
+        x = self.out(x)
         return x.squeeze()
 
-model = SimpleLSTM().to(DEVICE)
+start_time = time.time()
+
+model = ImprovedLSTM().to(DEVICE)
+total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+print(f"Total trainable parameters: {total_params:,}")
+
 
 if os.path.exists(model_path_file):
     model.load_state_dict(torch.load(model_path_file))
@@ -258,7 +399,7 @@ else:
         if loss.item() < best_loss:
             best_loss = loss.item()
             wait = 0
-            torch.save(model.state_dict(), model_path_file)
+            #torch.save(model.state_dict(), model_path_file)
         else:
             wait += 1
             if wait >= patience:
@@ -291,3 +432,5 @@ future_dates = pd.date_range(start=last_date + pd.Timedelta(days=1), periods=10,
 print("\nNext 10 business days predictions:")
 for date, price in zip(future_dates, future_prices.flatten()):
     print(f"{date.strftime('%Y-%m-%d')}: ${price:.2f}")
+
+print(f"took {time.time() - start_time}")

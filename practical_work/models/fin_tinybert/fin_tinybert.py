@@ -11,25 +11,37 @@ from sklearn.model_selection import train_test_split
 import spacy
 
 
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
 class TinyFinBERTRegressor(nn.Module):
     def __init__(self, pretrained_model='huawei-noah/TinyBERT_General_4L_312D'):
         super().__init__()
         self.config = AutoConfig.from_pretrained(pretrained_model)
         self.bert = AutoModel.from_pretrained(pretrained_model, config=self.config)
-        #self.dropout = nn.Dropout(0.3)
+        self.attention = nn.Sequential(
+            nn.Linear(self.config.hidden_size, 128),
+            nn.Tanh(),
+            nn.Linear(128, 1)
+        )
         self.regressor = nn.Linear(self.config.hidden_size, 1)
 
     def forward(self, input_ids=None, attention_mask=None, labels=None):
         outputs = self.bert(input_ids=input_ids, attention_mask=attention_mask)
-        cls_output = outputs.last_hidden_state[:, 0]
-        #cls_output = self.dropout(cls_output)
-        score = self.regressor(cls_output).squeeze()
+        hidden_states = outputs.last_hidden_state
+        weights = self.attention(hidden_states)
+        weights = weights.masked_fill(attention_mask.unsqueeze(-1) == 0, float('-inf'))
+        weights = torch.softmax(weights, dim=1)
+        pooled_output = (hidden_states * weights).sum(dim=1)
+        score = self.regressor(pooled_output).squeeze()
         loss = F.mse_loss(score, labels) if labels is not None else None
         return {'loss': loss, 'score': score}
 
 
+
 def preprocess_texts(texts):
-    nlp = spacy.load("en_core_web_sm", disable=["ner", "parser"])  # Speeds up processing
+    nlp = spacy.load("en_core_web_sm", disable=["ner", "parser"])
     negations = {'no', 'not', 'none', 'nobody', 'nothing', 'neither', 'nowhere', 'never',
                  'hardly', 'scarcely', 'barely', "n't", "without", "unless", "nor"}
     stop_words = set(stopwords.words('english')) - negations
@@ -41,11 +53,10 @@ def preprocess_texts(texts):
         doc = nlp(text)
         tokens = [
             token.lemma_ for token in doc
-            if token.lemma_.strip() # token.lemma_ not in stop_words and
+            if token.lemma_.strip()  # token.lemma_ not in stop_words and
         ]
         processed.append(' '.join(tokens))
     return processed
-
 
 
 def load_phrasebank(path):
@@ -75,17 +86,14 @@ def load_words_phrases(path):
     return pd.DataFrame(data, columns=["text", "score"])
 
 
-def train_model(phrase_path, words_path, save_path):
+def train_model(train_df, test_df, save_path, extra_df=None):
     os.makedirs(save_path, exist_ok=True)
-    phrase_df = load_phrasebank(phrase_path)
-    words_df = load_words_phrases(words_path)
 
-    phrase_df['text'] = preprocess_texts(phrase_df['text'])
-    words_df['text'] = preprocess_texts(words_df['text'])
-
-    train_phrase, test_phrase = train_test_split(phrase_df, test_size=0.2, random_state=42)
-    train_df = pd.concat([train_phrase, words_df])
-    test_df = test_phrase.reset_index(drop=True)
+    train_df['text'] = preprocess_texts(train_df['text'])
+    if extra_df is not None:
+        extra_df['text'] = preprocess_texts(extra_df['text'])
+        train_df = pd.concat([train_df, extra_df], ignore_index=True)
+    test_df['text'] = preprocess_texts(test_df['text'])
 
     tokenizer = AutoTokenizer.from_pretrained('huawei-noah/TinyBERT_General_4L_312D')
 
@@ -99,7 +107,7 @@ def train_model(phrase_path, words_path, save_path):
 
     args = TrainingArguments(
         output_dir=os.path.join(save_path, "results"),
-        evaluation_strategy="epoch",
+        eval_strategy="epoch",
         save_strategy="epoch",
         learning_rate=2e-5,
         per_device_train_batch_size=16,
@@ -129,27 +137,35 @@ def train_model(phrase_path, words_path, save_path):
     tokenizer.save_pretrained(save_path)
 
 
+
 from sklearn.metrics import (
     mean_squared_error, r2_score,
     accuracy_score, precision_score, recall_score, f1_score,
     roc_auc_score, confusion_matrix, cohen_kappa_score
 )
 from sklearn.preprocessing import label_binarize
+
+
 def evaluate_model(phrase_path, model_path):
     phrase_df = load_phrasebank(phrase_path)
     _, test_df = train_test_split(phrase_df, test_size=0.2, random_state=42)
     test_df['text'] = preprocess_texts(test_df['text'])
 
     tokenizer = AutoTokenizer.from_pretrained(model_path)
-    model = TinyFinBERTRegressor()
-    model.load_state_dict(torch.load(os.path.join(model_path, "regressor_model.pt"), map_location=torch.device("cpu")))
+
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(f"Using device: {device}")
+    model = TinyFinBERTRegressor().to(device)
+
+    state_dict = torch.load(os.path.join(model_path, "regressor_model.pt"), map_location=device)
+    model.load_state_dict(state_dict, strict=False)
     model.eval()
 
     y_true, y_pred, y_scores = [], [], []
 
     for _, row in test_df.iterrows():
         inputs = tokenizer(row["text"], return_tensors="pt", truncation=True, padding='max_length', max_length=128)
-        inputs = {k: v for k, v in inputs.items() if k != "token_type_ids"}
+        inputs = {k: v.to(device) for k, v in inputs.items() if k != "token_type_ids"}
         with torch.no_grad():
             score = model(**inputs)["score"].item()
         y_scores.append(score)
@@ -187,8 +203,12 @@ def evaluate_model(phrase_path, model_path):
 
 def test(model_path):
     tokenizer = AutoTokenizer.from_pretrained(model_path)
-    model = TinyFinBERTRegressor()
-    model.load_state_dict(torch.load(os.path.join(model_path, "regressor_model.pt"), map_location=torch.device("cpu")))
+
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model = TinyFinBERTRegressor().to(device)
+
+    state_dict = torch.load(os.path.join(model_path, "regressor_model.pt"), map_location=device)
+    model.load_state_dict(state_dict, strict=False)
     model.eval()
 
     texts = [
@@ -213,18 +233,70 @@ def test(model_path):
         print(f"Tokens: {tokens}")
 
         inputs = tokenizer(clean_text, return_tensors="pt", truncation=True, padding='max_length', max_length=128)
-        inputs = {k: v for k, v in inputs.items() if k != "token_type_ids"}
+        inputs = {k: v.to(device) for k, v in inputs.items() if k != "token_type_ids"}
 
         with torch.no_grad():
             score = model(**inputs)["score"].item()
 
         print(f"Predicted Sentiment Score: {score:.3f}\n")
 
+def evaluate_base_tinybert_on_phrasebank(test_df):
+    tokenizer = AutoTokenizer.from_pretrained('huawei-noah/TinyBERT_General_4L_312D')
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model = TinyFinBERTRegressor().to(device)  # randomly initialized regressor
+
+    model.eval()
+    test_df['text'] = preprocess_texts(test_df['text'])
+
+    y_true, y_pred = [], []
+
+    for _, row in test_df.iterrows():
+        inputs = tokenizer(row["text"], return_tensors="pt", truncation=True, padding='max_length', max_length=128)
+        inputs = {k: v.to(device) for k, v in inputs.items() if k != "token_type_ids"}
+        with torch.no_grad():
+            score = model(**inputs)["score"].item()
+        y_pred.append(score)
+        y_true.append(row["score"])
+
+    mse = mean_squared_error(y_true, y_pred)
+    r2 = r2_score(y_true, y_pred)
+
+    y_pred_class = [1 if s > 0.3 else -1 if s < -0.3 else 0 for s in y_pred]
+    y_true_class = [int(round(s)) for s in y_true]
+
+    acc = accuracy_score(y_true_class, y_pred_class)
+    prec = precision_score(y_true_class, y_pred_class, average='weighted', zero_division=0)
+    rec = recall_score(y_true_class, y_pred_class, average='weighted')
+    f1 = f1_score(y_true_class, y_pred_class, average='weighted')
+    kappa = cohen_kappa_score(y_true_class, y_pred_class)
+    cm = confusion_matrix(y_true_class, y_pred_class)
+
+    y_true_bin = label_binarize(y_true_class, classes=[-1, 0, 1])
+    y_pred_bin = label_binarize(y_pred_class, classes=[-1, 0, 1])
+    roc_auc = roc_auc_score(y_true_bin, y_pred_bin, average='macro', multi_class='ovo')
+
+    print("\n=== Evaluation: Base TinyBERT (No Fine-tuning) ===")
+    print(f"- MSE: {mse:.4f}")
+    print(f"- R²: {r2:.4f}")
+    print(f"- Accuracy: {acc:.4f}")
+    print(f"- Precision: {prec:.4f}")
+    print(f"- Recall: {rec:.4f}")
+    print(f"- F1 Score: {f1:.4f}")
+    print(f"- ROC-AUC: {roc_auc:.4f}")
+    print(f"- Cohen's Kappa: {kappa:.4f}")
+    print(f"- Confusion Matrix:\n{cm}")
+
+
 def test_performance_on_financial_news(model_path, news_data_path):
+    # Load financial news dataset
     news_df = pd.read_csv(news_data_path)
     tokenizer = AutoTokenizer.from_pretrained(model_path)
-    model = TinyFinBERTRegressor()
-    model.load_state_dict(torch.load(os.path.join(model_path, "regressor_model.pt"), map_location=torch.device("cpu")))
+
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model = TinyFinBERTRegressor().to(device)
+
+    state_dict = torch.load(os.path.join(model_path, "regressor_model.pt"), map_location=device)
+    model.load_state_dict(state_dict, strict=False)
     model.eval()
 
     y_true, y_pred = [], []
@@ -233,7 +305,7 @@ def test_performance_on_financial_news(model_path, news_data_path):
         text = row["text"]
         clean_text = preprocess_texts([text])[0]
         inputs = tokenizer(clean_text, return_tensors="pt", truncation=True, padding='max_length', max_length=128)
-        inputs = {k: v for k, v in inputs.items() if k != "token_type_ids"}
+        inputs = {k: v.to(device) for k, v in inputs.items() if k != "token_type_ids"}
 
         with torch.no_grad():
             score = model(**inputs)["score"].item()
@@ -271,29 +343,67 @@ def test_performance_on_financial_news(model_path, news_data_path):
 
 
 if __name__ == "__main__":
-    model_dir = "E:/saved_models/sentiment_analysis_fine_tuned_tinybert"
-    phrase_path = "../fake_news_datasets/FinancialPhraseBank-v1.0/FinancialPhraseBank-v1.0/Sentences_50Agree.txt"
-    words_path = "../sentiment_datasets/financial_sentiment_words_phrases_negations.csv"
+    phrase_path = "Sentences_50Agree.txt"
+    words_path = "financial_sentiment_words_phrases_negations.csv"
+    model_dir = "E:/saved_models/attention_enhanced_fine_tuned_tinybert"
+
+    phrase_df = load_phrasebank(phrase_path)
+    train_phrase, test_phrase = train_test_split(phrase_df, test_size=0.2, random_state=42)
+    words_df = load_words_phrases(words_path)
 
     if not os.path.isfile(os.path.join(model_dir, "regressor_model.pt")):
-        train_model(phrase_path, words_path, model_dir)
+        train_model(train_phrase.copy(), test_phrase.copy(), model_dir, extra_df=words_df.copy())
 
+    print("\n=== Evaluation: Fine-Tuned TinyBERT ===")
     evaluate_model(phrase_path, model_dir)
-    test(model_dir)
-    test_performance_on_financial_news(model_dir, phrase_path)
-# # Tiny BERT
-# Sentiment Regression Metrics: without lemmatization, but with removing stop words
-# - MSE: 0.2055
-# - R²: 0.4553
-# - Accuracy: 0.7289
-# - Precision: 0.7374
-# - Recall: 0.7289
-# - F1 Score: 0.7315
-# - ROC-AUC: 0.7788
-# - Cohen's Kappa: 0.5237
+
+    evaluate_base_tinybert_on_phrasebank(test_phrase.copy())
+#
+# === Evaluation: Base TinyBERT (No Fine-tuning) ===
+# - MSE: 0.4194
+# - R²: -0.1116
+# - Accuracy: 0.5835
+# - Precision: 0.3453
+# - Recall: 0.5835
+# - F1 Score: 0.4338
+# - ROC-AUC: 0.4976
+# - Cohen's Kappa: -0.0065
 # - Confusion Matrix:
-# [[ 76  28   6]
-#  [ 47 425  99]
-#  [  9  74 206]]
-# With lemmatization on custom dataset and without removing stopwords
+# [[  0 110   0]
+#  [  5 566   0]
+#  [  0 289   0]]
+
+
+
+#Sentiment Regression Metrics: to add a new linear layer or something
+# class TinyFinBERTRegressor(nn.Module):
+#     def __init__(self, pretrained_model='huawei-noah/TinyBERT_General_4L_312D'):
+#         super().__init__()
+#         self.config = AutoConfig.from_pretrained(pretrained_model)
+#         self.bert = AutoModel.from_pretrained(pretrained_model, config=self.config)
+#         # self.dropout = nn.Dropout(0.3)
+#         self.regressor = nn.Linear(self.config.hidden_size, 1)
+#
+#     def forward(self, input_ids=None, attention_mask=None, labels=None):
+#         outputs = self.bert(input_ids=input_ids, attention_mask=attention_mask)
+#         cls_output = outputs.last_hidden_state[:, 0]
+#         # cls_output = self.dropout(cls_output)
+#         score = self.regressor(cls_output).squeeze()
+#         loss = F.mse_loss(score, labels) if labels is not None else None
+#         return {'loss': loss, 'score': score}
+# === Evaluation: Fine-Tuned TinyBERT ===
+# Using device: cuda
+# Sentiment Regression Metrics:
+# - MSE: 0.1645
+# - R²: 0.5640
+# - Accuracy: 0.8021
+# - Precision: 0.8120
+# - Recall: 0.8021
+# - F1 Score: 0.8042
+# - ROC-AUC: 0.8507
+# - Cohen's Kappa: 0.6550
+# - Confusion Matrix:
+# [[ 92  12   6]
+#  [ 41 452  78]
+#  [  4  51 234]]
 

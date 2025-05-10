@@ -96,7 +96,7 @@ def train_model(train_df, test_df, save_path, extra_df=None):
     test_dataset = Dataset.from_pandas(test_df).map(tokenize, batched=True)
     args = TrainingArguments(
         output_dir=os.path.join(save_path, "results"),
-        evaluation_strategy="epoch",
+        eval_strategy="epoch",
         save_strategy="epoch",
         learning_rate=2e-5,
         per_device_train_batch_size=16,
@@ -175,6 +175,25 @@ from sklearn.metrics import (
 )
 from sklearn.preprocessing import label_binarize
 
+def predict_sentiments_on_news(news_list, model_path):
+    tokenizer = AutoTokenizer.from_pretrained(model_path)
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model = TinyFinBERTRegressor().to(device)
+    model.load_state_dict(torch.load(os.path.join(model_path, "regressor_model.pt"), map_location=device))
+    model.eval()
+
+    processed_texts = preprocess_texts(news_list)
+    predictions = []
+
+    for text in processed_texts:
+        inputs = tokenizer(text, return_tensors="pt", truncation=True, padding='max_length', max_length=128)
+        inputs = {k: v.to(device) for k, v in inputs.items() if k != "token_type_ids"}
+        with torch.no_grad():
+            score = model(**inputs)["score"].item()
+        label = "Positive" if score > 0.3 else "Negative" if score < -0.3 else "Neutral"
+        predictions.append((text, score, label))
+
+    return predictions
 
 def evaluate_fine_tuned_tinybert_on_phrasebank(test_df, model_path):
     tokenizer = AutoTokenizer.from_pretrained(model_path)
@@ -234,6 +253,18 @@ if __name__ == "__main__":
     words_df = load_words_phrases(words_path)
     if not os.path.isfile(os.path.join(model_dir, "regressor_model.pt")):
         train_model(train_phrase.copy(), test_phrase.copy(), model_dir, extra_df=words_df.copy())
+
+    news_samples = [
+        "Federal Reserve raises interest rates again.",
+        "Apple stock plunges after poor earnings report.",
+        "The company maintained stable growth throughout the year."
+    ]
+
+    results = predict_sentiments_on_news(news_samples, model_dir)
+    for i, (text, score, label) in enumerate(results):
+        print(f"\nNews {i + 1}: {text}")
+        print(f" - Sentiment Score: {score:.4f}")
+        print(f" - Predicted Label: {label}")
 
     evaluate_base_tinybert_on_phrasebank(test_phrase.copy())
     evaluate_fine_tuned_tinybert_on_phrasebank(test_phrase.copy(), model_dir)

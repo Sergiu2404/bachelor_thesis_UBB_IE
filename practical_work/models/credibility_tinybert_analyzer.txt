@@ -1,0 +1,193 @@
+import numpy as np
+import pandas as pd
+import torch
+from torch.utils.data import Dataset, DataLoader
+from transformers import AutoTokenizer, AutoModelForSequenceClassification, AdamW
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, mean_absolute_error
+from tqdm import tqdm
+
+class NewsCredibilityDataset(Dataset):
+    def __init__(self, texts, labels, tokenizer, max_len=128):
+        self.texts = texts
+        self.labels = labels
+        self.tokenizer = tokenizer
+        self.max_len = max_len
+    
+    def __len__(self):
+        return len(self.texts)
+    
+    def __getitem__(self, idx):
+        text = str(self.texts[idx])
+        inputs = self.tokenizer.encode_plus(
+            text,
+            None,
+            add_special_tokens=True,
+            max_length=self.max_len,
+            padding='max_length',
+            return_token_type_ids=True,
+            truncation=True,
+            return_tensors='pt'
+        )
+        return {
+            'input_ids': inputs['input_ids'].flatten(),
+            'attention_mask': inputs['attention_mask'].flatten(),
+            'token_type_ids': inputs['token_type_ids'].flatten(),
+            'labels': torch.tensor(self.labels[idx], dtype=torch.float)
+        }
+
+class CredibilityRegressor:
+    def __init__(self, model_path='huawei-noah/TinyBERT_General_4L_312D', num_labels=1):
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.tokenizer = AutoTokenizer.from_pretrained(model_path)
+        self.model = AutoModelForSequenceClassification.from_pretrained(
+            model_path, 
+            num_labels=num_labels
+        ).to(self.device)
+    
+    def prepare_data(self, df, test_size=0.2):
+        X_train, X_test, y_train, y_test = train_test_split(
+            df['text'], 
+            df['credibility_score'], 
+            test_size=test_size, 
+            random_state=42
+        )
+        return X_train, X_test, y_train, y_test
+    
+    def create_data_loader(self, texts, labels, batch_size=16, shuffle=True):
+        dataset = NewsCredibilityDataset(texts, labels, self.tokenizer)
+        return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle)
+    
+    def train(self, train_loader, val_loader, epochs=5, learning_rate=2e-5):
+        optimizer = AdamW(self.model.parameters(), lr=learning_rate)
+        
+        for epoch in range(epochs):
+            self.model.train()
+            total_train_loss = 0
+            
+            for batch in tqdm(train_loader, desc=f'Epoch {epoch+1}/{epochs}'):
+                input_ids = batch['input_ids'].to(self.device)
+                attention_mask = batch['attention_mask'].to(self.device)
+                token_type_ids = batch['token_type_ids'].to(self.device)
+                labels = batch['labels'].to(self.device)
+                
+                self.model.zero_grad()
+                
+                outputs = self.model(
+                    input_ids, 
+                    attention_mask=attention_mask, 
+                    token_type_ids=token_type_ids, 
+                    labels=labels
+                )
+                
+                loss = outputs.loss
+                total_train_loss += loss.item()
+                
+                loss.backward()
+                optimizer.step()
+            
+            avg_train_loss = total_train_loss / len(train_loader)
+            
+            self.model.eval()
+            total_eval_loss = 0
+            predictions, true_labels = [], []
+            
+            with torch.no_grad():
+                for batch in val_loader:
+                    input_ids = batch['input_ids'].to(self.device)
+                    attention_mask = batch['attention_mask'].to(self.device)
+                    token_type_ids = batch['token_type_ids'].to(self.device)
+                    labels = batch['labels'].to(self.device)
+                    
+                    outputs = self.model(
+                        input_ids, 
+                        attention_mask=attention_mask, 
+                        token_type_ids=token_type_ids, 
+                        labels=labels
+                    )
+                    
+                    loss = outputs.loss
+                    total_eval_loss += loss.item()
+                    
+                    logits = outputs.logits
+                    predictions.extend(logits.cpu().numpy())
+                    true_labels.extend(labels.cpu().numpy())
+            
+            avg_val_loss = total_eval_loss / len(val_loader)
+            mse = mean_squared_error(true_labels, predictions)
+            mae = mean_absolute_error(true_labels, predictions)
+            
+            print(f'Epoch {epoch+1}/{epochs}')
+            print(f'Average training loss: {avg_train_loss:.4f}')
+            print(f'Average validation loss: {avg_val_loss:.4f}')
+            print(f'Mean Squared Error: {mse:.4f}')
+            print(f'Mean Absolute Error: {mae:.4f}')
+    
+    def predict(self, texts):
+        self.model.eval()
+        predictions = []
+        
+        with torch.no_grad():
+            for text in texts:
+                inputs = self.tokenizer.encode_plus(
+                    text,
+                    None,
+                    add_special_tokens=True,
+                    max_length=128,
+                    padding='max_length',
+                    return_token_type_ids=True,
+                    truncation=True,
+                    return_tensors='pt'
+                )
+                
+                input_ids = inputs['input_ids'].to(self.device)
+                attention_mask = inputs['attention_mask'].to(self.device)
+                token_type_ids = inputs['token_type_ids'].to(self.device)
+                
+                outputs = self.model(
+                    input_ids, 
+                    attention_mask=attention_mask, 
+                    token_type_ids=token_type_ids
+                )
+                
+                predictions.append(outputs.logits.cpu().numpy()[0][0])
+        
+        return np.clip(predictions, 0, 1)
+    
+    def save_model(self, path='news_credibility_model.pth'):
+        torch.save({
+            'model_state_dict': self.model.state_dict(),
+            'tokenizer': self.tokenizer
+        }, path)
+    
+    def load_model(self, path='news_credibility_model.pth'):
+        checkpoint = torch.load(path)
+        self.model.load_state_dict(checkpoint['model_state_dict'])
+        self.tokenizer = checkpoint['tokenizer']
+
+def main():
+    df = pd.read_csv('news_credibility_dataset.csv')
+    
+    regressor = CredibilityRegressor()
+    
+    X_train, X_test, y_train, y_test = regressor.prepare_data(df)
+    
+    train_loader = regressor.create_data_loader(X_train, y_train)
+    val_loader = regressor.create_data_loader(X_test, y_test, shuffle=False)
+    
+    regressor.train(train_loader, val_loader)
+    
+    regressor.save_model()
+    
+    sample_texts = X_test[:5].tolist()
+    predictions = regressor.predict(sample_texts)
+    
+    for text, pred in zip(sample_texts, predictions):
+        print(f'Text: {text}\nCredibility Score: {pred:.4f}\n')
+
+if __name__ == '__main__':
+    main()
+
+
+Title: "Fake News Detection Using Deep Learning: A Survey"
+ArXiv Link: https://arxiv.org/abs/2011.03214 my model alignes with the approach described in the paper, but model from this paper uses bert-base-uncased, but mine uses tinybert

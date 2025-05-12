@@ -345,14 +345,14 @@ def test_performance_on_financial_news(model_path, news_data_path):
 if __name__ == "__main__":
     phrase_path = "Sentences_50Agree.txt"
     words_path = "financial_sentiment_words_phrases_negations.csv"
-    model_dir = "E:/saved_models/attention_enhanced_fine_tuned_tinybert"
+    model_dir = "E:\saved_models\sentiment_analysis_fine_tuned_tinybert"
 
     phrase_df = load_phrasebank(phrase_path)
     train_phrase, test_phrase = train_test_split(phrase_df, test_size=0.2, random_state=42)
     words_df = load_words_phrases(words_path)
 
     if not os.path.isfile(os.path.join(model_dir, "regressor_model.pt")):
-        train_model(train_phrase.copy(), test_phrase.copy(), model_dir, extra_df=words_df.copy())
+        train_model(train_phrase.copy(), test_phrase.copy(), model_dir, extra_df=None)
 
     print("\n=== Evaluation: Fine-Tuned TinyBERT ===")
     evaluate_model(phrase_path, model_dir)
@@ -407,3 +407,18 @@ if __name__ == "__main__":
 #  [ 41 452  78]
 #  [  4  51 234]]
 
+
+#without words_df (set to None in training function)
+# Sentiment Regression Metrics:
+# - MSE: 0.1672
+# - R²: 0.5568
+# - Accuracy: 0.7887
+# - Precision: 0.8054
+# - Recall: 0.7887
+# - F1 Score: 0.7913
+# - ROC-AUC: 0.8424
+# - Cohen's Kappa: 0.6349
+# - Confusion Matrix:
+# [[ 88  15   7]
+#  [ 31 433 107]
+#  [  4  41 244]]

@@ -1,3 +1,6 @@
+IEEE Transactions on Computational Social Systems: pp. 1-13 (doi: 10.1109/TCSS.2021.3068519).
+for welfake dataset
+
 import numpy as np
 import pandas as pd
 import torch

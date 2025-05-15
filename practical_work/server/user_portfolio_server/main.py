@@ -10,7 +10,6 @@ from routers.sentiment_analysis import sentiment_analysis_router
 
 app = FastAPI(title="User Portfolio API")
 
-# CORS middleware configuration
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],

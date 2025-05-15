@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/home',  // Set the initial route here
+      initialRoute: '/home',
       routes: {
         '/': (context) => const WelcomePage(title: 'Welcome to the best financial app for any beginner'),
         '/register': (context) => RegisterScreen(),

@@ -24,3 +24,17 @@ class QuizAnswer {
         "No Image"}, $isCorrect\n";
   }
 }
+//
+// class QuizAnswer {
+//   final String text;
+//   final bool isCorrect;
+//
+//   QuizAnswer({required this.text, required this.isCorrect});
+//
+//   factory QuizAnswer.fromJson(Map<String, dynamic> json) {
+//     return QuizAnswer(
+//       text: json['text'],
+//       isCorrect: json['isCorrect'],
+//     );
+//   }
+// }

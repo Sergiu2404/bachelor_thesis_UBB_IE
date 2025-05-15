@@ -21,23 +21,26 @@ class HomeContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return userData == null
         ? const Center(child: CircularProgressIndicator())
-        : Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Icon(Icons.account_circle, size: 100, color: Colors.blue),
-          const SizedBox(height: 10),
-          Text(
-            "Welcome, ${userData!['username'] ?? 'Guest'}",
-            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 8),
-          Text("Email: ${userData!['email']}", style: const TextStyle(fontSize: 18)),
-          Text("Balance: \$${userData!['virtual_money_balance']}", style: const TextStyle(fontSize: 18)),
-          Text("Joined: ${userData!['created_at']}", style: const TextStyle(fontSize: 16)),
-        ],
+        : Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 32.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Icon(Icons.account_circle, size: 100, color: Colors.blue),
+            const SizedBox(height: 10),
+            Text(
+              "Welcome, ${userData!['username'] ?? 'Guest'}",
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            Text("Email: ${userData!['email']}", style: const TextStyle(fontSize: 18), textAlign: TextAlign.center),
+            Text("Balance: \$${userData!['virtual_money_balance']}", style: const TextStyle(fontSize: 18), textAlign: TextAlign.center),
+            Text("Joined: ${userData!['created_at']}", style: const TextStyle(fontSize: 16), textAlign: TextAlign.center),
+          ],
+        ),
       ),
     );
   }
@@ -89,16 +92,18 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // HomePage's AppBar
       appBar: _selectedIndex == 0
           ? AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Home Page'),
         actions: [
           IconButton(
             icon: const Icon(Icons.exit_to_app),
-            onPressed: () {
-              // Handle logout logic here
-              Navigator.pushNamed(context, "/login");
+            onPressed: () async {
+              AuthService authService = AuthService();
+              await authService.logout();
+              Navigator.pushNamedAndRemoveUntil(context, "/login", (route) => false);
+              //Navigator.pushNamed(context, "/login");
             },
           ),
         ],

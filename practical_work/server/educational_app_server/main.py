@@ -37,11 +37,11 @@ app.include_router(stock_data_router)
 app.include_router(portfolio_router)
 app.include_router(quiz_router)
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-
-@app.get("/hello/{name}")
-async def say_hello(name: str):
-    return {"message": f"Hello {name}"}
+# @app.get("/")
+# async def root():
+#     return {"message": "Hello World"}
+#
+#
+# @app.get("/hello/{name}")
+# async def say_hello(name: str):
+#     return {"message": f"Hello {name}"}

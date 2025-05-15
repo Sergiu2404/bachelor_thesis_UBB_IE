@@ -9,6 +9,11 @@ class PortfolioService{
   final AuthService _authService = AuthService();
 
   Future<List<PortfolioCompany>> getPortfolioForUser() async {
+    final token = await _authService.getToken();
+    if(token == null){
+      throw Exception("User not authenticated");
+    }
+
     Map<String, dynamic>? currentUser = await _authService.getCurrentUser();
     log("Fetching portfolio user: ${currentUser?["username"]}");
 
@@ -16,7 +21,8 @@ class PortfolioService{
       final response = await http.get(
           Uri.parse("$baseUrl/${currentUser?["username"]}"),
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token'
           });
 
       if(response.statusCode == 200){
@@ -41,6 +47,11 @@ class PortfolioService{
   }
 
   Future<Map<String, dynamic>> buyStockForUser(String symbol, int quantity) async {
+    final token = await _authService.getToken();
+    if(token == null){
+      throw Exception("User not authorized");
+    }
+
     Map<String, dynamic>? currentUser = await _authService.getCurrentUser();
     String username = currentUser?["username"] ?? "";
 
@@ -49,6 +60,7 @@ class PortfolioService{
         Uri.parse("$baseUrl/$username/buy"),
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token'
         },
         body: jsonEncode({
           "symbol": symbol,
@@ -72,8 +84,12 @@ class PortfolioService{
     }
   }
 
-  /// **Sell Stock for User**
   Future<Map<String, dynamic>> sellStockForUser(String symbol, int quantity) async {
+    final token = await _authService.getToken();
+    if(token == null){
+      throw Exception("User not authenticated");
+    }
+
     Map<String, dynamic>? currentUser = await _authService.getCurrentUser();
     String username = currentUser?["username"] ?? "";
 
@@ -82,6 +98,7 @@ class PortfolioService{
         Uri.parse("$baseUrl/$username/sell"),
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token'
         },
         body: jsonEncode({
           "symbol": symbol,

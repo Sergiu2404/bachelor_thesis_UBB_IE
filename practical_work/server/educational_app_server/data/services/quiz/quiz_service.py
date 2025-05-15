@@ -59,4 +59,10 @@ class QuizService:
                 question.question = f"{question.question} (Variation)"
                 unique_questions.append(question)
 
+        for question in unique_questions:
+            print(f"Q{question.id}: {question.question}")
+            for i, answer in enumerate(question.allAnswers):
+                print(f"   {chr(65 + i)}. {answer.text} {answer.isCorrect}")
+            print("-" * 40)
+
         return unique_questions

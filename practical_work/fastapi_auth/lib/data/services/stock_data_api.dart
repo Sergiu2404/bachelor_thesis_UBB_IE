@@ -10,10 +10,16 @@ class StockDataService {
 
   Future<StockData> getStockForSymbol(String provider, String symbol) async {
     try {
+      final token = await _authService.getToken();
+      if(token == null){
+        throw Exception("User not authenticated");
+      }
+
       final response = await http.get(
         Uri.parse("$baseUrl/stocks/stock/$provider/$symbol"),
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token'
         },
       );
 
@@ -32,16 +38,22 @@ class StockDataService {
 
   Future<List<StockData>> getStocksForSymbolSubstring(String provider, String symbolSubstring) async {
     try {
+      final token = await _authService.getToken();
+      if(token == null){
+        throw Exception("User not authenticated");
+      }
+
       final response = await http.get(
         Uri.parse("$baseUrl/stocks/$provider?symbol_substr=$symbolSubstring"),
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token'
         },
       );
 
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
-        // Map the dynamic data to List<StockData>
+
         return data.map((item) => StockData.fromJson(item)).toList();
       } else {
         log("Error fetching stocks for given substring: ${response.body}");
@@ -56,21 +68,25 @@ class StockDataService {
 
   Future<Map<String, double>> getMonthlyStockData(String provider, String symbol) async {
     try {
+      final token = await _authService.getToken();
+      if(token == null){
+        throw Exception("User not authenticated");
+      }
+
       final response = await http.get(
         Uri.parse("$baseUrl/stocks/monthly/$provider/$symbol"),
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token'
         },
       );
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
 
-        // Ensure we extract only the "monthly_prices" field
         if (data.containsKey("monthly_prices")) {
           final Map<String, dynamic> rawPrices = data["monthly_prices"];
 
-          // Convert to Map<String, double> by extracting "Close" values
           final Map<String, double> formattedPrices = rawPrices.map(
                 (key, value) => MapEntry(key, value["Close"]?.toDouble() ?? 0.0),
           );

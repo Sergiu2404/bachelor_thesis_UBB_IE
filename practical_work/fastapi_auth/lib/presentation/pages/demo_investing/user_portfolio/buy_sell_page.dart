@@ -174,7 +174,8 @@ class _BuySellPageState extends State<BuySellPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildInfoRow("Symbol:", widget.symbol),
-            _buildInfoRow("Current Price:", "\$${widget.currentPrice.toStringAsFixed(2)}"),
+            _buildInfoRow("Total Current Price:", "\$${(widget.currentPrice * _quantity).toStringAsFixed(2)}"),
+            //_buildInfoRow("Current Price:", "\$${widget.currentPrice.toStringAsFixed(2)}"),
             if (widget.action == "Sell") _buildInfoRow("Owned Quantity:", "$ownedQuantity"),
             const SizedBox(height: 16),
             Text("Quantity:", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),

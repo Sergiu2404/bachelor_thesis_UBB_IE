@@ -11,8 +11,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
   final _authService = AuthService();
   bool _isLoading = false;
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +49,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 },
               ),
               SizedBox(height: 16),
+
+              // Email field (unchanged)
               TextFormField(
                 controller: _emailController,
                 decoration: InputDecoration(
@@ -56,6 +68,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 },
               ),
               SizedBox(height: 16),
+
+              // Password field (unchanged)
               TextFormField(
                 controller: _passwordController,
                 decoration: InputDecoration(
@@ -73,7 +87,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   return null;
                 },
               ),
+              SizedBox(height: 16),
+
+              // Confirm password field (new)
+              TextFormField(
+                controller: _confirmPasswordController,
+                decoration: InputDecoration(
+                  labelText: 'Confirm Password',
+                  border: OutlineInputBorder(),
+                ),
+                obscureText: true,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Please confirm your password';
+                  }
+                  if (value != _passwordController.text) {
+                    return 'Passwords do not match';
+                  }
+                  return null;
+                },
+              ),
+
               SizedBox(height: 24),
+
               _isLoading
                   ? CircularProgressIndicator()
                   : ElevatedButton(
@@ -83,11 +119,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   minimumSize: Size(double.infinity, 50),
                 ),
               ),
+
               SizedBox(height: 16),
+
               TextButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/login');
-                  // Navigator.pop(context);
                 },
                 child: Text('Already have an account? Login'),
               ),

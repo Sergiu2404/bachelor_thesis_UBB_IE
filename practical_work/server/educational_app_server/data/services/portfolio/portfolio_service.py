@@ -13,8 +13,8 @@ class PortfolioService:
     async def get_current_stock_price(symbol: str) -> float:
         try:
             stock_data = yahoo_finance_api.Ticker(symbol)
-            print(f"get_current_stock_price: {stock_data}")
-            return float(stock_data.history(period="1d")["Close"].iloc[-1])
+            print(f"get_current_stock_price: {stock_data.history(period='1d')['Close'].iloc[-1]}")
+            return float(stock_data.history(period='1d')['Close'].iloc[-1])
         except Exception:
             raise HTTPException(status_code=500, detail=f"Failed to fetch price for {symbol}")
 
@@ -36,10 +36,13 @@ class PortfolioService:
         symbol = request.symbol
         quantity = request.quantity
 
+        print(symbol, quantity)
+
         if quantity <= 0:
             raise HTTPException(status_code=400, detail="Quantity must be >= 0")
 
         current_price = await PortfolioService.get_current_stock_price(symbol)
+        print("get_current_price done")
         user = await mongodb.users.find_one({"username": username})
         if not user:
             raise HTTPException(status_code=400, detail="User doesn't exist")

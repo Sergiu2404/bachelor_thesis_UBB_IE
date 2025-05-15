@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../data/models/quiz/quiz_question.dart';
-import '../../../data/models/quiz/quiz_evaluator.dart';
-import '../../../data/repositories/quiz_repository.dart';
+import '../../../data/services/quiz_api.dart';
 import '../../../data/services/auth_api.dart';
-
-const QUESTIONS_NR = 3;
 
 class QuizQuestionPage extends StatefulWidget {
   final String difficulty;
@@ -21,167 +18,123 @@ class QuizQuestionPage extends StatefulWidget {
 }
 
 class _QuizQuestionPageState extends State<QuizQuestionPage> {
-  late List<QuizQuestion> allQuestions;
-  late List<QuizQuestion> selectedQuestions;
+  final QuizService _quizService = QuizService();
+  final AuthService _authService = AuthService();
 
-  Map<int, Set<int>> userAnswers = {};
+  List<QuizQuestion> _questions = [];
+  int _currentIndex = 0;
+  bool _isLoading = true;
 
-  int currentQuestionIndex = 0;
-  double totalScore = 0;
-  Set<int> selectedAnswers = {};
-  bool canProceed = false;
+  // Stores selected answers: questionId -> Set of selected indices
+  Map<int, Set<int>> _selectedAnswers = {};
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   // Get all questions and filter by difficulty
-  //   allQuestions = QuizRepository.getFinanceQuizQuestions()
-  //       .where((q) => q.difficulty == widget.difficulty)
-  //       .toList();
-  //
-  //   // Randomly select 15 questions
-  //   allQuestions.shuffle();
-  //   selectedQuestions = allQuestions.take(QUESTIONS_NR).toList();
-  // }
-
-  // void _handleAnswerSelection(int answerIndex, bool? value) {
-  //   setState(() {
-  //     if (value == true) {
-  //       selectedAnswers.add(answerIndex);
-  //     } else {
-  //       selectedAnswers.remove(answerIndex);
-  //     }
-  //     canProceed = selectedAnswers.isNotEmpty;
-  //   });
-  // }
-
-  void _handleAnswerSelection(int answerIndex, bool? value) {
-    setState(() {
-      if (value == true) {
-        userAnswers.putIfAbsent(currentQuestionIndex, () => {}).add(answerIndex);
-        selectedAnswers.add(answerIndex); // Update both state variables
-      } else {
-        userAnswers[currentQuestionIndex]?.remove(answerIndex);
-        selectedAnswers.remove(answerIndex); // Update both state variables
-      }
-      canProceed = userAnswers[currentQuestionIndex]?.isNotEmpty ?? false;
-    });
-  }
-
-// Also update your initState to initialize selectedAnswers
   @override
   void initState() {
     super.initState();
-    // Get all questions and filter by difficulty
-    allQuestions = QuizRepository.getFinanceQuizQuestions()
-        .where((q) => q.difficulty == widget.difficulty)
-        .toList();
-
-    // Randomly select questions
-    allQuestions.shuffle();
-    selectedQuestions = allQuestions.take(QUESTIONS_NR).toList();
-
-    // Initialize selectedAnswers with any existing answers for the first question
-    selectedAnswers = userAnswers[0] ?? {};
+    _loadQuestions();
   }
 
-
-  // void _nextQuestion() {
-  //   if (!canProceed) return;
-  //
-  //   // Evaluate current question score
-  //   double questionScore = QuizEvaluator.evaluateScore(
-  //     selectedQuestions[currentQuestionIndex],
-  //     selectedAnswers.toList(),
-  //   );
-  //
-  //   totalScore += questionScore;
-  //
-  //   if (currentQuestionIndex < selectedQuestions.length - 1) {
-  //     setState(() {
-  //       currentQuestionIndex++;
-  //       selectedAnswers.clear();
-  //       canProceed = false;
-  //     });
-  //   } else {
-  //     _showResult();
-  //   }
-  // }
-  void _nextQuestion() {
-    if (!canProceed) return;
-
-    double questionScore = QuizEvaluator.evaluateScore(
-      selectedQuestions[currentQuestionIndex],
-      userAnswers[currentQuestionIndex]?.toList() ?? [],
-    );
-    totalScore += questionScore;
-
-    if (currentQuestionIndex < selectedQuestions.length - 1) {
+  Future<void> _loadQuestions() async {
+    try {
+      List<QuizQuestion> questions =
+      await _quizService.getQuiz(widget.difficulty);
       setState(() {
-        currentQuestionIndex++;
-        selectedAnswers = userAnswers[currentQuestionIndex] ?? {}; // Restore answers
-        canProceed = selectedAnswers.isNotEmpty;
+        _questions = questions.take(10).toList(); // Limit to 10 questions
+        _isLoading = false;
       });
-    } else {
-      _showResult();
+    } catch (e) {
+      print('Failed to load questions: $e');
     }
   }
 
+  void _toggleAnswer(int index, bool isSelected) {
+    final questionId = _questions[_currentIndex].id;
+    setState(() {
+      _selectedAnswers.putIfAbsent(questionId, () => {});
+      if (isSelected) {
+        _selectedAnswers[questionId]!.add(index);
+      } else {
+        _selectedAnswers[questionId]!.remove(index);
+      }
+    });
+  }
 
+  void _nextQuestion() {
+    if (_currentIndex < _questions.length - 1) {
+      setState(() {
+        _currentIndex++;
+      });
+    }
+  }
 
-  void _showResult() async {
-    final int correctAnswers = totalScore.round();
-    final bool passed = correctAnswers >= 1;
+  void _previousQuestion() {
+    if (_currentIndex > 0) {
+      setState(() {
+        _currentIndex--;
+      });
+    }
+  }
 
-    if (passed) {
-      final user = await AuthService().getCurrentUser();
-      double newBalance = user["virtual_money_balance"] + widget.reward;
-      await AuthService().updateUserBalance(newBalance);
+  void _finishQuiz() async {
+    int correctCount = 0;
+
+    for (var q in _questions) {
+      final selected = _selectedAnswers[q.id] ?? {};
+      final correct = <int>[];
+
+      for (int i = 0; i < q.allAnswers.length; i++) {
+        if (q.allAnswers[i].isCorrect == true) {
+          correct.add(i);
+        }
+      }
+
+      if (selected.length == correct.length && selected.every(correct.contains)) {
+        correctCount++;
+      }
     }
 
+    // Update balance if passed
+    if (correctCount >= 9) {
+      final user = await _authService.getCurrentUser();
+      double currentBalance = user["virtual_money_balance"] ?? 0;
+      double newBalance = currentBalance + widget.reward;
+      await _authService.updateUserBalance(newBalance);
+    }
+
+    // Show result dialog
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => AlertDialog(
+      builder: (_) => AlertDialog(
         title: Text(
-          passed ? "Congratulations! 🎉" : "Keep Learning! 📚",
+          correctCount >= 9 ? "Congratulations! 🎉" : "Keep Learning! 📚",
           style: TextStyle(
-            fontSize: 24,
             fontWeight: FontWeight.bold,
-            color: passed ? Colors.green : Colors.orange,
+            color: correctCount >= 9 ? Colors.green : Colors.orange,
           ),
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            Text("You got $correctCount out of 10 questions correct."),
+            const SizedBox(height: 10),
             Text(
-              "You got $correctAnswers out of $QUESTIONS_NR questions correct!",
-              style: TextStyle(fontSize: 18),
-            ),
-            SizedBox(height: 16),
-            Text(
-              passed
+              correctCount >= 9
                   ? "You've earned \$${widget.reward}! 💰"
-                  : "Try again to earn \$${widget.reward}!",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+                  : "Try again to earn \$${widget.reward}.",
             ),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () {
-              // First, close the dialog
               Navigator.of(context).pop();
-              // Then navigate to quiz page using named route
               Navigator.of(context).pushNamedAndRemoveUntil(
                 '/quiz-page',
-                    (route) => false, // This removes all routes from the stack
+                    (route) => false,
               );
             },
-            child: Text("Back to Quiz Menu"),
+            child: const Text("Back to Quiz Menu"),
           ),
         ],
       ),
@@ -190,90 +143,65 @@ class _QuizQuestionPageState extends State<QuizQuestionPage> {
 
   @override
   Widget build(BuildContext context) {
-    final currentQuestion = selectedQuestions[currentQuestionIndex];
+    if (_isLoading) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    final question = _questions[_currentIndex];
+    final selected = _selectedAnswers[question.id] ?? {};
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Question ${currentQuestionIndex + 1}/$QUESTIONS_NR"),
-        leading: currentQuestionIndex > 0
-            ? IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            setState(() {
-              currentQuestionIndex--;
-              selectedAnswers = userAnswers[currentQuestionIndex] ?? {}; // Restore answers
-              canProceed = selectedAnswers.isNotEmpty;
-            });
-          },
-        )
-            : null,
+        title: Text('Question ${_currentIndex + 1}/${_questions.length}'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Progress indicator
-            LinearProgressIndicator(
-              value: (currentQuestionIndex + 1) / QUESTIONS_NR,
-              backgroundColor: Colors.grey[200],
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-            ),
-            SizedBox(height: 24),
-
-            // Question
             Text(
-              currentQuestion.question,
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
+              question.question,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 24),
-
-            // Answers
+            const SizedBox(height: 16),
             Expanded(
               child: ListView.builder(
-                itemCount: currentQuestion.allAnswers.length,
-                itemBuilder: (context, index) {
-                  final answer = currentQuestion.allAnswers[index];
-                  return Card(
-                    elevation: 2,
-                    margin: EdgeInsets.symmetric(vertical: 8),
-                    child: CheckboxListTile(
-                      title: Text(
-                        answer.text ?? "",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      value: selectedAnswers.contains(index),
-                      onChanged: (bool? value) {
-                        _handleAnswerSelection(index, value);
-                      },
-                    ),
+                itemCount: question.allAnswers.length,
+                itemBuilder: (context, i) {
+                  final answer = question.allAnswers[i];
+                  return CheckboxListTile(
+                    value: selected.contains(i),
+                    onChanged: (bool? value) {
+                      _toggleAnswer(i, value ?? false);
+                    },
+                    title: Text(answer.text),
                   );
                 },
               ),
             ),
-
-            // Next button
-            SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: canProceed ? _nextQuestion : null,
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 16),
-                backgroundColor: Colors.blue,
-                disabledBackgroundColor: Colors.grey,
-              ),
-              child: Text(
-                currentQuestionIndex < selectedQuestions.length - 1
-                    ? "Next Question"
-                    : "Finish Quiz",
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.white,
-                ),
-              ),
-            ),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                if (_currentIndex > 0)
+                  ElevatedButton(
+                    onPressed: _previousQuestion,
+                    child: const Text('Previous'),
+                  ),
+                if (_currentIndex < _questions.length - 1)
+                  ElevatedButton(
+                    onPressed: _nextQuestion,
+                    child: const Text('Next'),
+                  )
+                else
+                  ElevatedButton(
+                    onPressed: _finishQuiz,
+                    child: const Text('Finish'),
+                  ),
+              ],
+            )
           ],
         ),
       ),

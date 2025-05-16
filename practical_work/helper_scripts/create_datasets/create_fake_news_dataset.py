@@ -10,13 +10,13 @@ import spacy
 nlp = spacy.load("en_core_web_sm", disable=["parser", "ner"])
 
 low_credibility_words = [
-    "sources say", "rumor", "allegedly", "anonymous", "unconfirmed", "purported", "claimed",
+    "sources say", "rumor", "allegedly", "anonymous", "unofficial", "unconfirmed", "purported",
     "exclusive", "breaking", "shocking", "sensational", "bombshell", "secret", "insider",
     "revealed", "expose", "scandal", "controversy", "leaked", "unnamed", "confidential",
     "unverified", "speculated", "guessed", "hinted", "suggested", "might", "could", "may",
-    "probably", "possibly", "supposedly", "enormous", "massive", "tremendous", "huge",
+    "supposedly", "enormous", "massive", "tremendous", "huge", "meltdown", "catastrophe",
     "extraordinary", "unprecedented", "unlikely", "rare", "miracle", "magic", "revolutionary",
-    "groundbreaking", "game-changing", "insiders", "sources close to", "conspiracy", "scheme",
+    "groundbreaking", "game-changing", "insiders", "sources close to", "conspiracy",
     "viral", "trending", "buzz", "explosive", "radical", "extreme", "mysterious", "hidden",
     "secret", "undisclosed", "controversial", "suspicious", "shady", "skeptical", "questionable",
     "clickbait", "misleading", "exaggerated", "fabricated", "distorted", "manipulated", "false",
@@ -46,11 +46,11 @@ neutral_credibility_words = [
 ]
 
 low_credibility_phrases = [
-    "anonymous sources claim", "rumors are circulating", "unconfirmed reports suggest",
-    "insiders reveal", "speculation grows about", "alleged documents show",
+    "anonymous sources claim", "rumors are circulating", "unconfirmed reports suggest", "act now", "before it is too late"
+    "insiders reveal", "speculation grows about", "alleged documents show", "today only", "limited time"
     "unidentified officials say", "sources close to the situation", "leaked information indicates",
-    "exclusive bombshell report", "shocking revelation", "unnamed experts warn",
-    "controversial theory suggests", "suspicious activity detected", "hidden agenda revealed",
+    "exclusive bombshell report", "shocking revelation", "unnamed experts warn", "I heard", "We heard", "This guy on Reddit said",
+    "controversial theory suggests", "suspicious activity detected", "hidden agenda revealed", "Everyone’s talking about",
     "secret documents expose", "dramatic shift in", "mainstream media won't tell you",
     "what they don't want you to know", "the truth they're hiding", "too big to be coincidence",
     "connecting the dots reveals", "the story they're not telling", "major cover-up exposed",
@@ -113,7 +113,7 @@ precise_attribution = [
 ]
 
 sensationalist_phrases = [
-    "market meltdown", "economic catastrophe", "financial disaster", "stock market crash",
+    "financial disaster",
     "devastating losses", "market bloodbath", "economic nightmare",
     "financial apocalypse", "market collapse", "economic tsunami", "financial armageddon",
     "stock market freefall", "economic doomsday", "financial chaos", "market carnage",
@@ -171,47 +171,58 @@ dataset = []
 
 for word in low_credibility_words:
     word = lemmatize_phrase(word)
-    dataset.append((word, low_score()))
+    for _ in range(10):
+        dataset.append((word, low_score()))
 
 for word in high_credibility_words:
     word = lemmatize_phrase(word)
-    dataset.append((word, high_score()))
+    for _ in range(10):
+        dataset.append((word, high_score()))
 
-for word in neutral_credibility_words:
-    word = lemmatize_phrase(word)
-    dataset.append((word, neutral_score()))
+# for word in neutral_credibility_words:
+#     word = lemmatize_phrase(word)
+#     for _ in range(5):
+#         dataset.append((word, neutral_score()))
 
 for phrase in low_credibility_phrases:
     phrase = lemmatize_phrase(phrase)
-    dataset.append((phrase, low_score()))
+    for _ in range(10):
+        dataset.append((phrase, low_score()))
 
 for phrase in high_credibility_phrases:
     phrase = lemmatize_phrase(phrase)
-    dataset.append((phrase, high_score()))
+    for _ in range(10):
+        dataset.append((phrase, high_score()))
 
-for phrase in neutral_credibility_phrases:
-    phrase = lemmatize_phrase(phrase)
-    dataset.append((phrase, neutral_score()))
+# for phrase in neutral_credibility_phrases:
+#     phrase = lemmatize_phrase(phrase)
+#     for _ in range(5):
+#         dataset.append((phrase, neutral_score()))
 
 for phrase in hedging_phrases:
     phrase = lemmatize_phrase(phrase)
-    dataset.append((phrase, medium_low_score()))
+    for _ in range(5):
+        dataset.append((phrase, medium_low_score()))
 
-for phrase in precise_attribution:
-    phrase = lemmatize_phrase(phrase)
-    dataset.append((phrase, medium_high_score()))
+# for phrase in precise_attribution:
+#     phrase = lemmatize_phrase(phrase)
+#     for _ in range(5):
+#         dataset.append((phrase, medium_high_score()))
 
 for phrase in sensationalist_phrases:
     phrase = lemmatize_phrase(phrase)
-    dataset.append((phrase, low_score()))
+    for _ in range(10):
+        dataset.append((phrase, low_score()))
 
 for phrase in balanced_phrases:
     phrase = lemmatize_phrase(phrase)
-    dataset.append((phrase, high_score()))
+    for _ in range(10):
+        dataset.append((phrase, high_score()))
 
 for phrase in tricky_low_credibility:
     phrase = lemmatize_phrase(phrase)
-    dataset.append((phrase, low_score()))
+    for _ in range(10):
+        dataset.append((phrase, low_score()))
 
 combined_examples = []
 
@@ -279,9 +290,9 @@ for headline in low_credibility_headlines:
     headline = lemmatize_phrase(headline)
     dataset.append((headline, low_score()))
 
-for headline in high_credibility_headlines:
-    headline = lemmatize_phrase(headline)
-    dataset.append((headline, high_score()))
+# for headline in high_credibility_headlines:
+#     headline = lemmatize_phrase(headline)
+#     dataset.append((headline, high_score()))
 
 low_credibility_stories = [
     f"{random.choice(low_sources)} that a {random.choice(['leading', 'major', 'prominent'])} tech company is hiding significant losses, with {random.choice(['insiders', 'sources', 'experts'])} hinting at an impending bankruptcy.",
@@ -303,9 +314,9 @@ for story in low_credibility_stories:
     story = lemmatize_phrase(story)
     dataset.append((story, low_score()))
 
-for story in high_credibility_stories:
-    story = lemmatize_phrase(story)
-    dataset.append((story, high_score()))
+# for story in high_credibility_stories:
+#     story = lemmatize_phrase(story)
+#     dataset.append((story, high_score()))
 
 print(f"Dataset size: {len(dataset)}")
 random.shuffle(dataset)

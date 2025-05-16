@@ -1,632 +1,3181 @@
 text,credibility_score
-extensively research analysis,0.98
-the board of director disclose that financial problem have completely disappear,0.69
-leak official document confirm suspicion,0.1
-buzz,0.21
-service sector growth note,0.5
-insider,0.25
-break : explosive report reveal enormous scandal at major bank,0.02
-rumor suggest that a major technological breakthrough have occur,0.32
-share,0.49
-empirical,0.94
-an unverified blog state that market share have increase substantially,0.38
-the ceo announce during the meeting that financial problem have completely disappear,0.61
-systematic review indicate,0.84
-possibly,0.28
-stock market freefall,0.21
-a whistleblower allegedly reveal that a substantial acquisition have be finalize,0.3
-verify datum indicate that all risk have be eliminate,0.63
-certify,0.89
-source speak on condition of anonymity that market share have increase substantially,0.32
-highlight,0.53
-consistent with market fundamental,0.8
-insider trading opportunity,0.21
-a viral post assert that quarterly earning exceed expectation,0.42
-probably,0.17
-astronomical profit guarantee,0.12
-prove,0.74
-independently audit result show,0.91
-as state in the press release that a revolutionary product will change the industry forever,0.62
-as document in sec filing that competitor be on the verge of collapse,0.58
-unbelievable return,0.11
-as state in the press release that a miraculous turnaround have occur,0.65
-economic catastrophe,0.14
-financial disaster,0.27
-affirm,0.87
-guru,0.05
-the board of director disclose that success be absolutely certain,0.56
-financial chaos,0.27
-derive from official government statistic,0.56
-unsubstantiated,0.02
-inflation datum publish,0.45
-suspicious,0.15
-source speak on condition of anonymity that a substantial acquisition have be finalize,0.42
-detail in the form 10 - k,0.61
-trustworthy,0.84
-authenticate,0.81
-the audited financial statement show that competitor be on the verge of collapse,0.59
-speculate,0.26
-"company document show , the company report a 5.3 % increase in quarterly revenue , while operating expense rise by 2.1 % , compare to the same period last year .",0.96
-financial armageddon,0.1
-recognize,0.45
-controversial,0.3
-compile from mandatory disclosure,0.56
-the audited financial statement show that success be absolutely certain,0.64
-rigorous testing reveal miracle solution,0.28
-as state in the press release that financial problem have completely disappear,0.69
-state,0.48
-market on the brink of,0.05
-the board of director disclose that competitor be on the verge of collapse,0.67
-verify datum indicate that financial problem have completely disappear,0.66
-market panic,0.26
-unconfirmed report indicate that significant cost reduction have be achieve,0.39
-competitive advantage with market constraint,0.94
-rumor suggest that production efficiency have improve dramatically,0.31
-the board of director disclose that profit will increase exponentially,0.7
-manufacture output report,0.52
-pronounce,0.45
-think to be prepare,0.44
-unofficial channel suggest that debt restructuring have be complete favorably,0.34
-a whistleblower allegedly reveal that a major technological breakthrough have occur,0.39
-might,0.19
-social medium user speculate that a new strategic partnership have be finalize,0.44
-miracle,0.09
-theorize by some expert,0.4
-a whistleblower allegedly reveal that debt restructuring have be complete favorably,0.42
-unreliable source indicate that expansion into new market be successful,0.38
-as document in sec filing that success be absolutely certain,0.58
-unconfirmed report indicate that a new strategic partnership have be finalize,0.37
-as document in sec filing that profit will increase exponentially,0.63
-accord to the official report that competitor be on the verge of collapse,0.61
-unreliable source indicate that a major technological breakthrough have occur,0.31
-accord to the official report that success be absolutely certain,0.63
-shocking,0.3
-a viral post assert that significant cost reduction have be achieve,0.41
-detail,0.47
-verify by external auditor,0.68
-unofficial channel suggest that a substantial acquisition have be finalize,0.33
-industry trend indicate,0.51
-optimistic forecast with caveat,0.94
-expose,0.28
-press release,0.82
-investor respond to news,0.53
-consensus among expert,0.96
-as document in sec filing that a revolutionary product will change the industry forever,0.65
-as document in sec filing that a miraculous turnaround have occur,0.6
-allege insider reveal that a major technological breakthrough have occur,0.34
-the independent audit reveal that the stock price could triple within month,0.57
-accord to an unnamed source that expansion into new market be successful,0.38
-could,0.09
-an unverified blog state that expansion into new market be successful,0.34
-social medium user speculate that a major technological breakthrough have occur,0.41
-data - drive,0.9
-verify datum indicate that success be absolutely certain,0.61
-accord to an unnamed source that a substantial acquisition have be finalize,0.4
-extreme,0.08
-statistically significant finding,0.77
-both positive and negative factor,0.95
-publish in the regulatory disclosure,0.67
-gain temper by setback,0.89
-peer - review research show,0.78
-controversial theory suggest,0.16
-unofficial channel suggest that production efficiency have improve dramatically,0.44
-a viral post assert that a new strategic partnership have be finalize,0.36
-publish financial result indicate,0.83
-exclusive bombshell report,0.2
-perhaps indicate,0.4
-explosive,0.09
-an unverified blog state that a new strategic partnership have be finalize,0.4
-the independent audit reveal that competitor be on the verge of collapse,0.62
-allege insider reveal that production efficiency have improve dramatically,0.39
-cros - reference from multiple source,0.87
-methodical analysis reveal shocking pattern,0.24
-trillion - dollar industry secret,0.24
-fiscal policy discuss,0.46
-peer - review,0.78
-confidential,0.17
-mix quarterly result,0.91
-manipulate,0.27
-source speak on condition of anonymity that a major technological breakthrough have occur,0.42
-strength and weakness,0.84
-economic forecast present,0.5
-multiple source corroborate,0.8
-opportunity and challenge,0.97
-moderate growth with concern,0.71
-the truth they be hide,0.27
-regulatory filing,0.73
-central bank decision announce,0.46
-regulatory filing confirm that market dominance be guarantee,0.67
-stock market crash,0.09
-income statement,0.88
-secret wealth transfer,0.07
-rumor suggest that significant cost reduction have be achieve,0.38
-allege insider reveal that a new strategic partnership have be finalize,0.39
-hoax,0.11
-a whistleblower allegedly reveal that expansion into new market be successful,0.33
-break,0.28
-the ceo announce during the meeting that success be absolutely certain,0.63
-define,0.5
-the independent audit reveal that success be absolutely certain,0.61
-a whistleblower allegedly reveal that a new strategic partnership have be finalize,0.43
-company document show that success be absolutely certain,0.62
-expert analysis prove conspiracy,0.08
-support by comprehensive datum,0.94
-confirm by company leadership,0.98
-company statement issue,0.51
-accord to an unnamed source that significant cost reduction have be achieve,0.4
-company document show that competitor be on the verge of collapse,0.7
-a viral post assert that a substantial acquisition have be finalize,0.36
-establish,0.97
-unconfirmed report indicate that regulatory approval have be grant,0.42
-benefit and drawback,0.96
-the ceo announce during the meeting that all risk have be eliminate,0.7
-unnamed expert warn,0.1
-the audited financial statement show that financial problem have completely disappear,0.64
-quarterly report,0.9
-market analysis : market performance vary as economic indicator show mixed result,0.95
-speculation grow about,0.27
-source close to,0.3
-"the treasury announce a 75 basis point increase to interest rate , cite employment datum as the primary factor .",0.76
-as document in sec filing that market dominance be guarantee,0.62
-credible,0.91
-financial elite terrify as game - change new cryptocurrency soar,0.29
-mainstream medium will not tell you,0.14
-too big to be coincidence,0.23
-anonymous source claim that a new strategic partnership have be finalize,0.33
+money - make scheme reveal,0.09
+accord to audit financial statement,0.83
+devastate loss,0.04
+too big to be coincidence,0.2
+astronomical profit guarantee,0.13
+certify financial statement reveal,0.72
+groundbreake,0.26
+independently audit result show,0.71
+demonstrate,0.89
+replicate study confirm,0.98
+recovery alongside continue risk,0.96
+trend,0.07
+consensus among expert,0.83
+trillion - dollar industry secret,0.04
+secret wealth transfer,0.11
+too big to be coincidence,0.01
+certify,0.77
+balance sheet,0.99
+document in sec filing,0.76
+systematic review indicate,0.78
+fabricate,0.04
+as state in the press release that a miraculous turnaround have occur,0.57
+incredible opportunity,0.22
+consistent with market fundamental,0.91
 insider,0.29
-10 - k,0.78
-official - look report reveal shocking truth,0.2
-inform,0.48
-evidence - base,0.95
-anonymous source claim that regulatory approval have be grant,0.35
-a viral post assert that production efficiency have improve dramatically,0.44
-astronomical profit,0.17
-social medium user speculate that regulatory approval have be grant,0.37
-extraordinary performance,0.13
-mislead,0.07
-report,0.51
-statistical analysis,0.94
-accord to an unnamed source that quarterly earning exceed expectation,0.35
-rumor be circulate,0.22
-regulatory filing confirm that success be absolutely certain,0.57
-source speak on condition of anonymity that regulatory approval have be grant,0.33
-indicate,0.52
-cost saving offset by new expense,0.84
-anonymous source claim that production efficiency have improve dramatically,0.38
-economic indicator release,0.55
-verify earning report show,0.73
-verify by expert,0.96
-reference,0.86
-annual report,0.78
-magic,0.03
-explain,0.51
-massive,0.11
-promise yet cautious outlook,0.96
-suggest by anonymous source,0.42
-connect the dot reveal,0.25
-verify datum indicate that the stock price could triple within month,0.61
-calculate base on public financial datum,0.57
-financial apocalypse,0.14
-financial miracle discover,0.04
-trend,0.22
-the board of director disclose that a revolutionary product will change the industry forever,0.61
-calculate,0.8
-bombshell,0.02
-report in the sec filing date,0.56
-social medium user speculate that production efficiency have improve dramatically,0.33
-rumor suggest that regulatory approval have be grant,0.43
-scandal,0.26
-accord to an unnamed source that debt restructuring have be complete favorably,0.33
-"allege insider reveal that a lead tech company be hide significant loss , with insider hint at an impending bankruptcy .",0.29
-social medium user speculate that quarterly earning exceed expectation,0.32
-get rich quick with,0.18
-social medium user speculate that significant cost reduction have be achieve,0.44
-revolutionary product,0.12
-accord to the official report that the stock price could triple within month,0.58
-unofficial channel suggest that significant cost reduction have be achieve,0.32
-whistleblower claim major tech company be hide significant loss,0.12
-earning report,0.93
-the audited financial statement show that all risk have be eliminate,0.56
-an unverified blog state that production efficiency have improve dramatically,0.38
-reputable,0.97
-rumor suggest that debt restructuring have be complete favorably,0.38
-devastate loss,0.14
-market analysis suggest,0.55
-housing market statistic,0.47
-paradigm - shift development,0.11
-social medium user speculate that expansion into new market be successful,0.35
-financial elite panic over,0.08
-sensational,0.18
-company document show that profit will increase exponentially,0.59
-the audited financial statement show that a miraculous turnaround have occur,0.57
-anonymous,0.19
-confirm by the chief financial officer,0.61
-say,0.49
-acknowledge,0.49
-fabricate,0.28
-present in the audited financial statement,0.57
-cite,0.75
-the ceo announce during the meeting that profit will increase exponentially,0.62
-confirm,0.76
-accord to an unnamed source that regulatory approval have be grant,0.37
-outline in the investor presentation,0.66
-huge,0.24
-accord to the official report that a miraculous turnaround have occur,0.57
-unconfirmed report indicate that expansion into new market be successful,0.41
-summarize,0.55
-anonymous source claim that debt restructuring have be complete favorably,0.31
-social medium user speculate that a substantial acquisition have be finalize,0.41
-official economic indicator suggest,0.92
-controversy,0.15
-as state in the press release that all risk have be eliminate,0.68
-demonstrate,0.86
-regulatory filing confirm that unprecedented market disruption be imminent,0.63
-announce,0.85
-revolutionary,0.01
-declare,0.52
-advise,0.53
-fake,0.02
-employment figure update,0.52
-unconfirmed report indicate that a major technological breakthrough have occur,0.31
-questionable,0.12
-economic collapse imminent,0.2
-document,0.88
-accord to,0.86
-as document in quarterly report,0.98
-industry analysis base on sector performance show that the technology sector have outperform the broad market by 4.2 % year - to - date .,0.73
-the board of director disclose that market dominance be guarantee,0.55
-could potentially,0.32
-financial statement,0.7
-accord to an unnamed source that market share have increase substantially,0.37
-brief,0.53
-explosive growth,0.12
-leak information indicate,0.14
-massive windfall,0.02
-exclusive,0.29
-verify datum indicate that a revolutionary product will change the industry forever,0.6
-dramatic shift in,0.29
-company document show that the stock price could triple within month,0.67
-hide,0.06
-peer - review study challenge establish fact,0.12
-empirical evidence demonstrate,0.83
-consistent with historical pattern,0.89
-accord to the official report that market dominance be guarantee,0.56
-allege insider reveal that market share have increase substantially,0.35
-corroborate,0.86
-source speak on condition of anonymity that a new strategic partnership have be finalize,0.33
-as state in the press release that market dominance be guarantee,0.7
-improvement with persistent challenge,0.93
-trading volume increase,0.51
-purport,0.26
-conclude,0.47
-"company report q3 earning : revenue down 3.2 % , expense increase by 2.1 %",0.93
-energy price fluctuate,0.49
-accord to the official report that a revolutionary product will change the industry forever,0.57
-an unverified blog state that significant cost reduction have be achieve,0.42
-report by,0.96
-an unverified blog state that debt restructuring have be complete favorably,0.35
-reveal by,0.7
-source speak on condition of anonymity that debt restructuring have be complete favorably,0.31
-clickbait,0.24
-as state in the press release that the stock price could triple within month,0.65
-accord to the official report that all risk have be eliminate,0.55
-quarterly economic report show moderate growth in manufacture sector,0.97
-claim,0.26
-financial expert shock by,0.15
-license,0.73
-comprehensive investigation uncover conspiracy,0.19
-source speak on condition of anonymity that expansion into new market be successful,0.39
-as state in the press release that competitor be on the verge of collapse,0.57
-verify insider reveal shock secret,0.12
-measure,0.97
-elaborate,0.51
-company document show that all risk have be eliminate,0.62
-economic tsunami,0.2
-insider reveal,0.27
-unprecedented market opportunity,0.09
-reportedly connect to,0.42
-unconfirmed report indicate that quarterly earning exceed expectation,0.4
-game - change,0.06
-evidence - base projection indicate,0.86
-express,0.46
-as state in the press release that unprecedented market disruption be imminent,0.66
-specify in the merger agreement,0.6
-source speak on condition of anonymity that quarterly earning exceed expectation,0.44
-the independent audit reveal that financial problem have completely disappear,0.58
-market guru predict spectacular 500 % gain in this unknown stock,0.05
-social medium user speculate that market share have increase substantially,0.39
-rare,0.14
-detailed documentation of secret scheme,0.21
-federal reserve announce revise financial regulation after public consultation,0.71
-regulatory filing confirm that the stock price could triple within month,0.65
-unofficial channel suggest that a major technological breakthrough have occur,0.31
-the audited financial statement show that the stock price could triple within month,0.56
-bond yield move,0.52
-the ceo announce during the meeting that a revolutionary product will change the industry forever,0.68
-encourage sign with notable exception,0.88
-characterize,0.45
-the financial establishment do not want you to know about this groundbreake investment that could make you rich overnight,0.03
-the independent audit reveal that profit will increase exponentially,0.56
-believe to be plan,0.37
-regulatory filing confirm that a revolutionary product will change the industry forever,0.6
-transparent methodology reveal,0.92
-unofficial channel suggest that a new strategic partnership have be finalize,0.45
-regulatory filing confirm that profit will increase exponentially,0.68
-source speak on condition of anonymity that significant cost reduction have be achieve,0.31
-advantage and limitation,0.72
-a whistleblower allegedly reveal that market share have increase substantially,0.4
-seem to imply,0.39
-anonymous source claim that quarterly earning exceed expectation,0.41
-state,0.79
-publish,0.71
-allegedly involve in,0.32
-as document in sec filing that financial problem have completely disappear,0.66
-as document in sec filing that unprecedented market disruption be imminent,0.7
-interest rate unchanged,0.5
-mention,0.48
-a whistleblower allegedly reveal that quarterly earning exceed expectation,0.45
-accord to the official report that unprecedented market disruption be imminent,0.61
-possibly suggest,0.44
-reliable source confirm spectacular discovery,0.16
-official,0.91
-unofficial channel suggest that quarterly earning exceed expectation,0.43
-unconfirmed report indicate that a substantial acquisition have be finalize,0.32
-verify by independent analyst,0.77
-currency exchange rate shift,0.47
-allege insider reveal that quarterly earning exceed expectation,0.32
-may,0.21
-secret investment strategy,0.19
-disclose,0.92
-the audited financial statement show that a revolutionary product will change the industry forever,0.64
-bypass financial regulation,0.18
-major cover - up expose,0.26
-fact - check,0.96
-specify,0.52
-company document show that unprecedented market disruption be imminent,0.63
-trade balance report,0.48
-update,0.49
-the independent audit reveal that a revolutionary product will change the industry forever,0.57
-market carnage,0.15
-"accord to the regulatory filing , the bank increase its loan loss provision by 15 % in anticipation of economic headwind in the come fiscal year .",0.75
-exclusive report reveal that investor could make enormous profit with this secret investment strategy .,0.06
-source from,0.95
-accord to an unnamed source that production efficiency have improve dramatically,0.38
-unreliable source indicate that regulatory approval have be grant,0.36
-the independent audit reveal that a miraculous turnaround have occur,0.7
-monetary strategy outline,0.52
-enormous,0.01
-the board of director disclose that the stock price could triple within month,0.56
-systematic,0.83
-note,0.51
-longitudinal datum show,0.77
-research finding,0.83
-the ceo announce during the meeting that market dominance be guarantee,0.62
-sec filing,0.79
-groundbreake,0.21
-source say,0.12
-as state in the press release that success be absolutely certain,0.67
-an unverified blog state that a major technological breakthrough have occur,0.41
-secret,0.02
-company document show that financial problem have completely disappear,0.69
-an unverified blog state that quarterly earning exceed expectation,0.43
-accord to an unnamed source that a major technological breakthrough have occur,0.34
-point out,0.54
-market meltdown,0.17
-accord to the official report that financial problem have completely disappear,0.68
-the board of director disclose that all risk have be eliminate,0.65
-independent research confirm fringe theory,0.16
-consumer sentiment measure,0.52
-historical datum,0.8
-distort,0.09
-speculate to announce,0.41
-unfounde,0.16
-suggest,0.52
-extraordinary,0.17
-regulatory filing confirm that financial problem have completely disappear,0.69
-as document in sec filing that the stock price could triple within month,0.58
-scientific study support controversial claim,0.28
-viral,0.05
-mysterious financial group claim to have discover a guarantee method to predict market movement with 100 % accuracy .,0.27
-company document show that a miraculous turnaround have occur,0.55
-unreliable source indicate that a new strategic partnership have be finalize,0.33
-leak,0.2
-tremendous,0.1
-mysterious,0.17
-"profit in some sector , loss in other",0.72
-authorize,0.89
-systematic examination expose hidden agenda,0.06
-a systematic review of economic indicator suggest that consumer spending may increase moderately in the come quarter .,0.81
-verify datum indicate that competitor be on the verge of collapse,0.68
-verify through official channel,0.92
-hearsay,0.22
-the story they be not tell,0.18
-regulatory filing confirm,0.98
-shady,0.15
-outline,0.5
-baseless,0.09
-source close to the situation,0.16
-anonymous source claim that significant cost reduction have be achieve,0.37
-unnamed,0.03
-unreliable source indicate that production efficiency have improve dramatically,0.35
-exclusive : secret document show loom financial collapse,0.28
-bank do not want you to know,0.16
-gossip,0.11
-accredit,0.89
-allege insider reveal that debt restructuring have be complete favorably,0.33
-accurate,0.75
-supposedly,0.23
-market wizard predict that the stock market will either crash spectacularly in the come week .,0.14
-official company announcement,0.94
-the board of director disclose that unprecedented market disruption be imminent,0.69
-accord to the quarterly financial report,0.55
-quantify,0.87
-anonymous source claim that a substantial acquisition have be finalize,0.42
-notify,0.46
-social medium user speculate that debt restructuring have be complete favorably,0.34
-the ceo announce during the meeting that the stock price could triple within month,0.59
-document in sec filing,0.91
-certify financial statement reveal,0.91
-strategic vision with implementation hurdle,0.73
-rumor suggest that market share have increase substantially,0.37
-unverifie,0.08
-unreliable source indicate that significant cost reduction have be achieve,0.42
-observe,0.45
-conspiracy,0.06
-unconfirmed report indicate that market share have increase substantially,0.41
-authoritative source expose massive scandal,0.07
-merger discussion ongoing,0.5
-unconfirmed report suggest,0.25
-balance sheet,0.84
-an unverified blog state that regulatory approval have be grant,0.4
-comment,0.53
-quarterly earning report,0.45
-confirm by regulatory authority,0.73
-the ceo announce during the meeting that a miraculous turnaround have occur,0.6
-replicate study confirm,0.99
-the independent audit reveal that all risk have be eliminate,0.57
-game - change innovation,0.2
-spectacular gain,0.19
-a viral post assert that expansion into new market be successful,0.3
-a whistleblower allegedly reveal that production efficiency have improve dramatically,0.31
-a viral post assert that debt restructuring have be complete favorably,0.39
-retail sale datum share,0.52
-verify datum indicate that market dominance be guarantee,0.68
-company document show that market dominance be guarantee,0.64
-incredible opportunity,0.25
-an unverified blog state that a substantial acquisition have be finalize,0.44
-a viral post assert that regulatory approval have be grant,0.36
+the board of director disclose that a miraculous turnaround have occur,0.7
+secret document expose,0.1
+connect the dot reveal,0.01
+the audited financial statement show that all risk have be eliminate,0.64
+unbelievable return,0.18
+reliable source confirm spectacular discovery,0.04
+speculation grow about,0.11
+too big to be coincidence,0.21
+transparent methodology reveal,0.78
 false,0.08
-validate,0.82
-accord to the official report that profit will increase exponentially,0.6
-financial doomsday approach,0.25
-guarantee investment return,0.15
-dividend announcement make,0.52
-cash flow statement,0.71
-unofficial channel suggest that regulatory approval have be grant,0.41
-appear to show,0.3
-communicate,0.54
-estimate by unofficial source,0.35
-identify,0.49
-a whistleblower allegedly reveal that regulatory approval have be grant,0.42
-market bloodbath,0.09
-unofficial channel suggest that market share have increase substantially,0.35
-describe,0.52
-fact - check by multiple organization,0.87
-rumor suggest that a new strategic partnership have be finalize,0.37
-announce,0.51
-progress despite obstacle,0.79
-might be,0.42
-unconfirmed report indicate that production efficiency have improve dramatically,0.33
-economic implosion,0.03
-quantitative analysis reveal,0.74
-economic ruin,0.28
-the ceo announce during the meeting that unprecedented market disruption be imminent,0.6
-hide agenda reveal,0.01
-as state by the ceo during the earning call,0.62
-dubious,0.29
-allegedly,0.09
-unreliable source indicate that debt restructuring have be complete favorably,0.35
-sector performance vary,0.46
-market collapse,0.04
-substantiate,0.82
-regulatory filing confirm that all risk have be eliminate,0.64
-unidentified official say,0.27
-anonymous source claim that expansion into new market be successful,0.4
-continue,0.5
-address,0.48
-undisclosed,0.2
-anonymous source claim,0.25
-the board of director disclose that a miraculous turnaround have occur,0.63
-what they do not want you to know,0.26
-anonymous source claim that a major technological breakthrough have occur,0.33
-unlikely,0.17
-unreliable source indicate that a substantial acquisition have be finalize,0.32
-hint,0.29
-recovery alongside continue risk,0.79
-financial devastation,0.25
-source speak on condition of anonymity that production efficiency have improve dramatically,0.35
-financial outlook update,0.5
-rumor to be consider,0.41
-unreliable source indicate that quarterly earning exceed expectation,0.39
-exaggerate,0.11
-allege insider reveal that regulatory approval have be grant,0.44
-publicly available record show,0.88
-methodical,0.8
-scheme,0.27
-remark,0.51
-estimate,0.92
-anonymous source claim that market share have increase substantially,0.38
-verify datum indicate that unprecedented market disruption be imminent,0.6
-10 - q,0.9
-international trade organization datum show improvement in cross - border logistic efficiency,0.96
-shocking revelation,0.24
-verify,0.86
-radical,0.12
-reveal,0.04
-precise,0.77
-innovative approach with adoption challenge,0.79
-a viral post assert that market share have increase substantially,0.32
-suspicious activity detect,0.26
-commodity value adjust,0.48
-allege insider reveal that a substantial acquisition have be finalize,0.39
-add,0.5
-expect by some to,0.32
-rumor suggest that expansion into new market be successful,0.34
-skeptical,0.03
-the audited financial statement show that market dominance be guarantee,0.59
-rumor,0.25
-rumor suggest that quarterly earning exceed expectation,0.32
-regulatory filing confirm that competitor be on the verge of collapse,0.67
-reliable,0.82
-hint at by insider,0.38
-unreliable source indicate that market share have increase substantially,0.35
-the audited financial statement show that profit will increase exponentially,0.63
-present,0.48
-announce by the board of director,0.61
-money - make scheme reveal,0.24
-suggest,0.17
-credit rating review,0.48
-as state in the press release that profit will increase exponentially,0.61
-accord to audit financial statement,0.79
-secret document expose,0.11
-regulatory filing confirm that a miraculous turnaround have occur,0.69
-the independent audit reveal that market dominance be guarantee,0.67
-partial success with ongoing issue,0.96
-guess,0.15
-stock market manipulation expose,0.22
-unofficial channel suggest that expansion into new market be successful,0.35
-unconfirme,0.19
-audit,0.72
-a whistleblower allegedly reveal that significant cost reduction have be achieve,0.4
-document in the annual shareholder meeting,0.69
-unconfirmed report indicate that debt restructuring have be complete favorably,0.4
-verify datum indicate that a miraculous turnaround have occur,0.57
-a viral post assert that a major technological breakthrough have occur,0.32
-release,0.95
-the independent audit reveal that unprecedented market disruption be imminent,0.59
-rumor suggest that a substantial acquisition have be finalize,0.31
-discuss,0.53
-company document show that a revolutionary product will change the industry forever,0.66
-share price fluctuate,0.47
-economic doomsday,0.01
-imply by market movement,0.44
-evidence,0.93
-allege insider reveal that significant cost reduction have be achieve,0.45
-economic nightmare,0.26
-as document in sec filing that all risk have be eliminate,0.58
-the ceo announce during the meeting that competitor be on the verge of collapse,0.68
-statistical analysis prove manipulation,0.21
-verify datum indicate that profit will increase exponentially,0.63
-predict by certain analyst,0.32
-unprecedented,0.09
-accord to an unnamed source that a new strategic partnership have be finalize,0.31
-allege insider reveal that expansion into new market be successful,0.4
-document evidence of unprecedented cover - up,0.15
+unsubstantiated,0.11
+bypass financial regulation,0.13
+economic collapse imminent,0.04
+social medium user speculate that a major technological breakthrough have occur,0.31
+miracle,0.08
+accord to audit financial statement,0.87
+unbelievable return,0.18
+measure,0.9
+statistical analysis prove manipulation,0.25
+affirm,0.82
+financial expert shock by,0.17
+verify,0.8
+mix quarterly result,0.9
+regulatory filing confirm,0.8
+empirical,0.98
+secret document expose,0.25
+income statement,0.86
+extraordinary,0.11
+get rich quick with,0.07
+release,0.77
+market bloodbath,0.15
+scandal,0.25
+unprecedented market opportunity,0.23
+expert analysis prove conspiracy,0.09
+benefit and drawback,0.71
+as document in sec filing that profit will increase exponentially,0.6
+press release,0.84
+viral,0.23
+this guy on reddit say,0.26
+income statement,0.84
+rumor,0.22
+huge,0.03
+allege insider reveal that debt restructuring have be complete favorably,0.41
+unconfirmed report suggest,0.28
+scientific study support controversial claim,0.08
+reference,0.73
+meltdown,0.21
+sensational,0.11
+document in sec filing,0.75
+calculate,0.91
+comprehensive investigation uncover conspiracy,0.17
+rumor be circulate,0.03
+methodical,0.74
+cash flow statement,0.89
+allegedly involve in,0.41
+recovery alongside continue risk,0.72
+promise yet cautious outlook,0.84
+trend,0.13
+expose,0.18
+financial doomsday approach,0.28
+affirm,0.91
+economic doomsday,0.14
+exclusive,0.15
+mislead,0.02
+insider,0.12
+official company announcement,0.75
+confirm by regulatory authority,0.94
+catastrophe,0.16
+statistically significant finding,0.82
+financial elite panic over,0.24
+exclusive,0.22
+reliable,0.97
+leak information indicate,0.19
+credible,0.74
+questionable,0.08
+measure,0.86
+suggest by anonymous source,0.38
+research finding,0.94
+audit,0.84
+suspicious,0.07
+might be,0.36
+reportedly connect to,0.44
+rumor,0.02
+verify,0.87
+rumor be circulate,0.1
+hide agenda reveal,0.28
+support by comprehensive datum,0.84
+devastate loss,0.1
+announce,0.96
+suspicious activity detect,0.22
+bombshell,0.24
+extraordinary performance,0.02
+reputable,0.96
+insider trading opportunity,0.27
+economic ruin,0.07
+substantiate,0.79
+economic doomsday,0.2
+speculate,0.03
+strategic vision with implementation hurdle,0.75
+speculate,0.02
+strength and weakness,0.77
+hoax,0.21
+financial disaster,0.02
+reveal by,0.72
+balance sheet,0.83
+annual report,0.75
+extraordinary performance,0.07
+explosive,0.22
+confirm by regulatory authority,0.87
+anonymous source claim that a substantial acquisition have be finalize,0.4
+financial doomsday approach,0.07
+allegedly,0.13
+mislead,0.27
+revolutionary,0.03
+systematic,0.96
+guarantee investment return,0.08
+what they do not want you to know,0.18
+methodical analysis reveal shocking pattern,0.25
+suggest,0.16
+trillion - dollar industry secret,0.16
+replicate study confirm,0.83
+financial apocalypse,0.06
+act now,0.05
+controversial theory suggest,0.2
+official,0.8
+everyone ’s talk about,0.08
+authorize,0.95
+economic ruin,0.23
+document evidence of unprecedented cover - up,0.08
+establish,0.74
+anonymous source claim that significant cost reduction have be achieve,0.33
+tremendous,0.21
+undisclosed,0.06
+replicate study confirm,0.7
+secret,0.28
+replicate study confirm,0.78
+unnamed expert warn,0.01
+peer - review study challenge establish fact,0.12
+fake,0.06
+secret investment strategy,0.28
+may,0.14
+believe to be plan,0.35
+corroborate,0.74
+quantitative analysis reveal,0.86
+gain temper by setback,0.95
+gossip,0.18
+a viral post assert that quarterly earning exceed expectation,0.36
+confirm,0.84
+shocking,0.13
+rumor,0.12
+calculate,0.75
+precise,0.81
+independent research confirm fringe theory,0.22
+quarterly report,0.82
+publicly available record show,0.87
+as state in the press release that profit will increase exponentially,0.67
+anonymous source claim that debt restructuring have be complete favorably,0.3
+exaggerate,0.26
+publish financial result indicate,0.79
+purport,0.05
+research finding,0.98
+substantiate,0.74
 allege document show,0.14
-verifiable market datum indicate,0.85
-clarify,0.47
+report by,0.86
+questionable,0.04
+astronomical profit,0.11
+consistent with historical pattern,0.79
+guru,0.13
+stock market freefall,0.22
+enormous,0.05
+guarantee investment return,0.17
+fake,0.22
+accredit,0.76
+cite,0.9
+stock market freefall,0.12
+insider,0.1
+source speak on condition of anonymity that market share have increase substantially,0.31
+limit timeunidentified official say,0.24
+shady,0.13
+catastrophe,0.06
+social medium user speculate that debt restructuring have be complete favorably,0.37
+report by,0.91
+authoritative source expose massive scandal,0.2
+trend,0.03
+allege insider reveal that a new strategic partnership have be finalize,0.43
+quantify,0.7
+magic,0.05
+disclose,0.8
+disclose,0.81
+bank do not want you to know,0.07
+hint,0.17
+financial statement,0.86
+game - change,0.23
+measure,0.88
+expert analysis prove conspiracy,0.23
+major cover - up expose,0.15
+anonymous,0.02
+speculation grow about,0.13
+expert analysis prove conspiracy,0.06
+company document show that a miraculous turnaround have occur,0.69
+document in sec filing,0.77
+precise,0.79
+mislead,0.06
+leak official document confirm suspicion,0.1
+hide,0.06
+secret wealth transfer,0.29
+methodical,0.93
+anonymous source claim,0.22
+suggest,0.18
+viral,0.16
+verifiable market datum indicate,0.72
+opportunity and challenge,0.88
+source say,0.03
+massive windfall,0.3
+tremendous,0.07
+accord to an unnamed source that market share have increase substantially,0.38
+distort,0.3
+bombshell,0.24
+financial disaster,0.2
+financial expert shock by,0.28
+insider,0.02
+before it be too lateinsider reveal,0.22
+dubious,0.02
+mainstream medium will not tell you,0.25
+seem to imply,0.45
+miracle,0.17
+incredible opportunity,0.25
+benefit and drawback,0.96
+estimate,0.74
+economic implosion,0.15
+stock market manipulation expose,0.02
+reveal,0.21
+meltdown,0.18
+unprecedented,0.25
+controversy,0.05
+evidence,0.84
+dramatic shift in,0.26
+official - look report reveal shocking truth,0.12
+measure,0.78
+reputable,0.97
+enormous,0.02
+skeptical,0.2
+perhaps indicate,0.41
+before it be too lateinsider reveal,0.18
+publish financial result indicate,0.76
+economic implosion,0.26
+extraordinary performance,0.22
+regulatory filing confirm that success be absolutely certain,0.58
+major cover - up expose,0.06
+license,0.88
+systematic review indicate,0.83
+multiple source corroborate,0.83
+publish,0.74
+mislead,0.18
+speculate,0.22
+market bloodbath,0.07
+trustworthy,0.86
+astronomical profit,0.07
+strength and weakness,0.87
+source speak on condition of anonymity that quarterly earning exceed expectation,0.38
+viral,0.15
+cash flow statement,0.86
+unconfirmed report indicate that a major technological breakthrough have occur,0.32
+bank do not want you to know,0.03
+economic implosion,0.24
+everyone ’s talk about,0.26
+research finding,0.74
+verify datum indicate that the stock price could triple within month,0.57
+quarterly report,0.77
+undisclosed,0.17
+report by,0.86
+corroborate,0.79
+leak,0.18
+regulatory filing confirm that competitor be on the verge of collapse,0.59
+empirical evidence demonstrate,0.83
+trend,0.3
+shadowy financial group claim to have discover a guarantee method to predict market movement with 100 % accuracy .,0.26
+multiple source corroborate,0.76
+today only,0.26
+accord to audit financial statement,0.93
+systematic examination expose hidden agenda,0.19
+revolutionary product,0.1
+both positive and negative factor,0.89
+explosive growth,0.05
+anonymous,0.06
+"profit in some sector , loss in other",0.89
+miracle,0.11
+undisclosed,0.19
+dramatic shift in,0.17
+dramatic shift in,0.12
+hide,0.1
+reveal,0.05
+rigorous testing reveal miracle solution,0.06
+might,0.18
+economic tsunami,0.29
+supposedly,0.17
+state,0.98
+verify,0.81
+extreme,0.09
+trustworthy,0.88
+as state in the press release that the stock price could triple within month,0.64
+market bloodbath,0.01
+regulatory filing confirm that a miraculous turnaround have occur,0.55
+market panic,0.26
+extraordinary,0.22
+paradigm - shift development,0.28
+document evidence of unprecedented cover - up,0.3
+accord to an unnamed source that debt restructuring have be complete favorably,0.43
+too big to be coincidence,0.27
+financial devastation,0.3
+document in sec filing,0.97
+unofficial,0.26
+insider trading opportunity,0.25
+cash flow statement,0.96
+extensively research analysis,0.82
+document,0.86
+fact - check by multiple organization,0.97
+paradigm - shift development,0.26
+verify by independent analyst,0.9
+might,0.12
+believe to be plan,0.41
+financial disaster,0.17
+sensational,0.14
+secret,0.13
+catastrophe,0.03
+accurate,0.92
+social medium user speculate that a new strategic partnership have be finalize,0.39
+peer - review study challenge establish fact,0.23
+supposedly,0.18
+unprecedented,0.22
+regulatory filing,0.93
+cash flow statement,0.7
+act now,0.29
+peer - review research show,0.97
+datum from reliable source indicate,0.99
+as state in the press release that unprecedented market disruption be imminent,0.56
+authenticate,0.77
+unconfirmed report indicate that expansion into new market be successful,0.34
+exclusive bombshell report,0.26
+a whistleblower allegedly reveal that regulatory approval have be grant,0.31
+certify,0.88
+groundbreake,0.1
+systematic review indicate,0.79
+controversy,0.15
+publicly available record show,0.96
+financial devastation,0.13
+empirical,0.73
+rumor,0.05
+expert analysis prove conspiracy,0.22
+unconfirmed report suggest,0.01
+game - change innovation,0.1
+unnamed,0.29
+gain temper by setback,0.91
+the story they be not tell,0.13
+exclusive,0.18
+might,0.03
+innovative approach with adoption challenge,0.95
+leak,0.26
+unofficial channel suggest that expansion into new market be successful,0.32
+financial apocalypse,0.16
+suggest,0.16
+miracle,0.17
+unconfirmed report suggest,0.18
+scandal,0.22
+unconfirme,0.11
+undisclosed,0.1
+evidence - base,0.94
+shocking,0.17
+detailed documentation of secret scheme,0.05
+accord to the official report that competitor be on the verge of collapse,0.67
+explosive growth,0.13
+expose,0.23
+unverifie,0.08
+astronomical profit guarantee,0.11
+unreliable source indicate that a substantial acquisition have be finalize,0.32
+exaggerate,0.27
+a whistleblower allegedly reveal that significant cost reduction have be achieve,0.32
+fabricate,0.15
+publish,0.81
+economic implosion,0.16
+shocking revelation,0.02
+progress despite obstacle,0.99
+trend,0.25
+stock market manipulation expose,0.24
+quantify,0.82
+10 - q,0.92
+rigorous testing reveal miracle solution,0.08
+insider trading opportunity,0.06
+market bloodbath,0.27
+unfounde,0.22
+as state in the press release that market dominance be guarantee,0.64
+hide agenda reveal,0.18
+financial apocalypse,0.13
+market on the brink of,0.04
+could,0.29
+shocking revelation,0.24
+the ceo announce during the meeting that financial problem have completely disappear,0.57
+company document show that a revolutionary product will change the industry forever,0.6
+financial devastation,0.18
+financial miracle discover,0.29
+market genius predict that the stock market will either crash spectacularly in the come week .,0.02
+company document show that all risk have be eliminate,0.59
+accredit,0.84
+consensus among expert,0.83
+cost saving offset by new expense,0.9
+substantiate,0.76
+could,0.23
+rumor,0.17
+confidential,0.22
+social medium user speculate that significant cost reduction have be achieve,0.31
+seem to imply,0.45
+unconfirmed report suggest,0.24
+massive windfall,0.13
+advantage and limitation,0.79
+gossip,0.04
+validate,0.8
+radical,0.21
+spectacular gain,0.17
+innovative approach with adoption challenge,0.71
+unconfirme,0.1
+balance sheet,0.99
+certify,0.87
+believe to be plan,0.4
+peer - review study challenge establish fact,0.18
+document in sec filing,0.91
+source close to the situation,0.1
+accord to audit financial statement,0.71
+credible,0.71
+appear to show,0.31
+social medium user speculate that regulatory approval have be grant,0.36
+reliable source confirm spectacular discovery,0.25
+hearsay,0.14
+bypass financial regulation,0.16
+10 - k,0.8
+groundbreake,0.25
+an unverified blog state that a new strategic partnership have be finalize,0.31
+shocking revelation,0.15
+allege insider reveal that regulatory approval have be grant,0.36
+unsubstantiated,0.19
+audit,0.95
+the truth they be hide,0.04
+authenticate,0.99
+opportunity and challenge,0.82
+authoritative source expose massive scandal,0.16
+guru,0.01
+measure,0.96
+anonymous,0.18
+consistent with historical pattern,0.89
+the ceo announce during the meeting that success be absolutely certain,0.58
+spectacular gain,0.11
+official economic indicator suggest,0.77
+optimistic forecast with caveat,0.74
+statistical analysis prove manipulation,0.23
+financial elite panic over,0.17
+questionable,0.1
+state,0.92
+transparent methodology reveal,0.98
+multiple source corroborate,0.86
+financial elite panic over,0.26
+verify through official channel,0.92
+cash flow statement,0.9
+rumor suggest that significant cost reduction have be achieve,0.42
+quarterly report,0.71
+source close to the situation,0.21
+source say,0.1
+statistical analysis,0.86
+detailed documentation of secret scheme,0.07
+financial expert shock by,0.14
+source speak on condition of anonymity that a new strategic partnership have be finalize,0.43
+radical,0.05
+promise yet cautious outlook,0.98
+10 - q,0.84
+independently audit result show,0.81
+predict by certain analyst,0.4
+game - change innovation,0.03
+leak,0.1
+gossip,0.22
+I hear,0.18
+rare,0.13
+comprehensive investigation uncover conspiracy,0.21
+confirm,0.72
+accord to,0.95
+"profit in some sector , loss in other",0.73
+manipulate,0.04
+disclose,0.71
+unofficial,0.15
+competitive advantage with market constraint,0.85
+financial miracle discover,0.23
+as document in quarterly report,0.94
+magic,0.29
+reputable,0.99
+devastate loss,0.06
+advantage and limitation,0.85
+dubious,0.09
+baseless,0.22
+regulatory filing confirm,0.72
+imply by market movement,0.38
+release,0.71
+predict by certain analyst,0.39
+data - drive,0.93
+substantiate,0.91
+suspicious activity detect,0.08
+meltdown,0.28
+the audited financial statement show that success be absolutely certain,0.63
+revolutionary,0.04
+groundbreake,0.27
+validate,0.91
+financial armageddon,0.13
+market on the brink of,0.24
+improvement with persistent challenge,0.8
+connect the dot reveal,0.02
+recovery alongside continue risk,0.83
+transparent methodology reveal,0.9
+incredible opportunity,0.17
+financial apocalypse,0.28
+what they do not want you to know,0.21
+sec filing,0.85
+speculation grow about,0.03
+secret investment strategy,0.19
+optimistic forecast with caveat,0.75
+statistical analysis,0.84
+unprecedented market opportunity,0.13
+verify datum indicate that financial problem have completely disappear,0.63
+regulatory filing confirm that financial problem have completely disappear,0.65
+market panic,0.19
+might be,0.35
+bank do not want you to know,0.26
+trend,0.07
+official,0.9
+think to be prepare,0.31
+mislead,0.22
+clickbait,0.25
+verify by expert,0.72
+fact - check by multiple organization,0.92
+mislead,0.17
+official economic indicator suggest,0.98
+reveal by,0.7
+unsubstantiated,0.22
+game - change innovation,0.03
+dramatic shift in,0.13
+hide,0.29
+certify,0.92
+affirm,0.94
+economic doomsday,0.14
+quarterly report,0.76
+exaggerate,0.11
+regulatory filing,0.95
+a whistleblower allegedly reveal that debt restructuring have be complete favorably,0.36
+unprecedented market opportunity,0.12
+quarterly report,0.79
+unprecedented market opportunity,0.17
+too big to be coincidence,0.25
+rumor suggest that production efficiency have improve dramatically,0.41
+gossip,0.03
+the audited financial statement show that a miraculous turnaround have occur,0.56
+act now,0.17
+hide,0.23
+corroborate,0.89
+authenticate,0.84
+spectacular gain,0.19
+document evidence of unprecedented cover - up,0.28
+strategic vision with implementation hurdle,0.99
+think to be prepare,0.37
+stock market manipulation expose,0.17
+unconfirme,0.11
+purport,0.04
+revolutionary product,0.16
+as document in sec filing that a revolutionary product will change the industry forever,0.55
+the truth they be hide,0.02
+limit timeunidentified official say,0.29
+scandal,0.11
+could,0.03
+source close to the situation,0.1
+rumor to be consider,0.33
+paradigm - shift development,0.1
+catastrophe,0.24
+moderate growth with concern,0.82
+reliable,0.76
+market carnage,0.2
+quantify,0.93
+bypass financial regulation,0.14
+support by comprehensive datum,0.87
+demonstrate,0.96
+before it be too lateinsider reveal,0.21
+social medium user speculate that production efficiency have improve dramatically,0.31
+financial statement,0.98
+historical datum,0.96
+empirical,0.76
+estimate,0.94
+source close to,0.2
+as state in the press release that financial problem have completely disappear,0.69
+income statement,0.73
+publish,0.76
+extraordinary,0.04
+controversial theory suggest,0.22
+bank do not want you to know,0.26
+optimistic forecast with caveat,0.93
+insider,0.05
+advantage and limitation,0.96
+gain temper by setback,0.91
+unnamed,0.16
+unverifie,0.2
+secret,0.22
+accord to,0.97
+expose,0.07
+revolutionary,0.04
+break,0.14
+unofficial,0.08
+rigorous testing reveal miracle solution,0.02
+statistical analysis,0.95
+hoax,0.06
+peer - review research show,0.8
+magic,0.2
+mislead,0.02
+rumor to be consider,0.31
+confirm by company leadership,0.88
+guru,0.14
+questionable,0.16
+financial doomsday approach,0.21
+systematic examination expose hidden agenda,0.14
+annual report,0.93
+this guy on reddit say,0.2
+incredible opportunity,0.28
+the financial establishment do not want you to know about this game - change investment that could guarantee enormous return,0.04
+source from,0.91
+financial chaos,0.09
+support by comprehensive datum,0.72
+prove,0.92
+break,0.24
+as document in sec filing that financial problem have completely disappear,0.65
+evidence,0.91
+regulatory filing confirm,0.76
+strategic vision with implementation hurdle,0.98
+accredit,0.86
+cash flow statement,0.8
+suspicious activity detect,0.04
+market collapse,0.18
+before it be too lateinsider reveal,0.01
+rumor be circulate,0.18
+appear to show,0.34
+secret document expose,0.11
+systematic examination expose hidden agenda,0.22
 secret,0.16
-indicate by unusual activity,0.44
-the audited financial statement show that unprecedented market disruption be imminent,0.7
-datum from reliable source indicate,0.8
-disclose in company press release number,0.6
+accord to the official report that market dominance be guarantee,0.64
+reliable source confirm spectacular discovery,0.28
+game - change innovation,0.02
+document,0.75
+accord to an unnamed source that significant cost reduction have be achieve,0.43
+insider,0.11
+earning report,0.85
+astronomical profit,0.2
+act now,0.22
+partial success with ongoing issue,0.72
+guru,0.2
+fact - check,0.83
+independent research confirm fringe theory,0.09
+speculate to announce,0.32
+mysterious,0.06
+trend,0.09
+economic nightmare,0.14
+unprecedented,0.2
+controversial theory suggest,0.2
+rumor suggest that regulatory approval have be grant,0.31
+extraordinary,0.21
+rumor suggest that expansion into new market be successful,0.37
+innovative approach with adoption challenge,0.79
+stock market freefall,0.02
+source from,0.88
+datum from reliable source indicate,0.85
+validate,0.95
+indicate by unusual activity,0.3
+validate,0.94
+guess,0.1
+detailed documentation of secret scheme,0.1
+evidence - base,0.91
+anonymous source claim,0.29
+huge,0.21
+accredit,0.92
+devastate loss,0.25
+a viral post assert that a major technological breakthrough have occur,0.39
+financial devastation,0.18
+accurate,0.78
+statistical analysis,0.74
+trustworthy,0.8
+prove,0.78
+unreliable source indicate that market share have increase substantially,0.31
+datum from reliable source indicate,0.95
+rigorous testing reveal miracle solution,0.08
+unreliable source indicate that production efficiency have improve dramatically,0.4
+might,0.15
+a whistleblower allegedly reveal that production efficiency have improve dramatically,0.34
+accord to audit financial statement,0.95
+authenticate,0.89
+measure,0.81
+extraordinary performance,0.29
+buzz,0.07
+estimate,0.85
+prove,0.87
+guru,0.06
+expose,0.17
+peer - review study challenge establish fact,0.16
+historical datum,0.72
+financial miracle discover,0.02
+magic,0.13
+accurate,0.89
+source from,0.9
+unbelievable return,0.02
+unconfirmed report indicate that a substantial acquisition have be finalize,0.38
+expose,0.05
+speculate to announce,0.43
+evidence - base projection indicate,0.88
+guarantee investment return,0.29
+enormous,0.04
+controversy,0.16
+an unverified blog state that significant cost reduction have be achieve,0.3
+huge,0.21
+hint at by insider,0.42
+we hear,0.09
+longitudinal datum show,0.97
+break,0.22
+secret wealth transfer,0.25
+secret,0.03
+official - look report reveal shocking truth,0.02
+could potentially,0.38
+bombshell,0.16
+insider,0.2
+the story they be not tell,0.01
+verify through official channel,0.77
+gain temper by setback,0.86
+datum from reliable source indicate,0.74
+bank do not want you to know,0.03
+might,0.15
+supposedly,0.11
+replicate study confirm,0.76
+quarterly report,0.89
+precise,0.82
+trend,0.26
+leak,0.24
+encourage sign with notable exception,0.86
+miracle,0.24
+dubious,0.12
+unnamed expert warn,0.09
+trillion - dollar industry secret,0.24
+an unverified blog state that production efficiency have improve dramatically,0.35
+quantitative analysis reveal,0.83
+earning report,0.93
+both positive and negative factor,0.97
+historical datum,0.76
+distort,0.15
+rumor suggest that debt restructuring have be complete favorably,0.31
+devastate loss,0.15
+demonstrate,0.8
+major cover - up expose,0.1
+economic nightmare,0.28
+astronomical profit guarantee,0.21
+secret,0.07
+the independent audit reveal that financial problem have completely disappear,0.62
+expert analysis prove conspiracy,0.11
+revolutionary product,0.17
+explosive,0.23
+economic tsunami,0.19
+suggest by anonymous source,0.44
+indicate by unusual activity,0.31
+suspicious,0.29
+recovery alongside continue risk,0.77
+systematic,0.89
+accord to the official report that profit will increase exponentially,0.65
+establish,0.72
+shady,0.28
+consensus among expert,0.84
+today only,0.29
+anonymous,0.26
+fabricate,0.06
+moderate growth with concern,0.85
+revolutionary product,0.14
+fabricate,0.09
+reliable source confirm spectacular discovery,0.23
+dramatic shift in,0.06
+insider trading opportunity,0.07
+guru,0.14
+systematic,0.76
+verify datum indicate that unprecedented market disruption be imminent,0.67
+catastrophe,0.09
+support by comprehensive datum,0.86
+money - make scheme reveal,0.28
+groundbreake,0.06
+market panic,0.03
+market collapse,0.06
+cash flow statement,0.79
+exaggerate,0.23
+10 - q,0.79
+enormous,0.3
+unofficial channel suggest that quarterly earning exceed expectation,0.38
+official economic indicator suggest,0.98
+false,0.03
+stock market manipulation expose,0.14
+break,0.04
+source close to,0.13
+research finding,0.7
+mainstream medium will not tell you,0.12
+unlikely,0.02
+mainstream medium will not tell you,0.26
+financial disaster,0.14
+sec filing,0.76
+financial doomsday approach,0.02
+anonymous,0.22
+allege insider reveal that quarterly earning exceed expectation,0.3
+secret,0.19
+unofficial channel suggest that a new strategic partnership have be finalize,0.44
+optimistic forecast with caveat,0.82
+bank do not want you to know,0.1
+demonstrate,0.9
+expert analysis prove conspiracy,0.14
+affirm,0.96
+opportunity and challenge,0.83
+cros - reference from multiple source,0.94
+bypass financial regulation,0.29
+license,0.93
+financial chaos,0.18
+economic doomsday,0.02
+statistical analysis prove manipulation,0.2
+predict by certain analyst,0.37
+economic collapse imminent,0.14
+official economic indicator suggest,0.87
+anonymous source claim that expansion into new market be successful,0.38
+methodical analysis reveal shocking pattern,0.12
+strategic vision with implementation hurdle,0.79
+paradigm - shift development,0.03
+could,0.27
+the board of director disclose that success be absolutely certain,0.62
+supposedly,0.06
+secret,0.3
+strength and weakness,0.88
+financial armageddon,0.22
+stock market manipulation expose,0.05
+limit timeunidentified official say,0.15
+tremendous,0.26
+allege insider reveal that significant cost reduction have be achieve,0.42
+unsubstantiated,0.28
+the audited financial statement show that a revolutionary product will change the industry forever,0.64
+transparent methodology reveal,0.82
+economic collapse imminent,0.02
+authorize,0.88
+leak information indicate,0.06
+conspiracy,0.29
+publish financial result indicate,0.85
+game - change,0.29
+exaggerate,0.1
+exclusive bombshell report,0.07
+"profit in some sector , loss in other",0.76
+financial chaos,0.3
+the truth they be hide,0.29
+moderate growth with concern,0.99
+verify through official channel,0.92
+unprecedented,0.21
+state,0.86
+income statement,0.91
+as document in quarterly report,0.8
+verifiable market datum indicate,0.72
+unlikely,0.01
+controversial,0.09
+progress despite obstacle,0.81
+independent research confirm fringe theory,0.01
+break,0.28
+market panic,0.23
+publicly available record show,0.83
+verify by independent analyst,0.75
+financial devastation,0.17
+reliable,0.93
+economic doomsday,0.22
+financial statement,0.78
+baseless,0.25
+balance sheet,0.87
+unfounde,0.02
+market carnage,0.27
+financial statement,0.99
+publish,0.9
+publish,0.95
+longitudinal datum show,0.9
+unconfirmed report suggest,0.13
+unofficial,0.13
+today only,0.27
+mysterious,0.21
+recovery alongside continue risk,0.98
+benefit and drawback,0.94
+systematic review indicate,0.78
+document in sec filing,0.95
+state,0.76
+dubious,0.1
+manipulate,0.04
+market collapse,0.18
+income statement,0.86
+mix quarterly result,0.76
+peer - review research show,0.79
+estimate by unofficial source,0.43
+empirical,0.78
+verify insider reveal shock secret,0.14
+shocking,0.03
+mysterious,0.04
+exclusive bombshell report,0.04
+official economic indicator suggest,0.89
+market collapse,0.14
+insider trading opportunity,0.1
+systematic,0.86
+official company announcement,0.75
+mysterious,0.18
+financial chaos,0.21
+exclusive,0.24
+financial elite panic over,0.2
+everyone ’s talk about,0.15
+comprehensive investigation uncover conspiracy,0.2
+peer - review,0.98
+market carnage,0.19
+research finding,0.88
+unlikely,0.15
+purport,0.24
+empirical evidence demonstrate,0.75
+consistent with historical pattern,0.96
+quarterly report,0.89
+shady,0.18
+secret investment strategy,0.25
+publish,0.85
+innovative approach with adoption challenge,0.74
+the independent audit reveal that unprecedented market disruption be imminent,0.56
+statistical analysis,0.86
+financial apocalypse,0.13
+allegedly involve in,0.38
+clickbait,0.16
+fabricate,0.3
+supposedly,0.21
+credible,0.85
+false,0.21
+financial disaster,0.03
+could,0.14
+reportedly connect to,0.39
+we hear,0.15
+distort,0.17
+trend,0.11
+hide agenda reveal,0.04
+money - make scheme reveal,0.05
+insider,0.02
+act now,0.14
+publish financial result indicate,0.88
+verify by independent analyst,0.98
+anonymous,0.07
+longitudinal datum show,0.97
+validate,0.86
+rare,0.08
+regulatory filing confirm that the stock price could triple within month,0.6
+false,0.16
+methodical analysis reveal shocking pattern,0.14
+verify through official channel,0.92
+verify by expert,0.78
+source close to the situation,0.01
+could potentially,0.42
+moderate growth with concern,0.87
+confidential,0.15
+expose,0.05
+certify financial statement reveal,0.93
+source close to the situation,0.25
+systematic,0.88
+official - look report reveal shocking truth,0.04
+official company announcement,0.9
+verify through official channel,0.8
+financial devastation,0.29
+stock market freefall,0.24
+financial miracle discover,0.25
+announce,0.77
+competitive advantage with market constraint,0.73
+consistent with market fundamental,0.96
+reliable source confirm spectacular discovery,0.04
+controversy,0.14
+market on the brink of,0.1
+regulatory filing confirm,0.72
+announce,0.85
+break : shocking report reveal huge conspiracy at major bank,0.03
+rumor suggest that market share have increase substantially,0.42
+encourage sign with notable exception,0.8
+the audited financial statement show that competitor be on the verge of collapse,0.64
+sec filing,0.83
+quantitative analysis reveal,0.85
+cost saving offset by new expense,0.83
+official,0.71
+devastate loss,0.06
+strength and weakness,0.73
+controversial theory suggest,0.07
+calculate,0.88
+radical,0.02
+expose,0.21
+systematic review indicate,0.8
+confidential,0.07
+verify datum indicate that all risk have be eliminate,0.69
+license,0.83
+hide,0.08
+act now,0.16
+source speak on condition of anonymity that regulatory approval have be grant,0.37
+I hear,0.27
+manipulate,0.01
+datum from reliable source indicate,0.73
+market carnage,0.24
+consistent with historical pattern,0.99
+statistical analysis prove manipulation,0.07
+official economic indicator suggest,0.82
+clickbait,0.29
+get rich quick with,0.12
+explosive growth,0.09
+enormous,0.22
+longitudinal datum show,0.77
+press release,0.74
+methodical,0.85
+economic tsunami,0.13
+strength and weakness,0.83
+rigorous testing reveal miracle solution,0.27
+this guy on reddit say,0.2
+connect the dot reveal,0.07
+conspiracy,0.09
+purport,0.07
+license,0.95
+estimate by unofficial source,0.4
+fake,0.07
+hoax,0.12
+unprecedented,0.29
+evidence - base,0.71
+revolutionary,0.02
+get rich quick with,0.04
+unnamed,0.26
+innovative approach with adoption challenge,0.91
+major cover - up expose,0.23
+economic implosion,0.12
+verify by independent analyst,0.75
+market carnage,0.27
+controversial,0.19
+controversy,0.03
+extensively research analysis,0.92
+market collapse,0.24
+source say,0.22
+sec filing,0.8
+hide,0.23
+purport,0.06
+imply by market movement,0.34
+connect the dot reveal,0.09
+I hear,0.24
+huge,0.16
+announce,0.9
+before it be too lateinsider reveal,0.21
+financial disaster,0.2
+might be,0.42
+unofficial channel suggest that a major technological breakthrough have occur,0.39
+unconfirmed report suggest,0.29
+economic doomsday,0.28
+independently audit result show,0.73
+mainstream medium will not tell you,0.15
+the story they be not tell,0.08
+today only,0.1
+encourage sign with notable exception,0.73
+methodical,0.78
+dubious,0.09
+rumor be circulate,0.14
+perhaps indicate,0.32
+suggest,0.25
+verify datum indicate that market dominance be guarantee,0.61
+the ceo announce during the meeting that a miraculous turnaround have occur,0.62
+hint,0.01
+certify,0.97
+as document in quarterly report,0.81
+hint,0.06
+peer - review,0.92
+unbelievable return,0.27
+hide agenda reveal,0.22
+verifiable market datum indicate,0.99
+too big to be coincidence,0.03
+social medium user speculate that expansion into new market be successful,0.39
+rare,0.03
+mysterious,0.25
+appear to show,0.37
+confirm by company leadership,0.95
+bypass financial regulation,0.29
+financial miracle discover,0.19
+distort,0.28
+10 - q,0.74
+progress despite obstacle,0.71
+calculate,0.94
+cros - reference from multiple source,0.85
+break,0.27
+market panic,0.28
+gossip,0.29
+"profit in some sector , loss in other",0.81
+exaggerate,0.25
+statistical analysis,0.87
+financial expert shock by,0.28
+verify earning report show,0.75
+hearsay,0.02
+cite,0.89
+regulatory filing,0.88
+get rich quick with,0.18
+moderate growth with concern,0.92
+competitive advantage with market constraint,0.94
+undisclosed,0.1
+company document show that profit will increase exponentially,0.57
+systematic review indicate,0.9
+huge,0.17
+company document show that competitor be on the verge of collapse,0.55
+release,0.74
+corroborate,0.74
+advantage and limitation,0.86
+certify financial statement reveal,0.71
+guess,0.11
+transparent methodology reveal,0.75
+rigorous testing reveal miracle solution,0.24
+guarantee investment return,0.2
+bypass financial regulation,0.29
+explosive,0.09
+publicly available record show,0.71
+hearsay,0.16
+precise,0.95
+source say,0.08
+too big to be coincidence,0.01
+anonymous source claim,0.29
+unconfirmed report indicate that significant cost reduction have be achieve,0.45
+competitive advantage with market constraint,0.91
+independent research confirm fringe theory,0.11
+could,0.24
+game - change,0.05
+miracle,0.13
+massive,0.19
+recovery alongside continue risk,0.88
+limit timeunidentified official say,0.18
+predict by certain analyst,0.36
+10 - k,0.81
+supposedly,0.14
+an unverified blog state that a major technological breakthrough have occur,0.32
+controversial,0.14
+financial statement,0.89
+the story they be not tell,0.04
+massive windfall,0.12
+market bloodbath,0.16
+unfounde,0.28
+secret document expose,0.04
+market panic,0.26
+accord to an unnamed source that expansion into new market be successful,0.36
+revolutionary,0.13
+data - drive,0.94
+detailed documentation of secret scheme,0.26
+suspicious activity detect,0.09
+controversy,0.23
+an unverified blog state that regulatory approval have be grant,0.32
+anonymous,0.11
+sensational,0.2
+confirm,0.73
+accredit,0.8
+historical datum,0.95
+multiple source corroborate,0.88
+questionable,0.09
+verify by independent analyst,0.86
+economic nightmare,0.24
+extensively research analysis,0.74
+unconfirmed report indicate that regulatory approval have be grant,0.44
+connect the dot reveal,0.24
+suspicious activity detect,0.05
+allegedly,0.11
+methodical analysis reveal shocking pattern,0.02
+peer - review research show,0.78
+expect by some to,0.39
+reliable,0.98
+report by,0.89
+confidential,0.27
+unnamed expert warn,0.29
+connect the dot reveal,0.26
+quarterly report,0.83
+massive windfall,0.13
+financial armageddon,0.05
+unofficial channel suggest that debt restructuring have be complete favorably,0.39
+methodical analysis reveal shocking pattern,0.03
+economic ruin,0.21
+skeptical,0.06
+regulatory filing confirm,0.84
+radical,0.07
+mysterious,0.14
+financial statement,0.74
+rumor,0.23
+expect by some to,0.31
+unnamed expert warn,0.27
+suspicious,0.06
+purport,0.09
+extraordinary,0.18
+calculate,0.96
+cros - reference from multiple source,0.78
+explosive growth,0.27
+accurate,0.98
+regulatory filing confirm that market dominance be guarantee,0.62
+revolutionary,0.23
+baseless,0.22
+suggest by anonymous source,0.39
+groundbreake,0.27
+controversy,0.03
+leak information indicate,0.25
+establish,0.94
+get rich quick with,0.17
+trustworthy,0.98
+accord to audit financial statement,0.91
+questionable,0.11
+earning report,0.77
+expose,0.03
+cite,0.94
+mix quarterly result,0.7
+controversial,0.07
+dramatic shift in,0.1
+"profit in some sector , loss in other",0.92
+catastrophe,0.23
+might,0.12
+trillion - dollar industry secret,0.3
+economic tsunami,0.15
+detailed documentation of secret scheme,0.26
+quantify,0.96
+fabricate,0.24
+leak,0.02
+reliable,0.85
+press release,0.84
+comprehensive investigation uncover conspiracy,0.2
+verify insider reveal shock secret,0.12
+distort,0.26
+major cover - up expose,0.2
+fabricate,0.17
+allege document show,0.13
+benefit and drawback,0.97
+allege document show,0.27
+the truth they be hide,0.14
+peer - review,0.78
+controversial theory suggest,0.17
+seem to imply,0.38
+accord to audit financial statement,0.7
+progress despite obstacle,0.95
+10 - k,0.81
+the audited financial statement show that unprecedented market disruption be imminent,0.67
+the board of director disclose that the stock price could triple within month,0.61
+expert analysis prove conspiracy,0.11
+stock market manipulation expose,0.26
+accredit,0.91
+hint at by insider,0.35
+methodical,0.81
+speculate to announce,0.45
+replicate study confirm,0.73
+viral,0.15
+guru,0.03
+press release,0.7
+substantiate,0.98
+fact - check,0.78
+peer - review,0.9
+hide agenda reveal,0.02
+source say,0.16
+unconfirme,0.13
+dramatic shift in,0.13
+source speak on condition of anonymity that a major technological breakthrough have occur,0.35
+hoax,0.09
+hide agenda reveal,0.03
+leak official document confirm suspicion,0.15
+distort,0.15
+optimistic forecast with caveat,0.9
+shady,0.13
+economic collapse imminent,0.24
+could,0.04
+promise yet cautious outlook,0.75
+break report reveal that investor could make massive profit with this secret investment strategy .,0.23
+money - make scheme reveal,0.05
+balance sheet,0.81
+confirm by company leadership,0.8
+unofficial,0.2
+innovative approach with adoption challenge,0.86
+comprehensive investigation uncover conspiracy,0.14
+secret investment strategy,0.24
+economic nightmare,0.23
+moderate growth with concern,0.9
+financial expert shock by,0.28
+skeptical,0.04
+astronomical profit,0.22
+economic doomsday,0.14
+confirm by company leadership,0.85
+audit,0.89
+revolutionary product,0.19
+paradigm - shift development,0.26
+explosive,0.25
+research finding,0.7
+major cover - up expose,0.14
+bombshell,0.16
+explosive growth,0.21
+partial success with ongoing issue,0.75
+radical,0.21
+regulatory filing confirm that a revolutionary product will change the industry forever,0.69
+unnamed expert warn,0.1
+data - drive,0.84
+systematic examination expose hidden agenda,0.29
+announce,0.73
+supposedly,0.18
+massive windfall,0.25
+rumor be circulate,0.25
+unsubstantiated,0.08
+leak,0.23
+mainstream medium will not tell you,0.26
+extensively research analysis,0.88
+historical datum,0.76
+an unverified blog state that debt restructuring have be complete favorably,0.37
+baseless,0.03
+cost saving offset by new expense,0.96
+optimistic forecast with caveat,0.94
+allegedly,0.17
+financial devastation,0.05
+datum from reliable source indicate,0.83
+evidence - base,0.91
+today only,0.17
+extraordinary,0.21
+gain temper by setback,0.86
+authenticate,0.75
+fact - check by multiple organization,0.78
+a whistleblower allegedly reveal that a new strategic partnership have be finalize,0.31
+both positive and negative factor,0.73
+market guru predict unprecedented 500 % gain in this secret stock,0.06
+progress despite obstacle,0.74
+source close to,0.27
+source close to,0.16
+reference,0.73
+evidence - base,0.9
+financial apocalypse,0.25
+"profit in some sector , loss in other",0.79
+major cover - up expose,0.23
+magic,0.28
+game - change,0.18
+release,0.7
+authenticate,0.89
+both positive and negative factor,0.71
+baseless,0.2
+financial apocalypse,0.05
+"profit in some sector , loss in other",0.92
+unbelievable return,0.05
+encourage sign with notable exception,0.86
+unlikely,0.03
+bank do not want you to know,0.17
+economic implosion,0.1
+detailed documentation of secret scheme,0.08
+rare,0.28
+evidence - base projection indicate,0.74
+act now,0.29
+market bloodbath,0.08
+detailed documentation of secret scheme,0.24
+consistent with historical pattern,0.97
+unconfirme,0.07
+market carnage,0.27
+accord to the official report that all risk have be eliminate,0.55
+shocking,0.12
+unofficial channel suggest that market share have increase substantially,0.42
+baseless,0.16
+affirm,0.85
+competitive advantage with market constraint,0.83
+allege insider reveal that market share have increase substantially,0.34
+mix quarterly result,0.92
+reputable,0.92
+suspicious,0.14
+rare,0.09
+extraordinary performance,0.1
+certify,0.89
+earning report,0.92
+get rich quick with,0.27
+affirm,0.78
+as document in quarterly report,0.94
+consensus among expert,0.85
+may,0.11
+official - look report reveal shocking truth,0.27
+verify,0.98
+suggest,0.29
+expert analysis prove conspiracy,0.25
+shocking,0.25
+supposedly,0.08
+before it be too lateinsider reveal,0.14
+consistent with market fundamental,0.97
+evidence,0.75
+as state in the press release that all risk have be eliminate,0.67
+document in sec filing,0.92
+get rich quick with,0.24
+publicly available record show,0.94
+empirical evidence demonstrate,0.74
+cost saving offset by new expense,0.8
+verifiable market datum indicate,0.75
+methodical,0.97
+magic,0.04
+economic implosion,0.26
+accurate,0.95
+document evidence of unprecedented cover - up,0.23
+financial statement,0.85
+insider,0.06
+authoritative source expose massive scandal,0.17
+rumor be circulate,0.28
+corroborate,0.8
+estimate,0.81
+document evidence of unprecedented cover - up,0.03
+the independent audit reveal that a revolutionary product will change the industry forever,0.58
+historical datum,0.72
+revolutionary,0.11
+rumor,0.15
+as document in sec filing that competitor be on the verge of collapse,0.61
+official economic indicator suggest,0.98
+explosive,0.24
+optimistic forecast with caveat,0.89
+may,0.17
+source close to the situation,0.12
+viral,0.16
+progress despite obstacle,0.89
+distort,0.25
+the story they be not tell,0.06
+trustworthy,0.95
+sensational,0.3
+improvement with persistent challenge,0.89
+quantitative analysis reveal,0.78
+guess,0.08
+measure,0.79
+speculate,0.28
+consensus among expert,0.75
+a viral post assert that market share have increase substantially,0.4
+quantitative analysis reveal,0.83
+might be,0.45
+stock market freefall,0.21
+what they do not want you to know,0.24
+unprecedented,0.3
+recovery alongside continue risk,0.85
+competitive advantage with market constraint,0.86
+meltdown,0.14
+major cover - up expose,0.14
+cros - reference from multiple source,0.9
+the board of director disclose that a revolutionary product will change the industry forever,0.61
+source speak on condition of anonymity that significant cost reduction have be achieve,0.45
+reliable source confirm spectacular discovery,0.24
+limit timeunidentified official say,0.14
+sensational,0.26
+limit timeunidentified official say,0.17
+economic nightmare,0.08
+datum from reliable source indicate,0.7
+reveal by,0.88
+leak official document confirm suspicion,0.28
+reference,0.75
+I hear,0.3
+official company announcement,0.73
+transparent methodology reveal,0.72
+market on the brink of,0.24
+secret,0.11
+release,0.89
+replicate study confirm,0.94
+magic,0.25
+I hear,0.27
+astronomical profit,0.09
+as document in quarterly report,0.9
+viral,0.13
+promise yet cautious outlook,0.95
+verify through official channel,0.83
+insider trading opportunity,0.12
+authoritative source expose massive scandal,0.24
+methodical analysis reveal shocking pattern,0.18
+statistical analysis prove manipulation,0.28
+economic ruin,0.29
+money - make scheme reveal,0.16
+longitudinal datum show,0.79
+official economic indicator suggest,0.97
+independently audit result show,0.85
+economic doomsday,0.21
+disclose,0.88
+both positive and negative factor,0.92
+official company announcement,0.92
+predict by certain analyst,0.4
+verifiable market datum indicate,0.76
+limit timeunidentified official say,0.18
+improvement with persistent challenge,0.81
+improvement with persistent challenge,0.75
+source close to,0.06
+radical,0.22
+theorize by some expert,0.4
+leak information indicate,0.12
+hide agenda reveal,0.24
+I hear,0.06
+purport,0.29
+accord to an unnamed source that production efficiency have improve dramatically,0.32
+demonstrate,0.97
+hearsay,0.16
+official company announcement,0.76
+certify financial statement reveal,0.73
+source close to,0.25
+financial doomsday approach,0.13
+financial miracle discover,0.19
+evidence,0.81
+extreme,0.17
+think to be prepare,0.44
+controversy,0.23
+buzz,0.08
+hoax,0.1
+accurate,0.87
+exaggerate,0.18
+accord to an unnamed source that a major technological breakthrough have occur,0.32
+moderate growth with concern,0.87
+anonymous source claim,0.1
+hearsay,0.27
+everyone ’s talk about,0.08
+financial statement,0.94
+secret,0.13
+imply by market movement,0.32
+astronomical profit guarantee,0.08
+accord to the official report that unprecedented market disruption be imminent,0.62
+mainstream medium will not tell you,0.29
+unbelievable return,0.27
+regulatory filing,0.8
+false,0.15
+this guy on reddit say,0.19
+source say,0.06
+the truth they be hide,0.05
+estimate by unofficial source,0.41
+balance sheet,0.73
+trillion - dollar industry secret,0.18
+10 - q,0.75
+baseless,0.2
+quarterly report,0.77
+financial miracle discover,0.29
+allege document show,0.06
+possibly suggest,0.45
+"profit in some sector , loss in other",0.92
+rigorous testing reveal miracle solution,0.07
+suggest,0.25
+may,0.3
+clickbait,0.12
+accord to the official report that a revolutionary product will change the industry forever,0.61
+reference,0.81
+guarantee investment return,0.08
+verify earning report show,0.74
+promise yet cautious outlook,0.96
+explosive,0.2
+purport,0.12
+economic ruin,0.13
+unconfirmed report suggest,0.14
+we hear,0.19
+anonymous source claim that regulatory approval have be grant,0.38
+substantiate,0.97
+verify by expert,0.74
+rumor suggest that a substantial acquisition have be finalize,0.4
+moderate growth with concern,0.85
+reveal,0.07
+exclusive,0.24
+unverifie,0.05
+evidence - base projection indicate,0.86
+balance sheet,0.77
+improvement with persistent challenge,0.87
+miracle,0.21
+financial statement,0.98
+document,0.76
+state,0.93
+promise yet cautious outlook,0.72
+verifiable market datum indicate,0.95
+innovative approach with adoption challenge,0.86
+validate,0.79
+exclusive bombshell report,0.18
+verify by expert,0.97
+guarantee investment return,0.01
+quantitative analysis reveal,0.92
+longitudinal datum show,0.8
+stock market freefall,0.18
+progress despite obstacle,0.82
+cost saving offset by new expense,0.86
+source say,0.06
+promise yet cautious outlook,0.86
+groundbreake,0.26
+financial disaster,0.09
+speculate,0.13
+reputable,0.76
+comprehensive investigation uncover conspiracy,0.11
+could,0.2
+empirical evidence demonstrate,0.77
+the truth they be hide,0.27
+methodical analysis reveal shocking pattern,0.07
+meltdown,0.04
+financial chaos,0.12
+unsubstantiated,0.19
+credible,0.98
+accord to an unnamed source that a substantial acquisition have be finalize,0.39
+the independent audit reveal that profit will increase exponentially,0.61
+confidential,0.23
+explosive growth,0.26
+sensational,0.06
+consistent with historical pattern,0.8
+estimate,0.91
+get rich quick with,0.08
+publish financial result indicate,0.89
+estimate,0.81
+moderate growth with concern,0.84
+unlikely,0.22
+accord to the official report that the stock price could triple within month,0.64
+unconfirme,0.13
+extensively research analysis,0.99
+multiple source corroborate,0.98
+audit,0.91
+unnamed,0.18
+support by comprehensive datum,0.91
+market on the brink of,0.2
+devastate loss,0.26
+hint at by insider,0.44
+gain temper by setback,0.78
+exclusive bombshell report,0.22
+the independent audit reveal that a miraculous turnaround have occur,0.62
+allegedly involve in,0.33
+official,0.85
+unfounde,0.29
+regulatory filing,0.77
+meltdown,0.12
+financial armageddon,0.24
+hoax,0.1
+think to be prepare,0.43
+independent research confirm fringe theory,0.07
+methodical,0.77
+the ceo announce during the meeting that competitor be on the verge of collapse,0.66
+speculation grow about,0.19
+speculate to announce,0.4
+advantage and limitation,0.95
+reference,0.81
+official company announcement,0.76
+advantage and limitation,0.77
+buzz,0.15
+financial doomsday approach,0.07
+leak information indicate,0.26
+financial miracle discover,0.14
+market carnage,0.17
+release,0.92
+gain temper by setback,0.79
+sec filing,0.77
+massive windfall,0.22
+astronomical profit,0.2
+accord to the official report that financial problem have completely disappear,0.65
+official - look report reveal shocking truth,0.19
+leak official document confirm suspicion,0.15
+this guy on reddit say,0.05
+unofficial,0.09
+rumor be circulate,0.15
+insider trading opportunity,0.17
+bombshell,0.15
+paradigm - shift development,0.23
+recovery alongside continue risk,0.73
+systematic,0.87
+theorize by some expert,0.43
+financial statement,0.89
+massive windfall,0.03
+evidence - base,0.73
+unofficial,0.24
+allegedly involve in,0.33
+reference,0.72
+rigorous testing reveal miracle solution,0.02
+unnamed,0.22
+the story they be not tell,0.02
+extreme,0.16
+reveal,0.17
+establish,0.93
+economic implosion,0.24
+today only,0.2
+massive,0.25
+quantify,0.83
+historical datum,0.9
+unprecedented,0.04
+insider,0.01
+mysterious,0.03
+detailed documentation of secret scheme,0.11
+the independent audit reveal that market dominance be guarantee,0.65
+audit,0.73
+secret document expose,0.2
+source from,0.98
+certify financial statement reveal,0.95
+imply by market movement,0.32
+official - look report reveal shocking truth,0.23
+the truth they be hide,0.11
+skeptical,0.29
+statistical analysis,0.77
+balance sheet,0.94
+disclose,0.91
+extensively research analysis,0.84
+accord to audit financial statement,0.99
+enormous,0.11
+statistical analysis,0.88
+allegedly,0.03
+press release,0.99
+disclose,0.71
+extraordinary,0.08
+data - drive,0.81
+economic tsunami,0.17
+imply by market movement,0.39
+peer - review research show,0.76
+opportunity and challenge,0.71
+questionable,0.04
+market bloodbath,0.26
+document,0.88
+rumor to be consider,0.37
+opportunity and challenge,0.76
+clickbait,0.27
+exclusive,0.07
+insider,0.04
+rumor,0.27
+unnamed,0.03
+shocking,0.27
+report by,0.86
+suggest by anonymous source,0.37
+guess,0.12
+unnamed expert warn,0.16
+major cover - up expose,0.21
+economic collapse imminent,0.26
+undisclosed,0.28
+verify earning report show,0.88
+systematic,0.72
+systematic review indicate,0.89
+hint,0.22
+game - change,0.24
+validate,0.79
+source from,0.76
+peer - review study challenge establish fact,0.15
+as state in the press release that competitor be on the verge of collapse,0.66
+the truth they be hide,0.29
+progress despite obstacle,0.94
+stock market freefall,0.1
+official,0.75
+allegedly,0.1
+explosive,0.29
+verify insider reveal shock secret,0.18
+financial chaos,0.22
+believe to be plan,0.42
+manipulate,0.11
+corroborate,0.91
+hint,0.03
+controversial theory suggest,0.21
+secret,0.06
+encourage sign with notable exception,0.97
+too big to be coincidence,0.22
+source close to,0.16
+official,0.82
+trillion - dollar industry secret,0.08
+strategic vision with implementation hurdle,0.73
+demonstrate,0.81
+revolutionary,0.24
+leak information indicate,0.2
+progress despite obstacle,0.93
+systematic examination expose hidden agenda,0.21
+annual report,0.91
+confirm,0.92
+bypass financial regulation,0.2
+accord to,0.82
+publish financial result indicate,0.73
+announce,0.78
+this guy on reddit say,0.11
+clickbait,0.07
+exclusive,0.15
+consensus among expert,0.98
+extreme,0.26
+insider,0.14
+mysterious,0.3
+statistical analysis prove manipulation,0.04
+the ceo announce during the meeting that market dominance be guarantee,0.58
+exaggerate,0.29
+a viral post assert that a substantial acquisition have be finalize,0.31
+peer - review study challenge establish fact,0.08
+speculation grow about,0.25
+reputable,0.8
+reliable source confirm spectacular discovery,0.16
+miracle,0.04
+scandal,0.01
+scandal,0.3
+improvement with persistent challenge,0.89
+evidence - base projection indicate,0.98
+document evidence of unprecedented cover - up,0.11
+secret,0.14
+reputable,0.88
+source from,0.86
+rumor be circulate,0.1
+sec filing,0.79
+shocking revelation,0.04
+incredible opportunity,0.04
+optimistic forecast with caveat,0.72
+empirical,0.8
+huge,0.29
+press release,0.78
+reveal by,0.76
+meltdown,0.18
+reliable source confirm spectacular discovery,0.07
+leak official document confirm suspicion,0.17
+estimate by unofficial source,0.42
+trillion - dollar industry secret,0.03
+document,0.76
+unofficial,0.08
+expose,0.28
+anonymous source claim that a major technological breakthrough have occur,0.32
+announce,0.9
+hint,0.04
+fake,0.13
+massive,0.29
+bombshell,0.1
+false,0.22
+financial doomsday approach,0.21
+10 - k,0.72
+reputable,0.71
+consistent with market fundamental,0.81
+consistent with historical pattern,0.97
+shady,0.27
+false,0.29
+unprecedented,0.06
+astronomical profit guarantee,0.06
+unconfirme,0.26
+unnamed expert warn,0.23
+financial armageddon,0.29
+spectacular gain,0.01
+conspiracy,0.22
+credible,0.79
+conspiracy,0.22
+allege insider reveal that expansion into new market be successful,0.36
+reveal,0.16
+unsubstantiated,0.06
+what they do not want you to know,0.07
+explosive growth,0.17
+too big to be coincidence,0.06
+the story they be not tell,0.26
+allege document show,0.11
+datum from reliable source indicate,0.78
+company document show that financial problem have completely disappear,0.69
+cros - reference from multiple source,0.81
+before it be too lateinsider reveal,0.07
+leak official document confirm suspicion,0.24
+buzz,0.24
+meltdown,0.16
+regulatory filing confirm,0.93
+think to be prepare,0.41
+scientific study support controversial claim,0.18
+evidence - base projection indicate,0.82
+suggest,0.04
+fact - check by multiple organization,0.76
+could,0.13
+confirm by company leadership,0.85
+groundbreake,0.26
+methodical analysis reveal shocking pattern,0.07
+encourage sign with notable exception,0.81
+extreme,0.02
+document,0.83
+unsubstantiated,0.1
+believe to be plan,0.34
+trustworthy,0.99
+consistent with market fundamental,0.71
+statistical analysis,0.98
+source say,0.1
+an unverified blog state that quarterly earning exceed expectation,0.41
+10 - k,0.71
+speculate,0.21
+the board of director disclose that financial problem have completely disappear,0.55
+cros - reference from multiple source,0.7
+break,0.12
+regulatory filing confirm,0.75
+market bloodbath,0.06
+unprecedented,0.08
+statistically significant finding,0.99
+financial chaos,0.2
+prove,0.76
+market carnage,0.19
+release,0.88
+mislead,0.13
+secret,0.27
+advantage and limitation,0.7
+unprecedented market opportunity,0.18
+peer - review study challenge establish fact,0.07
+allege document show,0.16
+cost saving offset by new expense,0.8
+statistically significant finding,0.76
+financial armageddon,0.11
+suspicious activity detect,0.08
+anonymous,0.26
+statistical analysis prove manipulation,0.07
+economic tsunami,0.06
+unsubstantiated,0.09
+statistical analysis prove manipulation,0.22
+benefit and drawback,0.75
+controversial,0.18
+methodical,0.87
+unreliable source indicate that quarterly earning exceed expectation,0.38
+research finding,0.99
+a whistleblower allegedly reveal that a major technological breakthrough have occur,0.45
+verify earning report show,0.95
+as document in sec filing that unprecedented market disruption be imminent,0.55
+data - drive,0.74
+accurate,0.81
+purport,0.04
+publish financial result indicate,0.92
+market panic,0.29
+trillion - dollar industry secret,0.25
+disclose,0.77
+confirm,0.85
+financial elite panic over,0.14
+authoritative source expose massive scandal,0.17
+trillion - dollar industry secret,0.1
+press release,0.94
+financial devastation,0.17
+fake,0.17
+earning report,0.88
+sensational,0.21
+10 - k,0.71
+rumor suggest that a new strategic partnership have be finalize,0.39
+authorize,0.91
+methodical,0.93
+astronomical profit guarantee,0.15
+theorize by some expert,0.32
+fact - check,0.79
+transparent methodology reveal,0.75
+unbelievable return,0.23
+verify insider reveal shock secret,0.08
+strength and weakness,0.77
+mainstream medium will not tell you,0.27
+trustworthy,0.8
+financial disaster,0.04
+catastrophe,0.25
+authorize,0.78
+certify financial statement reveal,0.81
+bombshell,0.03
+support by comprehensive datum,0.87
+everyone ’s talk about,0.15
+source speak on condition of anonymity that debt restructuring have be complete favorably,0.4
+as document in quarterly report,0.88
+hide,0.29
+accord to audit financial statement,0.93
+the independent audit reveal that competitor be on the verge of collapse,0.57
+radical,0.16
+indicate by unusual activity,0.43
+baseless,0.17
+bank do not want you to know,0.13
+competitive advantage with market constraint,0.86
+authorize,0.77
+secret wealth transfer,0.21
+competitive advantage with market constraint,0.84
+improvement with persistent challenge,0.76
+data - drive,0.98
+financial elite panic over,0.19
+shady,0.18
+unconfirmed report indicate that quarterly earning exceed expectation,0.32
+distort,0.04
+game - change innovation,0.19
+financial armageddon,0.3
+sensational,0.13
+establish,0.88
+audit,0.96
+publicly available record show,0.77
+empirical evidence demonstrate,0.84
+scientific study support controversial claim,0.27
+verify insider reveal shock secret,0.22
+announce,0.71
+rare,0.22
+fact - check by multiple organization,0.73
+replicate study confirm,0.71
+publicly available record show,0.77
+might,0.22
+financial apocalypse,0.27
+datum from reliable source indicate,0.86
+state,0.84
+accord to audit financial statement,0.91
+paradigm - shift development,0.11
+verify earning report show,0.98
+massive windfall,0.11
+insider trading opportunity,0.09
+meltdown,0.16
+what they do not want you to know,0.15
+press release,0.73
+unofficial,0.29
+secret wealth transfer,0.23
+hoax,0.2
+company document show that market dominance be guarantee,0.68
+this guy on reddit say,0.08
+insider,0.08
+empirical evidence demonstrate,0.78
+state,0.84
+buzz,0.13
+controversial,0.27
+statistically significant finding,0.72
+evidence,0.89
+confirm by company leadership,0.88
+game - change innovation,0.19
+suspicious,0.29
+data - drive,0.79
+unverifie,0.3
+speculation grow about,0.11
+earning report,0.7
+statistical analysis prove manipulation,0.24
+as document in quarterly report,0.83
+demonstrate,0.82
+reliable,0.95
+peer - review,0.72
+unverifie,0.16
+could potentially,0.37
+viral,0.21
+document evidence of unprecedented cover - up,0.14
+a viral post assert that debt restructuring have be complete favorably,0.43
+controversy,0.07
+company document show that the stock price could triple within month,0.63
+competitive advantage with market constraint,0.79
+dubious,0.28
+demonstrate,0.86
+guarantee investment return,0.14
+multiple source corroborate,0.95
+authorize,0.95
+gain temper by setback,0.96
+evidence - base,0.98
+revolutionary product,0.04
+guarantee investment return,0.25
+unlikely,0.12
+scandal,0.22
+independently audit result show,0.82
+verify,0.91
+the board of director disclose that profit will increase exponentially,0.66
+suggest,0.19
+benefit and drawback,0.78
+mainstream medium will not tell you,0.26
+precise,0.8
+confidential,0.02
+license,0.98
+bypass financial regulation,0.2
+unprecedented,0.19
+game - change,0.11
+a whistleblower allegedly reveal that market share have increase substantially,0.32
+what they do not want you to know,0.02
+source close to the situation,0.09
+fact - check by multiple organization,0.84
+massive,0.25
+affirm,0.79
+extensively research analysis,0.93
+quarterly report,0.86
+systematic,0.88
+controversial theory suggest,0.16
+extraordinary,0.26
+hint,0.06
+possibly suggest,0.37
+reliable source confirm spectacular discovery,0.11
+the board of director disclose that unprecedented market disruption be imminent,0.65
+authenticate,0.88
+announce,0.8
+financial apocalypse,0.28
+skeptical,0.1
+scandal,0.13
+economic collapse imminent,0.29
+gain temper by setback,0.74
+disclose,0.93
+might be,0.39
+opportunity and challenge,0.97
+unfounde,0.01
+act now,0.04
+trillion - dollar industry secret,0.05
+scientific study support controversial claim,0.09
+cost saving offset by new expense,0.86
+undisclosed,0.26
+questionable,0.3
+shady,0.04
+10 - k,0.94
+encourage sign with notable exception,0.94
+confirm,0.88
+meltdown,0.29
+everyone ’s talk about,0.25
+verify by independent analyst,0.77
+estimate,0.84
+release,0.79
+exclusive bombshell report,0.22
+financial chaos,0.12
+statistically significant finding,0.77
+substantiate,0.99
+secret investment strategy,0.04
+market on the brink of,0.22
+fact - check,0.74
+press release,0.89
+economic nightmare,0.07
+gain temper by setback,0.7
+mix quarterly result,0.85
+rumor to be consider,0.39
+verify by independent analyst,0.94
+fact - check by multiple organization,0.84
+unreliable source indicate that a major technological breakthrough have occur,0.43
+anonymous source claim,0.28
+evidence - base,0.71
+skeptical,0.19
+secret wealth transfer,0.16
+hide agenda reveal,0.24
+unverifie,0.28
+opportunity and challenge,0.71
+accord to,0.81
+official,0.83
+incredible opportunity,0.12
+miracle,0.15
+could,0.17
+confidential,0.29
+authoritative source expose massive scandal,0.02
+replicate study confirm,0.94
+10 - k,0.82
+regulatory filing confirm,0.71
+unbelievable return,0.15
+hint at by insider,0.37
+authoritative source expose massive scandal,0.28
+strategic vision with implementation hurdle,0.83
+unconfirme,0.12
+cite,0.74
+estimate,0.75
+reveal,0.25
+source say,0.26
+what they do not want you to know,0.09
+secret wealth transfer,0.15
+validate,0.84
+precise,0.98
+quantitative analysis reveal,0.8
+accord to an unnamed source that a new strategic partnership have be finalize,0.4
+trend,0.23
+unnamed,0.15
+longitudinal datum show,0.88
+possibly suggest,0.38
+extensively research analysis,0.75
+authoritative source expose massive scandal,0.05
+huge,0.3
+affirm,0.98
+credible,0.87
+as document in sec filing that all risk have be eliminate,0.69
+hint,0.02
+manipulate,0.25
+independently audit result show,0.83
+evidence - base projection indicate,0.99
+spectacular gain,0.02
+authorize,0.79
+guess,0.07
+economic doomsday,0.26
+stock market freefall,0.09
+suggest by anonymous source,0.41
+unnamed,0.08
+credible,0.81
+source close to,0.13
+what they do not want you to know,0.06
+verify insider reveal shock secret,0.22
+accord to the official report that success be absolutely certain,0.64
+allege insider reveal that a substantial acquisition have be finalize,0.38
+promise yet cautious outlook,0.79
+leak official document confirm suspicion,0.18
+scientific study support controversial claim,0.21
+verify datum indicate that success be absolutely certain,0.66
+money - make scheme reveal,0.13
+a viral post assert that a new strategic partnership have be finalize,0.36
+controversial,0.14
+independent research confirm fringe theory,0.06
+publish,0.84
+improvement with persistent challenge,0.81
+catastrophe,0.07
+guarantee investment return,0.13
+scientific study support controversial claim,0.2
+market collapse,0.29
+income statement,0.85
+a viral post assert that regulatory approval have be grant,0.32
+might,0.3
+independent research confirm fringe theory,0.11
+unverifie,0.02
+extreme,0.16
+controversy,0.04
+hide,0.23
+devastate loss,0.29
+secret wealth transfer,0.03
+regulatory filing,0.81
+rigorous testing reveal miracle solution,0.29
+authoritative source expose massive scandal,0.2
+advantage and limitation,0.71
+sec filing,0.7
+undisclosed,0.05
+verify datum indicate that profit will increase exponentially,0.6
+speculate,0.08
+extraordinary performance,0.03
+expert analysis prove conspiracy,0.13
+explosive growth,0.04
+today only,0.18
+research finding,0.73
+cros - reference from multiple source,0.78
+unconfirmed report suggest,0.15
+allege document show,0.18
+fact - check,0.95
+secret investment strategy,0.13
+game - change,0.27
+gossip,0.19
+economic collapse imminent,0.18
+rare,0.18
+comprehensive investigation uncover conspiracy,0.15
+skeptical,0.27
+guess,0.22
+anonymous,0.15
+source speak on condition of anonymity that a substantial acquisition have be finalize,0.34
+license,0.79
+economic collapse imminent,0.21
+official - look report reveal shocking truth,0.13
+source close to,0.15
+hide agenda reveal,0.25
+anonymous source claim that quarterly earning exceed expectation,0.41
+economic nightmare,0.26
+unlikely,0.11
+secret,0.2
+systematic,0.93
+paradigm - shift development,0.26
+authorize,0.79
+guess,0.28
+verify earning report show,0.88
+economic doomsday,0.02
+a whistleblower allegedly reveal that a substantial acquisition have be finalize,0.39
+evidence,0.75
+peer - review research show,0.79
+encourage sign with notable exception,0.9
+expect by some to,0.43
+act now,0.08
+quantify,0.9
+"accord to an unnamed source that a prominent tech company be hide significant loss , with expert hint at an impending bankruptcy .",0.13
+break,0.13
+reveal by,0.96
+insider,0.29
+groundbreake,0.17
+source from,0.78
+partial success with ongoing issue,0.95
+a viral post assert that production efficiency have improve dramatically,0.34
+consistent with market fundamental,0.96
+clickbait,0.22
+evidence - base projection indicate,0.77
+anonymous source claim,0.19
+measure,0.77
+bank do not want you to know,0.08
+establish,0.97
+suggest,0.1
+unfounde,0.24
+fake,0.27
+confirm,0.93
+buzz,0.09
+as document in sec filing that market dominance be guarantee,0.56
+questionable,0.13
+reveal by,0.77
+verifiable market datum indicate,0.88
+certify,0.91
+certify financial statement reveal,0.97
+might,0.01
+financial elite panic over,0.28
+the ceo announce during the meeting that all risk have be eliminate,0.62
+this guy on reddit say,0.12
+systematic examination expose hidden agenda,0.23
+verify earning report show,0.88
+this guy on reddit say,0.03
+enormous,0.03
+the board of director disclose that market dominance be guarantee,0.59
+official economic indicator suggest,0.77
+verify by independent analyst,0.72
+exclusive bombshell report,0.3
+official,0.81
+economic ruin,0.29
+rumor suggest that quarterly earning exceed expectation,0.4
+certify financial statement reveal,0.87
+expert analysis prove conspiracy,0.16
+authenticate,0.8
+dubious,0.12
+guess,0.09
+unprecedented market opportunity,0.29
+verify datum indicate that a revolutionary product will change the industry forever,0.69
+supposedly,0.28
+skeptical,0.13
+financial miracle discover,0.06
+expect by some to,0.38
+anonymous source claim,0.08
+estimate,0.98
+astronomical profit,0.27
+everyone ’s talk about,0.03
+the independent audit reveal that the stock price could triple within month,0.57
+publicly available record show,0.72
+official - look report reveal shocking truth,0.02
+detailed documentation of secret scheme,0.21
+suspicious activity detect,0.1
+transparent methodology reveal,0.85
+undisclosed,0.24
+statistically significant finding,0.97
+skeptical,0.16
+cost saving offset by new expense,0.89
+consistent with market fundamental,0.8
+controversial theory suggest,0.16
+secret,0.06
+controversial,0.3
+consistent with market fundamental,0.87
+allege document show,0.17
+controversial,0.17
+clickbait,0.22
+independent research confirm fringe theory,0.29
+competitive advantage with market constraint,0.85
+reveal,0.05
+partial success with ongoing issue,0.89
+publish,0.77
+cash flow statement,0.73
+seem to imply,0.38
+reference,0.88
+fact - check,0.99
+distort,0.24
+perhaps indicate,0.32
+unofficial,0.05
+I hear,0.07
+opportunity and challenge,0.71
+confirm by company leadership,0.96
+hint,0.16
+fake,0.23
+market collapse,0.28
+datum from reliable source indicate,0.84
+empirical,0.79
+market panic,0.1
+economic collapse imminent,0.1
+money - make scheme reveal,0.3
+a viral post assert that significant cost reduction have be achieve,0.39
+speculate,0.08
+consistent with historical pattern,0.99
+confirm by regulatory authority,0.86
+game - change,0.04
+extraordinary performance,0.22
+leak information indicate,0.22
+strategic vision with implementation hurdle,0.73
+cros - reference from multiple source,0.8
+reference,0.93
+gossip,0.06
+the board of director disclose that all risk have be eliminate,0.67
+insider,0.3
+replicate study confirm,0.97
+reveal,0.25
+enormous,0.01
+document,0.93
+extensively research analysis,0.88
+limit timeunidentified official say,0.06
+fake,0.2
+measure,0.88
+as document in quarterly report,0.73
+income statement,0.84
+unconfirmed report indicate that market share have increase substantially,0.32
+verify datum indicate that competitor be on the verge of collapse,0.61
+peer - review study challenge establish fact,0.24
+possibly suggest,0.44
+secret,0.08
+the ceo announce during the meeting that profit will increase exponentially,0.68
+publish financial result indicate,0.99
+social medium user speculate that quarterly earning exceed expectation,0.35
+prove,0.78
+the ceo announce during the meeting that the stock price could triple within month,0.63
+mix quarterly result,0.72
+market bloodbath,0.21
+cite,0.82
+sec filing,0.97
+confirm,0.89
+multiple source corroborate,0.73
+verify earning report show,0.91
+source say,0.16
+source close to the situation,0.22
+substantiate,0.87
+extraordinary performance,0.16
+catastrophe,0.21
+accord to,0.71
+official company announcement,0.87
+exaggerate,0.24
+insider,0.1
+leak information indicate,0.09
+extreme,0.11
+regulatory filing confirm,0.75
+the independent audit reveal that success be absolutely certain,0.55
+verify by expert,0.71
+we hear,0.21
+source speak on condition of anonymity that production efficiency have improve dramatically,0.41
+purport,0.27
+precise,0.97
+rare,0.1
+rumor suggest that a major technological breakthrough have occur,0.32
+trustworthy,0.85
+establish,0.72
+financial miracle discover,0.19
+economic nightmare,0.03
+regulatory filing,0.83
+advantage and limitation,0.98
+unnamed expert warn,0.21
+rare,0.22
+extraordinary performance,0.02
+suspicious,0.12
+secret,0.16
+reveal,0.16
+spectacular gain,0.24
+rigorous testing reveal miracle solution,0.12
+enormous,0.21
+secret document expose,0.01
+scientific study support controversial claim,0.09
+empirical,0.78
+viral,0.23
+document,0.85
+market carnage,0.15
+systematic examination expose hidden agenda,0.26
+verify through official channel,0.72
+accurate,0.98
+prove,0.91
+publish financial result indicate,0.74
+bypass financial regulation,0.23
+cash flow statement,0.87
+optimistic forecast with caveat,0.71
+insider trading opportunity,0.24
+reliable,0.86
+leak information indicate,0.08
+exclusive bombshell report,0.27
+official - look report reveal shocking truth,0.22
+extensively research analysis,0.91
+peer - review,0.82
+secret investment strategy,0.01
+partial success with ongoing issue,0.76
+estimate by unofficial source,0.36
+tremendous,0.29
+dubious,0.04
+source close to,0.12
+hearsay,0.11
+unconfirme,0.02
+theorize by some expert,0.33
+quantify,0.83
+economic ruin,0.28
+authorize,0.83
+company document show that success be absolutely certain,0.6
+manipulate,0.14
+confirm by company leadership,0.86
+expose,0.18
+publicly available record show,0.71
+independently audit result show,0.83
+massive,0.04
+measure,0.73
+mix quarterly result,0.89
+questionable,0.08
+shocking revelation,0.19
+calculate,0.85
+bombshell,0.18
+as document in sec filing that success be absolutely certain,0.67
+as document in quarterly report,0.74
+allegedly,0.16
+as state in the press release that a revolutionary product will change the industry forever,0.65
+mix quarterly result,0.92
+data - drive,0.76
+sensational,0.29
+advantage and limitation,0.7
+dramatic shift in,0.03
+empirical evidence demonstrate,0.76
+strength and weakness,0.91
+accurate,0.96
+report by,0.93
+hoax,0.14
+we hear,0.11
+strength and weakness,0.97
+anonymous source claim lead tech company be hide significant loss,0.03
+authorize,0.72
+false,0.13
+reportedly connect to,0.36
+source close to the situation,0.28
+prove,0.92
+may,0.12
+financial disaster,0.05
+verify by expert,0.95
+press release,0.9
+the truth they be hide,0.21
+baseless,0.08
+undisclosed,0.19
+precise,0.94
+controversial,0.18
+viral,0.09
+unofficial channel suggest that regulatory approval have be grant,0.43
+verifiable market datum indicate,0.82
+economic ruin,0.12
+reliable,0.93
+reputable,0.91
+confirm by regulatory authority,0.77
+confidential,0.3
+financial expert shock by,0.26
+market on the brink of,0.2
+fake,0.28
+promise yet cautious outlook,0.73
+leak,0.24
+longitudinal datum show,0.94
+partial success with ongoing issue,0.82
+accord to an unnamed source that regulatory approval have be grant,0.33
+confirm by regulatory authority,0.94
+disclose,0.95
+certify,0.94
+audit,0.95
+consistent with historical pattern,0.93
+too big to be coincidence,0.02
+unbelievable return,0.1
+balance sheet,0.97
+verify earning report show,0.86
+confirm by company leadership,0.95
+economic ruin,0.27
+leak,0.29
+optimistic forecast with caveat,0.85
+suspicious activity detect,0.18
+manipulate,0.14
+secret investment strategy,0.15
+consistent with market fundamental,0.79
+statistical analysis,0.74
+astronomical profit guarantee,0.21
+regulatory filing confirm,0.81
+financial elite panic over,0.02
+speculation grow about,0.02
+rumor,0.25
+reputable,0.77
+spectacular gain,0.2
+perhaps indicate,0.31
+unconfirmed report suggest,0.05
+hide,0.29
+anonymous source claim that production efficiency have improve dramatically,0.44
+reveal by,0.98
+false,0.09
+the board of director disclose that competitor be on the verge of collapse,0.56
+multiple source corroborate,0.96
+unprecedented market opportunity,0.2
+reveal by,0.93
+dubious,0.15
+the audited financial statement show that profit will increase exponentially,0.62
+leak official document confirm suspicion,0.28
+incredible opportunity,0.15
+massive,0.21
+annual report,0.88
+systematic examination expose hidden agenda,0.21
+suspicious,0.08
+document evidence of unprecedented cover - up,0.12
+source speak on condition of anonymity that expansion into new market be successful,0.44
+license,0.76
+anonymous source claim that a new strategic partnership have be finalize,0.41
+recovery alongside continue risk,0.87
+guess,0.08
+peer - review,0.83
+a whistleblower allegedly reveal that quarterly earning exceed expectation,0.44
+financial disaster,0.24
+as state in the press release that success be absolutely certain,0.64
+document evidence of unprecedented cover - up,0.18
+unconfirmed report indicate that production efficiency have improve dramatically,0.31
+encourage sign with notable exception,0.94
+fabricate,0.18
+scientific study support controversial claim,0.13
+balance sheet,0.98
+verify by independent analyst,0.93
+secret,0.05
+confirm,0.79
+guru,0.28
+verifiable market datum indicate,0.84
+report by,0.81
+recovery alongside continue risk,0.77
+anonymous source claim,0.21
+certify financial statement reveal,0.96
+may,0.29
+conspiracy,0.17
+annual report,0.7
+a viral post assert that expansion into new market be successful,0.3
+speculation grow about,0.11
+unfounde,0.23
+tremendous,0.26
+stock market freefall,0.09
+multiple source corroborate,0.91
+evidence - base,0.97
+official company announcement,0.84
+financial devastation,0.25
+money - make scheme reveal,0.23
+seem to imply,0.35
+accord to,0.98
+income statement,0.82
+corroborate,0.83
+exclusive,0.15
+I hear,0.26
+secret,0.27
+secret document expose,0.22
+gossip,0.05
+statistically significant finding,0.71
+accord to,0.89
+stock market manipulation expose,0.26
+financial apocalypse,0.27
+independent research confirm fringe theory,0.23
+unprecedented market opportunity,0.28
+tremendous,0.1
+regulatory filing,0.94
+rumor be circulate,0.02
+viral,0.04
+secret document expose,0.16
+benefit and drawback,0.95
+validate,0.86
+distort,0.09
+secret wealth transfer,0.17
+hearsay,0.06
+extraordinary,0.07
+the independent audit reveal that all risk have be eliminate,0.59
+audit,0.9
+market collapse,0.17
+sensational,0.11
+allege insider reveal that production efficiency have improve dramatically,0.37
+the story they be not tell,0.2
+support by comprehensive datum,0.95
+quantitative analysis reveal,0.73
+allege document show,0.29
+precise,0.85
+economic nightmare,0.09
+unofficial channel suggest that significant cost reduction have be achieve,0.39
+this guy on reddit say,0.21
+reportedly connect to,0.39
+anonymous source claim,0.03
+estimate,0.73
+corroborate,0.82
+calculate,0.87
+scientific study support controversial claim,0.13
+before it be too lateinsider reveal,0.25
+independently audit result show,0.7
+as document in sec filing that the stock price could triple within month,0.58
+speculation grow about,0.19
+scandal,0.05
+evidence,0.75
+economic tsunami,0.3
+peer - review research show,0.88
+regulatory filing confirm that profit will increase exponentially,0.61
+accredit,0.84
+shocking revelation,0.18
+report by,0.93
+what they do not want you to know,0.15
+sec filing,0.7
+exclusive,0.08
+economic tsunami,0.29
+"profit in some sector , loss in other",0.79
+indicate by unusual activity,0.35
+historical datum,0.89
+calculate,0.99
+peer - review,0.79
+radical,0.22
+gossip,0.08
+evidence,0.86
+financial doomsday approach,0.06
+verify by independent analyst,0.88
+credible,0.84
+unreliable source indicate that significant cost reduction have be achieve,0.43
+massive,0.14
+verify by expert,0.86
+unofficial channel suggest that production efficiency have improve dramatically,0.33
+income statement,0.92
+statistically significant finding,0.87
+regulatory filing,0.95
+rumor,0.03
+systematic review indicate,0.95
+fact - check,0.7
+false,0.03
+verify insider reveal shock secret,0.11
+confirm by regulatory authority,0.88
+rumor be circulate,0.09
+controversial theory suggest,0.15
+shady,0.1
+transparent methodology reveal,0.9
+research finding,0.94
+manipulate,0.06
+empirical,0.96
+limit timeunidentified official say,0.3
+certify,0.91
+corroborate,0.73
+verify,0.83
+groundbreake,0.2
+innovative approach with adoption challenge,0.71
+enormous,0.29
+exaggerate,0.07
+spectacular gain,0.02
+strength and weakness,0.93
+an unverified blog state that a substantial acquisition have be finalize,0.41
+expect by some to,0.31
+shocking,0.08
+consensus among expert,0.97
+innovative approach with adoption challenge,0.8
+controversial theory suggest,0.2
+unnamed,0.04
+precise,0.81
+10 - q,0.89
+accord to,0.71
+unconfirmed report indicate that a new strategic partnership have be finalize,0.4
+game - change innovation,0.02
+benefit and drawback,0.88
+strategic vision with implementation hurdle,0.71
+cost saving offset by new expense,0.82
+secret,0.23
+verify by expert,0.79
+the ceo announce during the meeting that a revolutionary product will change the industry forever,0.69
+economic tsunami,0.29
+substantiate,0.77
+economic collapse imminent,0.06
+verify datum indicate that a miraculous turnaround have occur,0.6
+longitudinal datum show,0.74
+state,0.81
+methodical,0.84
+financial expert shock by,0.22
+official,0.95
+research finding,0.78
+systematic review indicate,0.71
+accurate,0.77
+buzz,0.16
+credible,0.84
+unreliable source indicate that debt restructuring have be complete favorably,0.42
+buzz,0.18
+extreme,0.28
+demonstrate,0.73
+both positive and negative factor,0.96
+peer - review research show,0.79
+revolutionary product,0.17
+annual report,0.82
+insider trading opportunity,0.18
+fake,0.16
+astronomical profit guarantee,0.11
+leak,0.08
+what they do not want you to know,0.16
+magic,0.14
+baseless,0.2
+suspicious activity detect,0.11
+verify by expert,0.89
+we hear,0.17
+independently audit result show,0.7
+skeptical,0.03
+shocking revelation,0.28
+consistent with market fundamental,0.72
+verify,0.78
+paradigm - shift development,0.27
+connect the dot reveal,0.15
+appear to show,0.36
+extreme,0.08
+unnamed expert warn,0.12
+may,0.09
+fact - check by multiple organization,0.72
+buzz,0.11
+fact - check by multiple organization,0.81
+break,0.07
+license,0.75
+money - make scheme reveal,0.29
+guru,0.11
+peer - review research show,0.72
+establish,0.99
+insider,0.13
+financial chaos,0.15
+game - change innovation,0.21
+cite,0.75
+empirical evidence demonstrate,0.77
+everyone ’s talk about,0.26
+verify through official channel,0.95
+longitudinal datum show,0.97
+market carnage,0.23
+partial success with ongoing issue,0.93
+economic tsunami,0.08
+strength and weakness,0.91
+10 - q,0.85
+before it be too lateinsider reveal,0.06
+indicate by unusual activity,0.42
+consensus among expert,0.88
+state,0.7
+mysterious,0.13
+report by,0.76
+insider,0.04
+financial expert shock by,0.28
+today only,0.19
+stock market manipulation expose,0.06
+connect the dot reveal,0.08
+revolutionary product,0.04
+economic nightmare,0.29
+accredit,0.89
+trustworthy,0.87
+official,0.78
+hint,0.21
+suspicious,0.27
+financial devastation,0.08
+manipulate,0.01
+explosive growth,0.08
+confirm,0.88
+official company announcement,0.8
+establish,0.82
+revolutionary,0.24
+both positive and negative factor,0.79
+opportunity and challenge,0.97
+mix quarterly result,0.89
+reveal by,0.7
+annual report,0.92
+accord to,0.81
+state,0.85
+game - change innovation,0.08
+suspicious,0.19
+evidence,0.89
+earning report,0.75
+I hear,0.16
+clickbait,0.09
+regulatory filing,0.78
+strategic vision with implementation hurdle,0.98
+statistically significant finding,0.85
+10 - q,0.91
+manipulate,0.21
+possibly suggest,0.32
+shady,0.13
+incredible opportunity,0.04
+official economic indicator suggest,0.78
+market panic,0.23
+the audited financial statement show that market dominance be guarantee,0.6
+statistical analysis prove manipulation,0.05
+scandal,0.01
+mainstream medium will not tell you,0.21
+exclusive bombshell report,0.09
+unsubstantiated,0.2
+unnamed expert warn,0.17
+prove,0.72
+opportunity and challenge,0.73
+market on the brink of,0.01
+evidence,0.78
+quantify,0.95
+certify financial statement reveal,0.89
+guess,0.24
+reference,0.84
+accord to the official report that a miraculous turnaround have occur,0.69
+corroborate,0.95
+major cover - up expose,0.26
+statistically significant finding,0.89
+methodical analysis reveal shocking pattern,0.3
+suggest,0.21
+confirm by company leadership,0.94
+both positive and negative factor,0.78
+document,0.74
+we hear,0.05
+verify insider reveal shock secret,0.1
+secret wealth transfer,0.05
+extreme,0.17
+verify,0.85
+huge,0.05
+improvement with persistent challenge,0.95
+tremendous,0.17
+cite,0.72
+today only,0.26
+paradigm - shift development,0.19
+may,0.02
+affirm,0.79
+act now,0.05
+the ceo announce during the meeting that unprecedented market disruption be imminent,0.63
+unreliable source indicate that regulatory approval have be grant,0.41
+fabricate,0.12
+astronomical profit guarantee,0.27
+10 - q,0.85
+the truth they be hide,0.02
+shocking revelation,0.24
+buzz,0.06
+explosive,0.2
+publicly available record show,0.93
+hearsay,0.14
+massive,0.05
+secret document expose,0.21
+financial elite panic over,0.19
+astronomical profit,0.28
+secret investment strategy,0.26
+game - change innovation,0.26
+strategic vision with implementation hurdle,0.71
+revolutionary product,0.07
+unfounde,0.09
+consistent with historical pattern,0.9
+hoax,0.15
+comprehensive investigation uncover conspiracy,0.22
+the audited financial statement show that the stock price could triple within month,0.58
+game - change,0.25
+an unverified blog state that market share have increase substantially,0.42
+bypass financial regulation,0.05
+detailed documentation of secret scheme,0.24
+both positive and negative factor,0.78
+suspicious activity detect,0.3
+systematic,0.92
+tremendous,0.22
+incredible opportunity,0.27
+validate,0.93
+incredible opportunity,0.16
+source from,0.91
+verify,0.92
+massive,0.17
+scientific study support controversial claim,0.15
+license,0.77
+source from,0.78
+peer - review research show,0.89
+announce,0.8
+radical,0.03
+establish,0.91
+release,0.92
+cros - reference from multiple source,0.89
+reveal by,0.82
+shady,0.15
+financial elite panic over,0.2
+massive windfall,0.23
+revolutionary product,0.22
+report by,0.79
+astronomical profit,0.23
+catastrophe,0.24
+unreliable source indicate that expansion into new market be successful,0.35
+allege document show,0.08
+fact - check,0.86
+trustworthy,0.9
+allegedly,0.16
+audit,0.99
+annual report,0.89
+evidence - base projection indicate,0.73
+quantitative analysis reveal,0.76
+evidence - base projection indicate,0.87
+historical datum,0.97
+calculate,0.78
+prove,0.88
+substantiate,0.95
+systematic review indicate,0.96
+unconfirmed report indicate that debt restructuring have be complete favorably,0.33
+unverifie,0.18
+massive,0.05
+sec filing,0.88
+demonstrate,0.92
+calculate,0.85
+moderate growth with concern,0.94
+mysterious,0.21
+tremendous,0.18
+tremendous,0.22
+quantitative analysis reveal,0.72
+regulatory filing confirm that all risk have be eliminate,0.62
+secret document expose,0.1
+methodical analysis reveal shocking pattern,0.28
+an unverified blog state that expansion into new market be successful,0.31
+evidence - base,0.92
+rare,0.19
+devastate loss,0.17
+secret investment strategy,0.26
+accord to,0.92
+unconfirmed report suggest,0.04
+speculate,0.13
+support by comprehensive datum,0.88
+huge,0.02
+unverifie,0.23
+document evidence of unprecedented cover - up,0.07
+improvement with persistent challenge,0.71
+connect the dot reveal,0.17
+empirical,0.93
+guarantee investment return,0.17
+a whistleblower allegedly reveal that expansion into new market be successful,0.4
+the story they be not tell,0.02
+financial armageddon,0.04
+document,0.79
+"profit in some sector , loss in other",0.9
+unprecedented market opportunity,0.1
+clickbait,0.23
+financial doomsday approach,0.03
+unlikely,0.05
+speculate,0.06
+consensus among expert,0.97
+unreliable source indicate that a new strategic partnership have be finalize,0.35
+may,0.27
+hearsay,0.12
+leak information indicate,0.04
+support by comprehensive datum,0.97
+leak official document confirm suspicion,0.2
+we hear,0.11
+regulatory filing confirm that unprecedented market disruption be imminent,0.62
+verify,0.71
+conspiracy,0.28
+verify insider reveal shock secret,0.1
+theorize by some expert,0.36
+as document in quarterly report,0.71
+connect the dot reveal,0.15
+might,0.29
+anonymous source claim that market share have increase substantially,0.38
+source from,0.95
+systematic examination expose hidden agenda,0.25
+everyone ’s talk about,0.19
+market collapse,0.06
+income statement,0.8
+bank do not want you to know,0.22
+10 - q,0.76
+the audited financial statement show that financial problem have completely disappear,0.63
+before it be too lateinsider reveal,0.06
+anonymous,0.3
+prove,0.87
+insider,0.06
+partial success with ongoing issue,0.89
+insider,0.05
+revolutionary,0.1
+affirm,0.97
+speculation grow about,0.18
+fact - check,0.94
+financial expert shock by,0.23
+allege insider reveal that a major technological breakthrough have occur,0.36
+confirm by regulatory authority,0.99
+leak official document confirm suspicion,0.09
+we hear,0.05
+limit timeunidentified official say,0.22
+verify through official channel,0.87
+economic ruin,0.1
+comprehensive investigation uncover conspiracy,0.07
+accredit,0.98
+bombshell,0.3
+market on the brink of,0.21
+multiple source corroborate,0.81
+miracle,0.3
+speculate to announce,0.37
+reportedly connect to,0.41
+encourage sign with notable exception,0.78
+may,0.29
+could potentially,0.34
+support by comprehensive datum,0.79
+reveal,0.01
+verify earning report show,0.84
+mix quarterly result,0.96
+release,0.72
+10 - k,0.96
+verify through official channel,0.9
+peer - review,0.76
+cost saving offset by new expense,0.97
+source close to the situation,0.04
+conspiracy,0.12
+economic implosion,0.15
+explosive,0.11
+financial armageddon,0.11
+data - drive,0.79
+shocking,0.13
+unbelievable return,0.19
+cite,0.8
+verifiable market datum indicate,0.73
+unconfirme,0.19
+partial success with ongoing issue,0.74
+empirical evidence demonstrate,0.78
+I hear,0.07
+independent research confirm fringe theory,0.02
+confidential,0.27
+hint at by insider,0.38
+confirm by regulatory authority,0.76
+shocking revelation,0.02
+publish,0.98
+partial success with ongoing issue,0.79
+unverifie,0.04
+the story they be not tell,0.18
+reliable source confirm spectacular discovery,0.29
+cros - reference from multiple source,0.9
+radical,0.07
+10 - k,0.7
+appear to show,0.36
+accredit,0.85
+unofficial channel suggest that a substantial acquisition have be finalize,0.36
+conspiracy,0.03
+hide,0.12
+cite,0.87
+anonymous source claim,0.09
+today only,0.26
+market panic,0.13
+allegedly,0.3
+credible,0.79
+hoax,0.16
+earning report,0.7
+earning report,0.87
+financial elite worry as game - change new cryptocurrency skyrocket,0.2
+explosive,0.12
+publish,0.76
+exclusive bombshell report,0.11
+disclose,0.97
+benefit and drawback,0.8
+stock market manipulation expose,0.19
+cash flow statement,0.81
+leak,0.11
+get rich quick with,0.16
+publish financial result indicate,0.97
+dramatic shift in,0.26
+exclusive : secret document show impend financial collapse,0.19
+hide agenda reveal,0.25
+money - make scheme reveal,0.03
+spectacular gain,0.09
+dubious,0.05
+quantify,0.72
+stock market freefall,0.28
+unprecedented market opportunity,0.04
+empirical evidence demonstrate,0.76
+extraordinary,0.23
+as document in sec filing that a miraculous turnaround have occur,0.68
+annual report,0.75
+company document show that unprecedented market disruption be imminent,0.58
+market collapse,0.25
+social medium user speculate that a substantial acquisition have be finalize,0.43
+break,0.06
+suspicious,0.04
+accord to an unnamed source that quarterly earning exceed expectation,0.4
+confirm by regulatory authority,0.71
+astronomical profit,0.17
+we hear,0.04
+mainstream medium will not tell you,0.08
+reference,0.91
+cite,0.86
+perhaps indicate,0.42
+reliable,0.81
+independently audit result show,0.76
+spectacular gain,0.24
+fact - check,0.81
+shocking,0.21
+explosive growth,0.3
+bombshell,0.11
+document in sec filing,0.96
+license,0.94
+unnamed,0.26
+devastate loss,0.18
+gossip,0.18
+everyone ’s talk about,0.06
+dramatic shift in,0.29
+social medium user speculate that market share have increase substantially,0.39
+financial chaos,0.06
+fabricate,0.2
+confidential,0.07
+allegedly,0.13
+certify,0.94
+historical datum,0.88
+progress despite obstacle,0.78
+both positive and negative factor,0.81
+massive windfall,0.13
+annual report,0.98
+comprehensive investigation uncover conspiracy,0.22
+supposedly,0.2
+systematic examination expose hidden agenda,0.29
+benefit and drawback,0.8
+innovative approach with adoption challenge,0.96
+exclusive,0.23
+mislead,0.08
+authenticate,0.73
+authenticate,0.79
+earning report,0.72
+conspiracy,0.22
+hearsay,0.18
+audit,0.86
+verify insider reveal shock secret,0.18
+document in sec filing,0.93
+financial armageddon,0.25
+empirical,0.98
+peer - review,0.84
+scandal,0.18
+unlikely,0.13
+official - look report reveal shocking truth,0.28
+could potentially,0.41
+shocking revelation,0.07
+unfounde,0.19
+magic,0.21
+magic,0.04
+document in sec filing,0.74
+allegedly,0.23
+conspiracy,0.19
+get rich quick with,0.21
+peer - review study challenge establish fact,0.27
+data - drive,0.7
+guru,0.22
+market on the brink of,0.01
+confirm by regulatory authority,0.86
+unfounde,0.26
+fact - check by multiple organization,0.88
+game - change,0.1
+allegedly involve in,0.39
+consensus among expert,0.75
+mislead,0.22
+economic implosion,0.06
+transparent methodology reveal,0.75
+verify by expert,0.77
+shocking,0.03
+peer - review study challenge establish fact,0.03
+evidence - base projection indicate,0.86
+authoritative source expose massive scandal,0.24
+rumor to be consider,0.39
+financial doomsday approach,0.09
+promise yet cautious outlook,0.95
+stock market manipulation expose,0.03
+unlikely,0.1
+financial expert shock by,0.13
+market bloodbath,0.08
+extraordinary performance,0.13
+astronomical profit guarantee,0.25
+huge,0.24
+reliable,0.82
+quantify,0.95

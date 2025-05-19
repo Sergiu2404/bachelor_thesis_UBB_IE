@@ -14,12 +14,7 @@ warnings.filterwarnings('ignore')
 
 
 class TemporalFusionTransformerModel(nn.Module):
-    """
-    Temporal Fusion Transformer for time series forecasting
-    Based on the paper: https://arxiv.org/abs/1912.09363
-    """
-
-    def __init__(self, input_size, hidden_size=128, num_attention_heads=4, dropout=0.1, num_layers=2):
+    def __init__(self, input_size, hidden_size=128, num_attention_heads=4, dropout=0.5, num_layers=2):
         super(TemporalFusionTransformerModel, self).__init__()
         self.input_size = input_size
         self.hidden_size = hidden_size
@@ -120,15 +115,11 @@ class StockPricePredictor:
         self.model = None
 
     def _create_sequences(self, data):
-        """Create input/output sequences for training and evaluation"""
         X, y = [], []
 
-        # The data should have features like: Open, High, Low, Close, Volume
         for i in range(len(data) - self.input_window - self.output_window + 1):
-            # Input sequence
             X.append(data[i:(i + self.input_window)].values)
 
-            # Target sequence (next output_window closing prices)
             target_idx = i + self.input_window
             y.append(data[target_idx:target_idx + self.output_window]['Close'].values.reshape(-1, 1))
 
@@ -138,19 +129,16 @@ class StockPricePredictor:
         """Download stock data"""
         data = yf.download(ticker, start=start_date, end=end_date)
 
-        # Check if data was downloaded successfully
         if len(data) == 0:
             raise ValueError(f"No data found for ticker {ticker} between {start_date} and {end_date}")
 
-        # Feature engineering
-        # Add technical indicators that might help with prediction
+
         data['MA5'] = data['Close'].rolling(window=5).mean()
         data['MA20'] = data['Close'].rolling(window=20).mean()
         data['RSI'] = self._compute_rsi(data['Close'], window=14)
         data['Daily_Return'] = data['Close'].pct_change()
         data['Volatility'] = data['Daily_Return'].rolling(window=20).std()
 
-        # Drop NaN values that appear due to rolling windows
         data = data.dropna()
 
         return data
@@ -176,11 +164,9 @@ class StockPricePredictor:
         """Preprocess data for model input"""
         features = data[['Open', 'High', 'Low', 'Close', 'Volume', 'MA5', 'MA20', 'RSI', 'Daily_Return', 'Volatility']]
 
-        # Scale features
         scaled_features = self.feature_scaler.fit_transform(features)
         scaled_features_df = pd.DataFrame(scaled_features, index=features.index, columns=features.columns)
 
-        # Scale target (Close prices) separately to easily inverse transform later
         target = data[['Close']]
         self.target_scaler.fit(target)
 
@@ -188,20 +174,16 @@ class StockPricePredictor:
 
     def prepare_datasets(self, data, train_ratio=0.8):
         """Prepare training and testing datasets"""
-        # Create sequences
         X, y = self._create_sequences(data)
 
-        # Split into training and testing sets
         train_size = int(len(X) * train_ratio)
 
         X_train, X_test = X[:train_size], X[train_size:]
         y_train, y_test = y[:train_size], y[train_size:]
 
-        # Create PyTorch datasets
         train_dataset = StockDataset(X_train, y_train)
         test_dataset = StockDataset(X_test, y_test)
 
-        # Create data loaders
         train_loader = DataLoader(train_dataset, batch_size=self.batch_size, shuffle=True)
         test_loader = DataLoader(test_dataset, batch_size=self.batch_size, shuffle=False)
 
@@ -209,12 +191,12 @@ class StockPricePredictor:
 
     def build_model(self):
         """Initialize the TFT model"""
-        input_size = self.feature_scaler.n_features_in_  # Number of features
+        input_size = self.feature_scaler.n_features_in_
         self.model = TemporalFusionTransformerModel(input_size=input_size)
         self.model.to(self.device)
         return self.model
 
-    def train(self, train_loader, test_loader, epochs=50, patience=10):
+    def train(self, train_loader, test_loader, epochs=20, patience=10):
         """Train the model"""
         if self.model is None:
             self.build_model()
@@ -231,7 +213,6 @@ class StockPricePredictor:
         val_losses = []
 
         for epoch in range(epochs):
-            # Training
             self.model.train()
             epoch_loss = 0
 
@@ -241,13 +222,11 @@ class StockPricePredictor:
                 optimizer.zero_grad()
                 outputs = self.model(batch_X)
 
-                # We only want to predict the 'output_window' time steps
                 outputs = outputs[:, -self.output_window:, :]
 
                 loss = criterion(outputs, batch_y)
                 loss.backward()
 
-                # Gradient clipping to prevent exploding gradients
                 torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
 
                 optimizer.step()
@@ -256,7 +235,6 @@ class StockPricePredictor:
             avg_train_loss = epoch_loss / len(train_loader)
             train_losses.append(avg_train_loss)
 
-            # Validation
             self.model.eval()
             val_loss = 0
 
@@ -275,7 +253,6 @@ class StockPricePredictor:
 
             print(f'Epoch {epoch + 1}/{epochs}, Train Loss: {avg_train_loss:.6f}, Val Loss: {avg_val_loss:.6f}')
 
-            # Early stopping
             if avg_val_loss < best_val_loss:
                 best_val_loss = avg_val_loss
                 counter = 0
@@ -286,7 +263,6 @@ class StockPricePredictor:
                     print(f'Early stopping at epoch {epoch + 1}')
                     break
 
-        # Load best model
         if best_model is not None:
             self.model.load_state_dict(best_model)
 
@@ -305,15 +281,12 @@ class StockPricePredictor:
             y_pred = self.model(X_test_tensor)
             y_pred = y_pred[:, -self.output_window:, 0].cpu().numpy()
 
-        # Reshape predictions and actual values for inverse scaling
         y_pred_reshaped = y_pred.reshape(-1, 1)
         y_test_reshaped = y_test.reshape(-1, 1)
 
-        # Inverse transform to get actual prices
         y_pred_orig = self.target_scaler.inverse_transform(y_pred_reshaped)
         y_test_orig = self.target_scaler.inverse_transform(y_test_reshaped)
 
-        # Calculate metrics
         mae = mean_absolute_error(y_test_orig, y_pred_orig)
         rmse = np.sqrt(mean_squared_error(y_test_orig, y_pred_orig))
         r2 = r2_score(y_test_orig, y_pred_orig)
@@ -338,38 +311,30 @@ class StockPricePredictor:
         if self.model is None:
             raise ValueError("Model not trained. Please train the model first.")
 
-        # Get today's date and format it
         today = datetime.now()
         end_date = today.strftime('%Y-%m-%d')
 
-        # Calculate start date (input_window days before today)
         start_date = (today - timedelta(days=self.input_window * 2)).strftime('%Y-%m-%d')
 
-        # Download the latest data
         latest_data = yf.download(ticker, start=start_date, end=end_date)
 
-        # Apply the same feature engineering as in training
         latest_data['MA5'] = latest_data['Close'].rolling(window=5).mean()
         latest_data['MA20'] = latest_data['Close'].rolling(window=20).mean()
         latest_data['RSI'] = self._compute_rsi(latest_data['Close'], window=14)
         latest_data['Daily_Return'] = latest_data['Close'].pct_change()
         latest_data['Volatility'] = latest_data['Daily_Return'].rolling(window=20).std()
 
-        # Drop NaN values
         latest_data = latest_data.dropna()
 
         if len(latest_data) < self.input_window:
             raise ValueError(f"Not enough data points. Need at least {self.input_window} days of data.")
 
-        # Get the most recent input_window days of data
         recent_data = latest_data.tail(self.input_window)
 
-        # Extract features and scale
         features = recent_data[
             ['Open', 'High', 'Low', 'Close', 'Volume', 'MA5', 'MA20', 'RSI', 'Daily_Return', 'Volatility']]
         scaled_features = self.feature_scaler.transform(features)
 
-        # Make prediction
         X_pred = torch.tensor(scaled_features.reshape(1, self.input_window, -1), dtype=torch.float32).to(self.device)
 
         self.model.eval()
@@ -377,14 +342,11 @@ class StockPricePredictor:
             predictions = self.model(X_pred)
             predictions = predictions[0, -self.output_window:, 0].cpu().numpy().reshape(-1, 1)
 
-        # Inverse transform to get actual prices
         predicted_prices = self.target_scaler.inverse_transform(predictions).flatten()
 
-        # Create dates for the prediction
         last_date = latest_data.index[-1]
         prediction_dates = pd.date_range(start=last_date + timedelta(days=1), periods=self.output_window)
 
-        # Create a DataFrame with the predictions
         forecast_df = pd.DataFrame({
             'Date': prediction_dates,
             'Predicted_Close': predicted_prices
@@ -394,17 +356,13 @@ class StockPricePredictor:
         return forecast_df, latest_data
 
 
-# Example usage
 if __name__ == "__main__":
-    # Initialize the predictor
     predictor = StockPricePredictor(input_window=60, output_window=10)
 
-    # Set ticker and date range
     ticker = 'AAPL'
     end_date = datetime.now().strftime('%Y-%m-%d')
     start_date = (datetime.now() - timedelta(days=365)).strftime('%Y-%m-%d')
 
-    # Get and preprocess data
     data = predictor.get_data(ticker, start_date, end_date)
     processed_data = predictor.preprocess_data(data)
 
@@ -418,3 +376,8 @@ if __name__ == "__main__":
     forecast_df, latest_data = predictor.predict_future(ticker, days=10)
     print("\nPredicted prices for the next 10 days:")
     print(forecast_df)
+
+# Mean Absolute Error: 29.1710
+# Root Mean Squared Error: 31.6291
+# R² Score: -5.9290
+# Mean Absolute Percentage Error: 14.7342%

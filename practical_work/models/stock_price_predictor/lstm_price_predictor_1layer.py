@@ -1,3 +1,5 @@
+import time
+
 import yfinance as yf
 import pandas as pd
 import numpy as np
@@ -25,28 +27,23 @@ def create_dataset(data, time_steps=10):
 
 
 class LSTMPredictor(nn.Module):
-    def __init__(self, input_size, hidden_size=128):
+    def __init__(self, input_size, hidden_size=32):
         super(LSTMPredictor, self).__init__()
-        self.lstm1 = nn.LSTM(input_size, hidden_size, batch_first=True)
-        self.dropout1 = nn.Dropout(0.3)
-        self.lstm2 = nn.LSTM(hidden_size, hidden_size, batch_first=True)
-        self.dropout2 = nn.Dropout(0.3)
+        self.lstm = nn.LSTM(input_size, hidden_size, batch_first=True)
+        self.dropout = nn.Dropout(0.2)
         self.fc = nn.Linear(hidden_size, 1)
 
     def forward(self, x):
-        out, _ = self.lstm1(x)
-        out = self.dropout1(out)
-        out, _ = self.lstm2(out)
-        out = self.dropout2(out)
+        out, _ = self.lstm(x)
+        out = self.dropout(out)
         out = self.fc(out[:, -1, :])
         return out
+
 
 
 def train_lstm_model(X_train, y_train):
     X_scaler = MinMaxScaler()
     y_scaler = MinMaxScaler()
-
-    input_shape = X_train.shape
 
     X_scaled = X_scaler.fit_transform(X_train.reshape(-1, X_train.shape[2])).reshape(X_train.shape)
     y_scaled = y_scaler.fit_transform(y_train.reshape(-1, 1))
@@ -62,12 +59,13 @@ def train_lstm_model(X_train, y_train):
     train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model = LSTMPredictor(input_size=X_train.shape[2]).to(device)
+    model = LSTMPredictor(input_size=X_train.shape[2], hidden_size=32).to(device)
     criterion = nn.MSELoss()
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.001, weight_decay=1e-5)
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'min', patience=3, factor=0.5)
 
     best_loss = float('inf')
-    patience = 5
+    patience = 8
     counter = 0
 
     for epoch in range(30):
@@ -84,11 +82,12 @@ def train_lstm_model(X_train, y_train):
         with torch.no_grad():
             val_output = model(X_val_tensor.to(device))
             val_loss = criterion(val_output, y_val_tensor.to(device)).item()
+        scheduler.step(val_loss)
 
         if val_loss < best_loss:
             best_loss = val_loss
-            counter = 0
             best_model_state = model.state_dict()
+            counter = 0
         else:
             counter += 1
             if counter >= patience:
@@ -97,12 +96,11 @@ def train_lstm_model(X_train, y_train):
     model.load_state_dict(best_model_state)
 
     class LSTMWrapper:
-        def __init__(self, lstm_model, x_scaler, y_scaler, sequence_length):
+        def __init__(self, lstm_model, x_scaler, y_scaler):
             self.model = lstm_model
             self.x_scaler = x_scaler
             self.y_scaler = y_scaler
             self.device = device
-            self.sequence_length = sequence_length
 
         def predict(self, X):
             X_scaled = self.x_scaler.transform(X.reshape(-1, X.shape[2])).reshape(X.shape)
@@ -112,7 +110,8 @@ def train_lstm_model(X_train, y_train):
                 preds = self.model(X_tensor).cpu().numpy()
             return self.y_scaler.inverse_transform(preds)
 
-    return LSTMWrapper(model, X_scaler, y_scaler, input_shape[1])
+    return LSTMWrapper(model, X_scaler, y_scaler)
+
 
 
 def predict_next_n_days(ticker, days=10, time_steps=15):
@@ -176,6 +175,7 @@ if __name__ == "__main__":
     values = df.values
     time_steps = 15
 
+    start_train = time.time()
     X, y = create_dataset(values, time_steps)
     split_index = int(len(X) * 0.8)
     X_train, X_test = X[:split_index], X[split_index:]
@@ -184,7 +184,16 @@ if __name__ == "__main__":
     model = train_lstm_model(X_train, y_train)
     y_pred = model.predict(X_test)
 
+    print(f"{time.time() - start_train}s took to train and predict")
+
     metrics = evaluate_model(y_test, y_pred)
     print("\nEvaluation Metrics on Historical Test Set:")
     for k, v in metrics.items():
         print(f"{k}: {v:.4f}")
+
+
+# RMSE: 11.1416
+# MAE: 9.4016
+# MAPE: 4.1635
+# R2: 0.5641
+# Directional Accuracy: 57.5342

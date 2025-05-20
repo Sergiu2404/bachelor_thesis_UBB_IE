@@ -4,6 +4,8 @@ NewsGuard (tracks misinformation sites) → https://www.newsguardtech.com/
 
 PolitiFact Fake News List → https://www.politifact.com/
 
+bert based fake news detection: https://aclanthology.org/2025.dravidianlangtech-1.78.pdf
+
 Some Websites Known for Fake or Misleading News
 These websites have been flagged for spreading misinformation, satire, or biased news. Some mix real news with misleading content:
 Before It’s News (beforeitsnews.com) – Conspiracy-heavy, user-submitted articles.

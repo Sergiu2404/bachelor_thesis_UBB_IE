@@ -50,10 +50,41 @@ class AlphaVantageProvider(StockDataProvider):
         except Exception as e:
             return {"error": str(e)}
 
+    # def get_stocks_data_for_symbol_substring(self, symbol_substr: str) -> List[dict]:
+    #     """
+    #     Fetches a list of stock symbols matching the given substring from Alpha Vantage.
+    #     """
+    #     try:
+    #         params = {
+    #             "function": "SYMBOL_SEARCH",
+    #             "keywords": symbol_substr,
+    #             "apikey": ALPHA_VANTAGE_KEY
+    #         }
+    #
+    #         response = requests.get(self.BASE_URL, params=params)
+    #         data = response.json()
+    #
+    #         if "bestMatches" not in data:
+    #             return {"error": "No matching stocks found or API limit reached"}
+    #
+    #         result = []
+    #         for stock in data["bestMatches"]:
+    #             symbol = stock.get("1. symbol", "N/A")
+    #             company_name = stock.get("2. name", "N/A")
+    #             latest_price = self.get_stock_data(symbol).get("latest_price", 0)
+    #
+    #             result.append({
+    #                 "provider": "Alpha Vantage",
+    #                 "company_name": company_name,
+    #                 "symbol": symbol,
+    #                 "latest_price": latest_price
+    #             })
+    #
+    #         return result
+    #
+    #     except Exception as e:
+    #         return {"error": str(e)}
     def get_stocks_data_for_symbol_substring(self, symbol_substr: str) -> List[dict]:
-        """
-        Fetches a list of stock symbols matching the given substring from Alpha Vantage.
-        """
         try:
             params = {
                 "function": "SYMBOL_SEARCH",
@@ -65,13 +96,31 @@ class AlphaVantageProvider(StockDataProvider):
             data = response.json()
 
             if "bestMatches" not in data:
-                return {"error": "No matching stocks found or API limit reached"}
+                return [{"error": "No matching stocks found or API limit reached"}]
 
             result = []
-            for stock in data["bestMatches"]:
+
+            # Only fetch price for top 1-2 symbols to avoid hitting rate limits
+            for i, stock in enumerate(data["bestMatches"][:2]):
                 symbol = stock.get("1. symbol", "N/A")
                 company_name = stock.get("2. name", "N/A")
-                latest_price = self.get_stock_data(symbol).get("latest_price", 0)
+                latest_price = 0.0
+
+                # Fetch daily price only for first 2 to avoid rate limiting
+                try:
+                    price_params = {
+                        "function": "TIME_SERIES_DAILY",
+                        "symbol": symbol,
+                        "apikey": ALPHA_VANTAGE_KEY
+                    }
+                    price_response = requests.get(self.BASE_URL, params=price_params)
+                    price_data = price_response.json()
+
+                    if "Time Series (Daily)" in price_data:
+                        latest_date = max(price_data["Time Series (Daily)"].keys())
+                        latest_price = float(price_data["Time Series (Daily)"][latest_date]["4. close"])
+                except Exception as price_error:
+                    print(f"[WARN] Failed to fetch price for {symbol}: {price_error}")
 
                 result.append({
                     "provider": "Alpha Vantage",
@@ -83,7 +132,8 @@ class AlphaVantageProvider(StockDataProvider):
             return result
 
         except Exception as e:
-            return {"error": str(e)}
+            print(f"[ERROR] AlphaVantageProvider error: {e}")
+            return [{"error": str(e)}]
 
     def get_monthly_close_prices(self, symbol: str) -> Dict[str, Dict[str, float]]:
         """

@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import '../../../data/models/quiz/quiz_question.dart';
 import '../../../data/services/quiz_api.dart';
 import '../../../data/services/auth_api.dart';
@@ -34,18 +37,65 @@ class _QuizQuestionPageState extends State<QuizQuestionPage> {
     _loadQuestions();
   }
 
+  // Future<void> _loadQuestions() async {
+  //   try {
+  //     List<QuizQuestion> questions =
+  //     await _quizService.getQuiz(widget.difficulty);
+  //     setState(() {
+  //       _questions = questions.take(10).toList();
+  //       _isLoading = false;
+  //     });
+  //   } catch (e) {
+  //     print('Failed to load questions: $e');
+  //   }
+  // }
+
   Future<void> _loadQuestions() async {
     try {
-      List<QuizQuestion> questions =
-      await _quizService.getQuiz(widget.difficulty);
+      List<QuizQuestion> questions = await _quizService.getQuiz(widget.difficulty);
       setState(() {
-        _questions = questions.take(10).toList(); // Limit to 10 questions
+        _questions = questions.take(10).toList();
         _isLoading = false;
       });
     } catch (e) {
-      print('Failed to load questions: $e');
+      setState(() {
+        _isLoading = false;
+      });
+
+      if (e is http.Response && e.statusCode == 429) {
+        try {
+          final body = jsonDecode(e.body);
+          final retrySeconds = body['retry_after_seconds'] ?? 30;
+
+          _showErrorDialog("Notice that you can start only one quiz per minute. Please wait $retrySeconds seconds and try again.");
+        } catch (_) {
+          _showErrorDialog("Too many requests. Please try again in a moment.");
+        }
+      } else {
+        _showErrorDialog("Failed to load quiz. Please try again later.");
+      }
     }
   }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text("Error"),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pop(context);
+            },
+            child: const Text("Back"),
+          ),
+        ],
+      ),
+    );
+  }
+
 
   void _toggleAnswer(int index, bool isSelected) {
     final questionId = _questions[_currentIndex].id;
@@ -148,6 +198,16 @@ class _QuizQuestionPageState extends State<QuizQuestionPage> {
         body: Center(child: CircularProgressIndicator()),
       );
     }
+
+    if (_questions.isEmpty) {
+      return Scaffold(
+        appBar: AppBar(title: const Text("Quiz")),
+        body: const Center(
+          child: Text("No questions available."),
+        ),
+      );
+    }
+
 
     final question = _questions[_currentIndex];
     final selected = _selectedAnswers[question.id] ?? {};

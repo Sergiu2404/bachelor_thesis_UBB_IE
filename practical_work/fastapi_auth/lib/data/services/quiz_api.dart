@@ -6,18 +6,8 @@ import 'auth_api.dart';
 
 
 class QuizService {
-  static const String baseUrl = 'http://10.0.2.2:8000/quiz';
-
-  // Future<List<QuizQuestion>> getQuiz(String difficulty) async {
-  //   final response = await http.get(Uri.parse('$baseUrl/$difficulty'));
-  //
-  //   if (response.statusCode == 200) {
-  //     List<dynamic> data = jsonDecode(response.body);
-  //     return data.map((q) => QuizQuestion.fromJson(q)).toList();
-  //   } else {
-  //     throw Exception('Failed to load quiz questions');
-  //   }
-  // }
+  //static const String baseUrl = 'http://10.0.2.2:8000/quiz';
+  static const String baseUrl = 'http://192.168.1.131:8000/quiz';
 
   Future<List<QuizQuestion>> getQuiz(String difficulty) async {
     final token = await AuthService().getToken();
@@ -39,6 +29,8 @@ class QuizService {
       return data.map((q) => QuizQuestion.fromJson(q)).toList();
     } else if (response.statusCode == 401) {
       throw Exception('Unauthorized: Please log in again.');
+    } else if (response.statusCode == 429){
+      throw response;
     } else {
       throw Exception('Failed to load quiz questions (${response.statusCode})');
     }

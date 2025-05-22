@@ -5,7 +5,8 @@ import 'package:fastapi_auth/data/services/auth_api.dart';
 import 'package:http/http.dart' as http;
 
 class StockDataService {
-  static const String baseUrl = 'http://10.0.2.2:8000';
+  //static const String baseUrl = 'http://10.0.2.2:8000';
+  static const String baseUrl = 'http://192.168.1.131:8000';
   final AuthService _authService = AuthService();
 
   Future<StockData> getStockForSymbol(String provider, String symbol) async {

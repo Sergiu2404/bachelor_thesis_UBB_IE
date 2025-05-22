@@ -8,22 +8,83 @@ from data.dtos.buy_sell_requests import BuySellStockRequest
 from data.models.portfolio_company import PortfolioCompany
 
 
+# class PortfolioService:
+#     @staticmethod
+#     async def get_current_stock_price(symbol: str) -> float:
+#         try:
+#             stock_data = yahoo_finance_api.Ticker(symbol)
+#             print(f"get_current_stock_price: {stock_data.history(period='1d')['Close'].iloc[-1]}")
+#             return float(stock_data.history(period='1d')['Close'].iloc[-1])
+#         except Exception:
+#             raise HTTPException(status_code=500, detail=f"Failed to fetch price for {symbol}")
+#
+#     @staticmethod
+#     async def get_company_name(symbol: str) -> str:
+#         try:
+#             stock_data = yahoo_finance_api.Ticker(symbol)
+#             return stock_data.info.get("longName", "N/A")
+#         except Exception:
+#             raise HTTPException(status_code=500, detail=f"Failed to fetch company name for {symbol}")
+
+
+from yahooquery import Ticker
+import yfinance as yf
+import pandas as pd
+from fastapi import HTTPException
+
 class PortfolioService:
     @staticmethod
     async def get_current_stock_price(symbol: str) -> float:
+        # 1. Try yfinance
         try:
-            stock_data = yahoo_finance_api.Ticker(symbol)
-            print(f"get_current_stock_price: {stock_data.history(period='1d')['Close'].iloc[-1]}")
-            return float(stock_data.history(period='1d')['Close'].iloc[-1])
-        except Exception:
+            print(f"[INFO] Trying yfinance.download for {symbol}")
+            df = yf.download(symbol, period="1d")
+            if not df.empty:
+                price = float(df["Close"].iloc[-1])
+                print(f"[SUCCESS] yfinance price for {symbol}: {price}")
+                return price
+            else:
+                raise Exception("Empty data from yfinance")
+        except Exception as e:
+            print(f"[WARNING] yfinance failed: {e}")
+
+        # 2. Try yahooquery
+        try:
+            print(f"[INFO] Trying yahooquery for {symbol}")
+            ticker = Ticker(symbol)
+            price_info = ticker.price.get(symbol)
+            if price_info and "regularMarketPrice" in price_info:
+                price = float(price_info["regularMarketPrice"])
+                print(f"[SUCCESS] yahooquery price for {symbol}: {price}")
+                return price
+            else:
+                raise Exception("regularMarketPrice not found")
+        except Exception as e:
+            print(f"[ERROR] yahooquery failed: {e}")
             raise HTTPException(status_code=500, detail=f"Failed to fetch price for {symbol}")
 
     @staticmethod
     async def get_company_name(symbol: str) -> str:
+        # 1. Try yfinance
         try:
-            stock_data = yahoo_finance_api.Ticker(symbol)
-            return stock_data.info.get("longName", "N/A")
-        except Exception:
+            print(f"[INFO] Trying yfinance.Ticker.info for {symbol}")
+            info = yf.Ticker(symbol).info
+            name = info.get("longName", "N/A")
+            print(f"[SUCCESS] yfinance company name for {symbol}: {name}")
+            return name
+        except Exception as e:
+            print(f"[WARNING] yfinance failed for company name: {e}")
+
+        # 2. Try yahooquery
+        try:
+            print(f"[INFO] Trying yahooquery for company name of {symbol}")
+            ticker = Ticker(symbol)
+            info = ticker.price.get(symbol)
+            name = info.get("longName") or info.get("shortName") or "N/A"
+            print(f"[SUCCESS] yahooquery company name: {name}")
+            return name
+        except Exception as e:
+            print(f"[ERROR] yahooquery failed for company name: {e}")
             raise HTTPException(status_code=500, detail=f"Failed to fetch company name for {symbol}")
 
     @staticmethod

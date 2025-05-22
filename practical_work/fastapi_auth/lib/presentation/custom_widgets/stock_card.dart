@@ -24,19 +24,43 @@ class StockCard extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: ListTile(
           contentPadding: EdgeInsets.zero, // Removes default padding
+          // title: Row(
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   children: [
+          //     Text(
+          //       companyName,
+          //       style: const TextStyle(
+          //         fontWeight: FontWeight.bold,
+          //         fontSize: 16,
+          //       ),
+          //       overflow: TextOverflow.ellipsis,
+          //     ),
+          //     const SizedBox(width: 8),
+          //     Flexible(
+          //       child: Text(
+          //         symbol,
+          //         style: Theme.of(context).textTheme.bodyMedium,
+          //         overflow: TextOverflow.ellipsis,
+          //       ),
+          //     ),
+          //   ],
+          // ),
           title: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                companyName,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
+              Expanded(
+                flex: 2,
+                child: Text(
+                  companyName,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
-                overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(width: 8),
-              Flexible(
+              Expanded(
+                flex: 1,
                 child: Text(
                   symbol,
                   style: Theme.of(context).textTheme.bodyMedium,
@@ -45,6 +69,7 @@ class StockCard extends StatelessWidget {
               ),
             ],
           ),
+
           trailing: Text(
             '\$${price.toStringAsFixed(2)}',
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(

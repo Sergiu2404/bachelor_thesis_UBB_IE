@@ -43,10 +43,12 @@ async def get_stocks_data_for_symbol_substring(provider: str, symbol_substr: str
 async def get_monthly_stock_data(provider: str, symbol: str, current_user: User = Depends(get_current_user)):
     try:
         stock_provider = get_provider(provider)
+        print(f"got provider {stock_provider}")
         if not stock_provider:
             raise HTTPException(status_code=400, detail="Invalid provider, only 'yahoo' or 'alpha' providers supported for now")
 
         service = StockDataService(stock_provider)
+        print("service created")
         return service.get_monthly_prices(symbol)
     except Exception as e:
         raise HTTPException(

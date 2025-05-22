@@ -85,7 +85,9 @@ class _LoginScreenState extends State<LoginScreen> {
           password: _passwordController.text,
         );
         if (token != null) {
-          Navigator.pushReplacementNamed(context, '/home');
+          final user = await _authService.getCurrentUser();
+          //Navigator.pushReplacementNamed(context, '/home');
+          Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
         }
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(

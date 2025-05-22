@@ -55,7 +55,7 @@ class _WelcomePageState extends State<WelcomePage> {
       const SizedBox(height: 40),
       ElevatedButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/login');
+          Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
         },
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
@@ -76,7 +76,7 @@ class _WelcomePageState extends State<WelcomePage> {
       const SizedBox(height: 20),
       ElevatedButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/register');
+          Navigator.pushNamedAndRemoveUntil(context, '/register', (route) => false);
         },
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),

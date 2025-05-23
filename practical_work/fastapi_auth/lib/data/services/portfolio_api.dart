@@ -6,7 +6,8 @@ import 'package:fastapi_auth/data/services/auth_api.dart';
 
 class PortfolioService{
   //static const String baseUrl = 'http://10.0.2.2:8000/portfolio';
-  static const String baseUrl = 'http://192.168.1.131:8000/portfolio';
+  //static const String baseUrl = 'http://192.168.1.131:8000/portfolio';
+  static const String baseUrl = 'http://192.168.51.118:8000/portfolio'; // phone hotspot
   final AuthService _authService = AuthService();
 
   Future<List<PortfolioCompany>> getPortfolioForUser() async {

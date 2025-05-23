@@ -1,135 +1,3 @@
-# from fastapi import FastAPI, Query
-# import yfinance as yf
-# import pandas as pd
-# import numpy as np
-# import torch
-# import torch.nn as nn
-# from torch.utils.data import DataLoader, TensorDataset
-# from sklearn.preprocessing import MinMaxScaler
-# from datetime import timedelta
-#
-#
-# app = FastAPI()
-#
-# class LSTMPredictor(nn.Module):
-#     def __init__(self, input_size, hidden_size=128):
-#         super().__init__()
-#         self.lstm1 = nn.LSTM(input_size, hidden_size, batch_first=True)
-#         self.dropout1 = nn.Dropout(0.2)
-#         self.lstm2 = nn.LSTM(hidden_size, hidden_size, batch_first=True)
-#         self.dropout2 = nn.Dropout(0.2)
-#         self.fc = nn.Linear(hidden_size, 1)
-#
-#     def forward(self, x):
-#         x, _ = self.lstm1(x)
-#         x = self.dropout1(x)
-#         x, _ = self.lstm2(x)
-#         x = self.dropout2(x)
-#         return self.fc(x[:, -1, :])
-#
-#
-# class LSTMWrapper:
-#     def __init__(self, model, x_scaler, y_scaler):
-#         self.model = model
-#         self.x_scaler = x_scaler
-#         self.y_scaler = y_scaler
-#         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-#
-#     def predict(self, X):
-#         X_scaled = self.x_scaler.transform(X.reshape(-1, X.shape[2])).reshape(X.shape)
-#         X_tensor = torch.tensor(X_scaled, dtype=torch.float32).to(self.device)
-#         self.model.eval()
-#         with torch.no_grad():
-#             preds = self.model(X_tensor).cpu().numpy()
-#         return self.y_scaler.inverse_transform(preds)
-#
-# def get_stock_data(ticker: str, period="2y"):
-#     df = yf.download(ticker, period=period)
-#     return df[['Close']].dropna()
-#
-#
-# def create_dataset(data, time_steps=15):
-#     X, y = [], []
-#     for i in range(len(data) - time_steps):
-#         X.append(data[i:i + time_steps])
-#         y.append(data[i + time_steps])
-#     return np.array(X), np.array(y)
-#
-# def train_model(X, y):
-#     x_scaler = MinMaxScaler()
-#     y_scaler = MinMaxScaler()
-#
-#     X_scaled = x_scaler.fit_transform(X.reshape(-1, 1)).reshape(X.shape)
-#     y_scaled = y_scaler.fit_transform(y.reshape(-1, 1))
-#
-#     X_tensor = torch.tensor(X_scaled, dtype=torch.float32)
-#     y_tensor = torch.tensor(y_scaled, dtype=torch.float32)
-#
-#     dataset = TensorDataset(X_tensor, y_tensor)
-#     dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
-#
-#     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-#     model = LSTMPredictor(input_size=1).to(device)
-#     criterion = nn.MSELoss()
-#     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
-#
-#     model.train()
-#     for epoch in range(20):
-#         for X_batch, y_batch in dataloader:
-#             X_batch, y_batch = X_batch.to(device), y_batch.to(device)
-#             optimizer.zero_grad()
-#             output = model(X_batch)
-#             loss = criterion(output, y_batch)
-#             loss.backward()
-#             optimizer.step()
-#
-#     return LSTMWrapper(model, x_scaler, y_scaler)
-#
-# def predict_next_days(model_wrapper, last_data, days=10, time_steps=15):
-#     predictions = []
-#     current_sequence = last_data[-time_steps:]
-#
-#     for _ in range(days):
-#         input_seq = current_sequence.reshape(1, time_steps, 1)
-#         next_price = model_wrapper.predict(input_seq)[0][0]
-#         predictions.append(next_price)
-#         current_sequence = np.append(current_sequence[1:], [[next_price]], axis=0)
-#
-#     return predictions
-#
-# @app.get("/predict_stock/")
-# async def predict_stock(ticker: str = Query(..., description="Stock ticker symbol")):
-#     try:
-#         df = get_stock_data(ticker)
-#         data = df['Close'].values.reshape(-1, 1)
-#         time_steps = 15
-#
-#         X, y = create_dataset(data, time_steps)
-#         model_wrapper = train_model(X, y)
-#
-#         future_prices = predict_next_days(model_wrapper, data, days=10, time_steps=time_steps)
-#         future_dates = pd.date_range(start=df.index[-1] + timedelta(days=1), periods=10, freq='B')
-#
-#         return {
-#             "ticker": ticker.upper(),
-#             "predictions": [
-#                 {"date": str(date.date()), "predicted_close": round(float(price), 2)}
-#                 for date, price in zip(future_dates, future_prices)
-#             ]
-#         }
-#     except Exception as e:
-#         return {"error": str(e)}
-#
-# @app.get("/")
-# async def root():
-#     return {"message": "Hello World"}
-#
-#
-# @app.get("/hello/{name}")
-# async def say_hello(name: str):
-#     return {"message": f"Hello {name}"}
-
-
 from fastapi import FastAPI, Query
 import yfinance as yf
 import pandas as pd
@@ -142,80 +10,73 @@ from datetime import timedelta
 
 app = FastAPI()
 
-
-class FastLSTM(nn.Module):
-    def __init__(self, hidden_size=64):
-        super().__init__()
-        self.lstm = nn.LSTM(input_size=1, hidden_size=hidden_size, batch_first=True)
+class LSTMPredictor(nn.Module):
+    def __init__(self, input_size, hidden_size=128):
+        super(LSTMPredictor, self).__init__()
+        self.lstm1 = nn.LSTM(input_size, hidden_size, batch_first=True)
+        self.dropout1 = nn.Dropout(0.3)
+        self.lstm2 = nn.LSTM(hidden_size, hidden_size, batch_first=True)
+        self.dropout2 = nn.Dropout(0.2)
         self.fc = nn.Linear(hidden_size, 1)
 
     def forward(self, x):
-        lstm_out, _ = self.lstm(x)
-        x = self.fc(lstm_out[:, -1, :])
-        return x
-
+        out, _ = self.lstm1(x)
+        out = self.dropout1(out)
+        out, _ = self.lstm2(out)
+        out = self.dropout2(out)
+        out = self.fc(out[:, -1, :])
+        return out
 
 class LSTMWrapper:
-    def __init__(self, model, x_scaler, y_scaler):
-        self.model = model
+    def __init__(self, lstm_model, x_scaler, y_scaler, device):
+        self.model = lstm_model
         self.x_scaler = x_scaler
         self.y_scaler = y_scaler
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = device
 
     def predict(self, X):
-        X_scaled = self.x_scaler.transform(X.reshape(-1, 1)).reshape(X.shape)
+        X_scaled = self.x_scaler.transform(X.reshape(-1, X.shape[2])).reshape(X.shape)
         X_tensor = torch.tensor(X_scaled, dtype=torch.float32).to(self.device)
         self.model.eval()
         with torch.no_grad():
             preds = self.model(X_tensor).cpu().numpy()
         return self.y_scaler.inverse_transform(preds)
 
-
 def get_stock_data(ticker: str, period="2y"):
     df = yf.download(ticker, period=period)
-    return df[['Close']].dropna()
+    df['Return'] = df['Close'].pct_change()
+    df['Volatility'] = df['Return'].rolling(window=10).std()
+    df = df[['Close', 'Volume', 'Volatility']].dropna()
+    return df
 
-
-def create_dataset(data, time_steps=30):
+def create_dataset(data, time_steps=20):
     X, y = [], []
     for i in range(len(data) - time_steps):
         X.append(data[i:i + time_steps])
-        y.append(data[i + time_steps])
+        y.append(data[i + time_steps, 0])
     return np.array(X), np.array(y)
 
-
-def add_noise_to_predictions(predictions, volatility_factor=0.02):
-    noise = np.random.normal(0, predictions.mean() * volatility_factor, size=predictions.shape)
-    return predictions + noise
-
-
-def train_model(X, y):
-    x_scaler = MinMaxScaler()
+def train_lstm_model(X, y):
+    X_scaler = MinMaxScaler()
     y_scaler = MinMaxScaler()
 
-    X_scaled = x_scaler.fit_transform(X.reshape(-1, 1)).reshape(X.shape)
+    X_scaled = X_scaler.fit_transform(X.reshape(-1, X.shape[2])).reshape(X.shape)
     y_scaled = y_scaler.fit_transform(y.reshape(-1, 1))
 
     X_tensor = torch.tensor(X_scaled, dtype=torch.float32)
     y_tensor = torch.tensor(y_scaled, dtype=torch.float32)
 
-    dataset = TensorDataset(X_tensor, y_tensor)
-
-    # Use 50% of data for faster training
-    indices = np.random.choice(len(dataset), size=len(dataset) // 2, replace=False)
-    dataset = torch.utils.data.Subset(dataset, indices)
-
-    dataloader = DataLoader(dataset, batch_size=128, shuffle=True)
+    train_dataset = TensorDataset(X_tensor, y_tensor)
+    train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model = FastLSTM(hidden_size=64).to(device)
-
+    model = LSTMPredictor(input_size=X.shape[2]).to(device)
     criterion = nn.MSELoss()
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.005)
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.001, weight_decay=1e-5)
 
     model.train()
-    for epoch in range(15):
-        for X_batch, y_batch in dataloader:
+    for epoch in range(20):
+        for X_batch, y_batch in train_loader:
             X_batch, y_batch = X_batch.to(device), y_batch.to(device)
             optimizer.zero_grad()
             output = model(X_batch)
@@ -223,65 +84,104 @@ def train_model(X, y):
             loss.backward()
             optimizer.step()
 
-    return LSTMWrapper(model, x_scaler, y_scaler)
+    return LSTMWrapper(model, X_scaler, y_scaler, device)
 
-
-def predict_next_days(model_wrapper, last_data, days=10, time_steps=30):
+def predict_next_n_days(model_wrapper, last_sequence, days=10, time_steps=20):
     predictions = []
-    current_sequence = last_data[-time_steps:].copy()
-
     for _ in range(days):
-        input_seq = current_sequence.reshape(1, time_steps, 1)
-        next_price = model_wrapper.predict(input_seq)[0][0]
-        predictions.append(next_price)
-        current_sequence = np.append(current_sequence[1:], [[next_price]], axis=0)
+        input_seq = last_sequence.reshape(1, time_steps, -1)
+        next_pred = model_wrapper.predict(input_seq)
 
-    predictions = np.array(predictions).reshape(-1, 1)
+        predicted_price = max(next_pred[0][0], 0.001) # minimum threshold
+        predictions.append(predicted_price)
 
-    # Calculate momentum factor from recent prices
-    price_diff = (current_sequence[-1, 0] - current_sequence[-7, 0]) / current_sequence[-7, 0]
-    momentum = 1 + (price_diff * 0.5)
+        next_row = np.array([predicted_price, last_sequence[-1, 1], last_sequence[-1, 2]])
+        last_sequence = np.vstack([last_sequence[1:], next_row])
+    return predictions
 
-    # Apply momentum to predictions to maintain trends
-    predictions = predictions * momentum
 
-    # Add controlled noise to predictions for realism
-    predictions = add_noise_to_predictions(predictions)
+def apply_daily_volatility_with_trend_conservation(predicted_prices, seed=None, pct_range=(0, 0.01)):
+    if seed is not None:
+        np.random.seed(seed)
 
-    return predictions.flatten()
+    predicted_prices = np.array(predicted_prices)
+    print(predicted_prices)
+    adjusted_prices = [max(predicted_prices[0], np.random.uniform(0.0001, 0.001))]
+    print(adjusted_prices)
+
+    for i in range(1, len(predicted_prices)):
+        prev = adjusted_prices[-1]
+        predicted_diff = predicted_prices[i] - predicted_prices[i - 1]
+
+        trend = np.sign(predicted_diff)
+
+        if trend == 0:
+            trend = np.random.choice([-1, 1])
+
+        percentage_change = np.random.uniform(*pct_range)
+        new_price = prev * (1 + trend * percentage_change)
+
+        new_price = max(new_price, np.random.uniform(0.0001, 0.001))  # minimum threshold
+        adjusted_prices.append(new_price)
+
+    return adjusted_prices
+
+def apply_sentiment_adjustment(prices, sentiment_credibility_adjusted_score, decay_rate=0.5):
+    sentiment_percentage = sentiment_credibility_adjusted_score / 10
+    adjusted_prices = []
+
+    for i in range(len(prices)):
+        decay = decay_rate ** i  # 1.0, 0.5, 0.25, ...
+
+        adjustment_factor = 1 + sentiment_percentage * decay
+
+        if i == 0:
+            new_price = prices[0] * adjustment_factor
+        else:
+            new_price = adjusted_prices[-1] * adjustment_factor
+
+            raw_trend = np.sign(prices[i] - prices[i - 1])
+            new_trend = np.sign(new_price - adjusted_prices[-1])
+
+            if raw_trend != new_trend and raw_trend != 0:
+                adjustment_factor = 1 - sentiment_percentage * decay
+                new_price = adjusted_prices[-1] * adjustment_factor
+
+        new_price = max(new_price, np.random.uniform(0.0001, 0.001))
+        adjusted_prices.append(new_price)
+
+    return adjusted_prices
 
 
 @app.get("/predict_stock/")
-async def predict_stock(ticker: str = Query(..., description="Stock ticker symbol")):
+async def predict_stock(
+        ticker: str = Query(..., description="Stock ticker symbol"),
+        adjusted_sentiment_credibility_score: float = Query(..., description="Sentiment score in interval (-1, 1)")
+        ):
     try:
+        time_steps = 20
         df = get_stock_data(ticker)
-        data = df['Close'].values.reshape(-1, 1)
-        time_steps = 30
+        values = df.values
+        X, y = create_dataset(values, time_steps)
+        model_wrapper = train_lstm_model(X, y)
 
-        X, y = create_dataset(data, time_steps)
-        model_wrapper = train_model(X, y)
+        last_sequence = values[-time_steps:]
+        predicted_prices = predict_next_n_days(model_wrapper, last_sequence, days=10, time_steps=time_steps)
 
-        future_prices = predict_next_days(
-            model_wrapper,
-            data,
-            days=10,
-            time_steps=time_steps
-        )
+        sentiment_adjusted_prices = apply_sentiment_adjustment(predicted_prices, adjusted_sentiment_credibility_score)
+        adjusted_volatility_prices = apply_daily_volatility_with_trend_conservation(sentiment_adjusted_prices)
 
-        future_dates = pd.date_range(start=df.index[-1] + timedelta(days=1), periods=15, freq='B')[:10]
-
-        historical_dates = [str(date.date()) for date in df.index[-20:]]
+        last_date = df.index[-1]
+        future_dates = [(last_date + timedelta(days=i + 1)) for i in range(10)]
 
         return {
             "ticker": ticker.upper(),
+            "raw_predictions": [round(float(price), 2) for price in predicted_prices],
+            "sentiment_predictions": [round(float(price), 2) for price in sentiment_adjusted_prices],
             "predictions": [
                 {"date": str(date.date()), "predicted_close": round(float(price), 2)}
-                for date, price in zip(future_dates, future_prices)
-            ],
-            "historical": {
-                "dates": historical_dates,
-                "prices": [round(float(price), 2) for price in df['Close'].iloc[-20:].values]
-            }
+                for date, price in zip(future_dates, adjusted_volatility_prices)
+            ]
         }
     except Exception as e:
         return {"error": str(e)}

@@ -35,7 +35,7 @@ from fastapi import HTTPException
 class PortfolioService:
     @staticmethod
     async def get_current_stock_price(symbol: str) -> float:
-        # 1. Try yfinance
+        # yfinance
         try:
             print(f"[INFO] Trying yfinance.download for {symbol}")
             df = yf.download(symbol, period="1d")
@@ -48,7 +48,7 @@ class PortfolioService:
         except Exception as e:
             print(f"[WARNING] yfinance failed: {e}")
 
-        # 2. Try yahooquery
+        # yahooquery
         try:
             print(f"[INFO] Trying yahooquery for {symbol}")
             ticker = Ticker(symbol)

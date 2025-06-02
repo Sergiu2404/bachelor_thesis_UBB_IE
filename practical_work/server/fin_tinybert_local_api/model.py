@@ -2,10 +2,6 @@ from transformers import AutoModel, AutoConfig
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from transformers import AutoModel, AutoConfig
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
 
 class TinyFinBERTRegressor(nn.Module):
     def __init__(self, pretrained_model='huawei-noah/TinyBERT_General_4L_312D'):

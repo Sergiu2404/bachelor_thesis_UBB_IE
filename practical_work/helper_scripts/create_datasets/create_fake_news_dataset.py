@@ -10,17 +10,34 @@ import spacy
 nlp = spacy.load("en_core_web_sm", disable=["parser", "ner"])
 
 low_credibility_words = [
-    "sources say", "rumor", "allegedly", "anonymous", "unofficial", "unconfirmed", "purported",
+    "rumor", "allegedly", "anonymous", "unofficial", "unconfirmed", "purported",
     "exclusive", "breaking", "shocking", "sensational", "bombshell", "secret", "insider",
     "revealed", "expose", "scandal", "controversy", "leaked", "unnamed", "confidential",
     "unverified", "speculated", "guessed", "hinted", "suggested", "might", "could", "may",
-    "supposedly", "enormous", "massive", "tremendous", "huge", "meltdown", "catastrophe",
+    "supposedly", "enormous", "massive", "tremendous", "huge", "meltdown", "catastrophe", "leaked",
     "extraordinary", "unprecedented", "unlikely", "rare", "miracle", "magic", "revolutionary",
-    "groundbreaking", "game-changing", "insiders", "sources close to", "conspiracy",
+    "groundbreaking", "game-changing", "insiders", "sources close to", "conspiracy", "unknown", "unchecked"
     "viral", "trending", "buzz", "explosive", "radical", "extreme", "mysterious", "hidden",
     "secret", "undisclosed", "controversial", "suspicious", "shady", "skeptical", "questionable",
     "clickbait", "misleading", "exaggerated", "fabricated", "distorted", "manipulated", "false",
-    "fake", "hoax", "dubious", "unsubstantiated", "baseless", "unfounded", "gossip", "hearsay", "guru"
+    "fake", "hoax", "dubious", "unsubstantiated", "baseless", "unfounded", "gossip", "hearsay", "guru",
+    "anonymous", "leaked", "unnamed", "unconfirmed", "allegedly", "purported", "unverified", "unauthenticated",
+    "disputed", "fabricated", "unofficial", "dubious", "baseless", "speculative", "shady", "questionable",
+    "rumored", "unacknowledged", "unsupported", "hidden", "secret", "obscure", "clandestine", "forbidden",
+    "banned", "censored", "restricted", "blacklisted", "shadowy", "mysterious", "covert", "illicit", "plausible",
+    "assumed", "suggested", "hinted", "whispered", "uncertain", "unbacked", "guessed", "implied", "estimated",
+    "contested", "unauthorized", "invisible", "cryptic", "hazy", "vague", "unknown", "obscured", "blurred",
+    "hypothetical", "fictional", "theoretical", "provisional", "tentative", "inconclusive", "ambiguous", "allegoric",
+    "imaginary", "rumored", "miraculous", "mythical", "misleading", "exaggerated", "clickbait", "viral",
+    "controversial", "divisive", "manipulated", "twisted", "deceptive", "falsified", "tampered", "staged", "hoax",
+    "scam", "phony", "bogus", "pseudo", "false", "fraudulent", "counterfeit", "planted", "setup", "scheme",
+    "gimmick", "ruse", "plot", "ploy", "conspiracy", "misrepresented", "outlandish", "unrealistic", "absurd",
+    "fantastical", "unbelievable", "fabrication", "invention"
+]
+
+nouns = [
+    "sources", "experts", "reports", "claims", "documents", "evidence", "leaks", "stories", "accounts", "statements",
+    "information", "theory", "allegations", "channel", "witness", "post", "comment", "headline", "message", "statement"
 ]
 
 high_credibility_words = [
@@ -51,7 +68,7 @@ low_credibility_phrases = [
     "unidentified officials say", "sources close to the situation", "leaked information indicates",
     "exclusive bombshell report", "shocking revelation", "unnamed experts warn", "I heard", "We heard", "This guy on Reddit said",
     "controversial theory suggests", "suspicious activity detected", "hidden agenda revealed", "Everyone’s talking about",
-    "secret documents expose", "dramatic shift in", "mainstream media won't tell you",
+    "secret documents expose", "dramatic shift in", "mainstream media won't tell you", "unknown sources",
     "what they don't want you to know", "the truth they're hiding", "too big to be coincidence",
     "connecting the dots reveals", "the story they're not telling", "major cover-up exposed",
     "guaranteed investment returns", "insider trading opportunities", "secret investment strategy",
@@ -59,7 +76,7 @@ low_credibility_phrases = [
     "economic collapse imminent", "financial doomsday approaching", "get rich quick with",
     "bypassing financial regulations", "trillion-dollar industry secret", "banks don't want you to know",
     "financial elites panicking over", "money-making scheme revealed", "astronomical profits guaranteed",
-    "financial miracle discovered", "unprecedented market opportunity", "secret wealth transfer"
+    "financial miracle discovered", "unprecedented market opportunity", "secret wealth transfer", "sources say"
 ]
 
 high_credibility_phrases = [
@@ -92,26 +109,6 @@ neutral_credibility_phrases = [
     "fiscal policy discussed", "monetary strategy outlined", "economic forecast presented"
 ]
 
-hedging_phrases = [
-    "might be", "could potentially", "perhaps indicates", "possibly suggests",
-    "seems to imply", "appears to show", "allegedly involved in", "reportedly connected to",
-    "rumored to be considering", "speculated to announce", "thought to be preparing",
-    "believed to be planning", "expected by some to", "predicted by certain analysts",
-    "estimated by unofficial sources", "hinted at by insiders", "suggested by anonymous sources",
-    "implied by market movements", "indicated by unusual activity", "theorized by some experts"
-]
-
-precise_attribution = [
-    "according to the quarterly financial report", "as stated by the CEO during the earnings call",
-    "reported in the SEC filing dated", "confirmed by the Chief Financial Officer",
-    "documented in the annual shareholder meeting", "presented in the audited financial statements",
-    "disclosed in company press release number", "verified by external auditor",
-    "published in the regulatory disclosure", "announced by the Board of Directors",
-    "outlined in the investor presentation", "detailed in the Form 10-K",
-    "specified in the merger agreement", "calculated based on public financial data",
-    "derived from official government statistics", "compiled from mandatory disclosures"
-]
-
 sensationalist_phrases = [
     "financial disaster",
     "devastating losses", "market bloodbath", "economic nightmare",
@@ -121,18 +118,6 @@ sensationalist_phrases = [
     "explosive growth", "astronomical profits", "massive windfall", "unbelievable returns",
     "incredible opportunity", "spectacular gains", "extraordinary performance", "revolutionary product",
     "game-changing innovation", "paradigm-shifting development"
-]
-
-balanced_phrases = [
-    "mixed quarterly results", "both positive and negative factors", "advantages and limitations",
-    "strengths and weaknesses", "opportunities and challenges", "benefits and drawbacks",
-    "profits in some sectors, losses in others", "promising yet cautious outlook",
-    "moderate growth with concerns", "partial success with ongoing issues",
-    "progress despite obstacles", "improvement with persistent challenges",
-    "recovery alongside continued risks", "gains tempered by setbacks",
-    "optimistic forecast with caveats", "encouraging signs with notable exceptions",
-    "strategic vision with implementation hurdles", "competitive advantage with market constraints",
-    "innovative approach with adoption challenges", "cost savings offset by new expenses"
 ]
 
 tricky_low_credibility = [
@@ -152,19 +137,19 @@ def lemmatize_phrase(text):
     return ' '.join([token.lemma_ for token in doc if token.lemma_.strip()])
 
 
-def low_score(): return round(random.uniform(0.01, 0.3), 2)
+def low_score(): return round(random.uniform(0.01, 0.2), 2)
 
 
-def medium_low_score(): return round(random.uniform(0.3, 0.45), 2)
+def medium_low_score(): return round(random.uniform(0.2, 0.45), 2)
 
 
 def neutral_score(): return round(random.uniform(0.45, 0.55), 2)
 
 
-def medium_high_score(): return round(random.uniform(0.55, 0.7), 2)
+def medium_high_score(): return round(random.uniform(0.55, 0.8), 2)
 
 
-def high_score(): return round(random.uniform(0.7, 0.99), 2)
+def high_score(): return round(random.uniform(0.8, 0.99), 2)
 
 
 dataset = []
@@ -189,20 +174,15 @@ for phrase in low_credibility_phrases:
     for _ in range(10):
         dataset.append((phrase, low_score()))
 
-for phrase in high_credibility_phrases:
-    phrase = lemmatize_phrase(phrase)
-    for _ in range(10):
-        dataset.append((phrase, high_score()))
+# for phrase in high_credibility_phrases:
+#     phrase = lemmatize_phrase(phrase)
+#     for _ in range(10):
+#         dataset.append((phrase, high_score()))
 
 # for phrase in neutral_credibility_phrases:
 #     phrase = lemmatize_phrase(phrase)
 #     for _ in range(5):
 #         dataset.append((phrase, neutral_score()))
-
-for phrase in hedging_phrases:
-    phrase = lemmatize_phrase(phrase)
-    for _ in range(5):
-        dataset.append((phrase, medium_low_score()))
 
 # for phrase in precise_attribution:
 #     phrase = lemmatize_phrase(phrase)
@@ -214,15 +194,21 @@ for phrase in sensationalist_phrases:
     for _ in range(10):
         dataset.append((phrase, low_score()))
 
-for phrase in balanced_phrases:
-    phrase = lemmatize_phrase(phrase)
-    for _ in range(10):
-        dataset.append((phrase, high_score()))
-
 for phrase in tricky_low_credibility:
     phrase = lemmatize_phrase(phrase)
     for _ in range(10):
         dataset.append((phrase, low_score()))
+
+for attr in set(low_credibility_words):
+    for noun in nouns:
+        phrase = lemmatize_phrase(f"{attr} {noun}")
+        for _ in range(3):
+            dataset.append((phrase, low_score()))
+
+for phrase in neutral_credibility_phrases:
+    for attr in list(set(low_credibility_words))[:10]:
+        modified_phrase = lemmatize_phrase(f"{attr} {phrase}")
+        dataset.append((modified_phrase, low_score()))
 
 combined_examples = []
 
@@ -270,53 +256,6 @@ for source in high_sources:
         combined = lemmatize_phrase(combined)
         dataset.append((combined, medium_high_score()))
 
-low_credibility_headlines = [
-    f"BREAKING: {random.choice(['Secret', 'Shocking', 'Explosive', 'Bombshell'])} Report Reveals {random.choice(['Massive', 'Huge', 'Enormous'])} {random.choice(['Scandal', 'Cover-up', 'Conspiracy'])} at Major Bank",
-    f"{random.choice(['Insiders', 'Anonymous Sources', 'Whistleblowers'])} Claim {random.choice(['Leading', 'Major', 'Prominent'])} Tech Company is Hiding Significant Losses",
-    f"EXCLUSIVE: {random.choice(['Leaked', 'Confidential', 'Secret'])} Documents Show {random.choice(['Impending', 'Imminent', 'Looming'])} Financial Collapse",
-    f"Market Guru Predicts {random.choice(['Spectacular', 'Incredible', 'Unprecedented'])} 500% Gains in This {random.choice(['Unknown', 'Secret', 'Hidden'])} Stock",
-    f"Financial Elite {random.choice(['Panicking', 'Worried', 'Terrified'])} as {random.choice(['Revolutionary', 'Game-changing', 'Disruptive'])} New Cryptocurrency {random.choice(['Soars', 'Explodes', 'Skyrockets'])}"
-]
-
-high_credibility_headlines = [
-    f"{random.choice(['Annual', 'Quarterly', 'Monthly'])} Economic Report Shows {random.choice(['Moderate', 'Steady', 'Consistent'])} Growth in Manufacturing Sector",
-    f"{random.choice(['Federal Reserve', 'SEC', 'Treasury Department'])} Announces {random.choice(['New', 'Updated', 'Revised'])} Financial Regulations After Public Consultation",
-    f"Company Reports {random.choice(['Q1', 'Q2', 'Q3', 'Q4'])} Earnings: Revenue {random.choice(['Up', 'Down', 'Flat'])} 3.2%, Expenses {random.choice(['Increased', 'Decreased', 'Stable'])} by 2.1%",
-    f"International Trade Organization Data Shows {random.choice(['Improvement', 'Decline', 'Stability'])} in Cross-Border Logistics Efficiency",
-    f"Market Analysis: {random.choice(['Sector', 'Industry', 'Market'])} Performance Varies as {random.choice(['Economic Indicators', 'Leading Indicators', 'Financial Metrics'])} Show Mixed Results"
-]
-
-for headline in low_credibility_headlines:
-    headline = lemmatize_phrase(headline)
-    dataset.append((headline, low_score()))
-
-# for headline in high_credibility_headlines:
-#     headline = lemmatize_phrase(headline)
-#     dataset.append((headline, high_score()))
-
-low_credibility_stories = [
-    f"{random.choice(low_sources)} that a {random.choice(['leading', 'major', 'prominent'])} tech company is hiding significant losses, with {random.choice(['insiders', 'sources', 'experts'])} hinting at an impending bankruptcy.",
-    f"{random.choice(['Shocking', 'Exclusive', 'Breaking'])} report reveals that investors could make {random.choice(['enormous', 'massive', 'spectacular'])} profits with this {random.choice(['little-known', 'secret', 'overlooked'])} investment strategy.",
-    f"Market {random.choice(['guru', 'wizard', 'genius'])} predicts that the stock market will either {random.choice(['crash spectacularly', 'soar to unprecedented heights', 'experience extreme volatility'])} in the coming weeks.",
-    f"{random.choice(['Controversial', 'Mysterious', 'Shadowy'])} financial group claims to have discovered a {random.choice(['foolproof', 'guaranteed', 'perfect'])} method to predict market movements with 100% accuracy.",
-    f"The financial establishment doesn't want you to know about this {random.choice(['revolutionary', 'game-changing', 'groundbreaking'])} investment that could {random.choice(['make you rich overnight', 'transform your financial future', 'guarantee enormous returns'])}"
-]
-
-high_credibility_stories = [
-    f"{random.choice(high_sources)}, the company reported a {random.choice(['5.3%', '2.7%', '3.9%'])} increase in quarterly revenue, while operating expenses {random.choice(['rose by 2.1%', 'fell by 1.8%', 'remained stable'])}, compared to the same period last year.",
-    f"According to the {random.choice(['annual financial report', 'audited statements', 'regulatory filing'])}, the bank increased its loan loss provisions by {random.choice(['12%', '8%', '15%'])} in anticipation of economic headwinds in the coming fiscal year.",
-    f"The {random.choice(['Federal Reserve', 'Central Bank', 'Treasury'])} announced a {random.choice(['25', '50', '75'])} basis point {random.choice(['increase', 'decrease', 'adjustment'])} to interest rates, citing {random.choice(['inflation concerns', 'employment data', 'economic indicators'])} as the primary factor.",
-    f"Industry analysis based on {random.choice(['market data', 'sector performance', 'financial metrics'])} shows that the {random.choice(['technology', 'healthcare', 'energy'])} sector has outperformed the broader market by {random.choice(['3.7%', '2.9%', '4.2%'])} year-to-date.",
-    f"A {random.choice(['comprehensive study', 'detailed analysis', 'systematic review'])} of economic indicators suggests that {random.choice(['consumer spending', 'business investment', 'export activity'])} may {random.choice(['increase moderately', 'decline slightly', 'remain stable'])} in the coming quarter."
-]
-
-for story in low_credibility_stories:
-    story = lemmatize_phrase(story)
-    dataset.append((story, low_score()))
-
-# for story in high_credibility_stories:
-#     story = lemmatize_phrase(story)
-#     dataset.append((story, high_score()))
 
 print(f"Dataset size: {len(dataset)}")
 random.shuffle(dataset)

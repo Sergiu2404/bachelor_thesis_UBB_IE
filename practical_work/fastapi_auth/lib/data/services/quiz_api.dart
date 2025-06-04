@@ -8,7 +8,7 @@ import 'auth_api.dart';
 class QuizService {
   //static const String baseUrl = 'http://10.0.2.2:8000/quiz';
   //static const String baseUrl = 'http://192.168.1.131:8000/quiz';
-  static const String baseUrl = 'http://192.168.51.118:8000/quiz'; //phone hotspot
+  static const String baseUrl = 'http://192.168.196.118:8000/quiz'; //phone hotspot
 
   Future<List<QuizQuestion>> getQuiz(String difficulty) async {
     final token = await AuthService().getToken();

@@ -51,10 +51,12 @@ async def predict_sentiment(input_text: InputText):
         with torch.no_grad():
             score = model(**inputs)["score"].item()
 
+        print(f"sentiment score {score}")
+
         return {
             "original_text": input_text.text,
             "processed_text": clean_text,
-            "sentiment_score": round(score, 2)
+            "sentiment_score": round(score, 3)
         }
 
     except Exception as e:

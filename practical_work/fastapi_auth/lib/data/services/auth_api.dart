@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthService {
   //static const String baseUrl = 'http://10.0.2.2:8000'; //emulator
   //static const String baseUrl = 'http://192.168.1.131:8000'; // phone retea acasa
-  static const String baseUrl = 'http://192.168.51.118:8000'; // phone hotspot
+  static const String baseUrl = 'http://192.168.196.118:8000'; // phone hotspot
   static const String tokenKey = 'auth_token';
 
   Future<String?> register({

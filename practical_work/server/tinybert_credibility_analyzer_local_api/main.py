@@ -157,7 +157,7 @@ async def predict_credibility_score(input_text: InputText):
         ])
 
         response = {
-            "overall_credibility_score": round(overall_score, 3),
+            "overall_credibility_score": 0.2 * grammar_result["score"] + 0.2 * punctuation_result["score"] + 0.6 * ai_result["score"],
             "detailed_scores": {
                 "grammar_analysis": {
                     "score": grammar_result["score"],
@@ -180,13 +180,13 @@ async def predict_credibility_score(input_text: InputText):
                     "error": ai_result["error"]
                 }
             },
-            "performance_metrics": {
-                "total_parallel_time": total_execution_time,
-                "estimated_sequential_time": sequential_time,
-                "time_saved": round(sequential_time - total_execution_time, 3),
-                "speedup_factor": round(sequential_time / total_execution_time, 2) if total_execution_time > 0 else 1
-            },
-            "weights_used": weights
+            # "performance_metrics": {
+            #     "total_parallel_time": total_execution_time,
+            #     "estimated_sequential_time": sequential_time,
+            #     "time_saved": round(sequential_time - total_execution_time, 3),
+            #     "speedup_factor": round(sequential_time / total_execution_time, 2) if total_execution_time > 0 else 1
+            # },
+            #"weights_used": weights
         }
 
         return response

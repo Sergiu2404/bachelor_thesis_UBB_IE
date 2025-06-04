@@ -133,6 +133,7 @@
 
 
 
+import 'package:fastapi_auth/presentation/pages/prediction_section/prediction_main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fastapi_auth/core/utils/user_provider.dart';
@@ -215,7 +216,7 @@ class _HomePageState extends State<HomePage> {
       const LearningMainPage(),
       const QuizPage(),
       const DemoInvestingPage(),
-      const Center(child: Text("Predictor")),
+      const PredictionMainPage(),
     ];
 
     return Scaffold(

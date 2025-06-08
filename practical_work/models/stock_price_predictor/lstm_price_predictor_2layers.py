@@ -13,10 +13,14 @@ import math
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
 
-def get_stock_data(ticker, period="2y"):
-    df = yf.download(ticker, period=period)
+# def get_stock_data(ticker, period="2y"):
+#     df = yf.download(ticker, period=period)
+#     return df[['Close', 'Volume']].dropna()
+def get_stock_data(ticker):
+    start_date = "2023-05-21"
+    end_date = "2025-05-21"
+    df = yf.download(ticker, start=start_date, end=end_date)
     return df[['Close', 'Volume']].dropna()
-
 
 def create_dataset(data, time_steps=20):
     X, y = [], []
@@ -169,7 +173,7 @@ def evaluate_model(y_true, y_pred):
 
 
 if __name__ == "__main__":
-    ticker = "AAPL"
+    ticker = "TGT"
     predictions = predict_next_n_days(ticker, days=10)
     print(f"\nPredicted prices for {ticker} for the next 10 days:")
     print(predictions)

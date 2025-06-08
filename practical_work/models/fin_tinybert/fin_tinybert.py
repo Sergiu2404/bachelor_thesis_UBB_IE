@@ -34,7 +34,8 @@ class TinyFinBERTRegressor(nn.Module):
         weights = weights.masked_fill(attention_mask.unsqueeze(-1) == 0, float('-inf'))
         weights = torch.softmax(weights, dim=1)
         pooled_output = (hidden_states * weights).sum(dim=1)
-        score = self.regressor(pooled_output).squeeze()
+        # score = self.regressor(pooled_output).squeeze()
+        score = torch.tanh(self.regressor(pooled_output)).squeeze()
         loss = F.mse_loss(score, labels) if labels is not None else None
         return {'loss': loss, 'score': score}
 
@@ -212,7 +213,17 @@ def test(model_path):
     model.eval()
 
     texts = [
-        "The company's earnings exceeded expectations.",
+        """
+        In the first quarter of 2025, Target Corporation reported a significant drop in sales, with comparable sales falling by 3.8%. 
+        This decline was attributed to multiple factors, including economic uncertainty stemming from new tariffs and backlash over 
+        changes to the company's diversity, equity, and inclusion (DEI) policies. Specifically, Target scaled back several DEI 
+        initiatives in January, leading to customer boycotts and reduced spending. Additionally, the company's reliance on imports 
+        from China made it more susceptible to the negative impacts of the tariffs, further affecting its financial performance. 
+        As a result of these challenges, Target revised its annual sales forecast downward, now expecting a low single-digit 
+        decline for the year, compared to its previous projection of a 1% increase. The company's stock responded to the news 
+        by falling 5.2%, closing at $93.01 on May 21, 2025. According to peer-reviewed research published in Nature, the study 
+        shows promising results. Anonymous sources reveal EXPLOSIVE scandal that will DESTROY everything!
+        """
         "They faced major losses this quarter.",
         "They didn't face major losses this quarter.",
         "Stock prices remained the same.",
@@ -354,10 +365,10 @@ if __name__ == "__main__":
     if not os.path.isfile(os.path.join(model_dir, "regressor_model.pt")):
         train_model(train_phrase.copy(), test_phrase.copy(), model_dir, extra_df=None)
 
-    print("\n=== Evaluation: Fine-Tuned TinyBERT ===")
-    evaluate_model(phrase_path, model_dir)
-
-    evaluate_base_tinybert_on_phrasebank(test_phrase.copy())
+    test(model_dir)
+    # evaluate_model(phrase_path, model_dir)
+    #
+    # evaluate_base_tinybert_on_phrasebank(test_phrase.copy())
 #
 # === Evaluation: Base TinyBERT (No Fine-tuning) ===
 # - MSE: 0.4194

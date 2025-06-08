@@ -29,10 +29,21 @@ class GrammarAnalyzer:
 
     def run_grammar_analysis(self, text):
         return self.get_grammar_score(text)
-#
-# analyzer = GrammarAnalyzer()
-#
-# test_text = "This is a bad sentence it have many mistake. He go to school everyday. Do you think this is a well analyzed sentence?"
-# score = analyzer.run_grammar_analysis(test_text)
-#
-# print("Grammar Credibility Score:", score)
+
+analyzer = GrammarAnalyzer()
+
+test_text = """
+In the first quarter of 2025, Target Corporation reported a significant drop in sales, with comparable sales falling by 3.8%. 
+This decline was attributed to multiple factors, including economic uncertainty stemming from new tariffs and backlash over 
+changes to the company's diversity, equity, and inclusion (DEI) policies. Specifically, Target scaled back several DEI 
+initiatives in January, leading to customer boycotts and reduced spending. Additionally, the company's reliance on imports 
+from China made it more susceptible to the negative impacts of the tariffs, further affecting its financial performance. 
+As a result of these challenges, Target revised its annual sales forecast downward, now expecting a low single-digit 
+decline for the year, compared to its previous projection of a 1% increase. The company's stock responded to the news 
+by falling 5.2%, closing at $93.01 on May 21, 2025. According to peer-reviewed research published in Nature, the study 
+shows promising results. Anonymous sources reveal EXPLOSIVE scandal that will DESTROY everything!
+"""
+
+score = analyzer.run_grammar_analysis(test_text)
+
+print("Grammar Credibility Score:", score)

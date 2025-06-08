@@ -236,11 +236,17 @@ def predict(texts):
                        token_type_ids=encoded.get('token_type_ids'))["score"]
     return scores.cpu().numpy().tolist()
 
-#
-# sample_texts = [
-#     "SHOCKING: Scientists discover MIRACLE cure that Big Pharma doesn't want you to know!",
-#     "According to peer-reviewed research published in Nature, the study shows promising results.",
-#     "Anonymous sources reveal EXPLOSIVE scandal that will DESTROY everything!",
-#     "The quarterly earnings report indicates steady growth in line with market expectations."
-# ]
-# print("Predictions:", predict(sample_texts))
+
+sample_texts = [
+    "In the first quarter of 2025, Target Corporation reported a significant drop in sales, with comparable sales"
+    " falling by 3.8%. This decline was attributed to multiple factors, including economic uncertainty stemming from"
+    " new tariffs and backlash over changes to the company's diversity, equity, and inclusion (DEI) policies. Specifically,"
+    " Target scaled back several DEI initiatives in January, leading to customer boycotts and reduced spending. Additionally,"
+    " the company's reliance on imports from China made it more susceptible to the negative impacts of the tariffs, further affecting "
+    "its financial performance. As a result of these challenges, Target revised its annual sales forecast downward, now expecting a low"
+    " single-digit decline for the year, compared to its previous projection of a 1% increase. The company's stock responded to the news"
+    " by falling 5.2%, closing at $93.01 on May 21, 2025. According to peer-reviewed research published in Nature, the study shows promising results.",
+    "Anonymous sources reveal EXPLOSIVE scandal that will DESTROY everything!",
+    "The quarterly earnings report indicates steady growth in line with market expectations."
+]
+print("Predictions:", predict(sample_texts))

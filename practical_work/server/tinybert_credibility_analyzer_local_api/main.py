@@ -157,7 +157,7 @@ async def predict_credibility_score(input_text: InputText):
         ])
 
         response = {
-            "overall_credibility_score": 0.2 * grammar_result["score"] + 0.2 * punctuation_result["score"] + 0.6 * ai_result["score"],
+            "overall_credibility_score": 0.25 * grammar_result["score"] + 0.25 * punctuation_result["score"] + 0.5 * ai_result["score"],
             "detailed_scores": {
                 "grammar_analysis": {
                     "score": grammar_result["score"],

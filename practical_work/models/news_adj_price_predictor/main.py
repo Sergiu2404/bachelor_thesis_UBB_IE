@@ -1,4 +1,3 @@
-from fastapi import FastAPI, Query
 import yfinance as yf
 import pandas as pd
 import numpy as np
@@ -7,8 +6,6 @@ import torch.nn as nn
 from torch.utils.data import DataLoader, TensorDataset
 from sklearn.preprocessing import MinMaxScaler
 from datetime import timedelta
-
-app = FastAPI()
 
 class LSTMPredictor(nn.Module):
     def __init__(self, input_size, hidden_size=128):
@@ -91,114 +88,68 @@ def predict_next_n_days(model_wrapper, last_sequence, days=10, time_steps=20):
     for _ in range(days):
         input_seq = last_sequence.reshape(1, time_steps, -1)
         next_pred = model_wrapper.predict(input_seq)
-
-        predicted_price = max(next_pred[0][0], 0.001) # minimum threshold
+        predicted_price = max(next_pred[0][0], 0.001)
         predictions.append(predicted_price)
-
         next_row = np.array([predicted_price, last_sequence[-1, 1], last_sequence[-1, 2]])
         last_sequence = np.vstack([last_sequence[1:], next_row])
     return predictions
 
-
 def apply_daily_volatility_with_trend_conservation(predicted_prices, seed=None, pct_range=(0, 0.01)):
     if seed is not None:
         np.random.seed(seed)
-
     predicted_prices = np.array(predicted_prices)
-    print(predicted_prices)
     adjusted_prices = [max(predicted_prices[0], np.random.uniform(0.0001, 0.001))]
-    print(adjusted_prices)
-
     for i in range(1, len(predicted_prices)):
         prev = adjusted_prices[-1]
         predicted_diff = predicted_prices[i] - predicted_prices[i - 1]
-
         trend = np.sign(predicted_diff)
-
         if trend == 0:
             trend = np.random.choice([-1, 1])
-
         percentage_change = np.random.uniform(*pct_range)
         new_price = prev * (1 + trend * percentage_change)
-
-        new_price = max(new_price, np.random.uniform(0.0001, 0.001))  # minimum threshold
+        new_price = max(new_price, np.random.uniform(0.0001, 0.001))
         adjusted_prices.append(new_price)
-
     return adjusted_prices
-
-def apply_daily_volatility_without_trend_conservation(predicted_prices, seed=None, pct_range=(0, 0.025)):
-    if seed is not None:
-        np.random.seed(seed)
-
-    predicted_prices = np.array(predicted_prices)
-    adjusted_prices = [predicted_prices[0]]
-
-    for i in range(1, len(predicted_prices)):
-        direction = np.random.choice([-1, 1])  # random up/down
-        percentage_change = np.random.uniform(*pct_range)
-        new_price = adjusted_prices[-1] * (1 + direction * percentage_change)
-        new_price = max(new_price, 0.01)  # enforce minimum threshold
-        adjusted_prices.append(new_price)
-
-    return adjusted_prices
-
 
 def apply_sentiment_adjustment(prices, sentiment_credibility_adjusted_score, decay_rate=0.5):
     sentiment_percentage = sentiment_credibility_adjusted_score / 10
     adjusted_prices = []
-
     for i in range(len(prices)):
-        decay = decay_rate ** i  # 1.0, 0.5, 0.25, ...
-
+        decay = decay_rate ** i
         adjustment_factor = 1 + sentiment_percentage * decay
-
         if i == 0:
             new_price = prices[0] * adjustment_factor
         else:
             new_price = adjusted_prices[-1] * adjustment_factor
-
             raw_trend = np.sign(prices[i] - prices[i - 1])
             new_trend = np.sign(new_price - adjusted_prices[-1])
-
             if raw_trend != new_trend and raw_trend != 0:
                 adjustment_factor = 1 - sentiment_percentage * decay
                 new_price = adjusted_prices[-1] * adjustment_factor
-
         new_price = max(new_price, np.random.uniform(0.0001, 0.001))
         adjusted_prices.append(new_price)
-
     return adjusted_prices
 
+def main():
+    ticker = input("Enter stock ticker: ").upper()
+    sentiment_score = float(input("Enter sentiment score (-1 to 1): "))
+    time_steps = 20
+    df = get_stock_data(ticker)
+    values = df.values
+    X, y = create_dataset(values, time_steps)
+    model_wrapper = train_lstm_model(X, y)
+    last_sequence = values[-time_steps:]
+    predicted_prices = predict_next_n_days(model_wrapper, last_sequence, days=10, time_steps=time_steps)
+    sentiment_adjusted_prices = apply_sentiment_adjustment(predicted_prices, sentiment_score)
+    final_prices = apply_daily_volatility_with_trend_conservation(sentiment_adjusted_prices)
+    last_date = df.index[-1]
+    future_dates = [(last_date + timedelta(days=i + 1)).date() for i in range(10)]
 
-@app.get("/predict_stock/")
-async def predict_stock(
-        ticker: str = Query(..., description="Stock ticker symbol"),
-        adjusted_sentiment_credibility_score: float = Query(..., description="Sentiment score in interval (-1, 1)")
-        ):
-    try:
-        time_steps = 20
-        df = get_stock_data(ticker)
-        values = df.values
-        X, y = create_dataset(values, time_steps)
-        model_wrapper = train_lstm_model(X, y)
+    print("\nPredicted Stock Prices:\n")
+    print("Date       | Raw      | Adjusted (Sentiment) | Final (Volatility)")
+    print("-----------|----------|----------------------|-------------------")
+    for date, raw, adj, final in zip(future_dates, predicted_prices, sentiment_adjusted_prices, final_prices):
+        print(f"{date} | {raw:.2f}   | {adj:.2f}               | {final:.2f}")
 
-        last_sequence = values[-time_steps:]
-        predicted_prices = predict_next_n_days(model_wrapper, last_sequence, days=10, time_steps=time_steps)
-
-        sentiment_adjusted_prices = apply_sentiment_adjustment(predicted_prices, adjusted_sentiment_credibility_score)
-        adjusted_volatility_prices = apply_daily_volatility_with_trend_conservation(sentiment_adjusted_prices)
-
-        last_date = df.index[-1]
-        future_dates = [(last_date + timedelta(days=i + 1)) for i in range(10)]
-
-        return {
-            "ticker": ticker.upper(),
-            "raw_predictions": [round(float(price), 2) for price in predicted_prices],
-            "sentiment_predictions": [round(float(price), 2) for price in sentiment_adjusted_prices],
-            "predictions": [
-                {"date": str(date.date()), "predicted_close": round(float(price), 2)}
-                for date, price in zip(future_dates, adjusted_volatility_prices)
-            ]
-        }
-    except Exception as e:
-        return {"error": str(e)}
+if __name__ == "__main__":
+    main()

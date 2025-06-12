@@ -121,7 +121,7 @@ def train_lstm_model(X_train, y_train):
     return LSTMWrapper(model, X_scaler, y_scaler, input_shape[1])
 
 
-def predict_next_n_days(ticker, days=10, time_steps=15):
+def predict_next_n_days(ticker, days=20, time_steps=15):
     df = get_stock_data(ticker)
     values = df.values
     X, y = create_dataset(values, time_steps)
@@ -174,7 +174,7 @@ def evaluate_model(y_true, y_pred):
 
 if __name__ == "__main__":
     ticker = "TGT"
-    predictions = predict_next_n_days(ticker, days=10)
+    predictions = predict_next_n_days(ticker, days=20)
     print(f"\nPredicted prices for {ticker} for the next 10 days:")
     print(predictions)
 

@@ -17,8 +17,8 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 #     df = yf.download(ticker, period=period)
 #     return df[['Close', 'Volume']].dropna()
 def get_stock_data(ticker):
-    start_date = "2023-05-21"
-    end_date = "2025-05-21"
+    start_date = "2023-05-23"
+    end_date = "2025-05-23"
     df = yf.download(ticker, start=start_date, end=end_date)
     return df[['Close', 'Volume']].dropna()
 
@@ -173,7 +173,7 @@ def evaluate_model(y_true, y_pred):
 
 
 if __name__ == "__main__":
-    ticker = "TGT"
+    ticker = "^GSPC"
     predictions = predict_next_n_days(ticker, days=20)
     print(f"\nPredicted prices for {ticker} for the next 10 days:")
     print(predictions)

@@ -12,20 +12,6 @@ class YahooFinanceProvider(StockDataProvider):
         self.session = requests.Session(impersonate="chrome")
 
     def get_stock_data(self, symbol: str) -> dict:
-        try:
-            print(f"[INFO] Trying yfinance.download for {symbol}")
-            df = yf.download(symbol, period="1d")
-            if not df.empty:
-                price = df["Close"].iloc[-1]
-                info = yf.Ticker(symbol).info
-                return {
-                    "provider": "yfinance",
-                    "company_name": info.get("longName", "N/A"),
-                    "symbol": symbol,
-                    "latest_price": price
-                }
-        except Exception as e:
-            print(f"[WARNING] yfinance.download failed: {e}")
 
         try:
             print(f"[INFO] Trying fallback: yahooquery for {symbol}")
@@ -40,6 +26,21 @@ class YahooFinanceProvider(StockDataProvider):
                 }
         except Exception as e:
             print(f"[ERROR] yahooquery failed: {e}")
+
+        try:
+            print(f"[INFO] Trying yfinance.download for {symbol}")
+            df = yf.download(symbol, period="1d")
+            if not df.empty:
+                price = df["Close"].iloc[-1]
+                info = yf.Ticker(symbol).info
+                return {
+                    "provider": "yfinance",
+                    "company_name": info.get("longName", "N/A"),
+                    "symbol": symbol,
+                    "latest_price": price
+                }
+        except Exception as e:
+            print(f"[WARNING] yfinance.download failed: {e}")
 
         return {"error": f"Could not retrieve stock data for {symbol}"}
 

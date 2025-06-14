@@ -1,3 +1,6 @@
-import torch
-print("Is CUDA available?", torch.cuda.is_available())
-print("GPU name:", torch.cuda.get_device_name(0) if torch.cuda.is_available() else "No GPU detected")
+import yfinance as yf
+
+# Download data for the S&P 500 index for the 10 trading days after May 23, 2025
+gspc = yf.download("^GSPC", start="2025-05-24", end="2025-06-12")
+
+print(gspc)

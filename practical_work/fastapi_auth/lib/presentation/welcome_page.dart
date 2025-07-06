@@ -39,7 +39,7 @@ class _WelcomePageState extends State<WelcomePage> {
         ),
         const SizedBox(height: 20),
         const Text(
-          'Your one-stop app for stock price prediction virtual trading, and financial education.',
+          'Your app for stock price prediction, virtual investment and financial education.',
         style: TextStyle(
         fontSize: 18,
           color: Colors.white70,

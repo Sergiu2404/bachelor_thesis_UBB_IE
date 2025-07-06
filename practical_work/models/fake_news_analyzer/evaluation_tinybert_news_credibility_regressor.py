@@ -143,7 +143,6 @@ def collate_fn(batch):
 train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True, collate_fn=collate_fn)
 val_loader = DataLoader(val_dataset, batch_size=32, collate_fn=collate_fn)
 
-# Training
 model = CredibilityRegressor().to(device)
 optimizer = torch.optim.AdamW(model.parameters(), lr=2e-5, weight_decay=0.01)
 scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=10, T_mult=2, eta_min=1e-6)
@@ -190,21 +189,19 @@ def evaluate_model(model, val_loader):
     rmse = np.sqrt(mse)
     r2 = r2_score(all_labels, all_preds)
 
-    print("\n📊 Evaluation Metrics:")
+    print("\nEvaluation Metrics:")
     print(f"MAE:   {mae:.4f}")
     print(f"MSE:   {mse:.4f}")
     print(f"RMSE:  {rmse:.4f}")
     print(f"R²:    {r2:.4f}")
 
-    # Optional: Binned error analysis
     bins = [0, 0.2, 0.4, 0.6, 0.8, 1.0]
     bin_indices = np.digitize(all_labels, bins, right=True)
-    print("\n🧩 MAE per credibility bin:")
+    print("\nMAE per credibility bin:")
     for i in range(1, len(bins)):
         bin_mask = bin_indices == i
         if np.any(bin_mask):
             bin_mae = mean_absolute_error(all_labels[bin_mask], all_preds[bin_mask])
             print(f"  {bins[i-1]:.1f}–{bins[i]:.1f}: MAE = {bin_mae:.4f}")
 
-# Run evaluation
 evaluate_model(model, val_loader)

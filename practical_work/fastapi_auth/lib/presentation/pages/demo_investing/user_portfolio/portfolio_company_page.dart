@@ -126,23 +126,55 @@ class _PortfolioCompanyPageState extends State<PortfolioCompanyPage> {
       spots.add(FlSpot(i.toDouble(), closePrice));
     }
 
+    final prices = spots.map((e) => e.y).toList();
+    final minY = (prices.reduce((a, b) => a < b ? a : b) - 10).floorToDouble();
+    final maxY = (prices.reduce((a, b) => a > b ? a : b) + 10).ceilToDouble();
+    final range = maxY - minY;
+    final interval = (range <= 20 ? 5 : range <= 50 ? 10 : 20).toDouble();
+
     return LineChart(
       LineChartData(
-        gridData: FlGridData(show: false),
+        minY: minY,
+        maxY: maxY,
+        gridData: FlGridData(show: true),
         titlesData: FlTitlesData(
           leftTitles: AxisTitles(
-            sideTitles: SideTitles(showTitles: true, reservedSize: 40),
+            sideTitles: SideTitles(
+              showTitles: true,
+              reservedSize: 40,
+              interval: interval,
+              getTitlesWidget: (value, meta) => Text(
+                value.toStringAsFixed(0),
+                style: const TextStyle(fontSize: 10),
+              ),
+            ),
           ),
           bottomTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
+              reservedSize: 20, // Reduced spacing
               getTitlesWidget: (value, meta) {
                 if (value.toInt() >= 0 && value.toInt() < sortedKeys.length) {
-                  return Text(sortedKeys[value.toInt()].substring(5));
+                  final dateStr = sortedKeys[value.toInt()]; // e.g., "2024-07"
+                  final parts = dateStr.split('-');
+                  final year = parts[0];
+                  final monthNum = int.parse(parts[1]);
+                  const monthNames = [
+                    '', // Index 0 not used
+                    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+                  ];
+                  final monthName = monthNames[monthNum];
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: Text(
+                      '$monthName $year',
+                      style: const TextStyle(fontSize: 7),
+                    ),
+                  );
                 }
                 return const Text("");
               },
-              reservedSize: 30,
             ),
           ),
           rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
@@ -155,11 +187,15 @@ class _PortfolioCompanyPageState extends State<PortfolioCompanyPage> {
             isCurved: true,
             color: Colors.blue,
             barWidth: 3,
-            belowBarData: BarAreaData(show: true, color: Colors.blue.withOpacity(0.3)),
+            belowBarData: BarAreaData(
+              show: true,
+              color: Colors.blue.withOpacity(0.3),
+            ),
             dotData: FlDotData(show: false),
           ),
         ],
       ),
     );
+
   }
 }

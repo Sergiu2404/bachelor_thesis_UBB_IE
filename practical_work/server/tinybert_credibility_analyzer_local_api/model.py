@@ -109,7 +109,7 @@ def predict_credibility(text: str) -> float:
         return_tensors="pt",
         padding=True,
         truncation=True,
-        max_length=128
+        max_length=512
     )
     encoded = {k: v.to(DEVICE) for k, v in encoded.items()}
     with torch.no_grad():

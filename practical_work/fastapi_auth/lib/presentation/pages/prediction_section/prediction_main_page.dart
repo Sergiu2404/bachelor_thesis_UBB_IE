@@ -19,7 +19,7 @@ class _PredictionMainPageState extends State<PredictionMainPage> {
       appBar: AppBar(
         title: const Text("AI Stock Predictor",
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
         elevation: 4,
       ),
@@ -57,37 +57,11 @@ class _PredictionMainPageState extends State<PredictionMainPage> {
                 ),
               ),
               child: const Text(
-                "📄 News-Based Prediction (10 Days)",
+                "News-Based Prediction (10 Days)",
                 style: TextStyle(fontSize: 18, color: Colors.white),
               ),
             ),
             const SizedBox(height: 20),
-
-            ElevatedButton(
-              onPressed: () {
-                showPredictionConfirmationDialog(
-                  context: context,
-                  onConfirm: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => LongTermPredictionPage()),
-                    );
-                  },
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                minimumSize: const Size(double.infinity, 60),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              child: const Text(
-                "📈 Long-Term Stock Prediction (10 Years)",
-                style: TextStyle(fontSize: 18, color: Colors.white),
-              ),
-            ),
-
             const SizedBox(height: 40),
             Container(
               padding: const EdgeInsets.all(15),
@@ -97,7 +71,7 @@ class _PredictionMainPageState extends State<PredictionMainPage> {
                 border: Border.all(color: Colors.grey.shade300),
               ),
               child: const Text(
-                "The first prediction uses a short news article (max 500 chars) and a stock ticker. It returns a credibility score (0-100%) and a sentiment score (-1 to 1), then forecasts the stock's adjusted price over the next 10 days.\n\nThe second predicts the long-term price over 10 years based only on historical performance, ignoring news sentiment.",
+                "This is a feature for predicting prices for a given ticker, using a short news article (max 500 chars) and a stock ticker. It returns a credibility score (value between 0 and 1) and a sentiment score (between -1 and 1), then forecasts the stock's adjusted price over the next 10 days.",
                 style: TextStyle(fontSize: 16, height: 1.5),
               ),
             ),

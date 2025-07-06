@@ -4,10 +4,14 @@ import 'package:fastapi_auth/data/models/portfolio_company.dart';
 import 'package:http/http.dart'as http;
 import 'package:fastapi_auth/data/services/auth_api.dart';
 
+// const String ipv4 = "192.168.1.129"; //acasa
+const String ipv4 = "172.30.248.247"; //mateinfo5G
+
 class PortfolioService{
   //static const String baseUrl = 'http://10.0.2.2:8000/portfolio';
-  //static const String baseUrl = 'http://192.168.1.131:8000/portfolio';
-  static const String baseUrl = 'http://192.168.196.118:8000/portfolio'; // phone hotspot
+  //static const String baseUrl = 'http://192.168.233.118:8244/portfolio'; // phone hotspot
+  //static const String baseUrl = 'http://172.30.248.247:8244/portfolio'; //phone mateinfo
+  static const String baseUrl = 'http://${ipv4}:8244/portfolio';
   final AuthService _authService = AuthService();
 
   Future<List<PortfolioCompany>> getPortfolioForUser() async {

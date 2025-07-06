@@ -11,9 +11,6 @@ from model import TinyFinBERTRegressor
 app = FastAPI()
 
 nlp = spacy.load("en_core_web_sm", disable=["ner", "parser"])
-negations = {'no', 'not', 'none', 'nobody', 'nothing', 'neither', 'nowhere', 'never',
-             'hardly', 'scarcely', 'barely', "n't", "without", "unless", "nor"}
-stop_words = set(stopwords.words('english')) - negations
 
 MODEL_DIR = "E:/saved_models/sentiment_analysis_fine_tuned_tinybert"
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -45,7 +42,7 @@ async def root():
 async def predict_sentiment(input_text: InputText):
     try:
         clean_text = preprocess_text(input_text.text)
-        inputs = tokenizer(clean_text, return_tensors="pt", truncation=True, padding='max_length', max_length=128)
+        inputs = tokenizer(clean_text, return_tensors="pt", truncation=True, padding='max_length', max_length=512)
         inputs = {k: v.to(DEVICE) for k, v in inputs.items() if k != "token_type_ids"}
 
         with torch.no_grad():

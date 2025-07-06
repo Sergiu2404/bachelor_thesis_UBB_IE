@@ -8,6 +8,10 @@ from torch.utils.data import DataLoader, TensorDataset
 from sklearn.preprocessing import MinMaxScaler
 from datetime import timedelta
 
+import os
+import logging
+logging.basicConfig(level=logging.INFO)
+
 app = FastAPI()
 
 class LSTMPredictor(nn.Module):
@@ -42,12 +46,54 @@ class LSTMWrapper:
             preds = self.model(X_tensor).cpu().numpy()
         return self.y_scaler.inverse_transform(preds)
 
+# def get_stock_data(ticker: str, period="2y"):
+#     df = yf.download(ticker, period=period)
+#     df['Return'] = df['Close'].pct_change()
+#     df['Volatility'] = df['Return'].rolling(window=10).std()
+#     df = df[['Close', 'Volume', 'Volatility']].dropna()
+#     return df
+import pandas as pd
+import os
+
+
 def get_stock_data(ticker: str, period="2y"):
-    df = yf.download(ticker, period=period)
+    try:
+        #raise ValueError("Simulated failure for fallback test")
+        df = yf.download(ticker, period=period)
+        if df.empty:
+            raise ValueError("Empty data from Yahoo Finance.")
+    except Exception as e:
+        print(f"[WARNING] Failed to fetch data from yfinance for {ticker}: {e}")
+        safe_ticker = ticker.replace("^", "")
+        path = fr"E:\thesis_fallback_datasets\{safe_ticker}_processed.csv"
+        if os.path.exists(path):
+            print(f"Loading fallback data from {path}")
+
+            df = pd.read_csv(
+                path,
+                skiprows=3,
+                names=["Date", "Close", "Volume", "Volatility"],
+                parse_dates=["Date"],
+                index_col="Date"
+            )
+
+            end_date = df.index.max()
+            if "y" in period:
+                years = int(period.rstrip("y"))
+                start_date = end_date - pd.DateOffset(years=years)
+                df = df.loc[start_date:end_date]
+            else:
+                print("UNSUPPORTED PERIOD")
+                raise ValueError("Unsupported period format for fallback.")
+        else:
+            print("NO FALLBACK DATA FOUND")
+            raise FileNotFoundError(f"No fallback data found for {ticker}")
+
     df['Return'] = df['Close'].pct_change()
     df['Volatility'] = df['Return'].rolling(window=10).std()
     df = df[['Close', 'Volume', 'Volatility']].dropna()
     return df
+
 
 def create_dataset(data, time_steps=20):
     X, y = [], []
@@ -92,7 +138,7 @@ def predict_next_n_days(model_wrapper, last_sequence, days=10, time_steps=20):
         input_seq = last_sequence.reshape(1, time_steps, -1)
         next_pred = model_wrapper.predict(input_seq)
 
-        predicted_price = max(next_pred[0][0], 0.001) # minimum threshold
+        predicted_price = max(next_pred[0][0], 0.001)  # minimum threshold
         predictions.append(predicted_price)
 
         next_row = np.array([predicted_price, last_sequence[-1, 1], last_sequence[-1, 2]])
@@ -126,7 +172,7 @@ def apply_daily_volatility_with_trend_conservation(predicted_prices, seed=None, 
 
     return adjusted_prices
 
-def apply_daily_volatility_without_trend_conservation(predicted_prices, seed=None, pct_range=(0, 0.025)):
+def apply_daily_volatility_without_trend_conservation(predicted_prices, seed=None, pct_range=(0, 0.01)):
     if seed is not None:
         np.random.seed(seed)
 
@@ -143,12 +189,12 @@ def apply_daily_volatility_without_trend_conservation(predicted_prices, seed=Non
     return adjusted_prices
 
 
-def apply_sentiment_adjustment(prices, sentiment_credibility_adjusted_score, decay_rate=0.5):
+def apply_sentiment_adjustment(prices, sentiment_credibility_adjusted_score, decay_rate=0.2):
     sentiment_percentage = sentiment_credibility_adjusted_score / 10
     adjusted_prices = []
 
     for i in range(len(prices)):
-        decay = decay_rate ** i  # 1.0, 0.5, 0.25, ...
+        decay = decay_rate ** i
 
         adjustment_factor = 1 + sentiment_percentage * decay
 
@@ -178,6 +224,12 @@ async def predict_stock(
     try:
         time_steps = 20
         df = get_stock_data(ticker)
+        current_date = df.index[-1].date()
+        #current_price = round(float(df['Close'].iloc[-1]), 2)
+        current_price = round(df['Close'].iloc[-1].item(), 2)
+        print(current_price)
+        logging.info(f"Current price: {current_price}")
+
         values = df.values
         X, y = create_dataset(values, time_steps)
         model_wrapper = train_lstm_model(X, y)
@@ -185,14 +237,25 @@ async def predict_stock(
         last_sequence = values[-time_steps:]
         predicted_prices = predict_next_n_days(model_wrapper, last_sequence, days=10, time_steps=time_steps)
 
-        sentiment_adjusted_prices = apply_sentiment_adjustment(predicted_prices, adjusted_sentiment_credibility_score)
-        adjusted_volatility_prices = apply_daily_volatility_with_trend_conservation(sentiment_adjusted_prices)
+        if adjusted_sentiment_credibility_score == 0.0:
+            adjusted_volatility_prices = apply_daily_volatility_with_trend_conservation(predicted_prices)
+            sentiment_adjusted_prices = predicted_prices
+        else:
+            sentiment_adjusted_prices = apply_sentiment_adjustment(predicted_prices,
+                                                                   adjusted_sentiment_credibility_score)
+            adjusted_volatility_prices = apply_daily_volatility_with_trend_conservation(sentiment_adjusted_prices)
+
+        # sentiment_adjusted_prices = apply_sentiment_adjustment(predicted_prices, adjusted_sentiment_credibility_score)
+        # adjusted_volatility_prices = apply_daily_volatility_with_trend_conservation(sentiment_adjusted_prices)
+
 
         last_date = df.index[-1]
         future_dates = [(last_date + timedelta(days=i + 1)) for i in range(10)]
 
         return {
             "ticker": ticker.upper(),
+            "current_date": str(current_date),
+            "current_price": current_price,
             "raw_predictions": [round(float(price), 2) for price in predicted_prices],
             "sentiment_predictions": [round(float(price), 2) for price in sentiment_adjusted_prices],
             "predictions": [

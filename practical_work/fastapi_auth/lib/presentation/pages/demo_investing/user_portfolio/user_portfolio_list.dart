@@ -61,19 +61,20 @@ class _UserPortfolioListState extends State<UserPortfolioList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Your Portfolio"),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 20),
-            child: Text(
-              (currentConnectedUser["virtual_money_balance"] as num?)?.toStringAsFixed(2) ?? "0.00",
-              style: TextStyle(color: Colors.white),
-            )
-
-          )
-        ],
+        title: const Text("Your Portfolio", style: TextStyle(color: Colors.white),),
+        // actions: [
+        //   Padding(
+        //     padding: EdgeInsets.only(right: 20),
+        //     child: Text(
+        //       (currentConnectedUser["virtual_money_balance"] as num?)?.toStringAsFixed(2) ?? "0.00",
+        //       style: TextStyle(color: Colors.white),
+        //     )
+        //
+        //   )
+        // ],
         backgroundColor: Colors.lightBlue,
       ),
+
       body: RefreshIndicator(
         onRefresh: _refreshPortfolio,
         child: isLoading
@@ -82,30 +83,52 @@ class _UserPortfolioListState extends State<UserPortfolioList> {
             ? const Center(child: Text("Your portfolio is empty for now"))
             : Padding(
           padding: const EdgeInsets.all(16.0),
-          child: ListView.builder(
-            physics: const AlwaysScrollableScrollPhysics(),
-            itemCount: stocks.length,
-            itemBuilder: (context, index) {
-              final stock = stocks[index];
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PortfolioCompanyPage(stock: stock),
-                    ),
-                  ).then((_) => _refreshPortfolio());
-                },
-                child: PortfolioCompanyCard(
-                  symbol: stock.symbol,
-                  companyName: stock.companyName,
-                  currentPrice: stock.totalCurrentValue / stock.quantity,
-                  quantity: stock.quantity,
-                  averagePurchasePrice: stock.averageBuyPrice,
-                  currentEvaluation: stock.totalCurrentValue,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Total Portfolio Evaluation: \$${stocks.fold(0.0, (sum, stock) => sum + stock.totalCurrentValue).toStringAsFixed(2)}",
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                "Number of Holdings: ${stocks.length}",
+                style: const TextStyle(fontSize: 16, color: Colors.black54),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                "Virtual Balance: \$${(currentConnectedUser["virtual_money_balance"] as num?)?.toStringAsFixed(2) ?? "0.00"}",
+                style: const TextStyle(fontSize: 16, color: Colors.black54),
+              ),
+              const Divider(height: 30),
+              Expanded(
+                child: ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemCount: stocks.length,
+                  itemBuilder: (context, index) {
+                    final stock = stocks[index];
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PortfolioCompanyPage(stock: stock),
+                          ),
+                        ).then((_) => _refreshPortfolio());
+                      },
+                      child: PortfolioCompanyCard(
+                        symbol: stock.symbol,
+                        companyName: stock.companyName,
+                        currentPrice: stock.totalCurrentValue / stock.quantity,
+                        quantity: stock.quantity,
+                        averagePurchasePrice: stock.averageBuyPrice,
+                        currentEvaluation: stock.totalCurrentValue,
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
+              ),
+            ],
           ),
         ),
       ),

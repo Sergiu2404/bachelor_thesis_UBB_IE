@@ -41,7 +41,7 @@ class TinyFinBERTRegressor(nn.Module):
 
 
 def preprocess_texts(texts):
-    nlp = spacy.load("en_core_web_sm", disable=["ner", "parser"])  # Speeds up processing
+    nlp = spacy.load("en_core_web_sm", disable=["ner", "parser"])
     negations = {'no', 'not', 'none', 'nobody', 'nothing', 'neither', 'nowhere', 'never',
                  'hardly', 'scarcely', 'barely', "n't", "without", "unless", "nor"}
     stop_words = set(stopwords.words('english')) - negations
@@ -53,7 +53,7 @@ def preprocess_texts(texts):
         doc = nlp(text)
         tokens = [
             token.lemma_ for token in doc
-            if token.lemma_.strip()  # token.lemma_ not in stop_words and
+            if token.lemma_.strip()  # token.lemma_
         ]
         processed.append(' '.join(tokens))
     return processed

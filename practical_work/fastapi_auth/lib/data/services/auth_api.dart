@@ -3,11 +3,15 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+// const String ipv4 = "192.168.1.129"; //acasa
+//const String ipv4 = "10.220.19.21"; //fsega
+const String ipv4 = "172.30.248.247"; //mateinfo 5G
 
 class AuthService {
   //static const String baseUrl = 'http://10.0.2.2:8000'; //emulator
-  //static const String baseUrl = 'http://192.168.1.131:8000'; // phone retea acasa
-  static const String baseUrl = 'http://192.168.196.118:8000'; // phone hotspot
+  // static const String baseUrl = 'http://192.168.233.118:8244'; // phone hotspot
+  //static const String baseUrl = 'http://172.30.248.247:8244'; // phone mateinfo
+  static const String baseUrl = 'http://${ipv4}:8244';
   static const String tokenKey = 'auth_token';
 
   Future<String?> register({
@@ -134,7 +138,7 @@ class AuthService {
     if (token != null) {
       try {
         final response = await http.post(
-          Uri.parse('$baseUrl/auth/logout'), // Make sure this endpoint exists in your FastAPI backend
+          Uri.parse('$baseUrl/auth/logout'),
           headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer $token',
@@ -142,9 +146,11 @@ class AuthService {
         );
 
         if (response.statusCode == 200) {
-          await prefs.remove(tokenKey);
+          print("Logout successful.");
+        } else if (response.statusCode == 401) {
+          print("Token already invalid or expired.");
         } else {
-          throw Exception("Logout failed on server");
+          print("Unexpected logout error: ${response.statusCode}, ${response.body}");
         }
       } catch (e) {
         print("Error logging out: $e");
@@ -153,6 +159,33 @@ class AuthService {
 
     await prefs.remove(tokenKey);
   }
+
+  // Future<void> logout() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final token = await getToken();
+  //
+  //   if (token != null) {
+  //     try {
+  //       final response = await http.post(
+  //         Uri.parse('$baseUrl/auth/logout'), // Make sure this endpoint exists in your FastAPI backend
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           'Authorization': 'Bearer $token',
+  //         },
+  //       );
+  //
+  //       if (response.statusCode == 200) {
+  //         await prefs.remove(tokenKey);
+  //       } else {
+  //         throw Exception("Logout failed on server");
+  //       }
+  //     } catch (e) {
+  //       print("Error logging out: $e");
+  //     }
+  //   }
+  //
+  //   //await prefs.remove(tokenKey);
+  // }
 
 
 

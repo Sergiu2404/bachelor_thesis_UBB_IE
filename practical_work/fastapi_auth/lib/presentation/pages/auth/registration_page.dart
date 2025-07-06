@@ -28,7 +28,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Register')),
-      body: Padding(
+      body: SafeArea(
+        child: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
@@ -132,6 +133,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
         ),
       ),
+    )
     );
   }
 

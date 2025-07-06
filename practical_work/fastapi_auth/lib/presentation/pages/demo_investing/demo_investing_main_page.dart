@@ -281,11 +281,11 @@ class _DemoInvestingPageState extends State<DemoInvestingPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Demo Investing Account"),
+        title: const Text("Demo Investing Account", style: TextStyle(color: Colors.white),),
         backgroundColor: Colors.lightBlue,
         actions: [
           IconButton(
-            icon: const Icon(Icons.account_balance),
+            icon: const Icon(Icons.account_balance, color: Colors.white),
             onPressed: () {
               Navigator.pushNamed(context, '/user-portfolio');
             },
@@ -308,7 +308,7 @@ class _DemoInvestingPageState extends State<DemoInvestingPage> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Balance: \$${(user?['virtual_money_balance'] ?? 0).toString()}',
+                  'Balance: \$${(user?['virtual_money_balance'] ?? 0).toStringAsFixed(2)}',
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: Colors.green,
                   ),

@@ -99,7 +99,7 @@ class CredibilityRegressor(nn.Module):
         weights = torch.softmax(weights, dim=1)
         pooled_output = (attn_output * weights).sum(dim=1)
 
-        cls_token = attn_output[:, 0, :]
+        cls_token = attn_output[:, 0, :] #(batch_size, sequence_length, hidden_size)
 
         sensationalism_feat = self.sensationalism_features(pooled_output)
         linguistic_feat = self.linguistic_patterns(cls_token)
@@ -188,8 +188,8 @@ else:
     val_loader = DataLoader(val_dataset, batch_size=32, collate_fn=collate_fn)
 
     model = CredibilityRegressor().to(device)
-    optimizer = torch.optim.AdamW(model.parameters(), lr=2e-5, weight_decay=0.01)
-    scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=10, T_mult=2, eta_min=1e-6)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=2e-5, weight_decay=0.01) #update model weights dynamically
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=10, T_mult=2, eta_min=1e-6) #update learning rate dynamically
 
     model.train()
     for epoch in range(10):

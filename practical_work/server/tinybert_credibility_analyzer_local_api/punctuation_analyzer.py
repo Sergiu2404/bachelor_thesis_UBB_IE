@@ -3,10 +3,10 @@ import re
 class PunctuationAnalyzer:
     def __init__(self):
         self.exaggerated_patterns = [
-            r'!{2,}',     # >=2 exclamation marks
-            r'\?{2,}',    # >=2 question marks
+            r'!{2,}',
+            r'\?{2,}',
             r'\.{3,}',    # >=3 dots
-            r'[,;:]{2,}'  # >=2 commas/semicolons/colons
+            r'[,;:]{2,}'
         ]
 
     def count_exaggerated_punctuation(self, text):

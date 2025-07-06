@@ -15,7 +15,7 @@ import math
 def get_stock_data(ticker, period="2y"):
     df = yf.download(ticker, period=period)
 
-    # Calculate RSI
+    # calculate RSI
     delta = df['Close'].diff()
     gain = delta.where(delta > 0, 0).rolling(14).mean()
     loss = -delta.where(delta < 0, 0).rolling(14).mean()
@@ -145,32 +145,26 @@ if __name__ == "__main__":
     time_steps = 20
     prediction_days = 10
 
-    # Step 1: Load and preprocess data
     df = get_stock_data(ticker)
     values = df.values
     X, y = create_dataset(values, time_steps)
 
-    # Step 2: Train/Test split
     split_index = int(len(X) * 0.8)
     X_train, X_test = X[:split_index], X[split_index:]
     y_train, y_test = y[:split_index], y[split_index:]
 
-    # Step 3: Train model
     start_time = time.time()
     model = train_lstm_model(X_train, y_train)
     train_time = time.time() - start_time
     print(f"\nTraining completed in {train_time:.4f} seconds.")
 
-    # Step 4: Predict on test set
     y_pred = model.predict(X_test)
 
-    # Step 5: Evaluate model
     metrics = evaluate_model(y_test, y_pred)
     print("\nEvaluation Metrics on Test Set:")
     for k, v in metrics.items():
         print(f"{k}: {v:.4f}")
 
-    # Step 6: Predict future 10 days
     last_sequence = values[-time_steps:]
     future_predictions = []
 
@@ -180,7 +174,6 @@ if __name__ == "__main__":
         next_close = next_pred[0][0]
         future_predictions.append(next_close)
 
-        # Use the last known RSI and Volume for next input
         next_step = np.array([next_close, last_sequence[-1][1], last_sequence[-1][2]])
         last_sequence = np.vstack([last_sequence[1:], next_step])
 

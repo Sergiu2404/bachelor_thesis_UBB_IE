@@ -8,13 +8,29 @@ from curl_cffi import requests
 
 class YahooFinanceProvider(StockDataProvider):
     def __init__(self):
-        print("[INIT] Initializing YahooFinanceProvider with curl_cffi session")
+        print("Initializing YahooFinanceProvider with curl_cffi session")
         self.session = requests.Session(impersonate="chrome")
 
     def get_stock_data(self, symbol: str) -> dict:
 
         try:
-            print(f"[INFO] Trying fallback: yahooquery for {symbol}")
+            print(f"Trying yfinance.download for {symbol}")
+            df = yf.download(symbol, period="1d")
+            if not df.empty:
+                price = df["Close"].iloc[-1]
+                info = yf.Ticker(symbol).info
+                return {
+                    "provider": "yfinance",
+                    "company_name": info.get("longName", "N/A"),
+                    "symbol": symbol,
+                    "latest_price": price
+                }
+        except Exception as e:
+            print(f"yfinance.download failed: {e}")
+
+
+        try:
+            print(f"Trying yahooquery for {symbol}")
             ticker = Ticker(symbol, session=self.session)
             info = ticker.price.get(symbol)
             if info and "regularMarketPrice" in info:
@@ -27,42 +43,11 @@ class YahooFinanceProvider(StockDataProvider):
         except Exception as e:
             print(f"[ERROR] yahooquery failed: {e}")
 
-        try:
-            print(f"[INFO] Trying yfinance.download for {symbol}")
-            df = yf.download(symbol, period="1d")
-            if not df.empty:
-                price = df["Close"].iloc[-1]
-                info = yf.Ticker(symbol).info
-                return {
-                    "provider": "yfinance",
-                    "company_name": info.get("longName", "N/A"),
-                    "symbol": symbol,
-                    "latest_price": price
-                }
-        except Exception as e:
-            print(f"[WARNING] yfinance.download failed: {e}")
-
         return {"error": f"Could not retrieve stock data for {symbol}"}
 
     def get_monthly_close_prices(self, symbol: str):
         try:
-            print(f"[INFO] Trying yfinance.download for monthly data of {symbol}")
-            df = yf.download(symbol, period="5y", interval="1mo")
-            if not df.empty:
-                df.reset_index(inplace=True)
-                df["Date"] = pd.to_datetime(df["Date"], errors='coerce')
-                df["Year-Month"] = df["Date"].dt.strftime("%Y-%m")
-                monthly_data = df.groupby("Year-Month")["Close"].last().to_dict()
-                return {
-                    "provider": "yfinance",
-                    "symbol": symbol,
-                    "monthly_prices": {k: {"Close": v} for k, v in monthly_data.items()}
-                }
-        except Exception as e:
-            print(f"[WARNING] yfinance.download failed for monthly: {e}")
-
-        try:
-            print(f"[INFO] Trying fallback: yahooquery for monthly data of {symbol}")
+            print(f"Trying yahooquery for monthly data of {symbol}")
             ticker = Ticker(symbol, session=self.session)
             history = ticker.history(period="5y", interval="1mo")
             if not history.empty:
@@ -78,11 +63,27 @@ class YahooFinanceProvider(StockDataProvider):
         except Exception as e:
             print(f"[ERROR] yahooquery monthly failed: {e}")
 
+        try:
+            print(f"Trying yfinance.download for monthly data of {symbol}")
+            df = yf.download(symbol, period="5y", interval="1mo")
+            if not df.empty:
+                df.reset_index(inplace=True)
+                df["Date"] = pd.to_datetime(df["Date"], errors='coerce')
+                df["Year-Month"] = df["Date"].dt.strftime("%Y-%m")
+                monthly_data = df.groupby("Year-Month")["Close"].last().to_dict()
+                return {
+                    "provider": "yfinance",
+                    "symbol": symbol,
+                    "monthly_prices": {k: {"Close": v} for k, v in monthly_data.items()}
+                }
+        except Exception as e:
+            print(f"yfinance.download failed for monthly: {e}")
+
         return {"error": f"Could not retrieve monthly data for {symbol}"}
 
     def get_stocks_data_for_symbol_substring(self, symbol_substr: str) -> List[dict]:
         try:
-            print(f"[INFO] Searching for symbols matching: {symbol_substr}")
+            print(f"Searching for symbols matching: {symbol_substr}")
             url = (
                 f"https://query2.finance.yahoo.com/v1/finance/search?q={symbol_substr}"
                 f"&quotes_count=10&news_count=0&lang=en-US&region=US&corsDomain=finance.yahoo.com"

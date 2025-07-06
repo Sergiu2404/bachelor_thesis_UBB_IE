@@ -1,85 +1,3 @@
-// import 'package:fastapi_auth/presentation/pages/quiz/quiz_question_page.dart';
-// import 'package:flutter/material.dart';
-// import '../../../data/services/auth_api.dart';
-//
-// class QuizPage extends StatefulWidget {
-//   const QuizPage({super.key});
-//
-//   @override
-//   State<QuizPage> createState() => _QuizPageState();
-// }
-//
-// class _QuizPageState extends State<QuizPage> {
-//   final AuthService _authService = AuthService();
-//   Map<String, dynamic> currentConnectedUser = {};
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     _loadUserData();
-//   }
-//
-//   void _loadUserData() async {
-//     currentConnectedUser = await _authService.getCurrentUser();
-//     setState(() {});
-//   }
-//
-//   void _startQuiz(String difficulty, int reward) {
-//     Navigator.push(
-//       context,
-//       MaterialPageRoute(
-//         builder: (context) => QuizQuestionPage(difficulty: difficulty, reward: reward),
-//       ),
-//     );
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     bool isAuthenticated = currentConnectedUser.isNotEmpty;
-//
-//     return Scaffold(
-//       appBar: AppBar(
-//           title: Text("Finance Quiz"),
-//           leading: IconButton(
-//             icon: Icon(Icons.arrow_back),
-//             onPressed: () {
-//               Navigator.pushReplacementNamed(context, '/home');
-//             },
-//     ),
-//       ),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             Text(
-//               isAuthenticated ? "Welcome ${currentConnectedUser['username']}" : "Play for Free!",
-//               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-//             ),
-//             const SizedBox(height: 20),
-//             ElevatedButton(
-//               onPressed: () => _startQuiz("easy", 25),
-//               child: Text("Start Easy Quiz (\$25 Reward)"),
-//             ),
-//             ElevatedButton(
-//               onPressed: () => _startQuiz("medium", 40),
-//               child: Text("Start Medium Quiz (\$40 Reward)"),
-//             ),
-//             ElevatedButton(
-//               onPressed: () => _startQuiz("hard", 75),
-//               child: Text("Start Hard Quiz (\$75 Reward)"),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-
-
-
-
-
 import 'package:fastapi_auth/presentation/pages/quiz/quiz_question_page.dart';
 import 'package:flutter/material.dart';
 import '../../../data/services/auth_api.dart';
@@ -171,32 +89,44 @@ class _QuizPageState extends State<QuizPage> {
           },
         ),
       ),
+
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              isAuthenticated
-                  ? "Welcome ${currentConnectedUser!['username']}"
-                  : "Play as Guest",
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () => _startQuiz("easy", 25),
-              child: const Text("Start Easy Quiz (\$25 Reward)"),
-            ),
-            ElevatedButton(
-              onPressed: () => _startQuiz("medium", 40),
-              child: const Text("Start Medium Quiz (\$40 Reward)"),
-            ),
-            ElevatedButton(
-              onPressed: () => _startQuiz("hard", 75),
-              child: const Text("Start Hard Quiz (\$75 Reward)"),
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.blue.withOpacity(0.05),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.blueAccent),
+                ),
+                child: const Text(
+                  "This is the place where you can test your financial literacy. Each category consists of 10 multiple-choice questions. To receive the reward, you must answer at least 9 out of 10 correctly.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                ),
+              ),
+              const SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: () => _startQuiz("easy", 25),
+                child: const Text("Start Easy Quiz (\$25 Reward)"),
+              ),
+              ElevatedButton(
+                onPressed: () => _startQuiz("medium", 40),
+                child: const Text("Start Medium Quiz (\$40 Reward)"),
+              ),
+              ElevatedButton(
+                onPressed: () => _startQuiz("hard", 75),
+                child: const Text("Start Hard Quiz (\$75 Reward)"),
+              ),
+            ],
+          ),
         ),
       ),
+
     );
   }
 }

@@ -4,10 +4,15 @@ import 'package:fastapi_auth/data/models/stock_data.dart';
 import 'package:fastapi_auth/data/services/auth_api.dart';
 import 'package:http/http.dart' as http;
 
+// const String ipv4 = "192.168.1.129"; //acasa
+//const String ipv4 = "10.220.19.21"; //fsega
+const String ipv4 = "172.30.248.247"; //mateinfo5G
+
+
 class StockDataService {
   //static const String baseUrl = 'http://10.0.2.2:8000';
-  //static const String baseUrl = 'http://192.168.1.131:8000';
-  static const String baseUrl = 'http://192.168.196.118:8000'; //phone hotspot
+  // static const String baseUrl = 'http://192.168.233.118:8244'; //phone hotspot
+  static const String baseUrl = 'http://${ipv4}:8244';
 
   final AuthService _authService = AuthService();
 
@@ -28,14 +33,29 @@ class StockDataService {
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        return StockData.fromJson(data);
+
+        log("API Response: $data");
+
+        if (data.containsKey("error")) {
+          throw Exception("API Error: ${data["error"]}");
+        }
+
+        final stockData = StockData(
+          companyName: data["company_name"] ?? data["companyName"] ?? "N/A",
+          symbol: data["symbol"] ?? "N/A",
+          price: (data["latest_price"] ?? data["price"] ?? 0).toDouble(),
+        );
+
+        log("Mapped StockData: ${stockData.symbol}, ${stockData.price}");
+        return stockData;
+
       } else {
-        log("Error fetching stock: ${response.body}");
-        throw Exception("Failed to load stock data");
+        log("HTTP Error ${response.statusCode}: ${response.body}");
+        throw Exception("Failed to load stock data: HTTP ${response.statusCode}");
       }
     } catch (e) {
-      log("Exception: $e");
-      return StockData(companyName: "", symbol: "", price: 0);
+      log("Exception in getStockForSymbol: $e");
+      rethrow;
     }
   }
 

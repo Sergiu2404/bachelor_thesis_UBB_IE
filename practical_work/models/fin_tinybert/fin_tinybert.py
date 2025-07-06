@@ -42,7 +42,7 @@ class TinyFinBERTRegressor(nn.Module):
 
 
 def preprocess_texts(texts):
-    nlp = spacy.load("en_core_web_sm", disable=["ner", "parser"])
+    nlp = spacy.load("en_core_web_sm", disable=["ner", "parser"])  #remove company names, parser identifies subject
     negations = {'no', 'not', 'none', 'nobody', 'nothing', 'neither', 'nowhere', 'never',
                  'hardly', 'scarcely', 'barely', "n't", "without", "unless", "nor"}
     stop_words = set(stopwords.words('english')) - negations
@@ -165,7 +165,7 @@ def evaluate_model(phrase_path, model_path):
     y_true, y_pred, y_scores = [], [], []
 
     for _, row in test_df.iterrows():
-        inputs = tokenizer(row["text"], return_tensors="pt", truncation=True, padding='max_length', max_length=128)
+        inputs = tokenizer(row["text"], return_tensors="pt", truncation=True, padding='max_length', max_length=512)
         inputs = {k: v.to(device) for k, v in inputs.items() if k != "token_type_ids"}
         with torch.no_grad():
             score = model(**inputs)["score"].item()
@@ -346,7 +346,7 @@ def test_performance_on_financial_news(model_path, news_data_path):
     print(f"- R²: {r2:.4f}")
     print(f"- Accuracy: {acc:.4f}")
     print(f"- Precision: {prec:.4f}")
-    print(f"- Recall: {rec:.4f}")
+    print(f"- Recalll: {rec:.4f}")
     print(f"- F1 Score: {f1:.4f}")
     print(f"- ROC-AUC: {roc_auc:.4f}")
     print(f"- Cohen's Kappa: {kappa:.4f}")

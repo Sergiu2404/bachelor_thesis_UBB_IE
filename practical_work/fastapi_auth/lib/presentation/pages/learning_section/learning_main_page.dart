@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../home_page.dart';
 
@@ -10,6 +12,47 @@ class LearningMainPage extends StatefulWidget {
 }
 
 class _LearningMainPageState extends State<LearningMainPage> {
+
+  Future<void> _launchURL(String url) async {
+    try {
+      await launchUrlString(url);
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Could not launch $url"),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  Widget _buildLinkTile(String title, String url) {
+    return InkWell(
+      onTap: () => _launchURL(url),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 6.0),
+        child: Row(
+          children: [
+            const Icon(Icons.link, color: Colors.blue),
+            const SizedBox(width: 8),
+            Flexible(
+              child: Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.blue,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +67,7 @@ class _LearningMainPageState extends State<LearningMainPage> {
                 context, MaterialPageRoute(builder: (context) => const HomePage()));
           },
         ),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
         elevation: 4,
       ),
@@ -33,7 +76,6 @@ class _LearningMainPageState extends State<LearningMainPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // HEADER
             const Text(
               "Welcome to Your Financial Educational App",
               style: TextStyle(
@@ -41,7 +83,6 @@ class _LearningMainPageState extends State<LearningMainPage> {
             ),
             const SizedBox(height: 10),
 
-            // SUBHEADER
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
@@ -56,7 +97,6 @@ class _LearningMainPageState extends State<LearningMainPage> {
 
             const SizedBox(height: 20),
 
-            // MAIN CONTENT
             const Text(
               "Why Should You Learn?",
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
@@ -72,7 +112,6 @@ class _LearningMainPageState extends State<LearningMainPage> {
 
             const SizedBox(height: 20),
 
-            // STRUCTURED LEARNING
             Container(
               padding: const EdgeInsets.all(15),
               decoration: BoxDecoration(
@@ -88,10 +127,10 @@ class _LearningMainPageState extends State<LearningMainPage> {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    "1️⃣ Start by reading articles in this section.\n"
-                        "2️⃣ Solve quizzes to reinforce your knowledge.\n"
-                        "3️⃣ Experiment in the demo investing account.\n"
-                        "4️⃣ Use the AI Stock Predictor (only after reaching \$50k in demo investing).",
+                    "Start by reading / watching recommended materials in this section.\n"
+                        "Solve quizzes to reinforce your knowledge.\n"
+                        "Experiment in the demo investing account.\n"
+                        "Use the AI Stock Predictor (be careful, it costs you \$1).",
                     style: TextStyle(fontSize: 18, height: 1.5),
                   ),
                 ],
@@ -100,7 +139,6 @@ class _LearningMainPageState extends State<LearningMainPage> {
 
             const SizedBox(height: 20),
 
-            // STRATEGY TIP
             const Text(
               "Strategic Advice",
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
@@ -109,15 +147,14 @@ class _LearningMainPageState extends State<LearningMainPage> {
 
             const Text(
               "If you start directly with the demo investing account, you may lose money quickly unless you're lucky. If you fail, you'll be required to complete quizzes to regain virtual money. However, solving quizzes without studying might waste your time.\n\n"
-                  "🔹 **Balanced Learning Approach**:\n"
-                  "✓ Read a few articles → Solve a quiz → Read more → Solve another quiz → Invest with virtual money.\n"
-                  "✓ This structured approach ensures better decision-making in real-world investing.",
+                  "Balanced Learning Approach:\n"
+                  "Read a few articles → Solve a quiz → Read more → Solve another quiz → Invest with virtual money.\n"
+                  "This structured approach ensures better decision-making in real-world investing.",
               style: TextStyle(fontSize: 18, height: 1.5),
             ),
 
             const SizedBox(height: 20),
 
-            // FINAL NOTE
             Container(
               padding: const EdgeInsets.all(15),
               decoration: BoxDecoration(
@@ -133,36 +170,42 @@ class _LearningMainPageState extends State<LearningMainPage> {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    "Remember: The AI Predictor is costly. Use it only when you have over \$50k in demo investments to make it worthwhile.",
+                    "Remember: The AI Predictor costs \$1. Don't rely on it too much:)",
                     style: TextStyle(fontSize: 18, height: 1.5),
                   ),
                 ],
               ),
             ),
 
-            const SizedBox(height: 30),
-
-            // BUTTON TO START LEARNING
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  // Navigate to articles or quizzes
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepPurple,
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                child: const Text(
-                  "Start Learning Now",
-                  style: TextStyle(fontSize: 18, color: Colors.white),
-                ),
-              ),
-            ),
-
             const SizedBox(height: 20),
+
+            const Text(
+              "Trusted Financial Learning Sources",
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildLinkTile("Mr. Money Mustache (Blogs)", "https://www.mrmoneymustache.com"),
+                _buildLinkTile("Bogleheads Wiki", "https://www.bogleheads.org/wiki/Main_Page"),
+                _buildLinkTile("Of Dollars and Data", "https://ofdollarsanddata.com"),
+                _buildLinkTile("A Wealth of Common Sense", "https://awealthofcommonsense.com"),
+                const SizedBox(height: 16),
+
+                _buildLinkTile("Khan Academy - Finance & Capital Markets (Courses & Structured Learning)", "https://www.khanacademy.org/economics-finance-domain/core-finance"),
+                _buildLinkTile("Coursera - Financial Markets (Yale)", "https://www.coursera.org/learn/financial-markets-global"),
+                _buildLinkTile("Morningstar Investing Classroom", "https://www.morningstar.com/lp/investing-classroom"),
+                const SizedBox(height: 16),
+
+                _buildLinkTile("The Plain Bagel (YouTube)", "https://www.youtube.com/c/ThePlainBagel"),
+                _buildLinkTile("Ben Felix", "https://www.youtube.com/@BenFelixCSI"),
+                _buildLinkTile("Two Cents (PBS)", "https://www.youtube.com/c/TwoCentsPBS"),
+                _buildLinkTile("Aswath Damodaran Lectures", "https://www.youtube.com/c/AswathDamodaranonValuation"),
+              ],
+            )
+
           ],
         ),
       ),

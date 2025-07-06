@@ -228,6 +228,7 @@ class _QuizQuestionPageState extends State<QuizQuestionPage> {
             const SizedBox(height: 16),
             Expanded(
               child: ListView.builder(
+                key: ValueKey(_currentIndex),
                 itemCount: question.allAnswers.length,
                 itemBuilder: (context, i) {
                   final answer = question.allAnswers[i];
@@ -261,7 +262,8 @@ class _QuizQuestionPageState extends State<QuizQuestionPage> {
                     child: const Text('Finish'),
                   ),
               ],
-            )
+            ),
+            const SizedBox(height: 30),
           ],
         ),
       ),

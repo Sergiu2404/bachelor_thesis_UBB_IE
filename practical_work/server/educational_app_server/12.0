@@ -1,5 +1,0 @@
-Collecting websockets
-  Downloading websockets-13.1-cp38-cp38-win_amd64.whl.metadata (7.0 kB)
-Downloading websockets-13.1-cp38-cp38-win_amd64.whl (159 kB)
-Installing collected packages: websockets
-Successfully installed websockets-13.1
